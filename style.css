@@ -1,0 +1,60 @@
+:root{
+  color-scheme:dark;
+  --bg0:#02050f;--bg1:#06102a;--card:#0b1736;--line:#ffffff1a;--ink:#fff;--muted:#b9c6e8;--gold:#f7b60c;--gold2:#ffe27a;--navy:#0d1430;
+  --title:"Baloo 2","Arial Rounded MT Bold","Arial Black",system-ui,sans-serif;
+  --body:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--bg0)}
+body{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;color:var(--ink);font:400 16px/1.55 var(--body);
+  background:
+    radial-gradient(1px 1px at 12% 18%,#fff9 50%,transparent 51%),
+    radial-gradient(1px 1px at 72% 9%,#fff7 50%,transparent 51%),
+    radial-gradient(1.5px 1.5px at 85% 42%,#fffa 50%,transparent 51%),
+    radial-gradient(1px 1px at 33% 64%,#fff6 50%,transparent 51%),
+    radial-gradient(1.5px 1.5px at 56% 30%,#fff8 50%,transparent 51%),
+    radial-gradient(1px 1px at 8% 82%,#fff6 50%,transparent 51%),
+    radial-gradient(1px 1px at 92% 88%,#fff7 50%,transparent 51%),
+    radial-gradient(90% 60% at 50% 0%,#173c7e55 0%,transparent 60%),
+    radial-gradient(120% 80% at 50% 100%,#081634 0%,var(--bg0) 70%);
+  background-attachment:fixed;
+  padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)}
+a{color:var(--gold2)}
+.wrap{width:100%;max-width:1080px;margin:0 auto;padding:0 18px}
+header.site{padding:34px 0 10px;text-align:center}
+.logo{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+.logo .mark{width:38px;height:38px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#6fb6ff 0%,#1d5fc4 45%,#0b1d45 100%);box-shadow:0 0 0 3px var(--gold),0 0 24px #3b82f655}
+.logo .name{font:800 clamp(30px,8vw,46px)/1 var(--title);letter-spacing:.01em;-webkit-text-stroke:2px var(--navy);paint-order:stroke fill}
+.tagline{margin-top:8px;color:var(--muted);font-size:15px}
+main{flex:1}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px;padding:26px 0 34px}
+.card{display:flex;flex-direction:column;background:linear-gradient(180deg,#0f1f47 0%,var(--card) 100%);border:1px solid var(--line);border-radius:20px;
+  overflow:hidden;text-decoration:none;color:inherit;transition:transform .18s ease,box-shadow .18s ease,border-color .18s}
+.card:hover,.card:focus-visible{transform:translateY(-4px);border-color:#f7b60c88;box-shadow:0 14px 40px #0009,0 0 0 1px #f7b60c55;outline:none}
+.card .thumb{aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(70% 60% at 50% 55%,#173c7e 0%,#0b1d45 55%,#050c22 100%)}
+.card .thumb img{width:78%;height:78%;object-fit:contain;filter:drop-shadow(0 10px 24px #0008)}
+.card .info{padding:14px 16px 16px;display:flex;flex-direction:column;gap:4px;flex:1}
+.card h2{font:800 24px/1.1 var(--title)}
+.card p{color:var(--muted);font-size:14px;flex:1}
+.btn{align-self:flex-start;margin-top:10px;display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:999px;
+  font:800 18px/1 var(--title);color:var(--navy);background:linear-gradient(180deg,var(--gold2) 0%,var(--gold) 100%);box-shadow:0 4px 0 #8a6200}
+.card:hover .btn{filter:brightness(1.06)}
+.soon{border-style:dashed;opacity:.55;pointer-events:none}
+.soon .thumb{background:#0a1430;font:800 64px/1 var(--title);color:#ffffff22}
+.home-ad{height:100px;margin:0 auto 26px;max-width:728px}
+.home-ad .ad-slot{height:90px}
+footer.site{border-top:1px solid var(--line);padding:18px 0 22px;color:var(--muted);font-size:14px}
+footer.site .wrap{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;justify-content:space-between}
+footer.site nav{display:flex;gap:16px}
+footer.site a{color:var(--muted);text-decoration:none}
+footer.site a:hover{color:#fff;text-decoration:underline}
+.doc{max-width:760px;padding:30px 18px 40px}
+.doc h1{font:800 clamp(30px,7vw,42px)/1.1 var(--title);margin-bottom:14px}
+.doc h2{font:700 20px/1.3 var(--body);margin:26px 0 8px}
+.doc p,.doc li{color:#dfe6fa;margin-bottom:10px}
+.doc ul{padding-left:22px}
+.back{display:inline-block;margin-top:20px;color:var(--muted);text-decoration:none;font-weight:600}
+.back:hover{color:#fff}
+@media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}

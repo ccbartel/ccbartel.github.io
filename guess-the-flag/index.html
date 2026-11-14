@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Guess the Flag - Bartel Games</title>
+<meta name="description" content="Guess the Flag: a spinning 3D globe drops a pin on a country - pick its flag. Free quick quiz game, no download.">
+<meta name="theme-color" content="#02050f">
+<link rel="icon" type="image/png" href="assets/icon.png">
+<link rel="apple-touch-icon" href="assets/icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Bartel Games">
+<meta property="og:title" content="Guess the Flag">
+<meta property="og:description" content="A 3D globe drops a pin on a country - can you pick its flag?">
+<meta property="og:url" content="https://bartelgames.com.br/guess-the-flag/">
+<meta property="og:image" content="https://bartelgames.com.br/guess-the-flag/assets/icon.png">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@800&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg0:#02050f;--bg1:#06102a;--navy:#0d1430;--gold:#f7b60c;--ink:#ffffff;
+  --font:"Baloo 2","Arial Rounded MT Bold","Arial Black",system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg0);color:var(--ink);overflow:hidden;overscroll-behavior:none}
+body{font-family:var(--font);-webkit-tap-highlight-color:transparent;touch-action:manipulation;user-select:none;-webkit-user-select:none}
+#app{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+  padding:env(safe-area-inset-top,0px) max(16px,env(safe-area-inset-right,0px)) env(safe-area-inset-bottom,0px) max(16px,env(safe-area-inset-left,0px));
+  background:radial-gradient(120% 80% at 50% 50%,#081634 0%,#040a1c 55%,var(--bg0) 100%)}
+#stage.full{border-radius:0;box-shadow:none}
+#stage{position:relative;overflow:hidden;border-radius:18px;
+  background:radial-gradient(70% 42% at 50% 54%,#173c7e 0%,#0b1d45 38%,#050c22 72%,#030716 100%);
+  box-shadow:0 0 0 1px #ffffff14,0 20px 60px #0008}
+#gl,#fx{position:absolute;left:0;top:0;display:block}
+#gl{width:100%;height:100%}
+#hud{position:absolute;left:0;top:0;width:720px;height:1280px;transform-origin:0 0;pointer-events:none}
+#fx{width:720px;height:1280px;pointer-events:none}
+.a{position:absolute;transform:translate(-50%,-50%);will-change:transform}
+.tint{position:absolute;inset:0;-webkit-mask:var(--m) center/100% 100% no-repeat;mask:var(--m) center/100% 100% no-repeat}
+.dot{--m:url(assets/tex/ui_circle.png);width:30px;height:30px}
+.card{border:0;background:none;width:200px;height:139px;cursor:pointer;pointer-events:auto;outline:none;touch-action:manipulation}
+.card:focus-visible .cardbg{outline:4px solid #ffd84d;outline-offset:6px;border-radius:14px}
+.cardbg{--m:url(assets/tex/ui_card.png)}
+.card .flag{width:198px!important;height:198px!important}
+.flag{position:absolute;left:50%;top:50%;width:172px;height:172px;transform:translate(-50%,-50%);pointer-events:none;-webkit-user-drag:none}
+#name{width:680px;height:100px;display:flex;align-items:center;justify-content:center;white-space:nowrap;
+  font-size:64px;line-height:1;color:#fff;-webkit-text-stroke:4px #0d1430;paint-order:stroke fill;
+  filter:drop-shadow(5px 5px 0 rgba(0,0,0,.9));letter-spacing:.5px}
+.fancy{display:grid;place-items:center;line-height:1;white-space:nowrap}
+.fancy>span{grid-area:1/1;position:relative}
+.fancy .l0{color:#0d1430;-webkit-text-stroke:var(--so) #0d1430;filter:drop-shadow(var(--sh) var(--sh) 0 rgba(0,0,0,.9))}
+.fancy .l1{color:#fff;-webkit-text-stroke:var(--sw) #fff}
+.fancy .l2{background:linear-gradient(180deg,#f7b60c 8%,#ffe9a6 62%,#ffffff 92%);-webkit-background-clip:text;background-clip:text;color:transparent}
+#qmark{width:200px;height:180px;font-size:150px;--so:24px;--sw:10px;--sh:5px}
+#score{width:500px;height:170px;font-size:100px;--so:17px;--sw:7px;--sh:4px}
+#burst{--m:url(assets/tex/ui_ring.png);width:200px;height:200px}
+#burst .tint{background:#fff}
+#fbicon{width:150px;height:150px}
+#panel{width:640px;height:150px}
+#panel>.tint{--m:url(assets/tex/ui_panel.png);background:rgba(13,20,41,.6)}
+.rcard{width:173px;height:120px}
+.rcard .flag{width:172px;height:172px}
+.ricon{position:absolute;width:54px;height:54px;left:calc(50% + 58px);top:calc(50% - 42px);transform:translate(-50%,-50%) scale(0)}
+#again{width:330px;height:100px;border:0;border-radius:50px;cursor:pointer;pointer-events:auto;
+  font:800 46px/1 var(--font);color:#0d1430;display:flex;align-items:center;justify-content:center;gap:14px;
+  background:linear-gradient(180deg,#ffe27a 0%,#f7b60c 100%);box-shadow:0 0 0 5px #fff,0 0 0 11px #0d1430,0 12px 0 11px #000a;transform:translate(-50%,-50%) scale(0)}
+#again:focus-visible{box-shadow:0 0 0 5px #fff,0 0 0 11px #0d1430,0 0 0 18px #ffd84d}
+#again .ic{font-size:54px;margin-top:-4px}
+#flash{position:absolute;left:-90px;top:-110px;width:900px;height:1500px;background:#fff;opacity:0;pointer-events:none}
+.hide{display:none!important}
+#loader{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;background:var(--bg0);z-index:5;transition:opacity .35s}
+#loader.done{opacity:0;pointer-events:none}
+#loader .ttl{font:800 clamp(28px,7vw,44px)/1 var(--font);color:#fff;-webkit-text-stroke:3px var(--navy);paint-order:stroke fill}
+#loader .bar{width:min(260px,64vw);height:14px;border-radius:7px;background:#ffffff1f;overflow:hidden;box-shadow:inset 0 0 0 2px #ffffff22}
+#loader .fill{height:100%;width:0;background:linear-gradient(90deg,#f7b60c,#ffe9a6);border-radius:7px;transition:width .15s}
+#loader .pct{font:800 18px/1 var(--font);color:#b9c6e8}
+#loader .err{font:600 16px/1.4 system-ui,sans-serif;color:#ffb3b3;max-width:80vw;text-align:center}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* ---- site: barra de cima (link do portal) e banner embaixo ---- */
+:root{--topH:calc(30px + env(safe-area-inset-top,0px));--adH:calc(60px + env(safe-area-inset-bottom,0px))}
+@media (min-width:760px) and (min-height:640px){:root{--adH:calc(90px + env(safe-area-inset-bottom,0px))}}
+#app{top:var(--topH);bottom:var(--adH);padding-top:4px;padding-bottom:4px}
+#topbar{position:fixed;left:0;right:0;top:0;height:var(--topH);padding:env(safe-area-inset-top,0px) max(12px,env(safe-area-inset-right,0px)) 0 max(12px,env(safe-area-inset-left,0px));
+  display:flex;align-items:center;background:#02050f;z-index:3}
+#topbar a{font:700 14px/1 system-ui,sans-serif;color:#b9c6e8;text-decoration:none;padding:6px 8px;border-radius:8px}
+#topbar a:hover,#topbar a:focus-visible{color:#fff;background:#ffffff14}
+#adbar{position:fixed;left:0;right:0;bottom:0;height:var(--adH);padding-bottom:env(safe-area-inset-bottom,0px);display:flex;align-items:center;justify-content:center;background:#02050f;z-index:3;overflow:hidden}
+#adbar .ad-slot{width:100%;max-width:728px;height:100%}
+</style>
+<script src="../site-config.js"></script>
+<script src="../site.js"></script>
+</head>
+<body>
+<nav id="topbar"><a href="../">&larr; More games</a></nav>
+<div id="app">
+  <div id="stage">
+    <canvas id="gl"></canvas>
+    <div id="hud">
+      <div id="dots"><span class="a dot"><span class="tint"></span></span><span class="a dot"><span class="tint"></span></span><span class="a dot"><span class="tint"></span></span></div>
+      <div id="choices" class="hide">
+        <button class="a card" aria-label="Flag option 1"><span class="tint cardbg"></span><img class="flag" alt=""></button>
+        <button class="a card" aria-label="Flag option 2"><span class="tint cardbg"></span><img class="flag" alt=""></button>
+        <button class="a card" aria-label="Flag option 3"><span class="tint cardbg"></span><img class="flag" alt=""></button>
+      </div>
+      <div id="name" class="a hide" aria-live="polite"></div>
+      <div id="result" class="hide">
+        <div id="panel" class="a"><span class="tint"></span>
+          <div class="a rcard"><span class="tint cardbg"></span><img class="flag" alt=""><img class="ricon" alt=""></div>
+          <div class="a rcard"><span class="tint cardbg"></span><img class="flag" alt=""><img class="ricon" alt=""></div>
+          <div class="a rcard"><span class="tint cardbg"></span><img class="flag" alt=""><img class="ricon" alt=""></div>
+        </div>
+        <div id="score" class="a fancy" role="status"><span class="l0"></span><span class="l1"></span><span class="l2"></span></div>
+        <button id="again" class="a"><span class="ic" aria-hidden="true">&#8635;</span><span>Play again</span></button>
+      </div>
+      <div id="burst" class="a"><span class="tint"></span></div>
+      <img id="fbicon" class="a hide" alt="">
+      <div id="qmark" class="a fancy hide" aria-hidden="true"><span class="l0">?</span><span class="l1">?</span><span class="l2">?</span></div>
+      <canvas id="fx"></canvas>
+      <div id="flash"></div>
+    </div>
+  </div>
+  <div id="loader"><div class="ttl">Guess the Flag</div><div class="bar"><div class="fill"></div></div><div class="pct">0%</div><div class="err"></div></div>
+</div>
+<div id="adbar" aria-label="Advertisement"><div class="ad-slot" data-ad-slot-key="ADSENSE_SLOT_GAME"></div></div>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js"}}</script>
+<script type="module" src="game.js"></script>
+</body>
+</html>
