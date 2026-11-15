@@ -100,3 +100,6 @@ footer.site a:hover{color:#fff;text-decoration:underline}
 .back:hover{color:#fff}
 @media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
 .tt-ic svg{filter:drop-shadow(-1.5px -1px 0 #25f4ee) drop-shadow(1.5px 1px 0 #fe2c55)}
+.tt-n{white-space:nowrap}
+@media (max-width:420px){.tt{gap:10px}.tt-ic{width:40px;height:40px}.tt-btn{padding:8px 14px}.tt-txt strong{font-size:16px}.tt-txt span{font-size:12px}}
+@media (max-width:420px){.tt-n{display:block}.tt-dot{display:none}}
