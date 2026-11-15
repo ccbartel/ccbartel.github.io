@@ -22,13 +22,20 @@
   function compact(n, lang) {
     try { return new Intl.NumberFormat(lang || document.documentElement.lang || "en", {notation: "compact", maximumFractionDigits: 1}).format(n); } catch (e) { return String(n); }
   }
+  // testes no PC (localhost) nao gravam nada no banco de verdade
+  var LOCAL = /^(localhost|127\.|\[::1\])/.test(location.hostname);
+  if (LOCAL) { var _rpc = rpc; rpc = function (fn, body) {
+    if (fn === "record_play") return Promise.resolve(0);
+    if (fn === "toggle_like") return Promise.resolve([{liked: true, likes: 1}]);
+    if (fn === "submit_score") return Promise.resolve(1);
+    return _rpc(fn, body); }; }
   window.BG_SOCIAL = {
     device: device, name: name, compact: compact,
     stats: function (games) { return rpc("get_stats", {p_games: games, p_device: device()}); },
     play: function (game) { return rpc("record_play", {p_game: game}).catch(function () {}); },
     like: function (game) { return rpc("toggle_like", {p_game: game, p_device: device()}).then(function (r) { return r[0]; }); },
     submit: function (game, mode, score, day) { return rpc("submit_score", {p_game: game, p_mode: mode, p_device: device(), p_name: name() || "Player", p_score: score, p_day: day || null}); },
-    top: function (game, mode, day, limit) { return rpc("top_scores", {p_game: game, p_mode: mode, p_day: day || null, p_limit: limit || 10}); }
+    top: function (game, mode, day, limit) { return rpc("top_scores", {p_game: game, p_mode: mode, p_day: day || null, p_limit: limit || 10, p_device: device()}); }
   };
 
   // vitrine: "Played N times · ♥ N" embaixo de cada capa com data-game

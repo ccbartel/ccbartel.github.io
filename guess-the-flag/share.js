@@ -14,6 +14,9 @@
     var text = I.t("shTxt0");
     if (L && L.mode === "daily") text = I.t("shDaily", {n: String(L.daily), s: String(L.score), sq: (L.hits || []).map(function (h) { return h ? "🟩" : "🟥"; }).join("")});
     else if (L && L.mode === "inf") text = I.t("shInf", String(L.score));
+    else if (L && L.mode === "cap") text = I.t("shCap", String(L.score));
+    else if (L && L.mode === "find") text = I.t("shFind", String(L.score));
+    else if (L && L.mode === "name") text = I.t("shName", String(L.score));
     else if (L) text = I.t("shTxt", String(L.score));
     var data = {title: I.t("title"), text: text, url: URL_};
     if (navigator.share) { navigator.share(data).catch(function () {}); return; }
