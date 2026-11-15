@@ -157,3 +157,5 @@ footer.site a:hover{color:#fff;text-decoration:underline}
 .games .soon .thumb{border-style:dashed;border-color:#ffffff26;background:#0a1430;display:flex;align-items:center;justify-content:center}
 .games .soon .q{font:800 72px/1 var(--title);color:#ffffff22}
 @media (prefers-reduced-motion:reduce){.games .card .thumb{transition:none}.games .card:hover .thumb{transform:none}}
+.games .card p.meta{color:#8d97ad;font-size:12.5px}
+.games .card p.meta:empty{display:none}
