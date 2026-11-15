@@ -65,6 +65,16 @@ main{flex:1}
   .stores{display:grid;grid-template-columns:1fr 1fr;width:100%}
   .store{justify-content:center;padding:10px 8px;white-space:nowrap}
 }
+.tt{display:flex;align-items:center;gap:14px;margin-top:14px;padding:12px 14px 12px 12px;border-radius:18px;text-decoration:none;color:#fff;
+  background:linear-gradient(90deg,#0b0b14 0%,#141428 100%);border:1px solid #ffffff1f;transition:border-color .15s,transform .15s}
+.tt:hover,.tt:focus-visible{border-color:#fe2c5599;transform:translateY(-2px);outline:none}
+.tt-ic{flex:none;width:48px;height:48px;border-radius:12px;background:#000;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 1px #ffffff22}
+.tt-txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.tt-txt strong{font:800 19px/1.15 var(--title)}
+.tt-txt span{color:var(--muted);font-size:13px}
+.tt-btn{flex:none;padding:10px 20px;border-radius:999px;font:700 15px/1 var(--body);background:#fe2c55;color:#fff}
+.tt:hover .tt-btn{filter:brightness(1.1)}
+@media (prefers-reduced-motion:reduce){.tt{transition:none}.tt:hover{transform:none}}
 .home-ad{height:100px;margin:0 auto 26px;max-width:728px}
 .home-ad .ad-slot{height:90px}
 footer.site{border-top:1px solid var(--line);padding:18px 0 22px;color:var(--muted);font-size:14px}
@@ -80,3 +90,4 @@ footer.site a:hover{color:#fff;text-decoration:underline}
 .back{display:inline-block;margin-top:20px;color:var(--muted);text-decoration:none;font-weight:600}
 .back:hover{color:#fff}
 @media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
+.tt-ic svg{filter:drop-shadow(-1.5px -1px 0 #25f4ee) drop-shadow(1.5px 1px 0 #fe2c55)}
