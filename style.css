@@ -103,3 +103,8 @@ footer.site a:hover{color:#fff;text-decoration:underline}
 .tt-n{white-space:nowrap}
 @media (max-width:420px){.tt{gap:10px}.tt-ic{width:40px;height:40px}.tt-btn{padding:8px 14px}.tt-txt strong{font-size:16px}.tt-txt span{font-size:12px}}
 @media (max-width:420px){.tt-n{display:block}.tt-dot{display:none}}
+.socials{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr));gap:14px;margin-top:14px}
+.socials .tt{margin-top:0}
+.yt:hover,.yt:focus-visible{border-color:#ff003399}
+.yt-ic{background:#fff}
+.yt-btn{background:#ff0033}
