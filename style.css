@@ -108,3 +108,27 @@ footer.site a:hover{color:#fff;text-decoration:underline}
 .yt:hover,.yt:focus-visible{border-color:#ff003399}
 .yt-ic{background:#fff}
 .yt-btn{background:#ff0033}
+/* ---- secao More from (promo compacta, depois dos jogos) ---- */
+.grid{padding-bottom:26px}
+.more{padding-bottom:30px}
+.more-t{font:800 22px/1.2 var(--title);color:var(--muted);margin:0 0 12px;letter-spacing:.01em}
+.more .feat{margin-top:0;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);box-shadow:none}
+.more .feat-art{aspect-ratio:auto;max-height:none;min-height:170px;height:100%}
+.more .feat-art::after{background:linear-gradient(90deg,transparent 60%,#0b1736 100%),linear-gradient(0deg,#02050f66 0%,transparent 45%)}
+.more .feat-bg{object-position:70% 40%}
+.more .feat-logo{width:44%;left:4%;top:auto;bottom:8%;transform:none}
+.more .feat-info{flex-direction:column;align-items:flex-start;justify-content:center;padding:16px 20px}
+.more .feat-txt{flex:none}
+.more .feat h2{font-size:22px;margin-top:0}
+.more .stores{gap:8px}
+.more .store{min-height:38px;padding:8px 14px;font-size:14px}
+@media (max-width:640px){
+  .more .feat{grid-template-columns:1fr}
+  .more .feat-art{aspect-ratio:21/9;min-height:0;height:auto}
+  .more .feat-art::after{background:linear-gradient(0deg,#0b1736 0%,transparent 45%)}
+  .more .feat-bg{object-position:70% 35%}
+  .more .feat-logo{width:40%;left:12px;bottom:8px}
+  .more .stores{display:grid;grid-template-columns:1fr 1fr;width:100%}
+  .more .store{min-height:42px;justify-content:center}
+}
+.yt-ic svg{filter:none}
