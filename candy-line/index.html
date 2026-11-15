@@ -61,7 +61,9 @@ body{font-family:var(--font);-webkit-tap-highlight-color:transparent;touch-actio
 .mbtn small{font:700 24px/1.2 system-ui,-apple-system,"Segoe UI",sans-serif;opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mbtn.done{opacity:.65;cursor:default}
 .mbtn:focus-visible{outline:5px solid #ffd84d;outline-offset:6px}
-#m-daily{padding-right:96px}
+#m-play{padding-right:96px}
+#count.mis{font-size:54px;--so:12px;--sw:5px}
+#sub.win{font-size:58px;line-height:1.05;color:#ffe27a;-webkit-text-stroke:10px var(--ink2)}
 #m-rank,#r-rank{width:76px;height:76px;border-radius:50%;cursor:pointer;pointer-events:auto;display:flex;align-items:center;justify-content:center;font-size:40px;line-height:1;padding:0;
   background:linear-gradient(180deg,#ffe27a,#f7b60c);border:4px solid #fff;box-shadow:0 0 0 4px var(--ink2),0 6px 0 4px #2a0b3daa;transform:translate(-50%,-50%) scale(0)}
 #m-rank:focus-visible,#r-rank:focus-visible{outline:5px solid #ffd84d;outline-offset:4px}
@@ -73,6 +75,16 @@ body{font-family:var(--font);-webkit-tap-highlight-color:transparent;touch-actio
 .pbtn .ic{font-size:50px;margin-top:-4px}
 #rbtns{position:absolute;left:0;top:0;width:720px;height:1280px}
 #flash{position:absolute;left:-90px;top:-110px;width:900px;height:1500px;background:#fff;opacity:0;pointer-events:none}
+#mcard{width:600px;padding:40px 36px 34px;border-radius:40px;background:#ffffffe6;box-shadow:0 0 0 6px #3a0f4a,0 16px 0 6px #2a0b3daa;display:flex;flex-direction:column;align-items:center;gap:18px;pointer-events:auto;transform:translate(-50%,-50%) scale(0)}
+#mcard .mc-t{font:800 52px/1.05 var(--font);color:#3a0f4a;text-align:center}
+#mcard .mc-g{display:flex;align-items:center;gap:18px;font:800 42px/1.1 var(--font);color:#c2187a;text-align:left}
+#mcard .mc-bag{flex:none;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle at 50% 45%,#ffb3d6 0%,#ff6fb2 70%,#e0559a 100%);box-shadow:0 0 0 5px #3a0f4a}
+#mcard .mc-how{display:flex;align-items:center;gap:14px;font:700 30px/1.2 system-ui,-apple-system,"Segoe UI",sans-serif;color:#3a0f4a;text-align:left}
+#mcard .mc-seq{flex:none;display:flex;align-items:center;padding:6px 10px;border-radius:40px;background:linear-gradient(90deg,#ff4096,#ff4096);box-shadow:0 0 0 4px #96145f}
+#mcard .mc-seq img{width:52px;height:52px;margin:0 -2px}
+#mcard .mc-go{margin-top:10px;height:96px;padding:0 54px;border:0;border-radius:50px;cursor:pointer;font:800 46px/1 var(--font);color:#3a0f4a;background:linear-gradient(180deg,#ffe27a 0%,#f7b60c 100%);box-shadow:0 0 0 5px #fff,0 0 0 11px #3a0f4a,0 12px 0 11px #2a0b3daa;touch-action:manipulation}
+#mcard .mc-go:focus-visible,#mcard .mc-back:focus-visible{outline:5px solid #ffd84d;outline-offset:12px}
+#mcard .mc-back{border:0;background:none;cursor:pointer;font:800 32px/1 var(--font);color:#3a0f4a;opacity:.7;padding:8px 18px;text-decoration:underline}
 .hide{display:none!important}
 #loader{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;background:var(--bg0);z-index:5;transition:opacity .35s}
 #loader.done{opacity:0;pointer-events:none}
@@ -147,9 +159,16 @@ body{font-family:var(--font);-webkit-tap-highlight-color:transparent;touch-actio
       <div id="menu" class="hide">
         <h1 id="mtitle" class="a fancy"><span class="l0">Candy Line</span><span class="l1">Candy Line</span><span class="l2">Candy Line</span></h1>
         <button id="m-play" class="a mbtn primary" type="button"><span class="mi" aria-hidden="true"><svg viewBox="0 0 24 24" width="46" height="46"><path d="M7 4.5v15l12.5-7.5z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span><span class="mt"><b data-i18n="play"></b><small data-i18n="playSub"></small></span></button>
-        <button id="m-daily" class="a mbtn" type="button"><span class="mi" aria-hidden="true"><svg viewBox="0 0 24 24" width="44" height="44"><rect x="3" y="5" width="18" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M3 10h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></span><span class="mt"><b data-i18n="daily"></b><small></small></span></button>
+        <button id="m-daily" class="a mbtn" type="button"><span class="mi" aria-hidden="true"><svg viewBox="0 0 24 24" width="44" height="44"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="12" cy="12" r="5.5" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="12" cy="12" r="1.8" fill="currentColor"/></svg></span><span class="mt"><b data-i18n="daily"></b><small></small></span></button>
         <button id="m-rank" class="a" type="button" aria-haspopup="dialog" aria-controls="rank" data-i18n-label="rank"><span aria-hidden="true">&#127942;</span></button>
         <div id="best" class="a"></div>
+      </div>
+      <div id="mcard" class="a hide" role="dialog" aria-labelledby="mc-title">
+        <div id="mc-title" class="mc-t"><span aria-hidden="true">&#127919;</span> <span data-i18n="daily">Daily mission</span></div>
+        <div class="mc-g"><canvas class="mc-bag" id="mc-bag" width="300" height="300" aria-hidden="true"></canvas><span id="mc-txt"></span></div>
+        <div class="mc-how"><span class="mc-seq" aria-hidden="true"><img src="assets/c4.png" alt=""><img src="assets/c1.png" alt=""><img src="assets/c2.png" alt=""></span><span data-i18n="misHow">Swipe the candies in the order shown</span></div>
+        <button id="mc-go" class="mc-go" type="button"><span aria-hidden="true">&#9654;</span> <span data-i18n="misGo">Start</span></button>
+        <button id="mc-back" class="mc-back" type="button" data-i18n="back">Back</button>
       </div>
       <div id="result" class="hide">
         <div id="total" class="a fancy" role="status"><span class="l0"></span><span class="l1"></span><span class="l2"></span></div>

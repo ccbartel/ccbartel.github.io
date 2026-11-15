@@ -1,5 +1,5 @@
 // Compartilhar: celular abre a janela nativa (WhatsApp, TikTok...); computador copia o link.
-// Na tela final o jogo grava window.CL_LAST = {mode, score, daily} e o texto leva a pontuacao.
+// Na tela final o jogo grava window.CL_LAST = {mode, score, daily, goal, done, tries} e o texto leva a pontuacao.
 (function () {
   var I = window.CL_I18N || {t: function (k, f) { return k; }, lang: "en"};
   var URL_ = "https://bartelgames.com.br/candy-line/";
@@ -12,7 +12,7 @@
   function share() {
     var L = window.CL_LAST;
     var text = I.t("shTxt0");
-    if (L && L.mode === "daily") text = I.t("shDaily", {n: String(L.daily), s: String(L.score)});
+    if (L && L.mode === "daily") text = L.done ? (L.tries === 1 ? I.t("shMis1", {n: String(L.daily)}) : I.t("shMis", {n: String(L.daily), t: String(L.tries)})) : I.t("shMisTry", {n: String(L.daily), s: String(L.score), g: String(L.goal)});
     else if (L) text = I.t("shTxt", String(L.score));
     var data = {title: I.t("title"), text: text, url: URL_};
     if (navigator.share) { navigator.share(data).catch(function () {}); return; }
