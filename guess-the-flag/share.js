@@ -11,7 +11,10 @@
   }
   function share() {
     var L = window.GTF_LAST;
-    var text = L ? I.t("shTxt", String(L.score)) : I.t("shTxt0");
+    var text = I.t("shTxt0");
+    if (L && L.mode === "daily") text = I.t("shDaily", {n: String(L.daily), s: String(L.score), sq: (L.hits || []).map(function (h) { return h ? "🟩" : "🟥"; }).join("")});
+    else if (L && L.mode === "inf") text = I.t("shInf", String(L.score));
+    else if (L) text = I.t("shTxt", String(L.score));
     var data = {title: I.t("title"), text: text, url: URL_};
     if (navigator.share) { navigator.share(data).catch(function () {}); return; }
     var all = text + " " + URL_;
