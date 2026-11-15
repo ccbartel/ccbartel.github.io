@@ -14,7 +14,7 @@ window.SITE_CONFIG = {
   "SITE_NAME": "Bartel Games",
   "DOMAIN": "bartelgames.com.br",
   "GITHUB_USER": "ccbartel",
-  "CONTACT_EMAIL": "contato@SEU-DOMINIO",
+  "CONTACT_EMAIL": "ccbartelbusiness@gmail.com",
   "ALLOWED_HOSTS": ["localhost", "127.0.0.1"],
   "OFFICIAL_URL": "",
   "ADSENSE_CLIENT": "",
