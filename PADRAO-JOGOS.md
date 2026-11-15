@@ -1,6 +1,6 @@
 # Padrão dos jogos do Bartel Games (bartelgames.com.br)
 
-Guia para qualquer conversa/agente que for criar ou mudar um jogo deste site. Referência pronta: `guess-the-flag/`.
+Guia para qualquer conversa/agente que for criar ou mudar um jogo deste site. Referência pronta: `geo-quiz/`.
 
 ## Regras do dono (Cristiano)
 - Pode implementar, testar e publicar (commit + push) sem pedir licença; só parar para o que só ele resolve (contas, senhas, pagamentos, dados pessoais, decisões de rumo).
@@ -15,7 +15,7 @@ Guia para qualquer conversa/agente que for criar ou mudar um jogo deste site. Re
 2. **Código-fonte** em `src/<slug>/game.src.js` (fora do git); adicionar o slug na lista `GAMES` do `build.py`; `python build.py` ofusca para `<slug>/game.js` com trava de domínio (hosts em `site-config.js`). O build APAGA `_build_tmp/` — não guarde nada lá.
 3. **Idioma automático**: `i18n.js` (en, pt, es, fr, de, it; `?lang=xx` para testar), `<html lang>` definido cedo para o Chrome não oferecer tradução; nomes de países por `Intl.DisplayNames`.
 4. **Fluxo**: menu antes de jogar (título + modos), nunca abre jogando; resultado com "Jogar de novo" (volta ao menu) e Compartilhar com texto do modo/pontuação (`share.js`: `navigator.share` no celular, copiar link no PC).
-5. **Social (Supabase, projeto `bartelgames`)**: inserir a linha do jogo em `game_stats` (`insert into game_stats(game) values('<slug>')`); incluir `../social.js` (window.BG_SOCIAL: play, like, stats, submit, top) e uma UI como `guess-the-flag/social-ui.js`. Em localhost o social não grava nada (testes não sujam o banco).
+5. **Social (Supabase, projeto `bartelgames`)**: inserir a linha do jogo em `game_stats` (`insert into game_stats(game) values('<slug>')`); incluir `../social.js` (window.BG_SOCIAL: play, like, stats, submit, top) e uma UI como `geo-quiz/social-ui.js`. Em localhost o social não grava nada (testes não sujam o banco).
 6. **Vitrine** (`index.html` da raiz): card estilo YouTube Playables — capa 3:4 com o nome do jogo na arte, título + categoria embaixo, `data-game="<slug>"` e `<p class="meta">` (Played N times · ♥ N). Ícone/capa sem elementos 2D chapados destoando de arte 3D.
 7. **PWA**: páginas com `<link rel="manifest" href="/manifest.webmanifest">`; `sw.js` é rede-primeiro.
 8. **Testar**: as janelas de navegador do Cristiano costumam estar ocultas (animação parada) — usar Chrome headless com puppeteer-core (script `shot.mjs` no scratchpad da sessão; refazer se sumir): menu, partida, resultado, 375/414/1280 px, pt e en, sem rolagem horizontal.

@@ -1,4 +1,4 @@
-// Guess the Flag: curtir (barra do topo) e ranking (Infinito e Desafio do dia) sobre o ../social.js (BG_SOCIAL).
+// Guess the Flag: curtir (barra do topo) e ranking (so Infinito) sobre o ../social.js (BG_SOCIAL).
 // Tudo e opcional: sem rede ou sem Supabase o jogo segue igual (timeouts curtos, falhas silenciosas, botoes somem ou mostram "offline").
 (function () {
   var GAME = "guess-the-flag";
@@ -41,7 +41,7 @@
     });
   }
   function ended(last) {
-    if (!last || (last.mode !== "inf" && last.mode !== "daily")) { pend = null; return; }
+    if (!last || last.mode !== "inf") { pend = null; return; }   // ranking so no Infinito (Desafio do dia sem ranking)
     pend = {mode: last.mode, score: last.score | 0, day: last.mode === "daily" ? today() : null, n: last.daily || 0, rank: null, sent: false};
     if (S() && S().name()) send(pend).catch(function () {});
   }

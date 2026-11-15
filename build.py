@@ -18,7 +18,7 @@ import json, os, re, shutil, subprocess, sys, pathlib
 
 ROOT = pathlib.Path(__file__).resolve().parent
 CONFIG = ROOT / "site-config.js"
-GAMES = ["guess-the-flag", "candy-line"]  # slug = pasta do jogo; fonte em src/<slug>/game.src.js
+GAMES = ["geo-quiz", "candy-line"]  # slug = pasta do jogo; fonte em src/<slug>/game.src.js
 STATE = ROOT / ".build_state.json"
 TMP = ROOT / "_build_tmp"
 OBF_VERSION = "javascript-obfuscator@4.1.1"

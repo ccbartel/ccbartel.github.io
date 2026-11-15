@@ -11,8 +11,8 @@ Portal de jogos web. Primeiro jogo: **Guess the Flag**.
 | `index.html`, `style.css` | Vitrine (grade de cartoes, 1 por jogo) |
 | `privacy.html`, `contact.html` | Politica de privacidade (cookies do AdSense) e contato |
 | `site.js` | Codigo comum: preenche nome/e-mail e monta os banners AdSense (ou "Ad space" se vazio) |
-| `guess-the-flag/` | O jogo publicado: `index.html`, `game.js` (OFUSCADO, gerado), `assets/` |
-| `src/guess-the-flag/game.src.js` | Codigo-fonte legivel do jogo. **Fica fora do git** (`.gitignore`), porque no GitHub Pages gratis o repositorio e publico. Faca backup dele (ex.: OneDrive) |
+| `geo-quiz/` | O jogo publicado: `index.html`, `game.js` (OFUSCADO, gerado), `assets/` |
+| `src/geo-quiz/game.src.js` | Codigo-fonte legivel do jogo. **Fica fora do git** (`.gitignore`), porque no GitHub Pages gratis o repositorio e publico. Faca backup dele (ex.: OneDrive) |
 | `CNAME` | Dominio proprio (gerado pelo build; sem dominio, nao existe) |
 | `ads.txt` | Autorizacao do AdSense (gerado pelo build com o seu pub-ID) |
 | `.nojekyll` | Faz o GitHub Pages servir os arquivos como estao |

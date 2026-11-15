@@ -2,7 +2,7 @@
 // Na tela final o jogo grava window.GTF_LAST = {score, rounds} e o texto leva a pontuacao.
 (function () {
   var I = window.GTF_I18N || {t: function (k, f) { return k; }, lang: "en"};
-  var URL_ = "https://bartelgames.com.br/guess-the-flag/";
+  var URL_ = "https://bartelgames.com.br/geo-quiz/";
   function toast(msg) {
     var d = document.getElementById("toast");
     if (!d) { d = document.createElement("div"); d.id = "toast"; d.setAttribute("role", "status"); document.body.appendChild(d); }
@@ -12,7 +12,7 @@
   function share() {
     var L = window.GTF_LAST;
     var text = I.t("shTxt0");
-    if (L && L.mode === "daily") text = I.t("shDaily", {n: String(L.daily), s: String(L.score), sq: (L.hits || []).map(function (h) { return h ? "🟩" : "🟥"; }).join("")});
+    if (L && L.mode === "daily") text = L.done ? I.t(L.tries === 1 ? "shMisOk1" : "shMisOk", {n: String(L.daily), k: String(L.tries)}) : I.t("shMisNo", {n: String(L.daily)});
     else if (L && L.mode === "inf") text = I.t("shInf", String(L.score));
     else if (L && L.mode === "cap") text = I.t("shCap", String(L.score));
     else if (L && L.mode === "find") text = I.t("shFind", String(L.score));
