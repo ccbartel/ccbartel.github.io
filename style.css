@@ -43,6 +43,28 @@ main{flex:1}
 .card:hover .btn{filter:brightness(1.06)}
 .soon{border-style:dashed;opacity:.55;pointer-events:none}
 .soon .thumb{background:#0a1430;font:800 64px/1 var(--title);color:#ffffff22}
+.feat{margin-top:26px;border:1px solid var(--line);border-radius:22px;overflow:hidden;background:linear-gradient(180deg,#0f1f47 0%,var(--card) 100%);box-shadow:0 14px 40px #0007}
+.feat-art{position:relative;aspect-ratio:1920/620;max-height:300px;width:100%}
+.feat-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:62% 40%;display:block}
+.feat-art::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#02050f99 0%,#02050f33 30%,transparent 50%),linear-gradient(0deg,#0b1736 0%,transparent 28%)}
+.feat-logo{position:absolute;z-index:1;left:3%;top:50%;transform:translateY(-50%);width:36%;height:auto;filter:drop-shadow(0 8px 18px #000a)}
+.feat-info{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px 24px;padding:16px 20px 20px}
+.feat-txt{flex:1 1 320px;min-width:0}
+.feat-tag{font:700 12px/1 var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--gold2)}
+.feat h2{font:800 26px/1.15 var(--title);margin:6px 0 2px}
+.feat p{color:var(--muted);font-size:14px}
+.stores{display:flex;flex-wrap:wrap;gap:10px}
+.store{display:inline-flex;align-items:center;min-height:44px;padding:10px 18px;border-radius:999px;text-decoration:none;
+  font:700 15px/1 var(--body);color:#fff;background:#ffffff14;border:1px solid #ffffff33;transition:background .15s,border-color .15s}
+.store:hover,.store:focus-visible{background:var(--gold);border-color:var(--gold);color:var(--navy);outline:none}
+@media (max-width:640px){
+  .feat-art{aspect-ratio:16/10}
+  .feat-bg{object-position:75% 35%}
+  .feat-logo{width:46%;left:12px;top:auto;bottom:10px;transform:none}
+  .feat-art::after{background:linear-gradient(0deg,#0b1736 0%,#0b173688 25%,transparent 55%)}
+  .stores{display:grid;grid-template-columns:1fr 1fr;width:100%}
+  .store{justify-content:center;padding:10px 8px;white-space:nowrap}
+}
 .home-ad{height:100px;margin:0 auto 26px;max-width:728px}
 .home-ad .ad-slot{height:90px}
 footer.site{border-top:1px solid var(--line);padding:18px 0 22px;color:var(--muted);font-size:14px}
