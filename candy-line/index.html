@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Candy Line - Bartel Games</title>
+<meta name="description" content="Candy Line: spot the row of 3 candies in the grid and swipe it. Fill as many candy bags as you can in 55 seconds. Free quick puzzle game, no download.">
+<meta name="theme-color" content="#2a0b3d">
+<link rel="manifest" href="/manifest.webmanifest">
+<script src="i18n.js"></script>
+<script src="share.js"></script>
+<script src="../social.js" defer></script>
+<script src="social-ui.js" defer></script>
+<link rel="icon" type="image/png" href="assets/icon.png">
+<link rel="apple-touch-icon" href="assets/icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Bartel Games">
+<meta property="og:title" content="Candy Line">
+<meta property="og:description" content="Spot the row of candies and swipe it - how many bags can you fill in 55 seconds?">
+<meta property="og:url" content="https://bartelgames.com.br/candy-line/">
+<meta property="og:image" content="https://bartelgames.com.br/candy-line/assets/og.jpg">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@800&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg0:#2a0b3d;--ink2:#3a0f4a;--gold:#f7b60c;--navy:#0d1430;--ink:#ffffff;
+  --font:"Baloo 2","Arial Rounded MT Bold","Arial Black",system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg0);color:var(--ink);overflow:hidden;overscroll-behavior:none}
+body{font-family:var(--font);-webkit-tap-highlight-color:transparent;touch-action:manipulation;user-select:none;-webkit-user-select:none}
+#app{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+  padding:env(safe-area-inset-top,0px) max(16px,env(safe-area-inset-right,0px)) env(safe-area-inset-bottom,0px) max(16px,env(safe-area-inset-left,0px));
+  background:radial-gradient(120% 80% at 50% 50%,#5a1d6e 0%,#3a1150 55%,var(--bg0) 100%)}
+#stage{position:relative;overflow:hidden;border-radius:18px;touch-action:none;
+  background:
+    radial-gradient(60% 30% at 18% 12%,#ffffff40 0%,#ffffff00 70%),
+    radial-gradient(70% 40% at 85% 88%,#7d5cff55 0%,#7d5cff00 70%),
+    linear-gradient(162deg,#ff6fb2 0%,#f064c0 30%,#c062dc 64%,#8a5cf5 100%);
+  box-shadow:0 0 0 1px #ffffff1f,0 20px 60px #0008}
+#stage.full{border-radius:0;box-shadow:none}
+#cv{position:absolute;left:0;top:0;width:100%;height:100%;display:block}
+#hud{position:absolute;left:0;top:0;width:720px;height:1280px;transform-origin:0 0;pointer-events:none}
+.a{position:absolute;transform:translate(-50%,-50%);will-change:transform}
+.fancy{display:grid;place-items:center;line-height:1;white-space:nowrap}
+.fancy>span{grid-area:1/1;position:relative}
+.fancy .l0{color:var(--ink2);-webkit-text-stroke:var(--so) var(--ink2);filter:drop-shadow(var(--sh) var(--sh) 0 rgba(40,0,50,.85))}
+.fancy .l1{color:#8a4b00;-webkit-text-stroke:calc(var(--sw) * .5) #8a4b00}
+.fancy .l2{background:linear-gradient(180deg,#ffe680 6%,#ffc93a 52%,#f08c00 94%);-webkit-background-clip:text;background-clip:text;color:transparent}
+#mtitle{width:700px;height:150px;font-size:118px;--so:22px;--sw:9px;--sh:6px}
+#count{height:80px;font-size:66px;--so:14px;--sw:6px;--sh:3px;transform:translate(0,-50%);justify-items:start}
+#total{width:600px;height:200px;font-size:170px;--so:26px;--sw:10px;--sh:7px}
+#sub{width:660px;text-align:center;font:800 40px/1.1 var(--font);color:#fff;-webkit-text-stroke:7px var(--ink2);paint-order:stroke fill;filter:drop-shadow(3px 3px 0 rgba(40,0,50,.7))}
+#best{width:660px;text-align:center;font:800 34px/1.1 var(--font);color:#fff;-webkit-text-stroke:6px var(--ink2);paint-order:stroke fill}
+.mbtn{width:520px;height:118px;border-radius:30px;cursor:pointer;pointer-events:auto;display:flex;align-items:center;gap:20px;padding:0 30px;text-align:left;
+  font-family:var(--font);color:#fff;background:#3a0f4ad9;border:4px solid #ffffffd9;box-shadow:0 10px 0 #2a0b3daa;transform:translate(-50%,-50%) scale(0);touch-action:manipulation}
+.mbtn.primary{color:var(--ink2);background:linear-gradient(180deg,#ffe27a 0%,#f7b60c 100%);border-color:#fff;box-shadow:0 0 0 5px var(--ink2),0 12px 0 5px #2a0b3daa}
+.mbtn .mi{flex:none;width:56px;display:flex;justify-content:center}
+.mbtn .mt{display:flex;flex-direction:column;gap:4px;min-width:0;flex:1;overflow:hidden}
+.mbtn b{font:800 44px/1.1 var(--font);white-space:nowrap}
+.mbtn small{font:700 24px/1.2 system-ui,-apple-system,"Segoe UI",sans-serif;opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mbtn.done{opacity:.65;cursor:default}
+.mbtn:focus-visible{outline:5px solid #ffd84d;outline-offset:6px}
+#m-daily{padding-right:96px}
+#m-rank,#r-rank{width:76px;height:76px;border-radius:50%;cursor:pointer;pointer-events:auto;display:flex;align-items:center;justify-content:center;font-size:40px;line-height:1;padding:0;
+  background:linear-gradient(180deg,#ffe27a,#f7b60c);border:4px solid #fff;box-shadow:0 0 0 4px var(--ink2),0 6px 0 4px #2a0b3daa;transform:translate(-50%,-50%) scale(0)}
+#m-rank:focus-visible,#r-rank:focus-visible{outline:5px solid #ffd84d;outline-offset:4px}
+.pbtn{height:96px;padding:0 40px;border-radius:50px;cursor:pointer;pointer-events:auto;white-space:nowrap;display:flex;align-items:center;justify-content:center;gap:14px;
+  font:800 44px/1 var(--font);color:var(--ink2);background:linear-gradient(180deg,#ffe27a 0%,#f7b60c 100%);border:0;
+  box-shadow:0 0 0 5px #fff,0 0 0 11px var(--ink2),0 12px 0 11px #2a0b3daa;transform:translate(-50%,-50%) scale(0);touch-action:manipulation}
+.pbtn.sec{color:#fff;background:#3a0f4ae6;box-shadow:0 0 0 4px #fff,0 9px 0 4px #2a0b3daa;height:82px;font-size:36px;padding:0 32px}
+.pbtn:focus-visible{outline:5px solid #ffd84d;outline-offset:12px}
+.pbtn .ic{font-size:50px;margin-top:-4px}
+#rbtns{position:absolute;left:0;top:0;width:720px;height:1280px}
+#flash{position:absolute;left:-90px;top:-110px;width:900px;height:1500px;background:#fff;opacity:0;pointer-events:none}
+.hide{display:none!important}
+#loader{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;background:var(--bg0);z-index:5;transition:opacity .35s}
+#loader.done{opacity:0;pointer-events:none}
+#loader .ttl{font:800 clamp(28px,7vw,44px)/1 var(--font);color:#ffc93a;-webkit-text-stroke:3px var(--ink2);paint-order:stroke fill}
+#loader .bar{width:min(260px,64vw);height:14px;border-radius:7px;background:#ffffff1f;overflow:hidden;box-shadow:inset 0 0 0 2px #ffffff22}
+#loader .fill{height:100%;width:0;background:linear-gradient(90deg,#ff6fb2,#ffe27a);border-radius:7px;transition:width .15s}
+#loader .pct{font:800 18px/1 var(--font);color:#e4c8f0}
+#loader .err{font:600 16px/1.4 system-ui,sans-serif;color:#ffb3b3;max-width:80vw;text-align:center}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* ---- site: barra de cima e banner embaixo (igual ao Guess the Flag) ---- */
+:root{--topH:calc(48px + env(safe-area-inset-top,0px));--adH:calc(60px + env(safe-area-inset-bottom,0px))}
+@media (min-width:760px) and (min-height:640px){:root{--adH:calc(90px + env(safe-area-inset-bottom,0px))}}
+#app{top:var(--topH);bottom:var(--adH);padding-top:4px;padding-bottom:4px}
+#topbar{position:fixed;left:0;right:0;top:0;height:var(--topH);padding:env(safe-area-inset-top,0px) max(12px,env(safe-area-inset-right,0px)) 0 max(12px,env(safe-area-inset-left,0px));
+  display:flex;align-items:center;justify-content:space-between;background:var(--bg0);z-index:3}
+#topbar .back{display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 16px 0 10px;border-radius:999px;text-decoration:none;
+  font:800 17px/1 var(--font);color:#fff;background:#ffffff14;border:1.5px solid #ffffff38;transition:background .15s,border-color .15s,color .15s}
+#topbar .back:hover,#topbar .back:focus-visible{background:var(--gold);border-color:var(--gold);color:var(--navy);outline:none}
+#topbar .tb-r{display:flex;gap:8px}
+#topbar .topinfo{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;cursor:pointer;color:#fff;background:#ffffff14;border:1.5px solid #ffffff38}
+#topbar .topinfo:hover,#topbar .topinfo:focus-visible{background:var(--gold);border-color:var(--gold);color:var(--navy);outline:none}
+#topbar .topshare{display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 14px;border-radius:999px;cursor:pointer;font:800 17px/1 var(--font);color:#fff;background:#ffffff14;border:1.5px solid #ffffff38}
+#topbar .topshare:hover,#topbar .topshare:focus-visible{background:var(--gold);border-color:var(--gold);color:var(--navy);outline:none}
+#topbar .toplike{display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 12px;border-radius:999px;cursor:pointer;font:800 17px/1 var(--font);color:#fff;background:#ffffff14;border:1.5px solid #ffffff38}
+#topbar .toplike:hover,#topbar .toplike:focus-visible{border-color:var(--gold);outline:none}
+#topbar .toplike .hf{display:none}#topbar .toplike[aria-pressed="true"] .hf{display:block}#topbar .toplike[aria-pressed="true"] .ho{display:none}
+#topbar .toplike[aria-pressed="true"]{border-color:#ff4d6d}
+#topbar .toplike .lc:empty{display:none}
+@media (max-width:479px){#topbar .topshare span{display:none}#topbar .topshare{width:38px;padding:0;justify-content:center}#topbar .back{padding:0 12px 0 8px}}
+#howto{margin:auto;max-width:min(440px,calc(100vw - 32px));padding:22px 22px 18px;border:1.5px solid #ffffff26;border-radius:20px;background:#3a1150;color:#fff;font:400 16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;user-select:text;-webkit-user-select:text}
+#howto::backdrop{background:#1a0628cc}
+#howto h1{font:800 28px/1.1 var(--font);margin-bottom:10px;outline:none}
+#howto h2{font:800 19px/1.2 var(--font);color:var(--gold);margin:4px 0 6px}
+#howto ol,#howto ul{padding-left:20px;margin-bottom:12px}#howto li{margin-bottom:4px}
+#howto p{color:#e4c8f0;font-size:14.5px}
+#howto .close{margin-top:16px;width:100%;height:46px;border:0;border-radius:999px;cursor:pointer;font:800 18px/1 var(--font);color:var(--navy);background:linear-gradient(180deg,#ffe27a,#f7b60c)}
+#toast{position:fixed;left:50%;bottom:calc(var(--adH) + 18px);transform:translate(-50%,20px);opacity:0;z-index:30;pointer-events:none;padding:10px 18px;border-radius:999px;background:#fff;color:var(--navy);font:800 16px/1 var(--font);box-shadow:0 8px 24px #0008;transition:opacity .2s,transform .2s}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+#rank{margin:auto;width:min(420px,calc(100vw - 32px));padding:20px 20px 16px;border:1.5px solid #ffffff26;border-radius:20px;background:#3a1150;color:#fff;font:400 16px/1.4 system-ui,-apple-system,"Segoe UI",sans-serif}
+#rank::backdrop{background:#1a0628cc}
+#rank h1{font:800 24px/1.15 var(--font);margin-bottom:10px;color:var(--gold)}
+#rank ol{list-style:none;margin:0 0 10px;padding:0}
+#rank li{display:flex;gap:10px;align-items:center;padding:7px 10px;border-radius:10px;background:#ffffff12;margin-bottom:4px;font-weight:700}
+#rank li.me{background:#ffd84d;color:var(--navy)}
+#rank li .rp{width:30px;text-align:right;opacity:.75}#rank li .rn{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}#rank li .rs{font:800 18px/1 var(--font)}
+#rank .rmsg{color:#e4c8f0;font-size:15px;margin:6px 0 10px}
+#rank .ryou{font:800 18px/1.2 var(--font);margin:4px 0 10px}
+#rank form.nk label{display:block;font-weight:700;margin-bottom:6px}
+#rank form.nk input{width:100%;height:46px;border-radius:12px;border:2px solid #ffffff55;background:#1a0628;color:#fff;font:700 18px/1 system-ui,sans-serif;padding:0 12px}
+#rank form.nk input:focus{outline:none;border-color:var(--gold)}
+#rank form.nk small{display:block;color:#e4c8f0;margin:6px 0 10px}
+#rank .rbtn{width:100%;height:46px;border:0;border-radius:999px;cursor:pointer;font:800 18px/1 var(--font);color:var(--navy);background:linear-gradient(180deg,#ffe27a,#f7b60c);margin-top:6px}
+#rank .rbtn.sec{background:#ffffff14;color:#fff;border:1.5px solid #ffffff38}
+#adbar{position:fixed;left:0;right:0;bottom:0;height:var(--adH);padding-bottom:env(safe-area-inset-bottom,0px);display:flex;align-items:center;justify-content:center;background:var(--bg0);z-index:3;overflow:hidden}
+#adbar .ad-slot{width:100%;max-width:728px;height:100%}
+</style>
+<script src="../site-config.js"></script>
+<script src="../site.js"></script>
+<meta name="google-adsense-account" content="ca-pub-0483439498705157">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-0483439498705157" crossorigin="anonymous"></script>
+</head>
+<body>
+<nav id="topbar"><a class="back" href="../"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M15 4 7 12l8 8" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="more">More games</span></a><span class="tb-r"><button class="topinfo" type="button" aria-haspopup="dialog" aria-controls="howto" onclick="var d=document.getElementById('howto');d.showModal();d.scrollTop=0;document.getElementById('howto-t').focus({preventScroll:true})"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M12 11v6" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><circle cx="12" cy="7.3" r="1.6" fill="currentColor"/></svg><span class="sr" data-i18n="how">How to play</span></button><button class="toplike" id="toplike" type="button" aria-pressed="false" data-i18n-label="like" hidden><svg class="ho" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.2-9.4C1.6 7.6 3.9 4 7.4 4c2 0 3.6 1.1 4.6 2.7C13 5.1 14.6 4 16.6 4c3.5 0 5.8 3.6 4.6 7.1-1.7 4.8-9.2 9.4-9.2 9.4z" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linejoin="round"/></svg><svg class="hf" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.2-9.4C1.6 7.6 3.9 4 7.4 4c2 0 3.6 1.1 4.6 2.7C13 5.1 14.6 4 16.6 4c3.5 0 5.8 3.6 4.6 7.1-1.7 4.8-9.2 9.4-9.2 9.4z" fill="#ff3b5c" stroke="#ff3b5c" stroke-width="2.3" stroke-linejoin="round"/></svg><span class="lc"></span></button><button class="topshare" type="button" data-share><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 3v12M7 8l5-5 5 5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg><span data-i18n="share">Share</span></button></span></nav>
+<dialog id="howto" aria-labelledby="howto-t"><h1 id="howto-t" tabindex="-1" autofocus data-i18n="title">Candy Line</h1><h2 data-i18n="how">How to play</h2><ol><li data-i18n="h1"></li><li data-i18n="h2"></li><li data-i18n="h3"></li></ol><h2 data-i18n="modes">Game modes</h2><ul><li data-i18n="hmPlay"></li><li data-i18n="hmDaily"></li></ul><p data-i18n="ab"></p><form method="dialog"><button class="close" data-i18n="close">Close</button></form></dialog>
+<dialog id="rank" aria-labelledby="rank-t"><h1 id="rank-t"></h1><div class="rbody"></div><form method="dialog"><button class="rbtn sec" data-i18n="close">Close</button></form></dialog>
+<div id="app">
+  <div id="stage">
+    <canvas id="cv"></canvas>
+    <div id="hud" translate="no">
+      <div id="count" class="a fancy hide" aria-live="polite"><span class="l0">0</span><span class="l1">0</span><span class="l2">0</span></div>
+      <div id="menu" class="hide">
+        <h1 id="mtitle" class="a fancy"><span class="l0">Candy Line</span><span class="l1">Candy Line</span><span class="l2">Candy Line</span></h1>
+        <button id="m-play" class="a mbtn primary" type="button"><span class="mi" aria-hidden="true"><svg viewBox="0 0 24 24" width="46" height="46"><path d="M7 4.5v15l12.5-7.5z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span><span class="mt"><b data-i18n="play"></b><small data-i18n="playSub"></small></span></button>
+        <button id="m-daily" class="a mbtn" type="button"><span class="mi" aria-hidden="true"><svg viewBox="0 0 24 24" width="44" height="44"><rect x="3" y="5" width="18" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M3 10h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></span><span class="mt"><b data-i18n="daily"></b><small></small></span></button>
+        <button id="m-rank" class="a" type="button" aria-haspopup="dialog" aria-controls="rank" data-i18n-label="rank"><span aria-hidden="true">&#127942;</span></button>
+        <div id="best" class="a"></div>
+      </div>
+      <div id="result" class="hide">
+        <div id="total" class="a fancy" role="status"><span class="l0"></span><span class="l1"></span><span class="l2"></span></div>
+        <div id="sub" class="a"></div>
+        <button id="again" class="a pbtn" type="button"><span class="ic" aria-hidden="true">&#8635;</span><span data-i18n="again">Play again</span></button>
+        <button id="share" class="a pbtn sec" type="button" data-share><svg viewBox="0 0 24 24" width="34" height="34" aria-hidden="true"><path d="M12 3v12M7 8l5-5 5 5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg><span data-i18n="share">Share</span></button>
+        <button id="r-rank" class="a" type="button" aria-haspopup="dialog" aria-controls="rank" data-i18n-label="rank"><span aria-hidden="true">&#127942;</span></button>
+      </div>
+      <div id="flash"></div>
+    </div>
+  </div>
+  <div id="loader"><div class="ttl" data-i18n="title">Candy Line</div><div class="bar"><div class="fill"></div></div><div class="pct">0%</div><div class="err"></div></div>
+</div>
+<div id="adbar" aria-label="Advertisement" data-i18n-label="ad"><div class="ad-slot" data-ad-slot-key="ADSENSE_SLOT_GAME"></div></div>
+<script type="module" src="game.js"></script>
+</body>
+</html>

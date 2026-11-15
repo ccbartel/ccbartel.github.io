@@ -11,7 +11,7 @@ Guia para qualquer conversa/agente que for criar ou mudar um jogo deste site. Re
 
 ## Checklist de um jogo novo
 1. **Pasta** `<slug>/` com `index.html` (tela cheia, palco 9:16 720x1280 escalado), barra do topo: `← Mais jogos` (grande, com seta SVG), ⓘ Como jogar (`<dialog>` com texto próprio — conta para Google/AdSense), ♥ like, Compartilhar; faixa de anúncio embaixo (`#adbar`, `data-ad-slot-key`).
-2. **Código-fonte** em `src/<slug>/game.src.js` (fora do git); `python build.py` ofusca para `<slug>/game.js` com trava de domínio (hosts em `site-config.js`). O build APAGA `_build_tmp/` — não guarde nada lá.
+2. **Código-fonte** em `src/<slug>/game.src.js` (fora do git); adicionar o slug na lista `GAMES` do `build.py`; `python build.py` ofusca para `<slug>/game.js` com trava de domínio (hosts em `site-config.js`). O build APAGA `_build_tmp/` — não guarde nada lá.
 3. **Idioma automático**: `i18n.js` (en, pt, es, fr, de, it; `?lang=xx` para testar), `<html lang>` definido cedo para o Chrome não oferecer tradução; nomes de países por `Intl.DisplayNames`.
 4. **Fluxo**: menu antes de jogar (título + modos), nunca abre jogando; resultado com "Jogar de novo" (volta ao menu) e Compartilhar com texto do modo/pontuação (`share.js`: `navigator.share` no celular, copiar link no PC).
 5. **Social (Supabase, projeto `bartelgames`)**: inserir a linha do jogo em `game_stats` (`insert into game_stats(game) values('<slug>')`); incluir `../social.js` (window.BG_SOCIAL: play, like, stats, submit, top) e uma UI como `guess-the-flag/social-ui.js`. Em localhost o social não grava nada (testes não sujam o banco).

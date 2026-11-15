@@ -7,8 +7,9 @@ Uso:
 
 O que faz:
   1. Le site-config.js (nome, dominio, usuario GitHub, AdSense, hosts).
-  2. Embute a lista de hosts permitidos e o link oficial no jogo (src/guess-the-flag/game.src.js)
-     e grava guess-the-flag/game.js OFUSCADO (javascript-obfuscator via npx; precisa do Node).
+  2. Para cada jogo da lista GAMES: embute a lista de hosts permitidos e o link oficial em
+     src/<jogo>/game.src.js e grava <jogo>/game.js OFUSCADO (javascript-obfuscator via npx; precisa do Node).
+     Jogo novo = acrescentar o slug em GAMES (a pagina <jogo>/index.html entra sozinha em HTML_FILES).
   3. Gera CNAME (com o dominio; sem dominio = sem CNAME) e ads.txt (com o pub-ID do AdSense).
   4. Atualiza nas paginas .html o nome do site, o e-mail e o endereco (og:url / og:image).
   5. Confere: game.js sem nenhum host em texto puro e sintaxe valida (node --check).
@@ -17,12 +18,11 @@ import json, os, re, shutil, subprocess, sys, pathlib
 
 ROOT = pathlib.Path(__file__).resolve().parent
 CONFIG = ROOT / "site-config.js"
-SRC = ROOT / "src" / "guess-the-flag" / "game.src.js"
-OUT = ROOT / "guess-the-flag" / "game.js"
+GAMES = ["guess-the-flag", "candy-line"]  # slug = pasta do jogo; fonte em src/<slug>/game.src.js
 STATE = ROOT / ".build_state.json"
 TMP = ROOT / "_build_tmp"
 OBF_VERSION = "javascript-obfuscator@4.1.1"
-HTML_FILES = ["index.html", "privacy.html", "contact.html", "guess-the-flag/index.html"]
+HTML_FILES = ["index.html", "privacy.html", "contact.html"] + [g + "/index.html" for g in GAMES]
 DEFAULT_STATE = {"SITE_NAME": "Bartel Games", "CONTACT_EMAIL": "contato@SEU-DOMINIO",
                  "SITE_URL": "https://bartelgames.com.br/"}
 OBF_OPTIONS = {
@@ -95,31 +95,36 @@ def main():
     hosts, d, u = host_list(c)
     url = site_url(c, d, u)
 
-    # 1-2. jogo com hosts embutidos
-    src = SRC.read_text(encoding="utf8")
-    src, n1 = re.subn(r"/\*@@ALLOWED_HOSTS@@\*/\[[^\]]*\]", lambda m: json.dumps(hosts), src)
-    src, n2 = re.subn(r'/\*@@OFFICIAL_URL@@\*/"[^"]*"', lambda m: json.dumps(url), src)
-    if n1 != 1 or n2 != 1:
-        die("marcadores @@ALLOWED_HOSTS@@/@@OFFICIAL_URL@@ nao encontrados em " + str(SRC))
-    if plain:
-        OUT.write_text(src, encoding="utf8")
-    else:
-        TMP.mkdir(exist_ok=True)
-        pre, cfg = TMP / "game.pre.js", TMP / "obf.json"
-        pre.write_text(src, encoding="utf8")
-        cfg.write_text(json.dumps(OBF_OPTIONS), encoding="utf8")
-        r = subprocess.run([npx(), "--yes", OBF_VERSION, str(pre), "--output", str(OUT), "--config", str(cfg)],
-                           capture_output=True, text=True, encoding="utf8", errors="replace")
-        shutil.rmtree(TMP, ignore_errors=True)
-        if r.returncode != 0 or not OUT.exists():
-            die("ofuscador falhou:\n" + (r.stdout + r.stderr)[-1500:])
-        out = OUT.read_text(encoding="utf8")
-        leaks = [h for h in hosts if h in out]
-        if leaks:
-            die("host em texto puro no game.js ofuscado: %s" % leaks)
-    chk = subprocess.run(["node", "--check", str(OUT)], capture_output=True, text=True)
-    if shutil.which("node") and chk.returncode != 0:
-        die("game.js com erro de sintaxe:\n" + chk.stderr[-800:])
+    # 1-2. jogos com hosts embutidos (um por um da lista GAMES)
+    sizes = []
+    for slug in GAMES:
+        SRC = ROOT / "src" / slug / "game.src.js"
+        OUT = ROOT / slug / "game.js"
+        src = SRC.read_text(encoding="utf8")
+        src, n1 = re.subn(r"/\*@@ALLOWED_HOSTS@@\*/\[[^\]]*\]", lambda m: json.dumps(hosts), src)
+        src, n2 = re.subn(r'/\*@@OFFICIAL_URL@@\*/"[^"]*"', lambda m: json.dumps(url), src)
+        if n1 != 1 or n2 != 1:
+            die("marcadores @@ALLOWED_HOSTS@@/@@OFFICIAL_URL@@ nao encontrados em " + str(SRC))
+        if plain:
+            OUT.write_text(src, encoding="utf8")
+        else:
+            TMP.mkdir(exist_ok=True)
+            pre, cfg = TMP / "game.pre.js", TMP / "obf.json"
+            pre.write_text(src, encoding="utf8")
+            cfg.write_text(json.dumps(OBF_OPTIONS), encoding="utf8")
+            r = subprocess.run([npx(), "--yes", OBF_VERSION, str(pre), "--output", str(OUT), "--config", str(cfg)],
+                               capture_output=True, text=True, encoding="utf8", errors="replace")
+            shutil.rmtree(TMP, ignore_errors=True)
+            if r.returncode != 0 or not OUT.exists():
+                die(slug + ": ofuscador falhou:\n" + (r.stdout + r.stderr)[-1500:])
+            out = OUT.read_text(encoding="utf8")
+            leaks = [h for h in hosts if h in out]
+            if leaks:
+                die(slug + ": host em texto puro no game.js ofuscado: %s" % leaks)
+        chk = subprocess.run(["node", "--check", str(OUT)], capture_output=True, text=True)
+        if shutil.which("node") and chk.returncode != 0:
+            die(slug + ": game.js com erro de sintaxe:\n" + chk.stderr[-800:])
+        sizes.append((slug, OUT.stat().st_size // 1024))
 
     # 3. CNAME e ads.txt
     cname = ROOT / "CNAME"
@@ -158,7 +163,8 @@ def main():
             state[k] = v
     STATE.write_text(json.dumps(state, indent=1, ensure_ascii=False), encoding="utf8")
 
-    print("OK  game.js %s (%d KB)" % ("LEGIVEL (nao publicar)" if plain else "ofuscado", OUT.stat().st_size // 1024))
+    for slug, kb in sizes:
+        print("OK  %s/game.js %s (%d KB)" % (slug, "LEGIVEL (nao publicar)" if plain else "ofuscado", kb))
     print("    hosts permitidos: " + ", ".join(hosts))
     print("    link oficial: " + (url or "(vazio)"))
     print("    CNAME: " + (d or "nao gerado (DOMAIN vazio)"))

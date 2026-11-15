@@ -1,0 +1,81 @@
+// Idioma automatico do Candy Line (en, pt, es, fr, de, it; ?lang=xx para testar).
+// Roda cedo (script normal no <head>) para o <html lang> ja sair certo e o Chrome nao oferecer traducao.
+(function () {
+  var S = {
+    en: {title: "Candy Line", tryAgain: "Try again!", more: "More games", how: "How to play", modes: "Game modes", close: "Close", share: "Share", copied: "Link copied!", again: "Play again", ad: "Advertisement",
+      h1: "The top bar shows a line of 3 candies.", h2: "Find the same line in the grid - straight across, down or diagonal, in any of the 8 directions - and drag your finger (or mouse) over it.", h3: "Every line you find fills a candy bag. You have 55 seconds: fill as many bags as you can!",
+      hmPlay: "Play: 55 seconds, new boards every time.", hmDaily: "Daily challenge: the same boards for everyone, once a day. Compare on the ranking!",
+      ab: "Candy Line is a free candy word-search puzzle: spot the row of sweets and swipe it before the time runs out. Plays in your browser on phone or computer. No download, no sign-up.",
+      play: "Play", playSub: "55 seconds", daily: "Daily challenge", dailyN: "Challenge #{f}", dailyDone: "Done: {f} · back tomorrow", best: "Best: {f}", newBest: "New record!",
+      shTxt0: "Can you find the candy line? 🍬", shTxt: "I filled {f} candy bags on Candy Line! Can you beat me? 🍬", shDaily: "Candy Line daily #{n}: {s} bags 🍬 Can you beat me?",
+      like: "Like", rank: "Ranking", rankPlay: "Ranking", rankDaily: "Ranking - Challenge #{f}", rankYou: "Your position: #{f}", rankEmpty: "No scores yet. Be the first!", rankOff: "Ranking is offline right now. Try again later.", rankLoad: "Loading...",
+      nick: "Your nickname", nickAsk: "Pick a nickname for the ranking", nickHint: "Up to 14 letters, numbers or spaces", nickOk: "Save", nickChange: "Change nickname",
+      loadErr: "Could not load {f}. Please reload the page.", blk1: "This game is not available here", blk2: "Play the official version on our website:"},
+    pt: {title: "Candy Line", tryAgain: "Tente de novo!", more: "Mais jogos", how: "Como jogar", modes: "Modos de jogo", close: "Fechar", share: "Compartilhar", copied: "Link copiado!", again: "Jogar de novo", ad: "Publicidade",
+      h1: "A barra de cima mostra uma fileira de 3 doces.", h2: "Ache a mesma fileira na grade - reta na horizontal, vertical ou diagonal, em qualquer das 8 direções - e arraste o dedo (ou o mouse) por cima dela.", h3: "Cada fileira achada enche um pacote de doces. Você tem 55 segundos: encha o máximo de pacotes!",
+      hmPlay: "Jogar: 55 segundos, grades novas a cada partida.", hmDaily: "Desafio do dia: as mesmas grades para todo mundo, uma vez por dia. Compare no ranking!",
+      ab: "Candy Line é um caça-doces grátis: encontre a fileira de balas e deslize por cima antes do tempo acabar. Roda no navegador do celular ou do computador. Sem baixar nada e sem cadastro.",
+      play: "Jogar", playSub: "55 segundos", daily: "Desafio do dia", dailyN: "Desafio #{f}", dailyDone: "Feito: {f} - volte amanhã", best: "Recorde: {f}", newBest: "Novo recorde!",
+      shTxt0: "Você consegue achar a fileira de doces? 🍬", shTxt: "Enchi {f} pacotes de doces no Candy Line! Consegue me superar? 🍬", shDaily: "Candy Line desafio #{n}: {s} pacotes 🍬 Consegue me superar?",
+      like: "Curtir", rank: "Ranking", rankPlay: "Ranking", rankDaily: "Ranking do Desafio #{f}", rankYou: "Sua posição: #{f}", rankEmpty: "Ninguém pontuou ainda. Seja o primeiro!", rankOff: "Ranking fora do ar agora. Tente mais tarde.", rankLoad: "Carregando...",
+      nick: "Seu apelido", nickAsk: "Escolha um apelido para o ranking", nickHint: "Até 14 letras, números ou espaços", nickOk: "Salvar", nickChange: "Trocar apelido",
+      loadErr: "Não foi possível carregar {f}. Recarregue a página.", blk1: "Este jogo não está disponível aqui", blk2: "Jogue a versão oficial no nosso site:"},
+    es: {title: "Candy Line", tryAgain: "¡Inténtalo de nuevo!", more: "Más juegos", how: "Cómo jugar", modes: "Modos de juego", close: "Cerrar", share: "Compartir", copied: "¡Enlace copiado!", again: "Jugar de nuevo", ad: "Publicidad",
+      h1: "La barra de arriba muestra una fila de 3 dulces.", h2: "Encuentra la misma fila en la cuadrícula - recta en horizontal, vertical o diagonal, en cualquiera de las 8 direcciones - y desliza el dedo (o el ratón) sobre ella.", h3: "Cada fila encontrada llena una bolsa de dulces. Tienes 55 segundos: ¡llena todas las bolsas que puedas!",
+      hmPlay: "Jugar: 55 segundos, cuadrículas nuevas cada vez.", hmDaily: "Reto del día: las mismas cuadrículas para todos, una vez al día. ¡Compárate en el ranking!",
+      ab: "Candy Line es una sopa de dulces gratis: encuentra la fila de caramelos y deslízala antes de que se acabe el tiempo. Funciona en el navegador del móvil o del ordenador. Sin descargas ni registro.",
+      play: "Jugar", playSub: "55 segundos", daily: "Reto del día", dailyN: "Reto #{f}", dailyDone: "Hecho: {f} - vuelve mañana", best: "Récord: {f}", newBest: "¡Nuevo récord!",
+      shTxt0: "¿Puedes encontrar la fila de dulces? 🍬", shTxt: "¡Llené {f} bolsas de dulces en Candy Line! ¿Me superas? 🍬", shDaily: "Candy Line reto #{n}: {s} bolsas 🍬 ¿Me superas?",
+      like: "Me gusta", rank: "Ranking", rankPlay: "Ranking", rankDaily: "Ranking del Reto #{f}", rankYou: "Tu posición: #{f}", rankEmpty: "Nadie ha puntuado aún. ¡Sé el primero!", rankOff: "El ranking no está disponible ahora. Inténtalo más tarde.", rankLoad: "Cargando...",
+      nick: "Tu apodo", nickAsk: "Elige un apodo para el ranking", nickHint: "Hasta 14 letras, números o espacios", nickOk: "Guardar", nickChange: "Cambiar apodo",
+      loadErr: "No se pudo cargar {f}. Recarga la página.", blk1: "Este juego no está disponible aquí", blk2: "Juega la versión oficial en nuestro sitio:"},
+    fr: {title: "Candy Line", tryAgain: "Réessaie !", more: "Plus de jeux", how: "Comment jouer", modes: "Modes de jeu", close: "Fermer", share: "Partager", copied: "Lien copié !", again: "Rejouer", ad: "Publicité",
+      h1: "La barre du haut montre une ligne de 3 bonbons.", h2: "Trouve la même ligne dans la grille - à l'horizontale, à la verticale ou en diagonale, dans les 8 directions - et fais glisser le doigt (ou la souris) dessus.", h3: "Chaque ligne trouvée remplit un sachet de bonbons. Tu as 55 secondes : remplis le plus de sachets possible !",
+      hmPlay: "Jouer : 55 secondes, de nouvelles grilles à chaque partie.", hmDaily: "Défi du jour : les mêmes grilles pour tout le monde, une fois par jour. Compare-toi au classement !",
+      ab: "Candy Line est un jeu de mots mêlés gratuit avec des bonbons : repère la ligne de friandises et glisse dessus avant la fin du temps. Se joue dans le navigateur du mobile ou de l'ordinateur. Sans téléchargement ni inscription.",
+      play: "Jouer", playSub: "55 secondes", daily: "Défi du jour", dailyN: "Défi n°{f}", dailyDone: "Fait : {f} · à demain", best: "Record : {f}", newBest: "Nouveau record !",
+      shTxt0: "Sauras-tu trouver la ligne de bonbons ? 🍬", shTxt: "J'ai rempli {f} sachets de bonbons à Candy Line ! Tu fais mieux ? 🍬", shDaily: "Candy Line défi n°{n} : {s} sachets 🍬 Tu fais mieux ?",
+      like: "J'aime", rank: "Classement", rankPlay: "Classement", rankDaily: "Classement du Défi n°{f}", rankYou: "Ta position : n°{f}", rankEmpty: "Aucun score pour l'instant. Sois le premier !", rankOff: "Classement indisponible. Réessaie plus tard.", rankLoad: "Chargement...",
+      nick: "Ton pseudo", nickAsk: "Choisis un pseudo pour le classement", nickHint: "Jusqu'à 14 lettres, chiffres ou espaces", nickOk: "Enregistrer", nickChange: "Changer de pseudo",
+      loadErr: "Impossible de charger {f}. Recharge la page.", blk1: "Ce jeu n'est pas disponible ici", blk2: "Joue à la version officielle sur notre site :"},
+    de: {title: "Candy Line", tryAgain: "Versuch es nochmal!", more: "Mehr Spiele", how: "So wird gespielt", modes: "Spielmodi", close: "Schließen", share: "Teilen", copied: "Link kopiert!", again: "Nochmal spielen", ad: "Werbung",
+      h1: "Oben siehst du eine Reihe aus 3 Süßigkeiten.", h2: "Finde dieselbe Reihe im Gitter - waagerecht, senkrecht oder diagonal, in alle 8 Richtungen - und zieh den Finger (oder die Maus) darüber.", h3: "Jede gefundene Reihe füllt eine Süßigkeitentüte. Du hast 55 Sekunden: Fülle so viele Tüten wie möglich!",
+      hmPlay: "Spielen: 55 Sekunden, jedes Mal neue Gitter.", hmDaily: "Tagesaufgabe: dieselben Gitter für alle, einmal am Tag. Vergleiche dich in der Rangliste!",
+      ab: "Candy Line ist ein kostenloses Süßigkeiten-Suchrätsel: Entdecke die Reihe aus Bonbons und wische darüber, bevor die Zeit abläuft. Läuft im Browser auf Handy oder Computer. Ohne Download, ohne Anmeldung.",
+      play: "Spielen", playSub: "55 Sekunden", daily: "Tagesaufgabe", dailyN: "Aufgabe #{f}", dailyDone: "Erledigt: {f} · bis morgen", best: "Rekord: {f}", newBest: "Neuer Rekord!",
+      shTxt0: "Findest du die Süßigkeiten-Reihe? 🍬", shTxt: "Ich habe {f} Süßigkeitentüten bei Candy Line gefüllt! Schaffst du mehr? 🍬", shDaily: "Candy Line Aufgabe #{n}: {s} Tüten 🍬 Schaffst du mehr?",
+      like: "Gefällt mir", rank: "Rangliste", rankPlay: "Rangliste", rankDaily: "Rangliste Aufgabe #{f}", rankYou: "Deine Position: #{f}", rankEmpty: "Noch keine Punkte. Sei der Erste!", rankOff: "Rangliste gerade nicht erreichbar. Versuch es später.", rankLoad: "Lädt...",
+      nick: "Dein Spitzname", nickAsk: "Wähle einen Spitznamen für die Rangliste", nickHint: "Bis zu 14 Buchstaben, Zahlen oder Leerzeichen", nickOk: "Speichern", nickChange: "Spitznamen ändern",
+      loadErr: "{f} konnte nicht geladen werden. Bitte lade die Seite neu.", blk1: "Dieses Spiel ist hier nicht verfügbar", blk2: "Spiele die offizielle Version auf unserer Website:"},
+    it: {title: "Candy Line", tryAgain: "Riprova!", more: "Altri giochi", how: "Come si gioca", modes: "Modalità", close: "Chiudi", share: "Condividi", copied: "Link copiato!", again: "Gioca ancora", ad: "Pubblicità",
+      h1: "La barra in alto mostra una fila di 3 caramelle.", h2: "Trova la stessa fila nella griglia - in orizzontale, verticale o diagonale, in tutte le 8 direzioni - e trascina il dito (o il mouse) sopra.", h3: "Ogni fila trovata riempie un sacchetto di caramelle. Hai 55 secondi: riempi più sacchetti che puoi!",
+      hmPlay: "Gioca: 55 secondi, griglie nuove ogni volta.", hmDaily: "Sfida del giorno: le stesse griglie per tutti, una volta al giorno. Confrontati in classifica!",
+      ab: "Candy Line è un gioco gratuito di ricerca di caramelle: trova la fila di dolci e scorrila prima che finisca il tempo. Si gioca nel browser del telefono o del computer. Senza download e senza registrazione.",
+      play: "Gioca", playSub: "55 secondi", daily: "Sfida del giorno", dailyN: "Sfida n.{f}", dailyDone: "Fatto: {f} - torna domani", best: "Record: {f}", newBest: "Nuovo record!",
+      shTxt0: "Riesci a trovare la fila di caramelle? 🍬", shTxt: "Ho riempito {f} sacchetti di caramelle a Candy Line! Riesci a battermi? 🍬", shDaily: "Candy Line sfida n.{n}: {s} sacchetti 🍬 Riesci a battermi?",
+      like: "Mi piace", rank: "Classifica", rankPlay: "Classifica", rankDaily: "Classifica Sfida n.{f}", rankYou: "La tua posizione: n.{f}", rankEmpty: "Ancora nessun punteggio. Sii il primo!", rankOff: "Classifica non disponibile ora. Riprova più tardi.", rankLoad: "Caricamento...",
+      nick: "Il tuo nickname", nickAsk: "Scegli un nickname per la classifica", nickHint: "Fino a 14 lettere, numeri o spazi", nickOk: "Salva", nickChange: "Cambia nickname",
+      loadErr: "Impossibile caricare {f}. Ricarica la pagina.", blk1: "Questo gioco non è disponibile qui", blk2: "Gioca alla versione ufficiale sul nostro sito:"}
+  };
+  var tag = "en";
+  try {
+    var q = new URLSearchParams(location.search).get("lang");
+    var list = q ? [q] : (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || "en"]);
+    for (var i = 0; i < list.length; i++) { var b = String(list[i]).toLowerCase().split("-")[0]; if (S[b]) { tag = String(list[i]); break; } }
+  } catch (e) {}
+  var base = tag.toLowerCase().split("-")[0]; if (!S[base]) { base = "en"; tag = "en"; }
+  var I = {
+    lang: base, tag: tag,
+    t: function (k, f) { var s = (S[base][k] || S.en[k] || k); if (f && typeof f === "object") { for (var x in f) s = s.split("{" + x + "}").join(f[x]); return s; } return f != null ? s.replace("{f}", f) : s; }
+  };
+  window.CL_I18N = I;
+  document.documentElement.lang = tag;
+  function apply() {
+    document.title = I.t("title") + " - Bartel Games";
+    var els = document.querySelectorAll("[data-i18n]");
+    for (var j = 0; j < els.length; j++) els[j].textContent = I.t(els[j].getAttribute("data-i18n"));
+    var al = document.querySelectorAll("[data-i18n-label]");
+    for (var k = 0; k < al.length; k++) al[k].setAttribute("aria-label", I.t(al[k].getAttribute("data-i18n-label")));
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", apply); else apply();
+})();
