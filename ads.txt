@@ -1,3 +1,1 @@
-# ads.txt - preenchido pelo build.py quando ADSENSE_CLIENT estiver em site-config.js.
-# Formato (1 linha, troque pelo seu ID de editor do AdSense):
-# google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0
+google.com, pub-0483439498705157, DIRECT, f08c47fec0942fa0

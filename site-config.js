@@ -17,7 +17,7 @@ window.SITE_CONFIG = {
   "CONTACT_EMAIL": "ccbartelbusiness@gmail.com",
   "ALLOWED_HOSTS": ["localhost", "127.0.0.1"],
   "OFFICIAL_URL": "",
-  "ADSENSE_CLIENT": "",
+  "ADSENSE_CLIENT": "ca-pub-0483439498705157",
   "ADSENSE_SLOT_GAME": "",
   "ADSENSE_SLOT_HOME": ""
 };
