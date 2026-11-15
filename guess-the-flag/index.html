@@ -6,6 +6,8 @@
 <title>Guess the Flag - Bartel Games</title>
 <meta name="description" content="Guess the Flag: a spinning 3D globe drops a pin on a country - pick its flag. Free quick quiz game, no download.">
 <meta name="theme-color" content="#02050f">
+<script src="i18n.js"></script>
+<script src="share.js"></script>
 <link rel="icon" type="image/png" href="assets/icon.png">
 <link rel="apple-touch-icon" href="assets/icon.png">
 <meta property="og:type" content="website">
@@ -42,6 +44,9 @@ body{font-family:var(--font);-webkit-tap-highlight-color:transparent;touch-actio
 .card:focus-visible .cardbg{outline:4px solid #ffd84d;outline-offset:6px;border-radius:14px}
 .cardbg{--m:url(assets/tex/ui_card.png)}
 .card .flag{width:198px!important;height:198px!important}
+.cname{position:absolute;left:50%;top:calc(100% + 6px);transform:translateX(-50%);width:224px;text-align:center;pointer-events:none;
+  font:800 33px/1.02 var(--font);color:#fff;-webkit-text-stroke:6px #0d1430;paint-order:stroke fill;filter:drop-shadow(3px 3px 0 rgba(0,0,0,.85));
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
 .flag{position:absolute;left:50%;top:50%;width:172px;height:172px;transform:translate(-50%,-50%);pointer-events:none;-webkit-user-drag:none}
 #name{width:680px;height:100px;display:flex;align-items:center;justify-content:center;white-space:nowrap;
   font-size:64px;line-height:1;color:#fff;-webkit-text-stroke:4px #0d1430;paint-order:stroke fill;
@@ -66,6 +71,9 @@ body{font-family:var(--font);-webkit-tap-highlight-color:transparent;touch-actio
   background:linear-gradient(180deg,#ffe27a 0%,#f7b60c 100%);box-shadow:0 0 0 5px #fff,0 0 0 11px #0d1430,0 12px 0 11px #000a;transform:translate(-50%,-50%) scale(0)}
 #again:focus-visible{box-shadow:0 0 0 5px #fff,0 0 0 11px #0d1430,0 0 0 18px #ffd84d}
 #again .ic{font-size:54px;margin-top:-4px}
+#share{height:76px;padding:0 34px;border-radius:40px;cursor:pointer;pointer-events:auto;white-space:nowrap;display:flex;align-items:center;gap:12px;
+  font:800 34px/1 var(--font);color:#fff;background:#0d1430cc;border:4px solid #fff;box-shadow:0 8px 0 #000a;transform:translate(-50%,-50%) scale(0)}
+#share:focus-visible{outline:5px solid #ffd84d;outline-offset:4px}
 #flash{position:absolute;left:-90px;top:-110px;width:900px;height:1500px;background:#fff;opacity:0;pointer-events:none}
 .hide{display:none!important}
 #loader{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;background:var(--bg0);z-index:5;transition:opacity .35s}
@@ -78,13 +86,19 @@ body{font-family:var(--font);-webkit-tap-highlight-color:transparent;touch-actio
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 
 /* ---- site: barra de cima (link do portal) e banner embaixo ---- */
-:root{--topH:calc(30px + env(safe-area-inset-top,0px));--adH:calc(60px + env(safe-area-inset-bottom,0px))}
+:root{--topH:calc(48px + env(safe-area-inset-top,0px));--adH:calc(60px + env(safe-area-inset-bottom,0px))}
 @media (min-width:760px) and (min-height:640px){:root{--adH:calc(90px + env(safe-area-inset-bottom,0px))}}
 #app{top:var(--topH);bottom:var(--adH);padding-top:4px;padding-bottom:4px}
 #topbar{position:fixed;left:0;right:0;top:0;height:var(--topH);padding:env(safe-area-inset-top,0px) max(12px,env(safe-area-inset-right,0px)) 0 max(12px,env(safe-area-inset-left,0px));
   display:flex;align-items:center;background:#02050f;z-index:3}
-#topbar a{font:700 14px/1 system-ui,sans-serif;color:#b9c6e8;text-decoration:none;padding:6px 8px;border-radius:8px}
-#topbar a:hover,#topbar a:focus-visible{color:#fff;background:#ffffff14}
+#topbar .back{display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 16px 0 10px;border-radius:999px;text-decoration:none;
+  font:800 17px/1 var(--font);color:#fff;background:#ffffff14;border:1.5px solid #ffffff38;transition:background .15s,border-color .15s,color .15s}
+#topbar{justify-content:space-between}
+#topbar .topshare{display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 14px;border-radius:999px;cursor:pointer;font:800 17px/1 var(--font);color:#fff;background:#ffffff14;border:1.5px solid #ffffff38}
+#topbar .topshare:hover,#topbar .topshare:focus-visible{background:var(--gold);border-color:var(--gold);color:var(--navy);outline:none}
+#toast{position:fixed;left:50%;bottom:calc(var(--adH) + 18px);transform:translate(-50%,20px);opacity:0;z-index:30;pointer-events:none;padding:10px 18px;border-radius:999px;background:#fff;color:#0d1430;font:800 16px/1 var(--font);box-shadow:0 8px 24px #0008;transition:opacity .2s,transform .2s}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+#topbar .back:hover,#topbar .back:focus-visible{background:var(--gold);border-color:var(--gold);color:var(--navy);outline:none}
 #adbar{position:fixed;left:0;right:0;bottom:0;height:var(--adH);padding-bottom:env(safe-area-inset-bottom,0px);display:flex;align-items:center;justify-content:center;background:#02050f;z-index:3;overflow:hidden}
 #adbar .ad-slot{width:100%;max-width:728px;height:100%}
 </style>
@@ -94,16 +108,16 @@ body{font-family:var(--font);-webkit-tap-highlight-color:transparent;touch-actio
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-0483439498705157" crossorigin="anonymous"></script>
 </head>
 <body>
-<nav id="topbar"><a href="../">&larr; More games</a></nav>
+<nav id="topbar"><a class="back" href="../"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M15 4 7 12l8 8" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="more">More games</span></a><button class="topshare" type="button" data-share><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 3v12M7 8l5-5 5 5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg><span data-i18n="share">Share</span></button></nav>
 <div id="app">
   <div id="stage">
     <canvas id="gl"></canvas>
-    <div id="hud">
+    <div id="hud" translate="no">
       <div id="dots"><span class="a dot"><span class="tint"></span></span><span class="a dot"><span class="tint"></span></span><span class="a dot"><span class="tint"></span></span></div>
       <div id="choices" class="hide">
-        <button class="a card" aria-label="Flag option 1"><span class="tint cardbg"></span><img class="flag" alt=""></button>
-        <button class="a card" aria-label="Flag option 2"><span class="tint cardbg"></span><img class="flag" alt=""></button>
-        <button class="a card" aria-label="Flag option 3"><span class="tint cardbg"></span><img class="flag" alt=""></button>
+        <button class="a card" aria-label="Flag option 1"><span class="tint cardbg"></span><img class="flag" alt=""><span class="cname" aria-hidden="true"></span></button>
+        <button class="a card" aria-label="Flag option 2"><span class="tint cardbg"></span><img class="flag" alt=""><span class="cname" aria-hidden="true"></span></button>
+        <button class="a card" aria-label="Flag option 3"><span class="tint cardbg"></span><img class="flag" alt=""><span class="cname" aria-hidden="true"></span></button>
       </div>
       <div id="name" class="a hide" aria-live="polite"></div>
       <div id="result" class="hide">
@@ -113,7 +127,8 @@ body{font-family:var(--font);-webkit-tap-highlight-color:transparent;touch-actio
           <div class="a rcard"><span class="tint cardbg"></span><img class="flag" alt=""><img class="ricon" alt=""></div>
         </div>
         <div id="score" class="a fancy" role="status"><span class="l0"></span><span class="l1"></span><span class="l2"></span></div>
-        <button id="again" class="a"><span class="ic" aria-hidden="true">&#8635;</span><span>Play again</span></button>
+        <button id="again" class="a"><span class="ic" aria-hidden="true">&#8635;</span><span data-i18n="again">Play again</span></button>
+        <button id="share" class="a" type="button" data-share><svg viewBox="0 0 24 24" width="34" height="34" aria-hidden="true"><path d="M12 3v12M7 8l5-5 5 5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg><span data-i18n="share">Share</span></button>
       </div>
       <div id="burst" class="a"><span class="tint"></span></div>
       <img id="fbicon" class="a hide" alt="">
@@ -122,9 +137,9 @@ body{font-family:var(--font);-webkit-tap-highlight-color:transparent;touch-actio
       <div id="flash"></div>
     </div>
   </div>
-  <div id="loader"><div class="ttl">Guess the Flag</div><div class="bar"><div class="fill"></div></div><div class="pct">0%</div><div class="err"></div></div>
+  <div id="loader"><div class="ttl" data-i18n="title">Guess the Flag</div><div class="bar"><div class="fill"></div></div><div class="pct">0%</div><div class="err"></div></div>
 </div>
-<div id="adbar" aria-label="Advertisement"><div class="ad-slot" data-ad-slot-key="ADSENSE_SLOT_GAME"></div></div>
+<div id="adbar" aria-label="Advertisement" data-i18n-label="ad"><div class="ad-slot" data-ad-slot-key="ADSENSE_SLOT_GAME"></div></div>
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js"}}</script>
 <script type="module" src="game.js"></script>
 </body>
