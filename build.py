@@ -14,7 +14,7 @@ O que faz:
   4. Atualiza nas paginas .html o nome do site, o e-mail e o endereco (og:url / og:image).
   5. Confere: game.js sem nenhum host em texto puro e sintaxe valida (node --check).
 """
-import json, os, re, shutil, subprocess, sys, pathlib
+import hashlib, json, os, re, shutil, subprocess, sys, pathlib
 
 ROOT = pathlib.Path(__file__).resolve().parent
 CONFIG = ROOT / "site-config.js"
@@ -125,6 +125,16 @@ def main():
         if shutil.which("node") and chk.returncode != 0:
             die(slug + ": game.js com erro de sintaxe:\n" + chk.stderr[-800:])
         sizes.append((slug, OUT.stat().st_size // 1024))
+        # versao no <script src="game.js?v=..."> = hash do FONTE: o navegador baixa o jogo novo logo apos publicar
+        # (o GitHub Pages guarda game.js por 10 min; sem isso ele ouvia/via a versao velha). Fonte igual = mesmo ?v.
+        page = ROOT / slug / "index.html"
+        ver = hashlib.sha1(SRC.read_bytes()).hexdigest()[:8]
+        ht = page.read_text(encoding="utf8")
+        ht2, nv = re.subn(r'src="game\.js(\?v=[0-9a-f]+)?"', 'src="game.js?v=%s"' % ver, ht)
+        if nv != 1:
+            die(slug + ': <script src="game.js"> nao encontrado em ' + str(page))
+        if ht2 != ht:
+            page.write_text(ht2, encoding="utf8")
 
     # 3. CNAME e ads.txt
     cname = ROOT / "CNAME"
