@@ -36,7 +36,6 @@
 
   function send(p) {
     if (!S()) return Promise.reject(new Error("offline"));
-    if (/[?&]cols=4\b/.test(location.search)) return Promise.reject(new Error("teste 4x3 fora do ranking"));
     return lim(S().submit(GAME, p.mode, p.score, p.day), 4000).then(function (rank) {
       p.sent = true; p.rank = +rank || null; if (p.mode === "play") lsSet("cl_rank_play", "1"); return p.rank;
     });
