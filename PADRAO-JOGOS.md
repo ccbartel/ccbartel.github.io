@@ -11,6 +11,7 @@ Guia para qualquer conversa/agente que for criar ou mudar um jogo deste site. Re
 - Mudou uma regra do jogo? Revisar junto tudo o que a mostra: capa, ícone, demonstração do menu e o "Como jogar" nos 6 idiomas. Ele notou a capa ainda em diagonal depois que as diagonais saíram do Candy Line. Isso inclui a imagem do link compartilhado (`og:image`, ex. `assets/og.jpg`): ao trocar, subir `?v=N` no endereço para os apps não usarem a antiga em cache.
 - Quiz: sem timer; opções erradas ficam mais difíceis com o tempo (vizinhos, bandeiras parecidas).
 - Som: efeitos curtos sintetizados (WebAudio, sem arquivos), LIGADOS por padrão, com botão de alto-falante na barra do topo para desligar (a escolha fica salva). Pedido dele em 2026-11-16.
+- Volume equilibrado entre TODOS os sons de TODOS os jogos (pedido dele 2026-11-16): cada som passa pela tabela SGAIN do jogo. Medir com window.__sfxMeasure(nome,arg,raw) no teste local (volume percebido, janela 0,2 s) e acertar o ganho para o alvo: eventos de jogo ~-23 dB, vitoria/abertura -21, toque/tique de interface -27/-30. Som novo so entra medido.
 
 ## Checklist de um jogo novo
 1. **Pasta** `<slug>/` com `index.html` (tela cheia, palco 9:16 720x1280 escalado), barra do topo: `← Mais jogos` (grande, com seta SVG), ⓘ Como jogar (`<dialog>` com texto próprio — conta para Google/AdSense), ♥ like, Compartilhar; faixa de anúncio embaixo (`#adbar`, `data-ad-slot-key`).
