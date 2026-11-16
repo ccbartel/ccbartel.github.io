@@ -29,7 +29,7 @@
     } else {
       var ph = document.createElement("div");
       ph.className = "ad-placeholder";
-      ph.textContent = "Ad space";
+      ph.textContent = window.SITE_I18N ? window.SITE_I18N.t("ad_space") : "Ad space";
       ph.style.cssText = "width:100%;height:100%;max-height:90px;display:flex;align-items:center;justify-content:center;" +
         "border:1px dashed #ffffff2e;border-radius:8px;color:#ffffff55;font:600 12px/1 system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase";
       box.appendChild(ph);

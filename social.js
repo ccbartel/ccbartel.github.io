@@ -46,7 +46,7 @@
     window.BG_SOCIAL.stats(games).then(function (rows) {
       rows.forEach(function (r) {
         var el = document.querySelector('[data-game="' + r.game + '"] .meta');
-        if (el) el.textContent = "Played " + compact(r.plays, "en") + " times · ♥ " + compact(r.likes, "en");
+        if (el) var L = window.SITE_I18N; el.textContent = L ? L.t("played", {p: compact(r.plays, L.tag), l: compact(r.likes, L.tag)}) : "Played " + compact(r.plays, "en") + " times · ♥ " + compact(r.likes, "en");
       });
     }).catch(function () {});
   }
