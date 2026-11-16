@@ -8,8 +8,9 @@ Guia para qualquer conversa/agente que for criar ou mudar um jogo deste site. Re
 - Na vitrine, os jogos vêm PRIMEIRO; promoção (Kaze, TikTok, YouTube) fica depois, compacta.
 - Texto grande estilizado: degradê dourado SEM chegar ao branco + contorno escuro (branco com borda branca fica ilegível).
 - Desafio do dia = MISSÃO do dia (objetivo claro, igual para todos pela data, ex. "acerte 3 bandeiras sem errar", "encha 5 saquinhos"); tentativas ilimitadas, ✅ ao cumprir, compartilhar "✅ em N tentativas"; ranking só no modo infinito/pontuação.
-- Mudou uma regra do jogo? Revisar junto tudo o que a mostra: capa, ícone, demonstração do menu e o "Como jogar" nos 6 idiomas. Ele notou a capa ainda em diagonal depois que as diagonais saíram do Candy Line.
+- Mudou uma regra do jogo? Revisar junto tudo o que a mostra: capa, ícone, demonstração do menu e o "Como jogar" nos 6 idiomas. Ele notou a capa ainda em diagonal depois que as diagonais saíram do Candy Line. Isso inclui a imagem do link compartilhado (`og:image`, ex. `assets/og.jpg`): ao trocar, subir `?v=N` no endereço para os apps não usarem a antiga em cache.
 - Quiz: sem timer; opções erradas ficam mais difíceis com o tempo (vizinhos, bandeiras parecidas).
+- Som: efeitos curtos sintetizados (WebAudio, sem arquivos), LIGADOS por padrão, com botão de alto-falante na barra do topo para desligar (a escolha fica salva). Pedido dele em 2026-11-16.
 
 ## Checklist de um jogo novo
 1. **Pasta** `<slug>/` com `index.html` (tela cheia, palco 9:16 720x1280 escalado), barra do topo: `← Mais jogos` (grande, com seta SVG), ⓘ Como jogar (`<dialog>` com texto próprio — conta para Google/AdSense), ♥ like, Compartilhar; faixa de anúncio embaixo (`#adbar`, `data-ad-slot-key`).
