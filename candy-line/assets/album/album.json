@@ -21,7 +21,7 @@
    "name": {"pt": "Ursinho de cristal", "en": "Crystal bear", "es": "Osito de cristal", "fr": "Ourson de cristal", "de": "Kristallbär", "it": "Orsetto di cristallo"}},
   {"id": "r3", "img": "album/r3.png", "rar": "epica", "cond": {"type": "duel_win", "n": 3},
    "name": {"pt": "Almofadinha neon", "en": "Neon pillow", "es": "Almohadita neón", "fr": "Coussin néon", "de": "Neonkissen", "it": "Cuscinetto neon"}},
-  {"id": "r5", "img": "album/r5.png", "rar": "epica", "cond": {"type": "combo", "n": 6},
+  {"id": "r5", "img": "album/r5.png", "rar": "epica", "cond": {"type": "combo", "n": 8},
    "name": {"pt": "Jujuba galáxia", "en": "Galaxy jelly bean", "es": "Gominola galaxia", "fr": "Dragée galaxie", "de": "Galaxie-Geleebohne", "it": "Gelatina galassia"}},
   {"id": "x01", "img": "temas/natal/c0.png", "rar": "rara", "cond": {"type": "theme", "theme": "natal"},
    "name": {"pt": "Bengala de Natal", "en": "Candy cane", "es": "Bastón de caramelo", "fr": "Sucre d'orge", "de": "Zuckerstange", "it": "Bastoncino di zucchero"}}
