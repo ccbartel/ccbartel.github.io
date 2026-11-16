@@ -8,6 +8,7 @@ Guia para qualquer conversa/agente que for criar ou mudar um jogo deste site. Re
 - Na vitrine, os jogos vêm PRIMEIRO; promoção (Kaze, TikTok, YouTube) fica depois, compacta.
 - Texto grande estilizado: degradê dourado SEM chegar ao branco + contorno escuro (branco com borda branca fica ilegível).
 - Desafio do dia = MISSÃO do dia (objetivo claro, igual para todos pela data, ex. "acerte 3 bandeiras sem errar", "encha 5 saquinhos"); tentativas ilimitadas, ✅ ao cumprir, compartilhar "✅ em N tentativas"; ranking só no modo infinito/pontuação.
+- Mudou uma regra do jogo? Revisar junto tudo o que a mostra: capa, ícone, demonstração do menu e o "Como jogar" nos 6 idiomas. Ele notou a capa ainda em diagonal depois que as diagonais saíram do Candy Line.
 - Quiz: sem timer; opções erradas ficam mais difíceis com o tempo (vizinhos, bandeiras parecidas).
 
 ## Checklist de um jogo novo
