@@ -118,6 +118,8 @@
   for (var xl in X) for (var xk in X[xl]) S[xl][xk] = X[xl][xk];
   var AL = {"en": "Album", "pt": "Álbum", "es": "Álbum", "fr": "Album", "de": "Album", "it": "Album"};
   for (var al in AL) S[al].albumS = AL[al];
+  var TH = {"en": {"th_natal": "Christmas", "th_halloween": "Halloween", "th_pascoa": "Easter", "cDuelN": "Beat {f} friend challenges"}, "pt": {"th_natal": "Natal", "th_halloween": "Halloween", "th_pascoa": "Páscoa", "cDuelN": "Vença {f} desafios de amigos"}, "es": {"th_natal": "Navidad", "th_halloween": "Halloween", "th_pascoa": "Pascua", "cDuelN": "Gana {f} retos de amigos"}, "fr": {"th_natal": "Noël", "th_halloween": "Halloween", "th_pascoa": "Pâques", "cDuelN": "Gagne {f} défis d'amis"}, "de": {"th_natal": "Weihnachten", "th_halloween": "Halloween", "th_pascoa": "Ostern", "cDuelN": "Gewinne {f} Herausforderungen"}, "it": {"th_natal": "Natale", "th_halloween": "Halloween", "th_pascoa": "Pasqua", "cDuelN": "Vinci {f} sfide di amici"}};
+  for (var tl in TH) for (var tk in TH[tl]) S[tl][tk] = TH[tl][tk];
   // Como jogar, item 3 com o COMBO (decisao dele 2026-11-15: ponto = pacote; combo da mais tempo)
   var H3C = {
     en: "Every line you find fills a candy bag (1 bag = 1 point). Find it before the hint appears and you get extra time: +2 s, and in a row it's a COMBO: COMBO 2 = +2.5 s, COMBO 3 = +3 s, COMBO 4 or more = +3.5 s. A wrong line costs 1 second and ends the combo, and so does waiting for the hint. You start with 45 seconds: fill as many bags as you can!",
