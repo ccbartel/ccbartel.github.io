@@ -64,6 +64,70 @@
   for (var hl in HOW) S[hl].misHow = HOW[hl];
   var H3 = {en: "Every line you find fills a candy bag. Find it before the hint appears and you get +2 seconds; drag a wrong line and you lose 1 second. You start with 45 seconds: fill as many bags as you can!", pt: "Cada fileira achada enche um pacote de doces. Achou antes de a dica aparecer? Ganha +2 segundos. Arrastou uma fileira errada? Perde 1 segundo. Você começa com 45 segundos: encha o máximo de pacotes!", es: "Cada fila encontrada llena una bolsa de dulces. Si la encuentras antes de que aparezca la pista, ganas +2 segundos; si arrastas una fila equivocada, pierdes 1 segundo. Empiezas con 45 segundos: ¡llena todas las bolsas que puedas!", fr: "Chaque ligne trouvée remplit un sachet de bonbons. Trouve-la avant l'indice et gagne +2 secondes ; une mauvaise ligne te coûte 1 seconde. Tu commences avec 45 secondes : remplis le plus de sachets possible !", de: "Jede gefundene Reihe füllt eine Süßigkeitentüte. Findest du sie vor dem Hinweis, gibt es +2 Sekunden; eine falsche Reihe kostet 1 Sekunde. Du startest mit 45 Sekunden: Fülle so viele Tüten wie möglich!", it: "Ogni fila trovata riempie un sacchetto di caramelle. Se la trovi prima dell'aiuto guadagni +2 secondi; una fila sbagliata ti costa 1 secondo. Parti con 45 secondi: riempi più sacchetti che puoi!"};
   for (var h3l in H3) S[h3l].h3 = H3[h3l];
+  // Combo, desafio de amigo, album, som (2026-11-15)
+  var X = {
+    en: {cn0: "Pink bonbon", cn1: "Blue lollipop", cn2: "Gummy bear", cn3: "Lemon pillow", cn4: "Gummy strawberry", cn5: "Purple jelly bean", v_gold: "Golden {f}", v_rainbow: "Rainbow {f}",
+      cGames1: "Play 1 game", cGames: "Play {f} games", cBags: "{f} bags in one game", cTotal: "{f} bags in total", cMis1: "Complete a daily mission", cMis: "Complete {f} daily missions", cDuel: "Beat a friend's challenge", cTheme: "Play during {f}",
+      album: "Candy album", newStk: "New sticker!", friend: "your friend", challenge: "Challenge", sound: "Sound",
+      ccT: "Challenge!", duelBy: "{n} filled {s} candy bags", duelAnon: "A friend filled {f} candy bags", duelSub: "Same boards, same time. Fill {f} to win!", duelGo: "Accept", notNow: "Not now",
+      duelWin: "You beat {f}!", duelTie: "It's a tie!", duelLose: "So close! {f} more to win",
+      shDuelW: "I beat {n} on Candy Line: {s} bags vs {v}! Same boards for you - can you beat me? 🍬", shDuelL: "I filled {s} bags on Candy Line (target was {v}). Same boards for you - can you do better? 🍬", shPlay: "I filled {f} candy bags on Candy Line! Play the same boards and try to beat me 🍬",
+      hmDuel: "Challenge a friend: after a game, tap Challenge to send a link. Your friend plays exactly the same boards and tries to beat your number (challenge games don't count for the ranking).",
+      hmAlbum: "Candy album: earn stickers for combos, full games, daily missions and more."},
+    pt: {cn0: "Bombom rosa", cn1: "Pirulito azul", cn2: "Ursinho de goma", cn3: "Almofadinha", cn4: "Morango de goma", cn5: "Jujuba roxa", v_gold: "{f} dourado", v_rainbow: "{f} arco-íris",
+      cGames1: "Jogue 1 partida", cGames: "Jogue {f} partidas", cBags: "{f} pacotes numa partida", cTotal: "{f} pacotes no total", cMis1: "Cumpra uma missão do dia", cMis: "Cumpra {f} missões do dia", cDuel: "Vença o desafio de um amigo", cTheme: "Jogue no tema {f}",
+      album: "Álbum de doces", newStk: "Figurinha nova!", friend: "seu amigo", challenge: "Desafiar", sound: "Som",
+      ccT: "Desafio!", duelBy: "{n} encheu {s} pacotes", duelAnon: "Um amigo encheu {f} pacotes", duelSub: "Mesmas grades, mesmo tempo. Encha {f} para vencer!", duelGo: "Aceitar", notNow: "Agora não",
+      duelWin: "Você venceu {f}!", duelTie: "Empate!", duelLose: "Quase! Faltaram {f}",
+      shDuelW: "Venci {n} no Candy Line: {s} pacotes contra {v}! As mesmas grades para você - consegue me vencer? 🍬", shDuelL: "Enchi {s} pacotes no Candy Line (a meta era {v}). As mesmas grades para você - consegue mais? 🍬", shPlay: "Enchi {f} pacotes no Candy Line! Jogue as mesmas grades e tente me vencer 🍬",
+      hmDuel: "Desafie um amigo: no fim da partida, toque em Desafiar e mande o link. Seu amigo joga exatamente as mesmas grades e tenta bater o seu número (partidas de desafio não contam para o ranking).",
+      hmAlbum: "Álbum de doces: ganhe figurinhas com combos, partidas cheias, missões do dia e mais."},
+    es: {cn0: "Bombón rosa", cn1: "Piruleta azul", cn2: "Osito de goma", cn3: "Almohadita", cn4: "Fresa de goma", cn5: "Gominola morada", v_gold: "{f} dorado", v_rainbow: "{f} arcoíris",
+      cGames1: "Juega 1 partida", cGames: "Juega {f} partidas", cBags: "{f} bolsas en una partida", cTotal: "{f} bolsas en total", cMis1: "Cumple una misión del día", cMis: "Cumple {f} misiones del día", cDuel: "Gana el reto de un amigo", cTheme: "Juega en el tema {f}",
+      album: "Álbum de dulces", newStk: "¡Cromo nuevo!", friend: "tu amigo", challenge: "Retar", sound: "Sonido",
+      ccT: "¡Reto!", duelBy: "{n} llenó {s} bolsas", duelAnon: "Un amigo llenó {f} bolsas", duelSub: "Mismas cuadrículas, mismo tiempo. ¡Llena {f} para ganar!", duelGo: "Aceptar", notNow: "Ahora no",
+      duelWin: "¡Ganaste a {f}!", duelTie: "¡Empate!", duelLose: "¡Casi! Te faltaron {f}",
+      shDuelW: "Gané a {n} en Candy Line: {s} bolsas contra {v}. Las mismas cuadrículas para ti, ¿me ganas? 🍬", shDuelL: "Llené {s} bolsas en Candy Line (la meta era {v}). Las mismas cuadrículas para ti, ¿haces más? 🍬", shPlay: "¡Llené {f} bolsas en Candy Line! Juega las mismas cuadrículas e intenta ganarme 🍬",
+      hmDuel: "Reta a un amigo: al terminar, toca Retar y envía el enlace. Tu amigo juega exactamente las mismas cuadrículas e intenta superar tu número (los retos no cuentan para el ranking).",
+      hmAlbum: "Álbum de dulces: gana cromos con combos, buenas partidas, misiones del día y más."},
+    fr: {cn0: "Bonbon rose", cn1: "Sucette bleue", cn2: "Ourson gélifié", cn3: "Coussin citron", cn4: "Fraise gélifiée", cn5: "Dragée violette", v_gold: "{f} doré", v_rainbow: "{f} arc-en-ciel",
+      cGames1: "Joue 1 partie", cGames: "Joue {f} parties", cBags: "{f} sachets en une partie", cTotal: "{f} sachets au total", cMis1: "Réussis une mission du jour", cMis: "Réussis {f} missions du jour", cDuel: "Gagne le défi d'un ami", cTheme: "Joue pendant {f}",
+      album: "Album de bonbons", newStk: "Nouvelle vignette !", friend: "ton ami", challenge: "Défier", sound: "Son",
+      ccT: "Défi !", duelBy: "{n} a rempli {s} sachets", duelAnon: "Un ami a rempli {f} sachets", duelSub: "Mêmes grilles, même temps. Remplis-en {f} pour gagner !", duelGo: "Accepter", notNow: "Pas maintenant",
+      duelWin: "Tu as battu {f} !", duelTie: "Égalité !", duelLose: "Presque ! Il en manquait {f}",
+      shDuelW: "J'ai battu {n} sur Candy Line : {s} sachets contre {v} ! Les mêmes grilles pour toi, tu me bats ? 🍬", shDuelL: "J'ai rempli {s} sachets sur Candy Line (objectif {v}). Les mêmes grilles pour toi, tu fais mieux ? 🍬", shPlay: "J'ai rempli {f} sachets sur Candy Line ! Joue les mêmes grilles et essaie de me battre 🍬",
+      hmDuel: "Défie un ami : en fin de partie, touche Défier et envoie le lien. Ton ami joue exactement les mêmes grilles et essaie de battre ton score (les défis ne comptent pas pour le classement).",
+      hmAlbum: "Album de bonbons : gagne des vignettes avec les combos, les belles parties, les missions du jour et plus."},
+    de: {cn0: "Rosa Praline", cn1: "Blauer Lutscher", cn2: "Gummibär", cn3: "Zitronenkissen", cn4: "Gummi-Erdbeere", cn5: "Lila Geleebohne", v_gold: "Goldene(r) {f}", v_rainbow: "Regenbogen-{f}",
+      cGames1: "Spiele 1 Runde", cGames: "Spiele {f} Runden", cBags: "{f} Tüten in einer Runde", cTotal: "{f} Tüten insgesamt", cMis1: "Schaffe eine Tagesmission", cMis: "Schaffe {f} Tagesmissionen", cDuel: "Gewinne die Herausforderung eines Freundes", cTheme: "Spiele während {f}",
+      album: "Süßigkeiten-Album", newStk: "Neuer Sticker!", friend: "deinen Freund", challenge: "Herausfordern", sound: "Ton",
+      ccT: "Herausforderung!", duelBy: "{n} hat {s} Tüten gefüllt", duelAnon: "Ein Freund hat {f} Tüten gefüllt", duelSub: "Gleiche Felder, gleiche Zeit. Fülle {f} zum Sieg!", duelGo: "Annehmen", notNow: "Jetzt nicht",
+      duelWin: "Du hast {f} geschlagen!", duelTie: "Unentschieden!", duelLose: "Fast! Es fehlten {f}",
+      shDuelW: "Ich habe {n} bei Candy Line geschlagen: {s} Tüten gegen {v}! Gleiche Felder für dich - schlägst du mich? 🍬", shDuelL: "Ich habe {s} Tüten bei Candy Line gefüllt (Ziel {v}). Gleiche Felder für dich - schaffst du mehr? 🍬", shPlay: "Ich habe {f} Tüten bei Candy Line gefüllt! Spiel die gleichen Felder und schlag mich 🍬",
+      hmDuel: "Fordere einen Freund heraus: Tippe nach der Runde auf Herausfordern und schick den Link. Dein Freund spielt genau die gleichen Felder und versucht, deine Zahl zu schlagen (zählt nicht für die Rangliste).",
+      hmAlbum: "Süßigkeiten-Album: Sammle Sticker für Combos, starke Runden, Tagesmissionen und mehr."},
+    it: {cn0: "Bonbon rosa", cn1: "Lecca-lecca blu", cn2: "Orsetto gommoso", cn3: "Cuscinetto al limone", cn4: "Fragola gommosa", cn5: "Gelatina viola", v_gold: "{f} dorato", v_rainbow: "{f} arcobaleno",
+      cGames1: "Gioca 1 partita", cGames: "Gioca {f} partite", cBags: "{f} sacchetti in una partita", cTotal: "{f} sacchetti in totale", cMis1: "Completa una missione del giorno", cMis: "Completa {f} missioni del giorno", cDuel: "Vinci la sfida di un amico", cTheme: "Gioca durante {f}",
+      album: "Album di caramelle", newStk: "Nuova figurina!", friend: "il tuo amico", challenge: "Sfida", sound: "Suono",
+      ccT: "Sfida!", duelBy: "{n} ha riempito {s} sacchetti", duelAnon: "Un amico ha riempito {f} sacchetti", duelSub: "Stesse griglie, stesso tempo. Riempine {f} per vincere!", duelGo: "Accetta", notNow: "Non ora",
+      duelWin: "Hai battuto {f}!", duelTie: "Pareggio!", duelLose: "Quasi! Ne mancavano {f}",
+      shDuelW: "Ho battuto {n} a Candy Line: {s} sacchetti contro {v}! Le stesse griglie per te, mi batti? 🍬", shDuelL: "Ho riempito {s} sacchetti a Candy Line (obiettivo {v}). Le stesse griglie per te, fai di meglio? 🍬", shPlay: "Ho riempito {f} sacchetti a Candy Line! Gioca le stesse griglie e prova a battermi 🍬",
+      hmDuel: "Sfida un amico: a fine partita tocca Sfida e manda il link. Il tuo amico gioca esattamente le stesse griglie e prova a battere il tuo numero (le sfide non contano per la classifica).",
+      hmAlbum: "Album di caramelle: vinci figurine con le combo, le belle partite, le missioni del giorno e altro."}
+  };
+  for (var xl in X) for (var xk in X[xl]) S[xl][xk] = X[xl][xk];
+  var AL = {"en": "Album", "pt": "Álbum", "es": "Álbum", "fr": "Album", "de": "Album", "it": "Album"};
+  for (var al in AL) S[al].albumS = AL[al];
+  // Como jogar, item 3 com o COMBO (decisao dele 2026-11-15: ponto = pacote; combo da mais tempo)
+  var H3C = {
+    en: "Every line you find fills a candy bag (1 bag = 1 point). Find it before the hint appears and you get extra time: +2 s, and in a row it's a COMBO: COMBO 2 = +2.5 s, COMBO 3 = +3 s, COMBO 4 or more = +3.5 s. A wrong line costs 1 second and ends the combo, and so does waiting for the hint. You start with 45 seconds: fill as many bags as you can!",
+    pt: "Cada fileira achada enche um pacote de doces (1 pacote = 1 ponto). Achou antes de a dica aparecer? Ganha tempo: +2 s, e em sequência vira COMBO: COMBO 2 = +2,5 s, COMBO 3 = +3 s, COMBO 4 ou mais = +3,5 s. Fileira errada tira 1 segundo e acaba o combo; esperar a dica também acaba. Você começa com 45 segundos: encha o máximo de pacotes!",
+    es: "Cada fila encontrada llena una bolsa de dulces (1 bolsa = 1 punto). Si la encuentras antes de la pista ganas tiempo: +2 s, y seguidas forman un COMBO: COMBO 2 = +2,5 s, COMBO 3 = +3 s, COMBO 4 o más = +3,5 s. Una fila equivocada quita 1 segundo y corta el combo; esperar la pista también. Empiezas con 45 segundos: ¡llena todas las bolsas que puedas!",
+    fr: "Chaque ligne trouvée remplit un sachet (1 sachet = 1 point). Trouve-la avant l'indice et gagne du temps : +2 s, et à la suite c'est un COMBO : COMBO 2 = +2,5 s, COMBO 3 = +3 s, COMBO 4 ou plus = +3,5 s. Une mauvaise ligne coûte 1 seconde et casse le combo ; attendre l'indice aussi. Tu commences avec 45 secondes : remplis le plus de sachets possible !",
+    de: "Jede gefundene Reihe füllt eine Tüte (1 Tüte = 1 Punkt). Findest du sie vor dem Hinweis, gibt es Zeit: +2 s, und nacheinander wird es ein COMBO: COMBO 2 = +2,5 s, COMBO 3 = +3 s, COMBO 4 oder mehr = +3,5 s. Eine falsche Reihe kostet 1 Sekunde und beendet das Combo, Warten auf den Hinweis auch. Du startest mit 45 Sekunden: Fülle so viele Tüten wie möglich!",
+    it: "Ogni fila trovata riempie un sacchetto (1 sacchetto = 1 punto). Se la trovi prima dell'aiuto guadagni tempo: +2 s, e di fila diventa COMBO: COMBO 2 = +2,5 s, COMBO 3 = +3 s, COMBO 4 o più = +3,5 s. Una fila sbagliata toglie 1 secondo e chiude la combo; aspettare l'aiuto pure. Parti con 45 secondi: riempi più sacchetti che puoi!"
+  };
+  for (var hc in H3C) S[hc].h3 = H3C[hc];
   var tag = "en";
   try {
     var q = new URLSearchParams(location.search).get("lang");

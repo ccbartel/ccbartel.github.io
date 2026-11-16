@@ -1,0 +1,11 @@
+[
+  {"id": "n01", "img": "album/bombom_rosa.png", "rar": "comum",
+   "name": {"pt": "Bombom rosa", "en": "Pink bonbon", "es": "Bombón rosa", "fr": "Bonbon rose", "de": "Rosa Praline", "it": "Bonbon rosa"},
+   "cond": {"type": "games", "n": 1}},
+  {"id": "n02", "img": "c1@gold", "rar": "rara",
+   "name": {"pt": "Pirulito dourado", "en": "Golden lollipop", "es": "Piruleta dorada", "fr": "Sucette dorée", "de": "Goldener Lutscher", "it": "Lecca-lecca dorato"},
+   "cond": {"type": "combo", "n": 5}},
+  {"id": "n03", "img": "album/natal_bengala.png", "rar": "epica",
+   "name": {"pt": "Bengala de Natal", "en": "Candy cane", "es": "Bastón de caramelo", "fr": "Sucre d'orge", "de": "Zuckerstange", "it": "Bastoncino di zucchero"},
+   "cond": {"type": "theme", "theme": "natal"}}
+]

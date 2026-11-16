@@ -1,0 +1,14 @@
+Temas por epoca do Candy Line
+=============================
+Cada tema e uma pasta aqui: assets/temas/<tema>/
+  c0.png .. c5.png  os 6 doces do tema (mesmo tamanho/estilo dos assets/c0..c5.png; arquivo que faltar usa o padrao)
+  fundo.jpg (ou fundo.png / fundo.webp)  opcional, cobre o fundo do palco 9:16 (720x1280)
+
+Datas (no codigo, src/candy-line/game.src.js, constante THEMES):
+  natal      1 a 31 de dezembro
+  halloween  20 de outubro a 2 de novembro
+  pascoa     7 dias antes ate 1 dia depois do domingo de Pascoa (calculado por ano)
+
+Testar sem esperar a data: ?tema=natal (ou o nome de qualquer pasta). ?tema=padrao desliga o tema.
+Ordem dos doces padrao: c0 bombom rosa, c1 pirulito azul, c2 ursinho verde, c3 almofadinha amarela, c4 morango, c5 jujuba roxa.
+A cor dos cacos ao quebrar e medida sozinha nas imagens do tema.
