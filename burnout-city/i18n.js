@@ -1,0 +1,123 @@
+// Idioma automatico do Burnout City (en, pt, es, fr, de, it; ?lang=xx para testar).
+// Roda cedo (script normal no <head>) para o <html lang> ja sair certo e o Chrome nao oferecer traducao.
+(function () {
+  var S = {
+    en: {title: "Burnout City", more: "More games", how: "How to play", modes: "Game modes", close: "Close", share: "Share", copied: "Link copied!", again: "Play again", ad: "Advertisement", sound: "Sound", like: "Like", back: "Back",
+      h1: "Your car drives on its own through a burning city. Drag your finger left or right (or use the arrow keys / A-D) to steer and drift.",
+      h2: "Dodge meteors, tornadoes, collapsing buildings, road cracks, lava rivers and wrecked cars. Use the ramp to jump the lava.",
+      h3: "You can take 2 hits. Grab the glowing armor crates: each one bolts a new armor layer onto the car and gives +1 life (up to 5). Every crash tears one layer off.",
+      h4: "Points: 1 per meter + 50 per zombie you run over. Hit zombies in a row for a COMBO: 50, 100, 150... up to 300 per zombie.",
+      hmPlay: "Play: drive as far as you can and climb the global ranking.", hmDaily: "Daily mission: one goal, the same road for everyone today. Unlimited tries!",
+      ab: "Burnout City is a free 3D arcade driving game: drift a muscle car through the apocalypse, smash zombies and survive the disasters. Plays in your browser on phone or computer. No download, no sign-up.",
+      play: "Play", playSub: "Endless run · ranking", daily: "Daily mission", dailyN: "Mission #{f}", dailyDone: "Done ✅ ({f} tries) · back tomorrow",
+      best: "Best: {f}", keys: "← → or A / D to steer", drag: "👆 Drag left / right to steer",
+      misHow: "Same road for everyone today. Unlimited tries!", misGo: "Start",
+      gZ: "Smash {n} zombies", gM: "Drive {n} m", gC: "Grab {n} armor crates", gK: "Reach COMBO {n}", gS: "Score {n} points",
+      misOk: "Mission complete!", misNo: "Almost! {s} / {g}", newBest: "New record!", score: "Score",
+      shTxt0: "Can you survive Burnout City? 🔥🚗", shTxt: "I scored {f} in Burnout City! Can you beat me? 🔥🚗", shMis1: "Burnout City mission #{n} ✅ on the first try! 🔥", shMis: "Burnout City mission #{n} ✅ in {t} tries 🔥", shMisTry: "Burnout City mission #{n}: {s}/{g} so far. Can you do it? 🔥",
+      rank: "Ranking", rankPlay: "Ranking", rankDaily: "Ranking - Mission #{f}", rankYou: "Your position: #{f}", rankEmpty: "No scores yet. Be the first!", rankOff: "Ranking is offline right now. Try again later.", rankLoad: "Loading...",
+      nick: "Your nickname", nickAsk: "Pick a nickname for the ranking", nickHint: "Up to 14 letters, numbers or spaces", nickOk: "Save", nickChange: "Change nickname",
+      loadErr: "Could not load {f}. Please reload the page.", blk1: "This game is not available here", blk2: "Play the official version on our website:"},
+    pt: {title: "Burnout City", more: "Mais jogos", how: "Como jogar", modes: "Modos de jogo", close: "Fechar", share: "Compartilhar", copied: "Link copiado!", again: "Jogar de novo", ad: "Publicidade", sound: "Som", like: "Curtir", back: "Voltar",
+      h1: "Seu carro anda sozinho por uma cidade em chamas. Arraste o dedo para a esquerda ou a direita (ou use as setas / A-D) para virar e derrapar.",
+      h2: "Desvie de meteoros, tornados, prédios desabando, rachaduras na pista, rios de lava e carros destruídos. Use a rampa para pular a lava.",
+      h3: "Você aguenta 2 batidas. Pegue as caixas de armadura brilhantes: cada uma instala uma nova camada de armadura no carro e dá +1 vida (até 5). Cada batida arranca uma camada.",
+      h4: "Pontos: 1 por metro + 50 por zumbi atropelado. Acerte zumbis em sequência para fazer COMBO: 50, 100, 150... até 300 por zumbi.",
+      hmPlay: "Jogar: vá o mais longe que puder e suba no ranking mundial.", hmDaily: "Missão do dia: um objetivo, a mesma pista para todos hoje. Tentativas ilimitadas!",
+      ab: "Burnout City é um jogo de corrida 3D grátis: derrape um muscle car pelo apocalipse, atropele zumbis e sobreviva aos desastres. Roda no navegador do celular ou do computador. Sem download, sem cadastro.",
+      play: "Jogar", playSub: "Corrida sem fim · ranking", daily: "Missão do dia", dailyN: "Missão #{f}", dailyDone: "Feita ✅ ({f} tentativas) · volte amanhã",
+      best: "Recorde: {f}", keys: "← → ou A / D para virar", drag: "👆 Arraste para os lados para virar",
+      misHow: "Mesma pista para todos hoje. Tentativas ilimitadas!", misGo: "Começar",
+      gZ: "Atropele {n} zumbis", gM: "Dirija {n} m", gC: "Pegue {n} caixas de armadura", gK: "Faça COMBO {n}", gS: "Faça {n} pontos",
+      misOk: "Missão cumprida!", misNo: "Quase! {s} / {g}", newBest: "Novo recorde!", score: "Pontos",
+      shTxt0: "Você sobrevive a Burnout City? 🔥🚗", shTxt: "Fiz {f} pontos em Burnout City! Consegue me passar? 🔥🚗", shMis1: "Burnout City missão #{n} ✅ de primeira! 🔥", shMis: "Burnout City missão #{n} ✅ em {t} tentativas 🔥", shMisTry: "Burnout City missão #{n}: {s}/{g} até agora. Você consegue? 🔥",
+      rank: "Ranking", rankPlay: "Ranking", rankDaily: "Ranking - Missão #{f}", rankYou: "Sua posição: #{f}", rankEmpty: "Ainda sem pontuações. Seja o primeiro!", rankOff: "O ranking está fora do ar agora. Tente mais tarde.", rankLoad: "Carregando...",
+      nick: "Seu apelido", nickAsk: "Escolha um apelido para o ranking", nickHint: "Até 14 letras, números ou espaços", nickOk: "Salvar", nickChange: "Trocar apelido",
+      loadErr: "Não deu para carregar {f}. Recarregue a página.", blk1: "Este jogo não está disponível aqui", blk2: "Jogue a versão oficial no nosso site:"},
+    es: {title: "Burnout City", more: "Más juegos", how: "Cómo jugar", modes: "Modos de juego", close: "Cerrar", share: "Compartir", copied: "¡Enlace copiado!", again: "Jugar de nuevo", ad: "Publicidad", sound: "Sonido", like: "Me gusta", back: "Volver",
+      h1: "Tu coche avanza solo por una ciudad en llamas. Arrastra el dedo a la izquierda o a la derecha (o usa las flechas / A-D) para girar y derrapar.",
+      h2: "Esquiva meteoritos, tornados, edificios que se derrumban, grietas en la carretera, ríos de lava y coches destrozados. Usa la rampa para saltar la lava.",
+      h3: "Aguantas 2 choques. Recoge las cajas de blindaje brillantes: cada una instala una nueva capa de blindaje y da +1 vida (hasta 5). Cada choque arranca una capa.",
+      h4: "Puntos: 1 por metro + 50 por zombi atropellado. Atropella zombis seguidos para hacer COMBO: 50, 100, 150... hasta 300 por zombi.",
+      hmPlay: "Jugar: llega lo más lejos posible y sube en el ranking mundial.", hmDaily: "Misión del día: un objetivo, la misma carretera para todos hoy. ¡Intentos ilimitados!",
+      ab: "Burnout City es un juego de conducción 3D gratis: derrapa un muscle car por el apocalipsis, atropella zombis y sobrevive a los desastres. Se juega en el navegador del móvil o del ordenador. Sin descargas, sin registro.",
+      play: "Jugar", playSub: "Carrera sin fin · ranking", daily: "Misión del día", dailyN: "Misión #{f}", dailyDone: "Hecha ✅ ({f} intentos) · vuelve mañana",
+      best: "Récord: {f}", keys: "← → o A / D para girar", drag: "👆 Arrastra a los lados para girar",
+      misHow: "La misma carretera para todos hoy. ¡Intentos ilimitados!", misGo: "Empezar",
+      gZ: "Atropella {n} zombis", gM: "Conduce {n} m", gC: "Recoge {n} cajas de blindaje", gK: "Haz COMBO {n}", gS: "Consigue {n} puntos",
+      misOk: "¡Misión cumplida!", misNo: "¡Casi! {s} / {g}", newBest: "¡Nuevo récord!", score: "Puntos",
+      shTxt0: "¿Sobrevives a Burnout City? 🔥🚗", shTxt: "¡Hice {f} puntos en Burnout City! ¿Me superas? 🔥🚗", shMis1: "Burnout City misión #{n} ✅ ¡a la primera! 🔥", shMis: "Burnout City misión #{n} ✅ en {t} intentos 🔥", shMisTry: "Burnout City misión #{n}: {s}/{g} por ahora. ¿Puedes tú? 🔥",
+      rank: "Ranking", rankPlay: "Ranking", rankDaily: "Ranking - Misión #{f}", rankYou: "Tu posición: #{f}", rankEmpty: "Aún no hay puntuaciones. ¡Sé el primero!", rankOff: "El ranking no está disponible ahora. Inténtalo más tarde.", rankLoad: "Cargando...",
+      nick: "Tu apodo", nickAsk: "Elige un apodo para el ranking", nickHint: "Hasta 14 letras, números o espacios", nickOk: "Guardar", nickChange: "Cambiar apodo",
+      loadErr: "No se pudo cargar {f}. Recarga la página.", blk1: "Este juego no está disponible aquí", blk2: "Juega la versión oficial en nuestra web:"},
+    fr: {title: "Burnout City", more: "Plus de jeux", how: "Comment jouer", modes: "Modes de jeu", close: "Fermer", share: "Partager", copied: "Lien copié !", again: "Rejouer", ad: "Publicité", sound: "Son", like: "J'aime", back: "Retour",
+      h1: "Ta voiture roule toute seule dans une ville en flammes. Glisse le doigt à gauche ou à droite (ou utilise les flèches / A-D) pour tourner et déraper.",
+      h2: "Évite les météores, les tornades, les immeubles qui s'effondrent, les fissures, les rivières de lave et les épaves. Prends la rampe pour sauter la lave.",
+      h3: "Tu encaisses 2 chocs. Attrape les caisses d'armure lumineuses : chacune boulonne une nouvelle couche d'armure et donne +1 vie (jusqu'à 5). Chaque choc arrache une couche.",
+      h4: "Points : 1 par mètre + 50 par zombie écrasé. Enchaîne les zombies pour un COMBO : 50, 100, 150... jusqu'à 300 par zombie.",
+      hmPlay: "Jouer : va le plus loin possible et grimpe dans le classement mondial.", hmDaily: "Mission du jour : un objectif, la même route pour tout le monde aujourd'hui. Essais illimités !",
+      ab: "Burnout City est un jeu de conduite 3D gratuit : fais déraper une muscle car dans l'apocalypse, écrase des zombies et survis aux catastrophes. Se joue dans le navigateur du téléphone ou de l'ordinateur. Sans téléchargement ni inscription.",
+      play: "Jouer", playSub: "Course sans fin · classement", daily: "Mission du jour", dailyN: "Mission n°{f}", dailyDone: "Réussie ✅ ({f} essais) · reviens demain",
+      best: "Record : {f}", keys: "← → ou A / D pour tourner", drag: "👆 Glisse à gauche / droite pour tourner",
+      misHow: "La même route pour tous aujourd'hui. Essais illimités !", misGo: "Commencer",
+      gZ: "Écrase {n} zombies", gM: "Roule {n} m", gC: "Attrape {n} caisses d'armure", gK: "Fais un COMBO {n}", gS: "Marque {n} points",
+      misOk: "Mission réussie !", misNo: "Presque ! {s} / {g}", newBest: "Nouveau record !", score: "Points",
+      shTxt0: "Survivras-tu à Burnout City ? 🔥🚗", shTxt: "J'ai fait {f} points à Burnout City ! Tu me bats ? 🔥🚗", shMis1: "Burnout City mission n°{n} ✅ du premier coup ! 🔥", shMis: "Burnout City mission n°{n} ✅ en {t} essais 🔥", shMisTry: "Burnout City mission n°{n} : {s}/{g} pour l'instant. Tu y arrives ? 🔥",
+      rank: "Classement", rankPlay: "Classement", rankDaily: "Classement - Mission n°{f}", rankYou: "Ta position : n°{f}", rankEmpty: "Pas encore de score. Sois le premier !", rankOff: "Le classement est indisponible pour le moment. Réessaie plus tard.", rankLoad: "Chargement...",
+      nick: "Ton pseudo", nickAsk: "Choisis un pseudo pour le classement", nickHint: "Jusqu'à 14 lettres, chiffres ou espaces", nickOk: "Enregistrer", nickChange: "Changer de pseudo",
+      loadErr: "Impossible de charger {f}. Recharge la page.", blk1: "Ce jeu n'est pas disponible ici", blk2: "Joue à la version officielle sur notre site :"},
+    de: {title: "Burnout City", more: "Mehr Spiele", how: "So wird gespielt", modes: "Spielmodi", close: "Schließen", share: "Teilen", copied: "Link kopiert!", again: "Nochmal", ad: "Werbung", sound: "Ton", like: "Gefällt mir", back: "Zurück",
+      h1: "Dein Auto fährt von allein durch eine brennende Stadt. Wische nach links oder rechts (oder nutze die Pfeiltasten / A-D), um zu lenken und zu driften.",
+      h2: "Weiche Meteoren, Tornados, einstürzenden Häusern, Rissen in der Straße, Lavaflüssen und Autowracks aus. Nimm die Rampe, um über die Lava zu springen.",
+      h3: "Du hältst 2 Treffer aus. Schnapp dir die leuchtenden Panzerkisten: Jede schraubt eine neue Panzerschicht ans Auto und gibt +1 Leben (bis 5). Jeder Crash reißt eine Schicht ab.",
+      h4: "Punkte: 1 pro Meter + 50 pro überfahrenem Zombie. Erwische Zombies hintereinander für eine KOMBO: 50, 100, 150... bis 300 pro Zombie.",
+      hmPlay: "Spielen: Fahr so weit du kannst und klettere in der Weltrangliste.", hmDaily: "Tagesmission: ein Ziel, heute dieselbe Straße für alle. Unbegrenzte Versuche!",
+      ab: "Burnout City ist ein kostenloses 3D-Arcade-Rennspiel: Drifte ein Muscle-Car durch die Apokalypse, überfahre Zombies und überlebe die Katastrophen. Läuft im Browser auf Handy oder Computer. Kein Download, keine Anmeldung.",
+      play: "Spielen", playSub: "Endlosfahrt · Rangliste", daily: "Tagesmission", dailyN: "Mission #{f}", dailyDone: "Geschafft ✅ ({f} Versuche) · morgen wieder",
+      best: "Rekord: {f}", keys: "← → oder A / D zum Lenken", drag: "👆 Nach links / rechts wischen zum Lenken",
+      misHow: "Heute dieselbe Straße für alle. Unbegrenzte Versuche!", misGo: "Los",
+      gZ: "Überfahre {n} Zombies", gM: "Fahre {n} m", gC: "Schnapp dir {n} Panzerkisten", gK: "Erreiche COMBO {n}", gS: "Hole {n} Punkte",
+      misOk: "Mission erfüllt!", misNo: "Fast! {s} / {g}", newBest: "Neuer Rekord!", score: "Punkte",
+      shTxt0: "Überlebst du Burnout City? 🔥🚗", shTxt: "Ich habe {f} Punkte in Burnout City! Schaffst du mehr? 🔥🚗", shMis1: "Burnout City Mission #{n} ✅ beim ersten Versuch! 🔥", shMis: "Burnout City Mission #{n} ✅ in {t} Versuchen 🔥", shMisTry: "Burnout City Mission #{n}: bisher {s}/{g}. Schaffst du es? 🔥",
+      rank: "Rangliste", rankPlay: "Rangliste", rankDaily: "Rangliste - Mission #{f}", rankYou: "Deine Position: #{f}", rankEmpty: "Noch keine Punkte. Sei der Erste!", rankOff: "Die Rangliste ist gerade offline. Versuch es später.", rankLoad: "Lädt...",
+      nick: "Dein Spitzname", nickAsk: "Wähle einen Spitznamen für die Rangliste", nickHint: "Bis zu 14 Buchstaben, Zahlen oder Leerzeichen", nickOk: "Speichern", nickChange: "Spitzname ändern",
+      loadErr: "{f} konnte nicht geladen werden. Bitte Seite neu laden.", blk1: "Dieses Spiel ist hier nicht verfügbar", blk2: "Spiele die offizielle Version auf unserer Website:"},
+    it: {title: "Burnout City", more: "Altri giochi", how: "Come si gioca", modes: "Modalità", close: "Chiudi", share: "Condividi", copied: "Link copiato!", again: "Gioca ancora", ad: "Pubblicità", sound: "Audio", like: "Mi piace", back: "Indietro",
+      h1: "La tua auto corre da sola in una città in fiamme. Trascina il dito a sinistra o a destra (o usa le frecce / A-D) per sterzare e derapare.",
+      h2: "Schiva meteore, tornado, palazzi che crollano, crepe nella strada, fiumi di lava e auto distrutte. Usa la rampa per saltare la lava.",
+      h3: "Reggi 2 urti. Prendi le casse di corazza luminose: ognuna monta un nuovo strato di corazza e dà +1 vita (fino a 5). Ogni urto strappa via uno strato.",
+      h4: "Punti: 1 per metro + 50 per ogni zombie investito. Investi zombie di fila per una COMBO: 50, 100, 150... fino a 300 per zombie.",
+      hmPlay: "Gioca: arriva più lontano che puoi e scala la classifica mondiale.", hmDaily: "Missione del giorno: un obiettivo, la stessa strada per tutti oggi. Tentativi illimitati!",
+      ab: "Burnout City è un gioco di guida 3D gratuito: fai derapare una muscle car nell'apocalisse, investi zombie e sopravvivi ai disastri. Si gioca nel browser di telefono o computer. Niente download, niente registrazione.",
+      play: "Gioca", playSub: "Corsa infinita · classifica", daily: "Missione del giorno", dailyN: "Missione n.{f}", dailyDone: "Fatta ✅ ({f} tentativi) · torna domani",
+      best: "Record: {f}", keys: "← → o A / D per sterzare", drag: "👆 Trascina a sinistra / destra per sterzare",
+      misHow: "La stessa strada per tutti oggi. Tentativi illimitati!", misGo: "Inizia",
+      gZ: "Investi {n} zombie", gM: "Guida per {n} m", gC: "Prendi {n} casse di corazza", gK: "Fai COMBO {n}", gS: "Fai {n} punti",
+      misOk: "Missione compiuta!", misNo: "Quasi! {s} / {g}", newBest: "Nuovo record!", score: "Punti",
+      shTxt0: "Sopravvivi a Burnout City? 🔥🚗", shTxt: "Ho fatto {f} punti in Burnout City! Mi batti? 🔥🚗", shMis1: "Burnout City missione n.{n} ✅ al primo colpo! 🔥", shMis: "Burnout City missione n.{n} ✅ in {t} tentativi 🔥", shMisTry: "Burnout City missione n.{n}: {s}/{g} finora. Ce la fai? 🔥",
+      rank: "Classifica", rankPlay: "Classifica", rankDaily: "Classifica - Missione n.{f}", rankYou: "La tua posizione: n.{f}", rankEmpty: "Ancora nessun punteggio. Sii il primo!", rankOff: "La classifica ora non è disponibile. Riprova più tardi.", rankLoad: "Caricamento...",
+      nick: "Il tuo nickname", nickAsk: "Scegli un nickname per la classifica", nickHint: "Fino a 14 lettere, numeri o spazi", nickOk: "Salva", nickChange: "Cambia nickname",
+      loadErr: "Impossibile caricare {f}. Ricarica la pagina.", blk1: "Questo gioco non è disponibile qui", blk2: "Gioca la versione ufficiale sul nostro sito:"}
+  };
+  var tag = "en";
+  try {
+    var q = new URLSearchParams(location.search).get("lang");
+    var list = q ? [q] : (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || "en"]);
+    for (var i = 0; i < list.length; i++) { var b = String(list[i]).toLowerCase().split("-")[0]; if (S[b]) { tag = String(list[i]); break; } }
+  } catch (e) {}
+  var base = tag.toLowerCase().split("-")[0]; if (!S[base]) { base = "en"; tag = "en"; }
+  var I = {
+    lang: base, tag: tag,
+    t: function (k, f) { var s = (S[base][k] || S.en[k] || k); if (f && typeof f === "object") { for (var x in f) s = s.split("{" + x + "}").join(f[x]); return s; } return f != null ? s.replace("{f}", f) : s; }
+  };
+  window.CL_I18N = I;
+  document.documentElement.lang = tag;
+  function apply() {
+    document.title = I.t("title") + " - Bartel Games";
+    var els = document.querySelectorAll("[data-i18n]");
+    for (var j = 0; j < els.length; j++) els[j].textContent = I.t(els[j].getAttribute("data-i18n"));
+    var al = document.querySelectorAll("[data-i18n-label]");
+    for (var k = 0; k < al.length; k++) al[k].setAttribute("aria-label", I.t(al[k].getAttribute("data-i18n-label")));
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", apply); else apply();
+})();

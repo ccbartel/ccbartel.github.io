@@ -5,7 +5,7 @@
     en: {
       title: "Bartel Games - free quick games in your browser",
       tagline: "Free quick games. Tap and play &mdash; no download.",
-      home: "Bartel Games, home", games: "Games", geo_cat: "Quiz · Geography", candy_cat: "Puzzle · Match",
+      home: "Bartel Games, home", games: "Games", geo_cat: "Quiz · Geography", candy_cat: "Puzzle · Match", burnout_cat: "Driving · Action",
       soon_t: "Coming soon", soon_d: "New games on the way", more: "More from Bartel Games",
       kaze_d: "A 90s-style platformer: run, jump and use the power of the wild masks. Out now on PC and consoles.",
       kaze_alt: "Kaze, a purple rabbit with a red scarf, ready to jump", buy: "Buy Kaze and the Wild Masks",
@@ -20,7 +20,7 @@
     pt: {
       title: "Bartel Games - jogos rápidos e grátis no navegador",
       tagline: "Jogos rápidos e grátis. Toque e jogue &mdash; sem baixar nada.",
-      home: "Bartel Games, início", games: "Jogos", geo_cat: "Quiz · Geografia", candy_cat: "Puzzle · Combinar",
+      home: "Bartel Games, início", games: "Jogos", geo_cat: "Quiz · Geografia", candy_cat: "Puzzle · Combinar", burnout_cat: "Corrida · Ação",
       soon_t: "Em breve", soon_d: "Novos jogos a caminho", more: "Mais da Bartel Games",
       kaze_d: "Um jogo de plataforma no estilo dos anos 90: corra, pule e use o poder das máscaras selvagens. Já disponível para PC e consoles.",
       kaze_alt: "Kaze, personagem coelho roxo de cachecol vermelho, no meio de um salto", buy: "Comprar Kaze and the Wild Masks",
@@ -35,7 +35,7 @@
     es: {
       title: "Bartel Games - juegos rápidos y gratis en el navegador",
       tagline: "Juegos rápidos y gratis. Toca y juega &mdash; sin descargas.",
-      home: "Bartel Games, inicio", games: "Juegos", geo_cat: "Quiz · Geografía", candy_cat: "Puzzle · Combinar",
+      home: "Bartel Games, inicio", games: "Juegos", geo_cat: "Quiz · Geografía", candy_cat: "Puzzle · Combinar", burnout_cat: "Carreras · Acción",
       soon_t: "Próximamente", soon_d: "Nuevos juegos en camino", more: "Más de Bartel Games",
       kaze_d: "Un plataformas al estilo de los 90: corre, salta y usa el poder de las máscaras salvajes. Ya disponible en PC y consolas.",
       kaze_alt: "Kaze, personaje conejo morado con bufanda roja, a punto de saltar", buy: "Comprar Kaze and the Wild Masks",
@@ -50,7 +50,7 @@
     fr: {
       title: "Bartel Games - jeux rapides et gratuits dans le navigateur",
       tagline: "Jeux rapides et gratuits. Touche et joue &mdash; sans téléchargement.",
-      home: "Bartel Games, accueil", games: "Jeux", geo_cat: "Quiz · Géographie", candy_cat: "Puzzle · Association",
+      home: "Bartel Games, accueil", games: "Jeux", geo_cat: "Quiz · Géographie", candy_cat: "Puzzle · Association", burnout_cat: "Course · Action",
       soon_t: "Bientôt", soon_d: "De nouveaux jeux arrivent", more: "Plus de Bartel Games",
       kaze_d: "Un jeu de plateforme façon années 90 : cours, saute et utilise le pouvoir des masques sauvages. Disponible sur PC et consoles.",
       kaze_alt: "Kaze, personnage lapin violet à l'écharpe rouge, en plein saut", buy: "Acheter Kaze and the Wild Masks",
@@ -65,7 +65,7 @@
     de: {
       title: "Bartel Games - schnelle Gratis-Spiele im Browser",
       tagline: "Schnelle Gratis-Spiele. Tippen und spielen &mdash; ohne Download.",
-      home: "Bartel Games, Startseite", games: "Spiele", geo_cat: "Quiz · Geografie", candy_cat: "Puzzle · Kombinieren",
+      home: "Bartel Games, Startseite", games: "Spiele", geo_cat: "Quiz · Geografie", candy_cat: "Puzzle · Kombinieren", burnout_cat: "Rennen · Action",
       soon_t: "Demnächst", soon_d: "Neue Spiele unterwegs", more: "Mehr von Bartel Games",
       kaze_d: "Ein Jump'n'Run im Stil der 90er: renne, springe und nutze die Kraft der wilden Masken. Jetzt für PC und Konsolen.",
       kaze_alt: "Kaze, die lila Hasenfigur mit rotem Schal, mitten im Sprung", buy: "Kaze and the Wild Masks kaufen",
@@ -80,7 +80,7 @@
     it: {
       title: "Bartel Games - giochi veloci e gratis nel browser",
       tagline: "Giochi veloci e gratis. Tocca e gioca &mdash; senza download.",
-      home: "Bartel Games, home", games: "Giochi", geo_cat: "Quiz · Geografia", candy_cat: "Puzzle · Abbinamenti",
+      home: "Bartel Games, home", games: "Giochi", geo_cat: "Quiz · Geografia", candy_cat: "Puzzle · Abbinamenti", burnout_cat: "Corse · Azione",
       soon_t: "In arrivo", soon_d: "Nuovi giochi in arrivo", more: "Altro da Bartel Games",
       kaze_d: "Un platform in stile anni '90: corri, salta e usa il potere delle maschere selvagge. Disponibile su PC e console.",
       kaze_alt: "Kaze, personaggio coniglio viola con la sciarpa rossa, in pieno salto", buy: "Compra Kaze and the Wild Masks",
