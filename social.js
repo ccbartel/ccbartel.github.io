@@ -168,7 +168,22 @@
     return rpc("log_event", body).catch(function () { return false; });
   }
 
+  // ---- multijogador ao vivo (Candy Line, 2026-11-17): RPC com a identidade do jogador (apelido do aparelho ou conta Google) + canal do Realtime ----
+  // Em localhost NADA vai ao banco: as RPCs vao ao servidor falso do teste (/__mp/, script de teste mp_mock.mjs); o canal do Realtime e o de verdade, com prefixo de teste.
+  var mp = {
+    call: function (fn, body) {
+      body = body || {}; body.p_device = device(); body.p_token = dtok();
+      if (LOCAL) { var u = user(); body.p_lname = u && u.custom ? u.name || "" : "";
+        return fetch(location.origin + "/__mp/" + fn, {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(body)}).then(function (r) { if (!r.ok) throw new Error(fn + " " + r.status); return r.json(); }); }
+      if (session) return sb().then(function (c) { return c.rpc(fn, body); }).then(function (r) { if (r.error) throw r.error; return r.data; });
+      return rpc(fn, body);
+    },
+    channel: function (code, key) { return sb().then(function (c) { return c.channel((LOCAL ? "cl-mp-local-" : "cl-mp-") + code, {config: {broadcast: {self: false, ack: false}, presence: {key: key}}}); }); },
+    drop: function (ch) { try { if (client && ch) client.removeChannel(ch); } catch (e) {} }
+  };
+
   window.BG_SOCIAL = {
+    mp: mp,
     event: event,
     game: function (g) { if (g) EV.game = g; return EV.game; },
     // fim de partida: o jogo manda pontuacao e motivo; a duracao e medida aqui (desde o play)
