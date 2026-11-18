@@ -52,6 +52,7 @@
     sbP = import(SBJS).then(function (m) {
       client = m.createClient(BASE, KEY, {auth: {persistSession: true, autoRefreshToken: true, detectSessionInUrl: true, flowType: "pkce", storageKey: "bg_auth"}});
       client.auth.onAuthStateChange(function (ev, s) {
+        if (ev === "SIGNED_IN" && !session && s) setTimeout(function () { event(null, "login"); }, 0);
         var had = !!session; session = s || null; if (!session) me = null;
         if (session && (!had || !me)) setTimeout(loadMe, 0);
         fire();
@@ -122,12 +123,35 @@
   };
   if (GSI_CLIENT_ID && document.getElementById("rank")) sb(); // so nas paginas de jogo: com GIS o supabase-js precisa estar pronto quando o Google responder
 
+  // ---- uso anonimo dos jogos (pedido dele 2026-11-18): sem nome, e-mail nem conta; so o ID anonimo do aparelho ----
+  var EV = {t0: 0, ended: false, game: null};
+  function evBase() {
+    var ref = ""; try { if (document.referrer) { var h = new URL(document.referrer).hostname.toLowerCase(); if (h && h !== location.hostname) ref = h.replace(/^www\./, "").slice(0, 80); } } catch (e) {}
+    var mob = false; try { mob = matchMedia("(pointer:coarse)").matches; } catch (e) {}
+    return {lang: String(document.documentElement.lang || "").slice(0, 2).toLowerCase(), mobile: mob, ref: ref};
+  }
+  function event(game, kind, d) {
+    d = d || {}; game = game || EV.game; if (!game) return Promise.resolve(false);
+    var b = evBase(), body = {p_game: game, p_kind: kind, p_device: device(), p_mode: d.mode || null, p_secs: d.secs == null ? null : Math.round(d.secs),
+      p_score: d.score == null ? null : Math.round(d.score), p_reason: d.reason || null, p_lang: b.lang || null, p_mobile: b.mobile, p_ref: b.ref || null};
+    if (LOCAL) { console.info("[uso] (teste local, nao grava)", kind, JSON.stringify(body)); return Promise.resolve(true); }
+    return rpc("log_event", body).catch(function () { return false; });
+  }
+
   window.BG_SOCIAL = {
+    event: event,
+    game: function (g) { if (g) EV.game = g; return EV.game; },
+    // fim de partida: o jogo manda pontuacao e motivo; a duracao e medida aqui (desde o play)
+    end: function (game, mode, score, reason) { EV.ended = true; return event(game, "end", {mode: mode, score: score, reason: reason, secs: EV.t0 ? (performance.now() - EV.t0) / 1000 : null}); },
     device: device, compact: compact, auth: auth,
     // nome exibido da conta logada (o mesmo do ranking); sem login = "" (o apelido livre saiu)
     name: function () { var u = user(); return u ? u.name || "" : ""; },
     stats: function (games) { return rpc("get_stats", {p_games: games, p_device: device()}); },
-    play: function (game) { try { window.dispatchEvent(new Event("bg-play")); } catch (e) {} return rpc("record_play", {p_game: game}).catch(function () {}); },
+    play: function (game, mode) {
+      try { window.dispatchEvent(new Event("bg-play")); } catch (e) {}
+      EV.game = game; if (EV.ended) event(game, "replay", {mode: mode}); EV.ended = false; EV.t0 = performance.now(); event(game, "start", {mode: mode});
+      return rpc("record_play", {p_game: game}).catch(function () {});
+    },
     like: function (game) { return rpc("toggle_like", {p_game: game, p_device: device()}).then(function (r) { return r[0]; }); },
     // so com login (o servidor recusa sem conta); em localhost finge sucesso
     submit: function (game, mode, score, day) {

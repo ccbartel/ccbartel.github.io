@@ -52,6 +52,7 @@
       if (busy) return; busy = true;
       var prev = {liked: st.liked, likes: st.likes};
       st.liked = !st.liked; st.likes = Math.max(0, st.likes + (st.liked ? 1 : -1)); draw();
+      if (st.liked && S().event) S().event(GAME, "like");
       lim(S().like(GAME), 4000).then(function (r) { if (r) { st.liked = !!r.liked; st.likes = +r.likes || 0; } draw(); })
         .catch(function () { st = prev; draw(); })
         .then(function () { busy = false; });
@@ -206,6 +207,8 @@
       dlg.addEventListener("click", function (e) { if (e.target === dlg) dlg.close(); }); // toque fora fecha
     }
     initLike();
+    if (S() && S().event) { S().game(GAME); S().event(GAME, "open"); }
+    document.addEventListener("click", function (e) { var b = e.target && e.target.closest ? e.target.closest("[data-share]") : null; if (b && S() && S().event) S().event(GAME, "share"); }, true);
     window.addEventListener("bg-play", hideCta);
     // o aviso so vale na tela de resultado: qualquer botao do jogo (Jogar de novo, menu...) o esconde; compartilhar e ranking nao
     document.addEventListener("click", function (e) {
