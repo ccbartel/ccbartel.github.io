@@ -31,16 +31,21 @@
     return _rpc(fn, body); }; }
 
   // ---- login Google (supabase-js carregado so quando o jogo precisa do ranking) ----
+  // Botao oficial do Google Identity Services (janela mostra "Bartel Games", nao sai da pagina) + signInWithIdToken com nonce;
+  // sem Client ID ou se o GIS falhar, volta ao redirect OAuth do Supabase (reserva).
+  var GSI_CLIENT_ID = "517130945498-dhisrma92ccd9h4kqrtrq5n4monhmtu7.apps.googleusercontent.com"; // Client ID PUBLICO do cliente Web "Bartel Games Web" (projeto bartel-games-515023)
   var sbP = null, client = null, session = null, me = null, subs = [];
   var FAKE = LOCAL && /[?&]fakeauth=1/.test(location.search); // teste visual no PC: finge uma conta (nada vai ao banco)
-  function fire() { for (var i = 0; i < subs.length; i++) { try { subs[i](user()); } catch (e) {} } }
+  var fireT = 0, fakeName = "João S.";
+  // fora do callback do onAuthStateChange: chamar o supabase la dentro trava o lock do auth (o envio da pontuacao ficava preso)
+  function fire() { clearTimeout(fireT); fireT = setTimeout(function () { var u = user(); for (var i = 0; i < subs.length; i++) { try { subs[i](u); } catch (e) { console.error("[ranking] erro no aviso de login", e); } } }, 0); }
   function user() {
-    if (FAKE) return {name: "João S.", avatar: null, ready: true};
-    return session ? {name: me ? me.name : "", avatar: me ? me.avatar : null, ready: !!me} : null;
+    if (FAKE) return {name: fakeName, avatar: null, ready: true, id: "fake", custom: fakeName !== "João S.", canChangeAt: null};
+    return session ? {name: me ? me.name : "", avatar: me ? me.avatar : null, ready: !!me, id: session.user && session.user.id, custom: !!(me && me.custom), canChangeAt: me ? me.canChangeAt : null} : null;
   }
   function loadMe() {
     if (!client || !session) return;
-    client.rpc("my_name").then(function (r) { var x = r && r.data && r.data[0]; me = {name: x ? x.name || "" : "", avatar: x ? x.avatar : null}; fire(); }, function () { me = {name: "", avatar: null}; fire(); });
+    client.rpc("my_name").then(function (r) { if (r && r.error) console.error("[ranking] my_name falhou", r.error); var x = r && r.data && r.data[0]; me = {name: x ? x.name || "" : "", avatar: x ? x.avatar : null, custom: !!(x && x.custom), canChangeAt: x ? x.can_change_at : null}; fire(); }, function (e) { console.error("[ranking] my_name falhou", e); me = {name: "", avatar: null}; fire(); });
   }
   function sb() {
     if (sbP) return sbP;
@@ -48,28 +53,74 @@
       client = m.createClient(BASE, KEY, {auth: {persistSession: true, autoRefreshToken: true, detectSessionInUrl: true, flowType: "pkce", storageKey: "bg_auth"}});
       client.auth.onAuthStateChange(function (ev, s) {
         var had = !!session; session = s || null; if (!session) me = null;
-        if (session && (!had || !me)) loadMe(); fire();
+        if (session && (!had || !me)) setTimeout(loadMe, 0);
+        fire();
       });
       return client.auth.getSession().then(function (r) {
-        session = (r && r.data && r.data.session) || null; if (session) loadMe(); fire();
-        // volta do Google: tira ?code= da barra de endereco
+        session = (r && r.data && r.data.session) || null; if (session && !me) loadMe(); fire();
         try { var u = new URL(location.href); if (u.searchParams.has("code")) { u.searchParams.delete("code"); history.replaceState(null, "", u.pathname + u.search + u.hash); } } catch (e) {}
         return client;
       });
     });
-    sbP.catch(function () { sbP = null; });
+    sbP.catch(function (e) { console.error("[ranking] supabase-js nao carregou", e); sbP = null; });
     return sbP;
   }
+  function redirectLogin() {
+    return sb().then(function (c) { return c.auth.signInWithOAuth({provider: "google", options: {redirectTo: location.origin + location.pathname}}); });
+  }
+  // ---- Google Identity Services ----
+  var gsiP = null, gsiNonce = null;
+  function hex(buf) { return Array.prototype.map.call(new Uint8Array(buf), function (b) { return ("0" + b.toString(16)).slice(-2); }).join(""); }
+  function gsi() {
+    if (!GSI_CLIENT_ID || FAKE) return Promise.reject(new Error("sem GIS"));
+    if (gsiP) return gsiP;
+    gsiP = new Promise(function (res, rej) {
+      var sc = document.createElement("script"); sc.src = "https://accounts.google.com/gsi/client"; sc.async = true;
+      sc.onload = function () { res(); }; sc.onerror = function () { rej(new Error("gsi nao carregou")); };
+      document.head.appendChild(sc); setTimeout(function () { rej(new Error("gsi demorou")); }, 6000);
+    }).then(function () {
+      var raw = hex(crypto.getRandomValues(new Uint8Array(16)));
+      return crypto.subtle.digest("SHA-256", new TextEncoder().encode(raw)).then(function (h) {
+        gsiNonce = raw;
+        google.accounts.id.initialize({client_id: GSI_CLIENT_ID, nonce: hex(h), ux_mode: "popup", itp_support: true, use_fedcm_for_prompt: true,
+          callback: function (r) {
+            sb().then(function (c) { return c.auth.signInWithIdToken({provider: "google", token: r.credential, nonce: gsiNonce}); })
+              .then(function (x) { if (x && x.error) throw x.error; })
+              .catch(function (e) { console.error("[ranking] login Google (GIS) falhou, usando o redirect", e); redirectLogin(); });
+          }});
+      });
+    });
+    gsiP.catch(function (e) { console.warn("[ranking] GIS indisponivel:", e && e.message); });
+    return gsiP;
+  }
   var auth = {
-    ready: function () { return FAKE ? Promise.resolve(null) : sb(); },
+    ready: function () { if (FAKE) { fire(); return Promise.resolve(null); } return sb(); },
     user: user,
     on: function (cb) { subs.push(cb); },
+    // botao de login: o oficial do Google (GIS) quando houver Client ID; senao o nosso botao com redirect
+    button: function (box, fallbackBtn) {
+      box.appendChild(fallbackBtn);
+      gsi().then(function () {
+        var w = Math.min(320, Math.max(200, box.clientWidth || 240)), d = document.createElement("div");
+        google.accounts.id.renderButton(d, {type: "standard", theme: "outline", size: "large", shape: "pill", text: "signin_with", logo_alignment: "left", width: w, locale: document.documentElement.lang || "en"});
+        box.replaceChild(d, fallbackBtn);
+      }).catch(function () {});
+    },
+    // nome de usuario escolhido (opcional, unico, 1 troca a cada 24 h): devolve ok | len | bad | taken | wait | off
+    setName: function (name) {
+      if (FAKE) { var n = String(name || "").trim(); var c = !n ? "ok" : (n.length < 3 || n.length > 16 ? "len" : (/^(maria l\.?|speedy)$/i.test(n) ? "taken" : (/porra|fuck/i.test(n) ? "bad" : "ok"))); if (c === "ok") { fakeName = n || "João S."; fire(); } return Promise.resolve(c); }
+      return sb().then(function (c) { return c.rpc("set_username", {p_name: name}); }).then(function (r) {
+        if (r.error) { console.error("[ranking] set_username falhou", r.error); return "off"; }
+        if (r.data === "ok") loadMe(); return r.data;
+      }, function (e) { console.error("[ranking] set_username falhou", e); return "off"; });
+    },
     signIn: function () {
       if (FAKE) return Promise.resolve();
-      return sb().then(function (c) { return c.auth.signInWithOAuth({provider: "google", options: {redirectTo: location.origin + location.pathname}}); });
+      return redirectLogin();
     },
-    signOut: function () { if (FAKE) return Promise.resolve(); return sb().then(function (c) { return c.auth.signOut(); }).then(function () { session = null; me = null; fire(); }); }
+    signOut: function () { if (FAKE) return Promise.resolve(); try { window.google && google.accounts && google.accounts.id.disableAutoSelect(); } catch (e) {} return sb().then(function (c) { return c.auth.signOut(); }).then(function () { session = null; me = null; fire(); }); }
   };
+  if (GSI_CLIENT_ID && document.getElementById("rank")) sb(); // so nas paginas de jogo: com GIS o supabase-js precisa estar pronto quando o Google responder
 
   window.BG_SOCIAL = {
     device: device, compact: compact, auth: auth,
@@ -80,15 +131,18 @@
     like: function (game) { return rpc("toggle_like", {p_game: game, p_device: device()}).then(function (r) { return r[0]; }); },
     // so com login (o servidor recusa sem conta); em localhost finge sucesso
     submit: function (game, mode, score, day) {
-      if (LOCAL) return Promise.resolve(1);
+      if (LOCAL) { console.info("[ranking] (teste local, nao grava) pontuacao enviada:", game, mode, score); return Promise.resolve(1); }
       return sb().then(function (c) {
         if (!session) throw new Error("login");
-        return c.rpc("submit_score", {p_game: game, p_mode: mode, p_score: score, p_day: day || null}).then(function (r) { if (r.error) throw r.error; return r.data; });
+        return c.rpc("submit_score", {p_game: game, p_mode: mode, p_score: score, p_day: day || null}).then(function (r) {
+          if (r.error) { console.error("[ranking] submit_score falhou", r.error); throw r.error; }
+          console.info("[ranking] pontuacao enviada:", game, mode, score, "posicao", r.data); return r.data;
+        });
       });
     },
     top: function (game, mode, day, limit) {
       var body = {p_game: game, p_mode: mode, p_day: day || null, p_limit: limit || 10};
-      if (FAKE) return Promise.resolve([{rank: 1, name: "Maria L.", score: 2380, is_me: false, avatar: null, tag: ""}, {rank: 2, name: "João S.", score: 1835, is_me: true, avatar: null, tag: "#A3F"},
+      if (FAKE) return Promise.resolve([{rank: 1, name: "Maria L.", score: 2380, is_me: false, avatar: null, tag: ""}, {rank: 2, name: fakeName, score: 1835, is_me: true, avatar: null, tag: fakeName === "João S." ? "#A3F" : ""},
         {rank: 3, name: "João S.", score: 1420, is_me: false, avatar: null, tag: "#7C1"}, {rank: 4, name: "", score: 990, is_me: false, avatar: null, tag: "#0B2"}, {rank: 5, name: "Lukas M.", score: 610, is_me: false, avatar: null, tag: ""}]); // so teste local
       return sb().then(function (c) { return c.rpc("top_scores", body).then(function (r) { if (r.error) throw r.error; return r.data || []; }); }, function () { return rpc("top_scores", body); });
     }
