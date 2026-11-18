@@ -37,7 +37,7 @@
   }
   function gbtn() {
     var b = el("button", "gbtn"); b.type = "button"; b.innerHTML = G; b.appendChild(el("span", null, T("gLogin")));
-    b.addEventListener("click", function () { if (pend && !pend.sent) savePend(pend); lsSet(PK + "_open", "1"); if (S()) S().auth.signIn().catch(function () {}); });
+    b.addEventListener("click", function () { if (pend && !pend.sent) savePend(pend); lsSet(PK + "_open", String(Date.now())); if (S()) S().auth.signIn().catch(function () {}); });
     return b;
   }
 
@@ -194,11 +194,12 @@
   function hideCta() { if (cta) cta.classList.remove("on"); }
 
   var bestSentFor = null, askedFor = null;
+  function openFlag() { var v = +lsGet(PK + "_open"); return v > 1 && Date.now() - v < 6e5; } /* login pedido pelo ranking ha menos de 10 min; sinal velho nao abre nada */
   function afterLogin(u) {
     if (!u) { bestSentFor = askedFor = null; if (dlg && dlg.open) list(); return; }
     hideCta();
-    // conta sem apelido: abre na hora "Escolha seu apelido" (as pontuacoes ja vao para o servidor e aparecem quando o apelido for salvo)
-    if (u.kind === "google" && u.ready && !u.custom && askedFor !== u.id && dlg) { askedFor = u.id; lsSet(PK + "_open", ""); var lp = loadPend(); open(lp ? lp.mode : view.mode, lp ? lp.n : view.n); }
+    // conta sem apelido: pede o apelido SO se a pessoa acabou de entrar pelo ranking (dialogo aberto ou botao de login); abrir o jogo nunca pede (2026-11-18)
+    if (u.kind === "google" && u.ready && !u.custom && askedFor !== u.id && dlg) { askedFor = u.id; if (dlg.open) list(); else if (openFlag()) { lsSet(PK + "_open", ""); var lp = loadPend(); open(lp ? lp.mode : view.mode, lp ? lp.n : view.n); } }
     var p = loadPend(), job = null;
     if (p && !(pend && pend.sent)) { pend = p; job = send(p); }
     if (bestSentFor !== u.id) { // ao entrar: o recorde guardado no aparelho tambem vai para o ranking (o servidor guarda o maior)
@@ -206,7 +207,7 @@
       if (b > 0 && !(p && p.score >= b)) { var bp = {mode: MODE, score: b, day: null, n: 0, rank: null, sent: false}; job = (job || Promise.resolve()).catch(function () {}).then(function () { return send(bp); }); }
     }
     (job || Promise.resolve()).catch(function () {}).then(function () {
-      if (lsGet(PK + "_open")) { lsSet(PK + "_open", ""); open(p ? p.mode : view.mode, p ? p.n : view.n); }
+      if (openFlag()) { lsSet(PK + "_open", ""); open(p ? p.mode : view.mode, p ? p.n : view.n); }
       else if (dlg && dlg.open) list();
     });
   }
