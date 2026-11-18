@@ -36,12 +36,12 @@
   var GSI_CLIENT_ID = "517130945498-dhisrma92ccd9h4kqrtrq5n4monhmtu7.apps.googleusercontent.com"; // Client ID PUBLICO do cliente Web "Bartel Games Web" (projeto bartel-games-515023)
   var sbP = null, client = null, session = null, me = null, subs = [];
   var FAKE = LOCAL && /[?&]fakeauth=1/.test(location.search); // teste visual no PC: finge uma conta (nada vai ao banco)
-  var fireT = 0, fakeName = "João S.";
+  var fireT = 0, fakeName = ""; // teste: comeca sem apelido
   // fora do callback do onAuthStateChange: chamar o supabase la dentro trava o lock do auth (o envio da pontuacao ficava preso)
   function fire() { clearTimeout(fireT); fireT = setTimeout(function () { var u = user(); for (var i = 0; i < subs.length; i++) { try { subs[i](u); } catch (e) { console.error("[ranking] erro no aviso de login", e); } } }, 0); }
   function user() {
-    if (FAKE) return {name: fakeName, avatar: null, ready: true, id: "fake", custom: fakeName !== "João S.", canChangeAt: null};
-    return session ? {name: me ? me.name : "", avatar: me ? me.avatar : null, ready: !!me, id: session.user && session.user.id, custom: !!(me && me.custom), canChangeAt: me ? me.canChangeAt : null} : null;
+    if (FAKE) return {name: fakeName, avatar: null, ready: true, id: "fake", custom: !!fakeName, canChangeAt: null};
+    return session ? {name: me ? me.name : "", avatar: null, ready: !!me, id: session.user && session.user.id, custom: !!(me && me.custom), canChangeAt: me ? me.canChangeAt : null} : null;
   }
   function loadMe() {
     if (!client || !session) return;
@@ -103,13 +103,15 @@
       box.appendChild(fallbackBtn);
       gsi().then(function () {
         var w = Math.min(320, Math.max(200, box.clientWidth || 240)), d = document.createElement("div");
+        // iframe do GIS: com color-scheme escuro na pagina o iframe ganha fundo branco opaco (cantos brancos); light + recorte arredondado
+        d.style.cssText = "color-scheme:light;border-radius:999px;overflow:hidden;display:inline-block;line-height:0;background:transparent";
         google.accounts.id.renderButton(d, {type: "standard", theme: "outline", size: "large", shape: "pill", text: "signin_with", logo_alignment: "left", width: w, locale: document.documentElement.lang || "en"});
         box.replaceChild(d, fallbackBtn);
       }).catch(function () {});
     },
     // nome de usuario escolhido (opcional, unico, 1 troca a cada 24 h): devolve ok | len | bad | taken | wait | off
     setName: function (name) {
-      if (FAKE) { var n = String(name || "").trim(); var c = !n ? "ok" : (n.length < 3 || n.length > 16 ? "len" : (/^(maria l\.?|speedy)$/i.test(n) ? "taken" : (/porra|fuck/i.test(n) ? "bad" : "ok"))); if (c === "ok") { fakeName = n || "João S."; fire(); } return Promise.resolve(c); }
+      if (FAKE) { var n = String(name || "").trim(); var c = (n.length < 3 || n.length > 16 ? "len" : (/^(maria l\.?|speedy)$/i.test(n) ? "taken" : (/porra|fuck/i.test(n) ? "bad" : "ok"))); if (c === "ok") { fakeName = n; fire(); } return Promise.resolve(c); }
       return sb().then(function (c) { return c.rpc("set_username", {p_name: name}); }).then(function (r) {
         if (r.error) { console.error("[ranking] set_username falhou", r.error); return "off"; }
         if (r.data === "ok") loadMe(); return r.data;
@@ -166,8 +168,8 @@
     },
     top: function (game, mode, day, limit) {
       var body = {p_game: game, p_mode: mode, p_day: day || null, p_limit: limit || 10};
-      if (FAKE) return Promise.resolve([{rank: 1, name: "Maria L.", score: 2380, is_me: false, avatar: null, tag: ""}, {rank: 2, name: fakeName, score: 1835, is_me: true, avatar: null, tag: fakeName === "João S." ? "#A3F" : ""},
-        {rank: 3, name: "João S.", score: 1420, is_me: false, avatar: null, tag: "#7C1"}, {rank: 4, name: "", score: 990, is_me: false, avatar: null, tag: "#0B2"}, {rank: 5, name: "Lukas M.", score: 610, is_me: false, avatar: null, tag: ""}]); // so teste local
+      if (FAKE) return Promise.resolve([{rank: 1, name: "MariaTurbo", score: 2380, is_me: false, avatar: null, tag: ""}].concat(fakeName ? [{rank: 2, name: fakeName, score: 1835, is_me: true, avatar: null, tag: ""}] : [],
+        [{rank: fakeName ? 3 : 2, name: "Speedy", score: 1420, is_me: false, avatar: null, tag: ""}, {rank: fakeName ? 4 : 3, name: "Lukas_M", score: 610, is_me: false, avatar: null, tag: ""}])); // so teste local
       return sb().then(function (c) { return c.rpc("top_scores", body).then(function (r) { if (r.error) throw r.error; return r.data || []; }); }, function () { return rpc("top_scores", body); });
     }
   };

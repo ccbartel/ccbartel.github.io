@@ -1,5 +1,5 @@
 // Burnout City: curtir (barra do topo) e ranking global sobre o ../social.js (BG_SOCIAL).
-// Ranking SO com login Google (2026-11-17): o nome e a foto vem da conta, calculados no servidor; jogar nunca pede login.
+// Ranking SO com login Google + apelido obrigatorio (2026-11-17): so o apelido aparece; nome e foto do Google nunca; jogar nunca pede login.
 // Gerado por src/supabase/gera_social_ui.py a partir de social-ui.template.js (nao editar a copia do jogo).
 (function () {
   var GAME = "burnout-city", MODE = "play", BEST = "bc_best", TPLAY = "rankPlay";
@@ -22,7 +22,7 @@
     "#rank .rname input:focus{outline:none;border-color:#ffd84d}#rank .rnmsg{margin:0;font-size:15px;opacity:.9}#rank .rnmsg.err{color:#ff8a8a;opacity:1;font-weight:700}#rank .rnbtns{display:flex;gap:8px}#rank .rnbtns .rbtn{margin-top:0;flex:1}" +
     "#rank .rout{border:0;background:none;color:inherit;opacity:.7;text-decoration:underline;cursor:pointer;font:600 13px/1 system-ui,sans-serif;padding:6px}" +
     "#rank .rav{flex:none;width:28px;height:28px;border-radius:50%;object-fit:cover;background:#ffffff26;display:inline-flex;align-items:center;justify-content:center;font:700 14px/1 system-ui,sans-serif}" +
-    "#rank li .rtag{opacity:.6;font-size:12px;margin-left:4px}" +
+    "#rank .rnh{margin:0;font-weight:800;font-size:18px}" +
     "#bg-cta{position:fixed;left:50%;bottom:calc(var(--adH,60px) + 12px);transform:translate(-50%,20px);opacity:0;z-index:25;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px 10px;width:max-content;max-width:min(420px,calc(100vw - 20px));padding:10px 34px 10px 14px;border-radius:18px;border:1.5px solid #ffffff38;background:#141018f2;color:#fff;box-shadow:0 8px 24px #0009;transition:opacity .25s,transform .25s;pointer-events:none;font:600 14px/1.2 system-ui,-apple-system,'Segoe UI',sans-serif}" +
     "#bg-cta.top{bottom:auto;top:calc(var(--topH,48px) + 8px)}.gbox{display:flex;justify-content:center;min-height:44px}" +
     "#bg-cta.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}#bg-cta .ct{flex:1 1 100%;text-align:center}" +
@@ -91,29 +91,31 @@
   var editing = false;
   function header() {
     var u = user();
-    if (u && editing) return nameForm(u);
+    if (u && !u.ready) return el("p", "rmsg", T("rankLoad"));
+    if (u && (editing || !u.custom)) return nameForm(u, !u.custom); // sem apelido: escolher antes de aparecer no ranking
     if (u) {
       var row = el("div", "rme"), out = el("button", "rout", T("logout")), ed = el("button", "rout red", "✏ " + T("rename")); out.type = ed.type = "button";
       out.addEventListener("click", function () { S().auth.signOut().then(list, list); });
       ed.addEventListener("click", function () { editing = true; list(); });
       var acts = el("span", "racts"); acts.append(ed, out);
-      row.append(avatar(u.custom ? null : u.avatar, u.name || T("player")), el("span", "rn", T("youAre", u.name || T("player"))), acts);
+      row.append(avatar(null, u.name || T("player")), el("span", "rn", T("youAre", u.name || T("player"))), acts);
       return row;
     }
     var box = el("div", "rlog"); box.append(el("p", null, T("rankLogin")), gbox(), el("p", null, T("rankWhy")));
     return box;
   }
-  // "Mudar nome": campo inline; o servidor valida (3-16, sem palavrao, unico, 1 troca a cada 24 h)
-  function nameForm(u) {
-    var f = el("form", "rname"), inp = el("input"), msg = el("p", "rnmsg", T("nameHint")), ok = el("button", "rbtn", T("save")), no = el("button", "rbtn sec", T("cancel"));
-    inp.maxLength = 16; inp.value = u.custom ? u.name : ""; inp.placeholder = u.custom ? "" : u.name; inp.autocomplete = "off"; inp.id = "bg-uname";
+  // apelido: campo inline; o servidor valida (3-16, sem palavrao, unico; trocar = 1 vez a cada 24 h, a 1a escolha nao conta)
+  function nameForm(u, need) {
+    var f = el("form", "rname"), inp = el("input"), msg = el("p", "rnmsg", T("nameHint")), ok = el("button", "rbtn", T("save")), no = el("button", "rbtn sec", T(need ? "logout" : "cancel"));
+    inp.maxLength = 16; inp.value = u.custom ? u.name : ""; inp.placeholder = T("pickName"); inp.autocomplete = "off"; inp.id = "bg-uname";
     inp.setAttribute("aria-label", T("rename")); ok.type = "submit"; no.type = "button";
     var row = el("div", "rnbtns"); row.append(ok, no);
+    if (need) f.append(el("p", "rnh", T("pickName")));
     f.append(inp, msg, row);
-    no.addEventListener("click", function () { editing = false; list(); });
+    no.addEventListener("click", function () { editing = false; if (need) S().auth.signOut().then(list, list); else list(); });
     f.addEventListener("submit", function (e) {
       e.preventDefault(); var v = inp.value.replace(/\s+/g, " ").trim();
-      if (v && (v.length < 3 || v.length > 16)) { msg.textContent = T("nameLen"); msg.className = "rnmsg err"; return; }
+      if (v.length < 3 || v.length > 16) { msg.textContent = T("nameLen"); msg.className = "rnmsg err"; return; }
       ok.disabled = true; msg.textContent = T("rankLoad"); msg.className = "rnmsg";
       S().auth.setName(v).then(function (code) {
         ok.disabled = false;
@@ -138,8 +140,8 @@
       var ol = el("ol");
       rows.forEach(function (r) {
         var li = el("li"); if (r.is_me) li.className = "me";
-        var nm = el("span", "rn", r.name || T("player")); if (r.tag) nm.appendChild(el("span", "rtag", r.tag));
-        li.append(el("span", "rp", String(r.rank)), avatar(r.avatar, r.name || T("player")), nm, el("span", "rs", String(r.score)));
+        var nm = el("span", "rn", r.name || T("player"));
+        li.append(el("span", "rp", String(r.rank)), avatar(null, r.name || T("player")), nm, el("span", "rs", String(r.score)));
         ol.append(li);
       });
       body.append(ol);
@@ -183,10 +185,12 @@
   }
   function hideCta() { if (cta) cta.classList.remove("on"); }
 
-  var bestSentFor = null;
+  var bestSentFor = null, askedFor = null;
   function afterLogin(u) {
-    if (!u) { bestSentFor = null; if (dlg && dlg.open) list(); return; }
+    if (!u) { bestSentFor = askedFor = null; if (dlg && dlg.open) list(); return; }
     hideCta();
+    // conta sem apelido: abre na hora "Escolha seu apelido" (as pontuacoes ja vao para o servidor e aparecem quando o apelido for salvo)
+    if (u.ready && !u.custom && askedFor !== u.id && dlg) { askedFor = u.id; lsSet(PK + "_open", ""); var lp = loadPend(); open(lp ? lp.mode : view.mode, lp ? lp.n : view.n); }
     var p = loadPend(), job = null;
     if (p && !(pend && pend.sent)) { pend = p; job = send(p); }
     if (bestSentFor !== u.id) { // ao entrar: o recorde guardado no aparelho tambem vai para o ranking (o servidor guarda o maior)
