@@ -28,7 +28,12 @@
     "#bg-cta{position:fixed;left:50%;bottom:calc(var(--adH,60px) + 12px);transform:translate(-50%,20px);opacity:0;z-index:25;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px 10px;width:max-content;max-width:min(420px,calc(100vw - 20px));padding:10px 34px 10px 14px;border-radius:18px;border:1.5px solid #ffffff38;background:#141018f2;color:#fff;box-shadow:0 8px 24px #0009;transition:opacity .25s,transform .25s;pointer-events:none;font:600 14px/1.2 system-ui,-apple-system,'Segoe UI',sans-serif}" +
     "#bg-cta.top{bottom:auto;top:calc(var(--topH,48px) + 8px)}.gbox{display:flex;justify-content:center;min-height:44px}" +
     "#bg-cta.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}#bg-cta .ct{flex:1 1 100%;text-align:center}" +
-    "#bg-cta .cx{position:absolute;right:4px;top:4px;border:0;background:none;color:#fff;opacity:.7;font:700 20px/1 system-ui,sans-serif;cursor:pointer;padding:4px 8px}";
+    "#bg-cta .cx{position:absolute;right:4px;top:4px;border:0;background:none;color:#fff;opacity:.7;font:700 20px/1 system-ui,sans-serif;cursor:pointer;padding:4px 8px}" +
+    "#rank.nmode form[method=dialog]{display:none}" +
+    "#bg-ginv{margin:auto;max-width:min(380px,calc(100vw - 32px));padding:20px;border:1.5px solid #ffffff26;border-radius:20px;background:#2b1640;color:#fff;font:600 16px/1.4 system-ui,-apple-system,'Segoe UI',sans-serif;text-align:center}" +
+    "#bg-ginv::backdrop{background:#0009}#bg-ginv p{margin:0 0 14px}#bg-ginv .gir{display:flex;gap:10px}" +
+    "#bg-ginv .gib{flex:1;height:48px;border:0;border-radius:999px;cursor:pointer;font:800 17px/1 system-ui,sans-serif;color:#1a1300;background:linear-gradient(180deg,#ffe27a,#f7b60c)}" +
+    "#bg-ginv .gib.sec{background:#ffffff14;color:#fff;border:1.5px solid #ffffff38}#bg-ginv .gib:focus-visible{outline:3px solid #ffd84d;outline-offset:3px}";
   var G = '<svg viewBox="0 0 48 48" width="20" height="20" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.7 1.2 9.2 3.6l6.9-6.9C35.9 2.4 30.4 0 24 0 14.6 0 6.6 5.4 2.7 13.3l8 6.2C12.6 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.4c-.5 2.9-2.2 5.3-4.6 6.9l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.7 28.5c-.5-1.4-.8-2.9-.8-4.5s.3-3.1.8-4.5l-8-6.2C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l8-6.2z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.4-4.1-13.3-9.8l-8 6.2C6.6 42.6 14.6 48 24 48z"/></svg>';
   function gbox() { // caixa do login: botao oficial do Google (GIS) ou o nosso (redirect) de reserva
     var box = el("div", "gbox"), b = gbtn();
@@ -95,8 +100,7 @@
     var u = user();
     if (u && !u.ready) return el("p", "rmsg", T("rankLoad"));
     if (!u || editing || !u.custom) { // sem apelido: escolher (sem login); com Google sem apelido: escolher antes de aparecer
-      var wrap = el("div"); wrap.append(nameForm(u, !u || !u.custom));
-      if (!u) wrap.append(gopt());
+      var wrap = el("div"); wrap.append(nameForm(u, !u || !u.custom)); /* sem o Google aqui: o convite vem depois de salvar (2026-11-18) */
       return wrap;
     }
     var row = el("div", "rme"), ed = el("button", "rout red", "✏ " + T("rename")); ed.type = "button";
@@ -111,21 +115,21 @@
     var b = el("div", "rgopt"); b.append(el("p", null, T("gKeep")), gbox()); return b;
   }
   // apelido: campo inline; o servidor valida (3-16, sem palavrao, unico; trocar = 1 vez a cada 24 h, a 1a escolha nao conta)
-  function nameForm(u, need) {
-    var f = el("form", "rname"), inp = el("input"), msg = el("p", "rnmsg", T("nameHint")), ok = el("button", "rbtn", T("save")), no = el("button", "rbtn sec", T(need ? "logout" : "cancel"));
+  function nameForm(u, need, cb) { /* cb(ok): janela so do apelido (Salvar/Cancelar seguem para o destino) */
+    var f = el("form", "rname"), inp = el("input"), msg = el("p", "rnmsg", T("nameHint")), ok = el("button", "rbtn", T("save")), no = el("button", "rbtn sec", T(need && !cb ? "logout" : "cancel"));
     inp.maxLength = 16; inp.value = u && u.custom ? u.name : ""; inp.placeholder = T("pickName"); inp.autocomplete = "off"; inp.id = "bg-uname";
     inp.setAttribute("aria-label", T("rename")); ok.type = "submit"; no.type = "button";
-    var row = el("div", "rnbtns"); row.append(ok); if (u) row.append(no); // sem conta e sem apelido nao ha o que cancelar
+    var row = el("div", "rnbtns"); row.append(ok); if (u || cb) row.append(no); /* sem conta e sem apelido so ha o que cancelar na janela do apelido */
     if (need) f.append(el("p", "rnh", T("pickName")));
     f.append(inp, msg, row);
-    no.addEventListener("click", function () { editing = false; if (need && u.kind === "google") S().auth.signOut().then(list, list); else list(); });
+    no.addEventListener("click", function () { editing = false; if (cb) { cb(false); return; } if (need && u.kind === "google") S().auth.signOut().then(list, list); else list(); });
     f.addEventListener("submit", function (e) {
       e.preventDefault(); var v = inp.value.replace(/\s+/g, " ").trim();
       if (v.length < 3 || v.length > 16) { msg.textContent = T("nameLen"); msg.className = "rnmsg err"; return; }
       ok.disabled = true; msg.textContent = T("rankLoad"); msg.className = "rnmsg";
       S().auth.setName(v).then(function (code) {
         ok.disabled = false;
-        if (code === "ok") { editing = false; setTimeout(list, 400); return; }
+        if (code === "ok") { editing = false; if (cb) { cb(true); return; } setTimeout(list, 400); return; }
         msg.className = "rnmsg err";
         msg.textContent = code === "taken" ? T("nameTaken") : code === "bad" ? T("nameBad") : code === "len" ? T("nameLen") : code === "wait" ? T("nameWait") : code === "limit" ? T("nameLimit") : T("rankOff");
         inp.focus();
@@ -153,8 +157,35 @@
       body.append(ol);
     }).catch(function () { body.replaceChildren(header(), el("p", "rmsg", T("rankOff"))); });
   }
+  // ---- janela SO do apelido (Ao vivo, link de sala, ranking): campo, regra, Salvar e Cancelar; sem Google, sem lista, sem Fechar ----
+  var nameMode = false, nameCb = null, devChecked = false, ginv = null;
+  function askName(ttl, done) {
+    if (!dlg) { if (done) done(false); return; }
+    nameMode = true; nameCb = done || null; dlg.classList.add("nmode"); title.textContent = ttl; hideCta();
+    body.replaceChildren(nameForm(user(), true, function (ok) { var c = nameCb; nameMode = false; nameCb = null; dlg.classList.remove("nmode"); dlg.close(); if (c) c(ok); if (ok) setTimeout(invite, 450); }));
+    if (!dlg.open) dlg.showModal();
+  }
+  // convite curto depois de salvar o apelido: guardar na conta Google? (so sem login; NAO = 30 dias sem perguntar)
+  function invite() {
+    var u = user(); if (u && u.kind === "google") return;
+    var no = +lsGet("bg_ginv_no"); if (no && Date.now() - no < 30 * 864e5) return;
+    if (!S() || !S().auth || !S().auth.signIn) return;
+    if (!ginv) {
+      ginv = el("dialog"); ginv.id = "bg-ginv"; ginv.setAttribute("aria-label", T("gLogin"));
+      var p = el("p", null, T("gInvite")), row = el("div", "gir"), y = el("button", "gib", T("gYes")), n = el("button", "gib sec", T("gNo"));
+      y.type = "button"; n.type = "button";
+      y.addEventListener("click", function () { ginv.close(); if (dlg && dlg.open) lsSet(PK + "_open", String(Date.now())); if (pend && !pend.sent) savePend(pend); S().auth.signIn().catch(function () {}); });
+      n.addEventListener("click", function () { lsSet("bg_ginv_no", String(Date.now())); ginv.close(); });
+      ginv.addEventListener("keydown", function (e) { e.stopPropagation(); });
+      row.append(y, n); ginv.append(p, row); document.body.appendChild(ginv);
+    }
+    if (!ginv.open) ginv.showModal();
+  }
   function open(mode, n) {
     if (!dlg) return;
+    var u0 = user();
+    if (!u0 && !devChecked && S() && S().auth && S().auth.dev) { devChecked = true; S().auth.dev().then(function () { open(mode, n); }, function () { open(mode, n); }); return; } /* apelido do aparelho ainda carregando */
+    if (!nameMode && (!u0 || (u0.ready && !u0.custom))) { askName(titleFor({mode: mode, n: n || 0}), function (ok) { if (ok) open(mode, n); }); return; } /* sem apelido: primeiro a janela so do apelido, depois o ranking */
     var me = pend && pend.mode === mode ? pend : null;
     view = {mode: mode, day: mode === "daily" ? (me ? me.day : today()) : null, n: n || (me ? me.n : 0)};
     title.textContent = titleFor(view);
@@ -218,6 +249,7 @@
       body = dlg.querySelector(".rbody"); title = dlg.querySelector("h1");
       dlg.addEventListener("keydown", function (e) { e.stopPropagation(); });
       dlg.addEventListener("click", function (e) { if (e.target === dlg) dlg.close(); }); // toque fora fecha
+      dlg.addEventListener("close", function () { if (!nameMode) return; var c = nameCb; nameMode = false; nameCb = null; dlg.classList.remove("nmode"); if (c) c(false); }); /* Esc ou toque fora na janela do apelido = cancelar */
     }
     initLike();
     if (S() && S().event) { S().game(GAME); S().event(GAME, "open"); }
@@ -236,6 +268,6 @@
       if (lsGet("bg_auth") || /[?&]code=/.test(location.search) || /[?&]fakeauth=1/.test(location.search)) S().auth.ready().catch(function () {});
     }
   }
-  window.GTF_RANK = {open: open, ended: ended, ok: function () { return !!S(); }};
+  window.GTF_RANK = {open: open, ended: ended, ok: function () { return !!S(); }, askName: askName};
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
 })();

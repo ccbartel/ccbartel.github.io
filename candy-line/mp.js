@@ -3,7 +3,7 @@
 // + Supabase Realtime no canal da sala (broadcast "pk" = pacote confirmado, "st" = estado mudou; presence = quem esta conectado).
 // Ajustes faceis: as constantes abaixo (o servidor tem as mesmas em src/supabase/2026-11-17_candy_mp.sql).
 (function () {
-  var MIN_GOAL = 4, MAX_GOAL = 99, DEF_GOAL = 12, ALONE_S = 30, DROP_S = 20, MAXP = 4, BACK_S = 20;
+  var MIN_GOAL = 4, MAX_GOAL = 99, DEF_GOAL = 12, ALONE_S = 30, DROP_S = 20, MAXP = 4, BACK_S = 20, LOBBY_BACK_S = 180; /* sala de espera: o dono pode ir ao WhatsApp por ate 3 min (igual ao servidor) */
   var GOALS = [4, 12, 25, 50, 99];
   var GAME = "candy-line", URL_ = "https://bartelgames.com.br/candy-line/";
   var COL = ["#ff4096", "#3d8bff", "#2fbf5b", "#f7a400"]; // cor de cada vaga (rosa, azul, verde, amarelo)
@@ -63,7 +63,15 @@
   }
   function pollMs() { return st.phase === "race" ? 4000 : st.phase === "count" ? 2500 : 2000; }
   function netShow() { if (!badge) return; badge.classList.toggle("hide", !(st.code && st.phase !== "off" && (st.netBad >= 2 || (st.ch && st.chOk === false)))); }
-  function save() { if (st.code) lsSet("cl_mp", {code: st.code, t: Date.now()}); }
+  function save() { /* a sala fica no endereco (?sala=) e no aparelho: recarregar ou voltar do WhatsApp entra de novo na mesma sala */
+    if (!st.code) return; var v = st.view;
+    lsSet("cl_mp", {code: st.code, t: Date.now(), lobby: !!(v && v.state === "lobby"), host: !!(v && v.host === v.me)});
+    try { var u = new URL(location.href); if (u.searchParams.get("sala") !== st.code) { u.searchParams.set("sala", st.code); history.replaceState(null, "", u.pathname + u.search + u.hash); } } catch (e) {}
+  }
+  function unsave() { lsSet("cl_mp", null); try { var u = new URL(location.href); if (u.searchParams.has("sala")) { u.searchParams.delete("sala"); history.replaceState(null, "", u.pathname + u.search + u.hash); } } catch (e) {} }
+  function wake() { /* voltou do fundo (WhatsApp) ou da pagina guardada: reconecta o canal na hora e pergunta o estado */
+    if (!st.code || st.phase === "off") return; var v = st.view; drop(); if (v) chan(v); poll(0);
+  }
 
   // ---------- estado vindo do servidor ----------
   function meP(v) { v = v || st.view; if (!v) return null; for (var i = 0; i < v.players.length; i++) if (v.players[i].pid === v.me) return v.players[i]; return null; }
@@ -103,7 +111,7 @@
   }
   // sai da sala local (sem avisar o servidor: para quem caiu ou foi recusado)
   function out(msg) { if (msg) toast(msg); reset(); G().menu(); }
-  function reset() { clearTimeout(st.pollT); drop(); lsSet("cl_mp", null); st.code = null; st.view = null; st.phase = "off"; st.live = {}; st.want = st.sent = 0; st.sending = false; hideCard(); bar.classList.add("hide"); cd.classList.add("hide"); netShow(); }
+  function reset() { clearTimeout(st.pollT); drop(); unsave(); st.code = null; st.view = null; st.phase = "off"; st.live = {}; st.want = st.sent = 0; st.sending = false; hideCard(); bar.classList.add("hide"); cd.classList.add("hide"); netShow(); }
   function leave() { var c = st.code; if (c) { bc("st"); call("mp_leave", {p_code: c}).catch(function () {}); } reset(); G().menu(); }
 
   // ---------- cartao (todas as telas do modo ao vivo) ----------
@@ -121,10 +129,7 @@
   function home() {
     st.phase = "home"; G().wait();
     var u = user(), kids = [title(T("mpT"))];
-    if (!u || !u.custom || !u.name) {
-      kids.push(h("p", "mps", T("mpNeed")), btn("mpb pri", T("mpPick"), function () { pickName(); }), btn("mpx", T("back"), function () { reset(); G().menu(); }));
-      showCard(kids); return;
-    }
+    if (!u || !u.custom || !u.name) { askLive(); return; } /* sem apelido: abre direto a janela so do apelido (2026-11-18) */
     var you = h("p", "mpyou"); you.append(h("span", "mpav", (u.name || "?").charAt(0).toUpperCase()), h("span", null, T("mpYou", u.name)));
     var q = btn("mpb pri", "", function () { quick(); }); q.append(h("b", null, T("mpQuick")), h("small", null, T("mpQuickSub", String(DEF_GOAL))));
     var c = btn("mpb", "", function () { create(); }); c.append(h("b", null, T("mpCreate")), h("small", null, T("mpCreateSub")));
@@ -132,10 +137,14 @@
     kids.push(you, q, c, j, btn("mpx", T("back"), function () { reset(); G().menu(); }));
     showCard(kids);
   }
-  function pickName() {
-    var d = document.getElementById("rank"); if (!d || !window.CL_RANK) return;
-    window.CL_RANK.open("play");
-    d.addEventListener("close", function () { setTimeout(function () { if (st.phase !== "home") return; var u = user(); if (st.pendCode && u && u.custom) { var c = st.pendCode; st.pendCode = null; join(c); } else home(); }, 300); }, {once: true});
+  function askLive() {
+    if (st.asking) return; if (!window.CL_RANK || !window.CL_RANK.askName) { reset(); G().menu(); return; }
+    st.asking = true; hideCard(); G().wait();
+    window.CL_RANK.askName(T("mpT"), function (ok) {
+      st.asking = false;
+      if (!ok) { st.pendCode = null; reset(); G().menu(); return; }
+      if (st.pendCode) { var c = st.pendCode; st.pendCode = null; st.phase = "home"; showCard([title(T("mpT")), h("p", "mps", T("rankLoad"))]); join(c, "link"); } else home();
+    });
   }
   function create() {
     st.phase = "create"; var g = Math.min(MAX_GOAL, Math.max(MIN_GOAL, lsGet("cl_mp_goal") || DEF_GOAL));
@@ -169,7 +178,7 @@
   }
   function join(c, how) {
     var go = card.querySelector(".mpgo"); if (go) go.disabled = true;
-    call("mp_join", {p_code: c}).then(function (v) { if (go) go.disabled = false; if (v && v.ok) { ev("mp_join", {mode: how || "code"}); st.joinT = Date.now(); } apply(v); poll(1500); },
+    call("mp_join", {p_code: c}).then(function (v) { if (go) go.disabled = false; if (v && v.ok) { if (how !== "back") ev("mp_join", {mode: how || "code"}); st.joinT = Date.now(); } apply(v); poll(1500); },
       function () { if (go) go.disabled = false; toast(T("mpErrNet")); });
   }
   function quick() {
@@ -355,9 +364,11 @@
     bar = h("div", "hide"); bar.id = "mpbar"; bar.setAttribute("aria-live", "polite"); hud.append(bar);
     cd = h("div", "a fancy hide"); cd.id = "mpcd"; cd.append(h("span", "l0"), h("span", "l1"), h("span", "l2")); cd.setAttribute("aria-live", "assertive"); hud.append(cd);
     badge = h("div", "hide", T("mpReconn")); badge.id = "mpnet"; hud.append(badge);
-    window.addEventListener("online", function () { if (st.code) poll(0); });
-    document.addEventListener("visibilitychange", function () { if (!document.hidden && st.code) poll(0); });
-    try { S().auth.on(function () { if (st.phase === "home") home(); }); } catch (e) {}
+    window.addEventListener("online", wake);
+    document.addEventListener("visibilitychange", function () { if (!document.hidden) wake(); });
+    window.addEventListener("pageshow", function (e) { if (e.persisted) wake(); });
+    document.addEventListener("resume", wake); /* Chrome do celular descongelou a pagina */
+    try { S().auth.on(function () { if (st.phase === "home" && !st.asking) home(); }); } catch (e) {}
   }
   function nameReady() { // apelido do aparelho (sem baixar o supabase-js) ou conta Google
     var s = S(); if (!s) return Promise.resolve(null);
@@ -370,12 +381,12 @@
     // chamado pelo jogo depois do 1o menu: link ?sala=XXXX ou volta para a sala em ate 20 s (recarregou a pagina / caiu)
     boot: function () {
       if (!card) build();
-      var c = null; try { var u = new URL(location.href); c = (u.searchParams.get("sala") || "").toUpperCase().replace(/[^A-Z]/g, ""); if (u.searchParams.has("sala")) { u.searchParams.delete("sala"); history.replaceState(null, "", u.pathname + u.search + u.hash); } } catch (e) {}
+      var c = null; try { c = (new URL(location.href).searchParams.get("sala") || "").toUpperCase().replace(/[^A-Z]/g, ""); } catch (e) {}
       var sv = lsGet("cl_mp");
-      if (c && c.length >= 4) {
-        G().wait(); st.phase = "home"; showCard([title(T("mpT")), h("p", "mps", T("rankLoad"))]);
-        nameReady().then(function (u) { if (u && u.custom) join(c, "link"); else { st.pendCode = c; home(); } });
-      } else if (sv && sv.code && Date.now() - sv.t < BACK_S * 1000) {
+      if (c && c.length >= 4) { /* link de sala, ou o proprio dono voltando (o ?sala= fica no endereco enquanto esta na sala) */
+        G().wait(); st.phase = "home"; showCard([title(T("mpT")), h("p", "mps", T(sv && sv.code === c ? "mpReconn" : "rankLoad"))]);
+        nameReady().then(function (u) { if (u && u.custom) join(c, sv && sv.code === c ? "back" : "link"); else { st.pendCode = c; home(); } });
+      } else if (sv && sv.code && Date.now() - sv.t < (sv.lobby ? LOBBY_BACK_S : BACK_S) * 1000) {
         G().wait(); st.phase = "home"; showCard([title(T("mpT")), h("p", "mps", T("mpReconn"))]);
         nameReady().then(function () { call("mp_join", {p_code: sv.code}).then(function (v) { if (v && v.ok) st.joinT = Date.now(); else if (v && v.err === "dropped") { out(T("mpErrDropped")); return; } apply(v); poll(1500); }, function () { out(T("mpErrNet")); }); });
       } else lsSet("cl_mp", null);

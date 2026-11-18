@@ -128,9 +128,9 @@
     button: function (box, fallbackBtn) {
       box.appendChild(fallbackBtn);
       gsi().then(function () {
-        var w = Math.min(320, Math.max(200, box.clientWidth || 240)), d = document.createElement("div");
+        var w = Math.min(300, Math.max(240, box.clientWidth || 260)), d = document.createElement("div");
         // iframe do GIS: com color-scheme escuro na pagina o iframe ganha fundo branco opaco (cantos brancos); light + recorte arredondado
-        d.style.cssText = "color-scheme:light;border-radius:999px;overflow:hidden;display:inline-block;line-height:0;background:transparent";
+        d.style.cssText = "color-scheme:light;border-radius:999px;overflow:hidden;display:inline-flex;background:transparent"; /* sem line-height:0: esmagava o texto do botao (so o G aparecia, 2026-11-18) */
         google.accounts.id.renderButton(d, {type: "standard", theme: "outline", size: "large", shape: "pill", text: "signin_with", logo_alignment: "left", width: w, locale: document.documentElement.lang || "en"});
         box.replaceChild(d, fallbackBtn);
       }).catch(function () {});
