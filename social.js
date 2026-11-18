@@ -1,6 +1,6 @@
 // Recursos sociais (Supabase): contador de partidas, likes por aparelho e ranking.
-// Ranking SO com login Google (pedido do Cristiano 2026-11-17: sem apelido livre, sem palavrao, sem nome repetido).
-// O nome exibido (primeiro nome + inicial) e calculado NO SERVIDOR a partir do perfil do Google; jogar nunca pede login.
+// Ranking com APELIDO (decisao dele 2026-11-17): o apelido pode ser do aparelho (bg_device + token secreto bg_dtok, so o hash
+// fica no servidor) ou da conta Google (opcional: guarda apelido e recorde em qualquer aparelho). Nome e foto do Google nunca aparecem.
 // A chave abaixo e a chave PUBLICA do projeto (feita para ficar no navegador); as tabelas so aceitam as funcoes rpc.
 (function () {
   var BASE = "https://yaznxsbhissyhvvyhweu.supabase.co";
@@ -28,24 +28,49 @@
   if (LOCAL) { var _rpc = rpc; rpc = function (fn, body) {
     if (fn === "record_play") return Promise.resolve(0);
     if (fn === "toggle_like") return Promise.resolve([{liked: true, likes: 1}]);
+    // apelido do aparelho: so no navegador (nomes "Speedy"/"Maria Turbo" fingem estar em uso)
+    if (fn === "my_device_name") { var fn0 = null; try { fn0 = localStorage.getItem("bg_fake_dev_name"); } catch (e) {} return Promise.resolve(fn0 ? [{name: fn0, can_change_at: null}] : []); }
+    if (fn === "set_device_name") { var n = String(body.p_name || "").trim(); var c = n.length < 3 || n.length > 16 ? "len" : /^(maria ?turbo|speedy)$/i.test(n) ? "taken" : /porra|fuck/i.test(n) ? "bad" : "ok";
+      if (c === "ok") try { localStorage.setItem("bg_fake_dev_name", n); } catch (e) {} return Promise.resolve(c); }
+    if (fn === "submit_score_device") { console.info("[ranking] (teste local, nao grava) pontuacao do aparelho:", body.p_game, body.p_score); return Promise.resolve(1); }
+    if (fn === "top_scores") { var me0 = null; try { me0 = localStorage.getItem("bg_fake_dev_name"); } catch (e) {}
+      return Promise.resolve([{rank: 1, name: "MariaTurbo", score: 2380, is_me: false}].concat(me0 ? [{rank: 2, name: me0, score: 1835, is_me: true}] : [], [{rank: me0 ? 3 : 2, name: "Speedy", score: 1420, is_me: false}])); }
     return _rpc(fn, body); }; }
+  // token secreto do aparelho: prova que o apelido do aparelho e deste navegador (o servidor guarda so o hash)
+  function dtok() {
+    var k = "bg_dtok", t = null;
+    try { t = localStorage.getItem(k); } catch (e) {}
+    if (!t || t.length < 32) { t = Array.prototype.map.call(crypto.getRandomValues(new Uint8Array(24)), function (b) { return ("0" + b.toString(16)).slice(-2); }).join(""); try { localStorage.setItem(k, t); } catch (e) {} }
+    return t;
+  }
 
   // ---- login Google (supabase-js carregado so quando o jogo precisa do ranking) ----
   // Botao oficial do Google Identity Services (janela mostra "Bartel Games", nao sai da pagina) + signInWithIdToken com nonce;
   // sem Client ID ou se o GIS falhar, volta ao redirect OAuth do Supabase (reserva).
   var GSI_CLIENT_ID = "517130945498-dhisrma92ccd9h4kqrtrq5n4monhmtu7.apps.googleusercontent.com"; // Client ID PUBLICO do cliente Web "Bartel Games Web" (projeto bartel-games-515023)
-  var sbP = null, client = null, session = null, me = null, subs = [];
+  var sbP = null, client = null, session = null, me = null, subs = [], dev = null, devP = null; // dev = apelido do aparelho {name, canChangeAt}
   var FAKE = LOCAL && /[?&]fakeauth=1/.test(location.search); // teste visual no PC: finge uma conta (nada vai ao banco)
   var fireT = 0, fakeName = ""; // teste: comeca sem apelido
   // fora do callback do onAuthStateChange: chamar o supabase la dentro trava o lock do auth (o envio da pontuacao ficava preso)
   function fire() { clearTimeout(fireT); fireT = setTimeout(function () { var u = user(); for (var i = 0; i < subs.length; i++) { try { subs[i](u); } catch (e) { console.error("[ranking] erro no aviso de login", e); } } }, 0); }
+  // quem aparece no ranking: conta Google (kind "google") ou apelido do aparelho (kind "device"); sem nenhum = null
   function user() {
-    if (FAKE) return {name: fakeName, avatar: null, ready: true, id: "fake", custom: !!fakeName, canChangeAt: null};
-    return session ? {name: me ? me.name : "", avatar: null, ready: !!me, id: session.user && session.user.id, custom: !!(me && me.custom), canChangeAt: me ? me.canChangeAt : null} : null;
+    if (FAKE) return {kind: "google", name: fakeName, avatar: null, ready: true, id: "fake", custom: !!fakeName, canChangeAt: null};
+    if (session) return {kind: "google", name: me ? me.name : "", avatar: null, ready: !!me, id: session.user && session.user.id, custom: !!(me && me.custom), canChangeAt: me ? me.canChangeAt : null};
+    if (dev && dev.name) return {kind: "device", name: dev.name, avatar: null, ready: true, id: "dev:" + device(), custom: true, canChangeAt: dev.canChangeAt};
+    return null;
+  }
+  function loadDev() {
+    if (devP) return devP;
+    devP = rpc("my_device_name", {p_device: device(), p_token: dtok()}).then(function (r) { var x = r && r[0]; dev = x ? {name: x.name, canChangeAt: x.can_change_at} : null; fire(); return dev; },
+      function (e) { console.warn("[ranking] apelido do aparelho indisponivel", e); dev = null; return null; });
+    return devP;
   }
   function loadMe() {
     if (!client || !session) return;
-    client.rpc("my_name").then(function (r) { if (r && r.error) console.error("[ranking] my_name falhou", r.error); var x = r && r.data && r.data[0]; me = {name: x ? x.name || "" : "", avatar: x ? x.avatar : null, custom: !!(x && x.custom), canChangeAt: x ? x.can_change_at : null}; fire(); }, function (e) { console.error("[ranking] my_name falhou", e); me = {name: "", avatar: null}; fire(); });
+    // ao entrar com Google: o apelido e as pontuacoes do aparelho passam para a conta (se a conta ja tem apelido, vale o da conta)
+    var claim = dev && dev.name ? client.rpc("claim_device", {p_device: device(), p_token: dtok()}).then(function (r) { if (r && r.error) console.error("[ranking] claim_device falhou", r.error); else { dev = null; devP = null; } }, function () {}) : Promise.resolve();
+    claim.then(function () { return client.rpc("my_name"); }).then(function (r) { if (r && r.error) console.error("[ranking] my_name falhou", r.error); var x = r && r.data && r.data[0]; me = {name: x ? x.name || "" : "", avatar: x ? x.avatar : null, custom: !!(x && x.custom), canChangeAt: x ? x.can_change_at : null}; fire(); }, function (e) { console.error("[ranking] my_name falhou", e); me = {name: "", avatar: null}; fire(); });
   }
   function sb() {
     if (sbP) return sbP;
@@ -96,6 +121,7 @@
   }
   var auth = {
     ready: function () { if (FAKE) { fire(); return Promise.resolve(null); } return sb(); },
+    dev: loadDev, // carrega o apelido do aparelho (sem baixar o supabase-js)
     user: user,
     on: function (cb) { subs.push(cb); },
     // botao de login: o oficial do Google (GIS) quando houver Client ID; senao o nosso botao com redirect
@@ -111,6 +137,8 @@
     },
     // nome de usuario escolhido (opcional, unico, 1 troca a cada 24 h): devolve ok | len | bad | taken | wait | off
     setName: function (name) {
+      if (!FAKE && !session) return rpc("set_device_name", {p_device: device(), p_token: dtok(), p_name: name}).then(function (code) { if (code === "ok") { devP = null; return loadDev().then(function () { return code; }); } return code; },
+        function (e) { console.error("[ranking] set_device_name falhou", e); return "off"; });
       if (FAKE) { var n = String(name || "").trim(); var c = (n.length < 3 || n.length > 16 ? "len" : (/^(maria l\.?|speedy)$/i.test(n) ? "taken" : (/porra|fuck/i.test(n) ? "bad" : "ok"))); if (c === "ok") { fakeName = n; fire(); } return Promise.resolve(c); }
       return sb().then(function (c) { return c.rpc("set_username", {p_name: name}); }).then(function (r) {
         if (r.error) { console.error("[ranking] set_username falhou", r.error); return "off"; }
@@ -157,7 +185,8 @@
     like: function (game) { return rpc("toggle_like", {p_game: game, p_device: device()}).then(function (r) { return r[0]; }); },
     // so com login (o servidor recusa sem conta); em localhost finge sucesso
     submit: function (game, mode, score, day) {
-      if (LOCAL) { console.info("[ranking] (teste local, nao grava) pontuacao enviada:", game, mode, score); return Promise.resolve(1); }
+      if (LOCAL) { console.info("[ranking] (teste local, nao grava) pontuacao enviada:", game, mode, score); return Promise.resolve(2); } // 2 = a posicao do jogador no ranking falso local
+      if (!session && dev && dev.name) return rpc("submit_score_device", {p_device: device(), p_token: dtok(), p_game: game, p_mode: mode, p_score: score, p_day: day || null}).then(function (r) { console.info("[ranking] pontuacao enviada (aparelho):", game, mode, score, "posicao", r); return r; });
       return sb().then(function (c) {
         if (!session) throw new Error("login");
         return c.rpc("submit_score", {p_game: game, p_mode: mode, p_score: score, p_day: day || null}).then(function (r) {
@@ -167,9 +196,10 @@
       });
     },
     top: function (game, mode, day, limit) {
-      var body = {p_game: game, p_mode: mode, p_day: day || null, p_limit: limit || 10};
+      var body = {p_game: game, p_mode: mode, p_day: day || null, p_limit: limit || 10, p_device: device()};
       if (FAKE) return Promise.resolve([{rank: 1, name: "MariaTurbo", score: 2380, is_me: false, avatar: null, tag: ""}].concat(fakeName ? [{rank: 2, name: fakeName, score: 1835, is_me: true, avatar: null, tag: ""}] : [],
         [{rank: fakeName ? 3 : 2, name: "Speedy", score: 1420, is_me: false, avatar: null, tag: ""}, {rank: fakeName ? 4 : 3, name: "Lukas_M", score: 610, is_me: false, avatar: null, tag: ""}])); // so teste local
+      if (!session) return rpc("top_scores", body); // sem conta: nao precisa baixar o supabase-js
       return sb().then(function (c) { return c.rpc("top_scores", body).then(function (r) { if (r.error) throw r.error; return r.data || []; }); }, function () { return rpc("top_scores", body); });
     }
   };
