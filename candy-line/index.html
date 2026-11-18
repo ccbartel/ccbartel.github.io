@@ -48,7 +48,18 @@ body{font-family:var(--font);-webkit-tap-highlight-color:transparent;touch-actio
 .fancy .l1{color:#8a4b00;-webkit-text-stroke:calc(var(--sw) * .5) #8a4b00}
 .fancy .l2{background:linear-gradient(180deg,#ffe680 6%,#ffc93a 52%,#f08c00 94%);-webkit-background-clip:text;background-clip:text;color:transparent}
 #mtitle{width:700px;height:150px;font-size:118px;--so:22px;--sw:9px;--sh:6px}
-#count{height:80px;font-size:66px;--so:14px;--sw:6px;--sh:3px;transform:translate(0,-50%);justify-items:start}
+#count{height:80px;font-size:66px;--so:14px;--sw:6px;--sh:3px;transform:translate(0,-50%);justify-items:start;transform-origin:0 50%;width:max-content}
+#dchip{width:226px;padding:6px 10px 7px;border-radius:22px;background:#ffffffeb;box-shadow:0 0 0 4px #3a0f4a,0 6px 0 4px #2a0b3d88;color:#3a0f4a;text-align:center;display:flex;flex-direction:column;gap:2px;transform:translate(-50%,-50%);pointer-events:none}
+#dchip .d1{font:800 25px/1.1 var(--font);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#c2187a}
+#dchip .d2{font:800 28px/1.1 var(--font);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#dchip.won{background:linear-gradient(180deg,#fff3b8,#ffd84d)}#dchip.won .d1{color:#3a0f4a}
+#dchip.pop{animation:dpop .55s cubic-bezier(.3,1.6,.5,1)}
+@keyframes dpop{0%{transform:translate(-50%,-50%) scale(1)}35%{transform:translate(-50%,-50%) scale(1.12)}100%{transform:translate(-50%,-50%) scale(1)}}
+#dban{max-width:600px;padding:12px 28px;border-radius:36px;background:#3a0f4ae8;color:#fff;font:800 38px/1.1 var(--font);text-align:center;box-shadow:0 0 0 4px #fff,0 8px 0 4px #2a0b3d88;pointer-events:none;animation:dban 2s ease-out both}
+#dban.gold{white-space:nowrap;font-size:42px;background:linear-gradient(180deg,#ffe27a,#f7b60c);color:#3a0f4a;box-shadow:0 0 0 5px #fff,0 0 0 10px #3a0f4a,0 10px 0 10px #2a0b3d88}
+@keyframes dban{0%{transform:translate(-50%,-50%) scale(.3);opacity:0}18%{transform:translate(-50%,-50%) scale(1.08);opacity:1}30%{transform:translate(-50%,-50%) scale(1)}100%{transform:translate(-50%,-50%) scale(1);opacity:1}}
+#sub{white-space:pre-line}#sub.win.vs{font-size:46px}
+@media (prefers-reduced-motion:reduce){#dchip.pop,#dban{animation-duration:.01s}}
 #total{width:600px;height:200px;font-size:170px;--so:26px;--sw:10px;--sh:7px}
 #sub{width:660px;text-align:center;font:800 40px/1.1 var(--font);color:#fff;-webkit-text-stroke:7px var(--ink2);paint-order:stroke fill;filter:drop-shadow(3px 3px 0 rgba(40,0,50,.7))}
 #best{width:660px;text-align:center;font:800 34px/1.1 var(--font);color:#fff;-webkit-text-stroke:6px var(--ink2);paint-order:stroke fill}
@@ -221,7 +232,7 @@ body{font-family:var(--font);-webkit-tap-highlight-color:transparent;touch-actio
   <div id="loader"><div class="ttl" data-i18n="title">Candy Line</div><div class="bar"><div class="fill"></div></div><div class="pct">0%</div><div class="err"></div></div>
 </div>
 <div id="adbar" aria-label="Advertisement" data-i18n-label="ad"><div class="ad-slot" data-ad-slot-key="ADSENSE_SLOT_GAME"></div></div>
-<script type="module" src="game.js?v=1d5130d2"></script>
+<script type="module" src="game.js?v=979a67f6"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7f9a5c4a463b4b799b86c338ccb2bc99"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>
