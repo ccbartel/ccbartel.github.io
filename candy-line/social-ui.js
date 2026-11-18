@@ -144,6 +144,12 @@
     }
     initLike();
     window.addEventListener("bg-play", hideCta);
+    // o aviso so vale na tela de resultado: qualquer botao do jogo (Jogar de novo, menu...) o esconde; compartilhar e ranking nao
+    document.addEventListener("click", function (e) {
+      var b = e.target && e.target.closest ? e.target.closest("button,a") : null;
+      if (!b || !cta || (cta && cta.contains(b)) || b.hasAttribute("data-share") || b.getAttribute("aria-controls") === "rank" || b.closest("#topbar") || b.closest("dialog")) return;
+      hideCta();
+    }, true);
     if (S() && S().auth) {
       S().auth.on(afterLogin);
       // so carrega o login se a pessoa ja entrou antes ou esta voltando do Google (quem nunca entrou nao baixa nada)
