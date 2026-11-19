@@ -12,7 +12,7 @@
   function share() {
     var L = window.CL_LAST, m = String(location.hash || "").match(/^#([A-Z2-9]{5})$/);
     var url = URL_ + (m ? "#" + m[1] : "");
-    var text = m ? I.t("shRoom", m[1]) : (L && L.win ? I.t("shWin") : I.t("shTxt0"));
+    var text = L && L.win ? I.t("shWin") : m ? I.t("shRoom", m[1]) : I.t("shTxt0"); // venceu: conta a vitoria (com o link da sala, se houver)
     var data = {title: I.t("title"), text: text, url: url};
     // so no celular (toque): no PC a janela de compartilhar do Windows manda para o WhatsApp SEM a foto de previa; la copia o link (2026-11-19)
     if (navigator.share && window.matchMedia && matchMedia("(pointer:coarse)").matches) { navigator.share(data).catch(function () {}); return; }
