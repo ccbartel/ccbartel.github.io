@@ -18,7 +18,8 @@ import hashlib, json, os, re, shutil, subprocess, sys, pathlib
 
 ROOT = pathlib.Path(__file__).resolve().parent
 CONFIG = ROOT / "site-config.js"
-GAMES = ["geo-quiz", "candy-line", "burnout-city"]  # slug = pasta do jogo; fonte em src/<slug>/game.src.js
+GAMES = ["geo-quiz", "candy-line", "burnout-city", "bumpets"]  # slug = pasta do jogo; fonte em src/<slug>/game.src.js
+# jogo com src/<slug>/prebuild.py: o build roda esse script antes (ex.: Bumpets junta os modulos do cliente e copia os assets)
 STATE = ROOT / ".build_state.json"
 TMP = ROOT / "_build_tmp"
 OBF_VERSION = "javascript-obfuscator@4.1.1"
@@ -98,6 +99,12 @@ def main():
     # 1-2. jogos com hosts embutidos (um por um da lista GAMES)
     sizes = []
     for slug in GAMES:
+        pre = ROOT / "src" / slug / "prebuild.py"
+        if pre.exists():
+            rp = subprocess.run([sys.executable, str(pre)], capture_output=True, text=True, encoding="utf8", errors="replace")
+            if rp.returncode != 0:
+                die(slug + ": prebuild.py falhou:\n" + (rp.stdout + rp.stderr)[-1500:])
+            print("    " + slug + " prebuild: " + rp.stdout.strip().replace("\n", " | "))
         SRC = ROOT / "src" / slug / "game.src.js"
         OUT = ROOT / slug / "game.js"
         src = SRC.read_text(encoding="utf8")

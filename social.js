@@ -189,6 +189,8 @@
     // fim de partida: o jogo manda pontuacao e motivo; a duracao e medida aqui (desde o play)
     end: function (game, mode, score, reason) { EV.ended = true; return event(game, "end", {mode: mode, score: score, reason: reason, secs: EV.t0 ? (performance.now() - EV.t0) / 1000 : null}); },
     device: device, compact: compact, auth: auth,
+    // identidade para um servidor proprio conferir o apelido no Supabase (Bumpets: Worker do multijogador); o token do aparelho so vai ao nosso servidor
+    ident: function () { return {dev: device(), tok: dtok(), jwt: session && session.access_token ? session.access_token : ""}; },
     // nome exibido da conta logada (o mesmo do ranking); sem login = "" (o apelido livre saiu)
     name: function () { var u = user(); return u ? u.name || "" : ""; },
     stats: function (games) { return rpc("get_stats", {p_games: games, p_device: device()}); },
