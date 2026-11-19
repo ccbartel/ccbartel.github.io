@@ -14,6 +14,7 @@
   var base = tag.toLowerCase().split("-")[0]; if (!S[base]) { base = "en"; tag = "en"; }
   var I = {
     lang: base, tag: tag,
+    has: function (k) { return !!(S[base][k] || S.en[k]); },
     t: function (k, f) { var s = (S[base][k] || S.en[k] || k); if (f && typeof f === "object") { for (var x in f) s = s.split("{" + x + "}").join(f[x]); return s; } return f != null ? s.replace("{f}", f) : s; }
   };
   window.CL_I18N = I;
