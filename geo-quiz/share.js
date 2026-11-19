@@ -13,14 +13,17 @@
     var L = window.GTF_LAST;
     var text = I.t("shTxt0");
     if (L && L.mode === "daily") text = L.done ? I.t(L.tries === 1 ? "shMisOk1" : "shMisOk", {n: String(L.daily), k: String(L.tries)}) : I.t("shMisNo", {n: String(L.daily)});
+    else if (L && L.mode === "inf" && L.duel && L.score > 0) text = I.t(L.score > L.vs ? "shDuelW" : "shDuelL", {n: L.nick || I.t("friend"), s: String(L.score), v: String(L.vs)});
+    else if (L && L.mode === "inf" && L.link) text = I.t("shPlay", String(L.score));
     else if (L && L.mode === "inf") text = I.t("shInf", String(L.score));
     else if (L && L.mode === "cap") text = I.t("shCap", String(L.score));
     else if (L && L.mode === "find") text = I.t("shFind", String(L.score));
     else if (L && L.mode === "name") text = I.t("shName", String(L.score));
     else if (L) text = I.t("shTxt", String(L.score));
-    var data = {title: I.t("title"), text: text, url: URL_};
+    var url = (L && L.link) || URL_; // desafio: link com a semente da partida (mesmas bandeiras)
+    var data = {title: I.t("title"), text: text, url: url};
     if (navigator.share) { navigator.share(data).catch(function () {}); return; }
-    var all = text + " " + URL_;
+    var all = text + " " + url;
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(all).then(function () { toast(I.t("copied")); }, function () { prompt("", all); });
     else prompt("", all);
   }
