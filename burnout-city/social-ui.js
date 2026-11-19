@@ -172,12 +172,14 @@
     if (!S() || !S().auth || !S().auth.signIn) return;
     if (!ginv) {
       ginv = el("dialog"); ginv.id = "bg-ginv"; ginv.setAttribute("aria-label", T("gLogin"));
-      var p = el("p", null, T("gInvite")), row = el("div", "gir"), y = el("button", "gib", T("gYes")), n = el("button", "gib sec", T("gNo"));
-      y.type = "button"; n.type = "button";
-      y.addEventListener("click", function () { ginv.close(); if (dlg && dlg.open) lsSet(PK + "_open", String(Date.now())); if (pend && !pend.sent) savePend(pend); S().auth.signIn().catch(function () {}); });
+      // "Sim" = botao OFICIAL do Google (janela mostra Bartel Games); o redirect do Supabase mostrava o endereco *.supabase.co (ele estranhou, 2026-11-19)
+      var p = el("p", null, T("gInvite")), row = el("div", "gir"), y = gbox(), n = el("button", "gib sec", T("gNo"));
+      y.style.marginBottom = "10px"; n.type = "button";
+      y.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest(".gbtn")) { ginv.close(); if (dlg && dlg.open) lsSet(PK + "_open", String(Date.now())); } }, true); // reserva (sem GIS) ainda faz o redirect
+      if (S().auth.on) S().auth.on(function () { var u = user(); if (u && u.kind === "google" && ginv && ginv.open) ginv.close(); }); // entrou pelo botao oficial: fecha o convite
       n.addEventListener("click", function () { lsSet("bg_ginv_no", String(Date.now())); ginv.close(); });
       ginv.addEventListener("keydown", function (e) { e.stopPropagation(); });
-      row.append(y, n); ginv.append(p, row); document.body.appendChild(ginv);
+      row.append(n); ginv.append(p, y, row); document.body.appendChild(ginv);
     }
     if (!ginv.open) ginv.showModal();
   }
