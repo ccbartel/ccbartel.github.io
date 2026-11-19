@@ -188,7 +188,7 @@
   function invite() {
     var link = URL_ + "?sala=" + st.code, text = T("mpInvTxt", st.code);
     try { S().event(GAME, "share", {mode: "live"}); } catch (e) {}
-    if (navigator.share) { navigator.share({title: T("title"), text: text, url: link}).catch(function () {}); return; }
+    if (navigator.share && window.matchMedia && matchMedia("(pointer:coarse)").matches) { navigator.share({title: T("title"), text: text, url: link}).catch(function () {}); return; }
     var all = text + " " + link;
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(all).then(function () { toast(T("copied")); }, function () { prompt("", all); }); else prompt("", all);
   }

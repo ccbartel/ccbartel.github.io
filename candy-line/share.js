@@ -18,7 +18,8 @@
     else if (L) text = I.t("shTxt", String(L.score));
     var url = (L && L.link) || URL_; // desafio de amigo: link com a semente da partida (gerado pelo jogo)
     var data = {title: I.t("title"), text: text, url: url};
-    if (navigator.share) { navigator.share(data).catch(function () {}); return; }
+    // so no celular (toque): no PC a janela de compartilhar do Windows manda para o WhatsApp SEM a foto de previa; la copia o link e a pessoa cola (2026-11-19)
+    if (navigator.share && window.matchMedia && matchMedia("(pointer:coarse)").matches) { navigator.share(data).catch(function () {}); return; }
     var all = text + " " + url;
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(all).then(function () { toast(I.t("copied")); }, function () { prompt("", all); });
     else prompt("", all);
