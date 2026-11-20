@@ -8,7 +8,7 @@
 <meta name="theme-color" content="#140d0a">
 <link rel="manifest" href="/manifest.webmanifest">
 <script src="i18n.js"></script>
-<script src="share.js?v=2"></script>
+<script src="share.js?v=3"></script>
 <script src="../social.js" defer></script>
 <script src="social-ui.js" defer></script>
 <link rel="icon" type="image/png" href="assets/icon.png">
@@ -114,6 +114,7 @@ body{font-family:var(--font);-webkit-tap-highlight-color:transparent;touch-actio
 #howto h2{font:700 19px/1.2 var(--font);color:var(--gold);margin:4px 0 6px;text-transform:uppercase}
 #howto ol,#howto ul{padding-left:20px;margin-bottom:12px}#howto li{margin-bottom:4px}
 #howto p{color:#e4d0c0;font-size:14.5px}
+#howto .cred{margin-top:10px;font-size:12px;opacity:.8}#howto .cred a{color:#ffd27a}
 #howto .close{margin-top:16px;width:100%;height:46px;border:0;border-radius:999px;cursor:pointer;font:700 18px/1 var(--font);color:var(--navy);background:linear-gradient(180deg,#ffe27a,#f7b60c)}
 #toast{position:fixed;left:50%;bottom:calc(var(--adH) + 18px);transform:translate(-50%,20px);opacity:0;z-index:30;pointer-events:none;padding:10px 18px;border-radius:999px;background:#fff;color:var(--navy);font:700 16px/1 var(--font);box-shadow:0 8px 24px #0008;transition:opacity .2s,transform .2s}
 #toast.on{opacity:1;transform:translate(-50%,0)}
@@ -142,7 +143,7 @@ body{font-family:var(--font);-webkit-tap-highlight-color:transparent;touch-actio
 </head>
 <body>
 <nav id="topbar"><a class="back" href="../"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M15 4 7 12l8 8" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="more">More games</span></a><span class="tb-r"><button class="topinfo topsnd" id="topsnd" type="button" aria-pressed="false" data-i18n-label="sound" hidden><svg class="sf" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M16.5 9.5l5 5m0-5l-5 5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg><svg class="so" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M16 8.5a5 5 0 0 1 0 7M18.6 5.8a9 9 0 0 1 0 12.4" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/></svg></button><button class="topinfo" type="button" aria-haspopup="dialog" aria-controls="howto" onclick="var d=document.getElementById('howto');d.showModal();d.scrollTop=0;document.getElementById('howto-t').focus({preventScroll:true})"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M12 11v6" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><circle cx="12" cy="7.3" r="1.6" fill="currentColor"/></svg><span class="sr" data-i18n="how">How to play</span></button><button class="toplike" id="toplike" type="button" aria-pressed="false" data-i18n-label="like" hidden><svg class="ho" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.2-9.4C1.6 7.6 3.9 4 7.4 4c2 0 3.6 1.1 4.6 2.7C13 5.1 14.6 4 16.6 4c3.5 0 5.8 3.6 4.6 7.1-1.7 4.8-9.2 9.4-9.2 9.4z" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linejoin="round"/></svg><svg class="hf" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.2-9.4C1.6 7.6 3.9 4 7.4 4c2 0 3.6 1.1 4.6 2.7C13 5.1 14.6 4 16.6 4c3.5 0 5.8 3.6 4.6 7.1-1.7 4.8-9.2 9.4-9.2 9.4z" fill="#ff3b5c" stroke="#ff3b5c" stroke-width="2.3" stroke-linejoin="round"/></svg><span class="lc"></span></button><button class="topshare" type="button" data-share><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 3v12M7 8l5-5 5 5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg><span data-i18n="share">Share</span></button></span></nav>
-<dialog id="howto" aria-labelledby="howto-t"><h1 id="howto-t" tabindex="-1" autofocus data-i18n="title">Burnout City</h1><h2 data-i18n="how">How to play</h2><ol><li data-i18n="h1"></li><li data-i18n="h2"></li><li data-i18n="h3"></li><li data-i18n="h4"></li></ol><h2 data-i18n="modes">Game modes</h2><ul><li data-i18n="hmPlay"></li><li data-i18n="hmDaily"></li></ul><p data-i18n="ab"></p><form method="dialog"><button class="close" data-i18n="close">Close</button></form></dialog>
+<dialog id="howto" aria-labelledby="howto-t"><h1 id="howto-t" tabindex="-1" autofocus data-i18n="title">Burnout City</h1><h2 data-i18n="how">How to play</h2><ol><li data-i18n="h1"></li><li data-i18n="h2"></li><li data-i18n="h3"></li><li data-i18n="h4"></li></ol><h2 data-i18n="modes">Game modes</h2><ul><li data-i18n="hmPlay"></li><li data-i18n="hmDaily"></li><li data-i18n="hmCones"></li></ul><p data-i18n="ab"></p><p class="cred"><span data-i18n="coneBy1">Cone:</span> <a href="https://sketchfab.com/3d-models/weathered-industrial-traffic-cone-e997bca95ea74acebe66cc8880a6a084" target="_blank" rel="noopener">&quot;Weathered Industrial Traffic Cone&quot;</a> <span data-i18n="coneBy2">by Victor Ogbuka</span> (<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>)</p><form method="dialog"><button class="close" data-i18n="close">Close</button></form></dialog>
 <dialog id="rank" aria-labelledby="rank-t"><h1 id="rank-t"></h1><div class="rbody"></div><form method="dialog"><button class="rbtn sec" data-i18n="close">Close</button></form></dialog>
 <div id="app">
   <div id="stage">
@@ -153,6 +154,7 @@ body{font-family:var(--font);-webkit-tap-highlight-color:transparent;touch-actio
         <h1 id="mtitle" class="a fancy"><span class="l0">Burnout&#10;City</span><span class="l1">Burnout&#10;City</span><span class="l2">Burnout&#10;City</span></h1>
         <button id="m-play" class="a mbtn primary" type="button"><span class="mi" aria-hidden="true"><svg viewBox="0 0 24 24" width="46" height="46"><path d="M7 4.5v15l12.5-7.5z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span><span class="mt"><b data-i18n="play"></b><small data-i18n="playSub"></small></span></button>
         <button id="m-daily" class="a mbtn" type="button"><span class="mi" aria-hidden="true"><svg viewBox="0 0 24 24" width="44" height="44"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="12" cy="12" r="5.5" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="12" cy="12" r="1.8" fill="currentColor"/></svg></span><span class="mt"><b data-i18n="daily"></b><small></small></span></button>
+        <button id="m-cones" class="a mbtn" type="button"><span class="mi" aria-hidden="true"><svg viewBox="0 0 24 24" width="46" height="46"><path d="M10.2 3h3.6l5 15H5.2z" fill="#ff7a1a" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M8.6 9h6.8l1 3H7.6zM6.9 14.2h10.2" stroke="#fff" stroke-width="2.2" fill="#fff"/><rect x="2.5" y="18" width="19" height="3" rx="1.2" fill="currentColor"/></svg></span><span class="mt"><b data-i18n="cones"></b><small></small></span></button>
         <button id="m-rank" class="a" type="button" aria-haspopup="dialog" aria-controls="rank" data-i18n-label="rank"><span aria-hidden="true">&#127942;</span></button>
         <div id="best" class="a"></div>
         <div id="keys" class="a" data-i18n="keys"></div>
@@ -178,7 +180,7 @@ body{font-family:var(--font);-webkit-tap-highlight-color:transparent;touch-actio
 </div>
 <div id="adbar" aria-label="Advertisement" data-i18n-label="ad"><div class="ad-slot" data-ad-slot-key="ADSENSE_SLOT_GAME"></div></div>
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js"}}</script>
-<script type="module" src="game.js?v=541fa9af"></script>
+<script type="module" src="game.js?v=53111ad1"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7f9a5c4a463b4b799b86c338ccb2bc99"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

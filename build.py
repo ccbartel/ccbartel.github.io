@@ -112,6 +112,11 @@ def main():
         src, n2 = re.subn(r'/\*@@OFFICIAL_URL@@\*/"[^"]*"', lambda m: json.dumps(url), src)
         if n1 != 1 or n2 != 1:
             die("marcadores @@ALLOWED_HOSTS@@/@@OFFICIAL_URL@@ nao encontrados em " + str(SRC))
+        # guarda (2026-11-20): com transformObjectKeys o ofuscador tira o objeto de um 'for(...) lista.push({...})' SEM chaves
+        # e todos os itens viram o MESMO objeto (provado: cones do modo Cones do Burnout todos no mesmo lugar). Exigir chaves.
+        ruim = [str(i + 1) for i, l in enumerate(src.split("\n")) if re.search(r"for\([^)]*\)\s*[A-Za-z_$][\w$.]*\.push\(\{", l)]
+        if ruim:
+            die(slug + ": 'for(...) x.push({...})' sem chaves nas linhas " + ", ".join(ruim) + " de " + str(SRC) + " (use for(...){ x.push({...}); })")
         if plain:
             OUT.write_text(src, encoding="utf8")
         else:

@@ -4,6 +4,7 @@
 // Gerado por src/supabase/gera_social_ui.py a partir de social-ui.template.js (nao editar a copia do jogo).
 (function () {
   var GAME = "bumpets", MODE = "play", BEST = "bb_best", TPLAY = "rankPlay";
+  var XM = {}; // modos extras com ranking proprio no mesmo jogo: {modo: {best: chave do recorde local, title: chave do titulo}}
   function T(k, f) { return window.CL_I18N ? window.CL_I18N.t(k, f) : k; }
   function S() { return window.BG_SOCIAL || null; }
   function lim(p, ms) { return Promise.race([p, new Promise(function (_, r) { setTimeout(function () { r(new Error("timeout")); }, ms || 5000); })]); }
@@ -82,14 +83,14 @@
     sending = {p: p, job: job}; job.then(function () { sending = null; }, function () { sending = null; });
     return job;
   }
-  function localBest() { var v = lsGet(BEST); try { v = JSON.parse(v); } catch (e) {} v = +v; return isFinite(v) && v > 0 ? Math.floor(v) : 0; }
+  function localBest(k) { var v = lsGet(k || BEST); try { v = JSON.parse(v); } catch (e) {} v = +v; return isFinite(v) && v > 0 ? Math.floor(v) : 0; }
   function ended(last) {
-    if (!last || last.mode !== MODE) { pend = null; return; }
+    if (!last || (last.mode !== MODE && !XM[last.mode])) { pend = null; return; }
     pend = {mode: last.mode, score: last.score | 0, day: last.mode === "daily" ? today() : null, n: last.daily || 0, rank: null, sent: false};
     if (user()) send(pend).catch(function () {});
     else { savePend(pend); if (pend.score > 0) showCta(); }
   }
-  function titleFor(v) { return v.mode === "daily" ? T("rankDaily", String(v.n)) : T(TPLAY); }
+  function titleFor(v) { return v.mode === "daily" ? T("rankDaily", String(v.n)) : (XM[v.mode] ? T(XM[v.mode].title) : T(TPLAY)); }
   function mine() { return pend && pend.mode === view.mode && pend.day === view.day ? pend : null; }
   function avatar(url, name) {
     if (url) { var i = el("img", "rav"); i.alt = ""; i.loading = "lazy"; i.referrerPolicy = "no-referrer"; i.src = url; return i; }
@@ -237,7 +238,8 @@
     if (p && !(pend && pend.sent)) { pend = p; job = send(p); }
     if (bestSentFor !== u.id) { // ao entrar: o recorde guardado no aparelho tambem vai para o ranking (o servidor guarda o maior)
       bestSentFor = u.id; var b = localBest();
-      if (b > 0 && !(p && p.score >= b)) { var bp = {mode: MODE, score: b, day: null, n: 0, rank: null, sent: false}; job = (job || Promise.resolve()).catch(function () {}).then(function () { return send(bp); }); }
+      if (b > 0 && !(p && p.mode === MODE && p.score >= b)) { var bp = {mode: MODE, score: b, day: null, n: 0, rank: null, sent: false}; job = (job || Promise.resolve()).catch(function () {}).then(function () { return send(bp); }); }
+      Object.keys(XM).forEach(function (m) { var bx = localBest(XM[m].best); if (bx > 0 && !(p && p.mode === m && p.score >= bx)) { var bq = {mode: m, score: bx, day: null, n: 0, rank: null, sent: false}; job = (job || Promise.resolve()).catch(function () {}).then(function () { return send(bq); }); } });
     }
     (job || Promise.resolve()).catch(function () {}).then(function () {
       if (openFlag()) { lsSet(PK + "_open", ""); open(p ? p.mode : view.mode, p ? p.n : view.n); }
