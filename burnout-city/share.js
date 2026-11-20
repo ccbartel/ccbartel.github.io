@@ -13,9 +13,11 @@
     var L = window.CL_LAST;
     var text = I.t("shTxt0");
     if (L && L.mode === "daily") text = L.done ? (L.tries === 1 ? I.t("shMis1", {n: String(L.daily)}) : I.t("shMis", {n: String(L.daily), t: String(L.tries)})) : I.t("shMisTry", {n: String(L.daily), s: String(L.score), g: String(L.goal)});
+    else if (L && L.mode === "duel" && L.score > 0) text = I.t(L.score > L.vs ? "shDuelW" : "shDuelL", {n: L.nick || I.t("friend"), s: String(L.score), v: String(L.vs)});
+    else if (L && L.mode === "cones" && L.link) text = I.t("shPlayC", String(L.score));
     else if (L && L.mode === "cones") text = I.t("shCones", String(L.score));
     else if (L) text = I.t("shTxt", String(L.score));
-    var url = URL_;
+    var url = (L && L.link) || URL_; // desafio de amigo no Cones: link com a semente da partida (gerado pelo jogo), como no Candy Line
     var data = {title: I.t("title"), text: text, url: url};
     // so no celular (toque): no PC a janela de compartilhar do Windows manda para o WhatsApp SEM a foto de previa; la copia o link e a pessoa cola (2026-11-19)
     if (navigator.share && window.matchMedia && matchMedia("(pointer:coarse)").matches) { navigator.share(data).catch(function () {}); return; }

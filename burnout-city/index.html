@@ -76,6 +76,17 @@ body{font-family:var(--font);-webkit-tap-highlight-color:transparent;touch-actio
 #mcard .mc-go{margin-top:10px;height:96px;padding:0 54px;border:0;border-radius:50px;cursor:pointer;font:700 46px/1 var(--font);text-transform:uppercase;color:#2a1306;background:linear-gradient(180deg,#ffe27a 0%,#f7b60c 100%);box-shadow:0 0 0 5px #fff,0 0 0 11px #2a1306,0 12px 0 11px #000a;touch-action:manipulation}
 #mcard .mc-back{border:0;background:none;cursor:pointer;font:700 32px/1 var(--font);color:#fff;opacity:.75;padding:8px 18px;text-decoration:underline}
 #mcard .mc-go:focus-visible,#mcard .mc-back:focus-visible{outline:5px solid #ffd84d;outline-offset:12px}
+#ccard{width:600px;padding:40px 36px 34px;border-radius:34px;background:#1d1714f2;box-shadow:0 0 0 5px #fff,0 0 0 11px #2a1306,0 16px 0 11px #000a;display:flex;flex-direction:column;align-items:center;gap:18px;pointer-events:auto;transform:translate(-50%,-50%) scale(0);text-align:center}
+#ccard .mc-t{font:700 60px/1.05 var(--font);color:var(--gold);text-transform:uppercase}
+#ccard #cc-txt{font:700 46px/1.15 var(--font);color:#fff}
+#ccard #cc-sub{font:700 28px/1.25 system-ui,-apple-system,"Segoe UI",sans-serif;color:#d9cfc6}
+#ccard .mc-go{margin-top:10px;height:96px;padding:0 54px;border:0;border-radius:50px;cursor:pointer;font:700 46px/1 var(--font);text-transform:uppercase;color:#2a1306;background:linear-gradient(180deg,#ffe27a 0%,#f7b60c 100%);box-shadow:0 0 0 5px #fff,0 0 0 11px #2a1306,0 12px 0 11px #000a;touch-action:manipulation}
+#ccard .mc-back{border:0;background:none;cursor:pointer;font:700 32px/1 var(--font);color:#fff;opacity:.75;padding:8px 18px;text-decoration:underline}
+#ccard .mc-go:focus-visible,#ccard .mc-back:focus-visible{outline:5px solid #ffd84d;outline-offset:12px}
+#dban{max-width:620px;padding:12px 28px;border-radius:36px;background:#1d1714eb;color:#fff;font:700 40px/1.1 var(--font);text-align:center;text-transform:uppercase;box-shadow:0 0 0 4px #fff,0 8px 0 4px #000a;pointer-events:none;animation:dban 2s ease-out both}
+#dban.gold{white-space:nowrap;font-size:44px;background:linear-gradient(180deg,#ffe27a,#f7b60c);color:#2a1306;box-shadow:0 0 0 5px #fff,0 0 0 10px #2a1306,0 10px 0 10px #000a}
+@keyframes dban{0%{transform:translate(-50%,-50%) scale(.3);opacity:0}18%{transform:translate(-50%,-50%) scale(1.08);opacity:1}30%{transform:translate(-50%,-50%) scale(1)}100%{transform:translate(-50%,-50%) scale(1);opacity:1}}
+@media (prefers-reduced-motion:reduce){#dban{animation-duration:.01s}}
 .hide,[hidden]{display:none!important}
 #loader{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;background:var(--bg0);z-index:5;transition:opacity .35s}
 #loader.done{opacity:0;pointer-events:none}
@@ -153,8 +164,8 @@ body{font-family:var(--font);-webkit-tap-highlight-color:transparent;touch-actio
       <div id="menu" class="hide">
         <h1 id="mtitle" class="a fancy"><span class="l0">Burnout&#10;City</span><span class="l1">Burnout&#10;City</span><span class="l2">Burnout&#10;City</span></h1>
         <button id="m-play" class="a mbtn primary" type="button"><span class="mi" aria-hidden="true"><svg viewBox="0 0 24 24" width="46" height="46"><path d="M7 4.5v15l12.5-7.5z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span><span class="mt"><b data-i18n="play"></b><small data-i18n="playSub"></small></span></button>
-        <button id="m-daily" class="a mbtn" type="button"><span class="mi" aria-hidden="true"><svg viewBox="0 0 24 24" width="44" height="44"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="12" cy="12" r="5.5" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="12" cy="12" r="1.8" fill="currentColor"/></svg></span><span class="mt"><b data-i18n="daily"></b><small></small></span></button>
         <button id="m-cones" class="a mbtn" type="button"><span class="mi" aria-hidden="true"><svg viewBox="0 0 24 24" width="46" height="46"><path d="M10.2 3h3.6l5 15H5.2z" fill="#ff7a1a" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M8.6 9h6.8l1 3H7.6zM6.9 14.2h10.2" stroke="#fff" stroke-width="2.2" fill="#fff"/><rect x="2.5" y="18" width="19" height="3" rx="1.2" fill="currentColor"/></svg></span><span class="mt"><b data-i18n="cones"></b><small></small></span></button>
+        <button id="m-daily" class="a mbtn" type="button"><span class="mi" aria-hidden="true"><svg viewBox="0 0 24 24" width="44" height="44"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="12" cy="12" r="5.5" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="12" cy="12" r="1.8" fill="currentColor"/></svg></span><span class="mt"><b data-i18n="daily"></b><small></small></span></button>
         <button id="m-rank" class="a" type="button" aria-haspopup="dialog" aria-controls="rank" data-i18n-label="rank"><span aria-hidden="true">&#127942;</span></button>
         <div id="best" class="a"></div>
         <div id="keys" class="a" data-i18n="keys"></div>
@@ -166,6 +177,14 @@ body{font-family:var(--font);-webkit-tap-highlight-color:transparent;touch-actio
         <button id="mc-go" class="mc-go" type="button"><span aria-hidden="true">&#9654;</span> <span data-i18n="misGo">Start</span></button>
         <button id="mc-back" class="mc-back" type="button" data-i18n="back">Back</button>
       </div>
+      <div id="ccard" class="a hide" role="dialog" aria-labelledby="cc-t">
+        <div id="cc-t" class="mc-t"><span aria-hidden="true">&#9876;&#65039;</span> <span data-i18n="ccT">Challenge!</span></div>
+        <div id="cc-txt"></div>
+        <div id="cc-sub"></div>
+        <button id="cc-go" class="mc-go" type="button"><span aria-hidden="true">&#9654;</span> <span data-i18n="duelGo">Accept</span></button>
+        <button id="cc-back" class="mc-back" type="button" data-i18n="notNow">Not now</button>
+      </div>
+      <div id="dban" class="a hide" role="status"></div>
       <div id="result" class="hide">
         <div id="rlabel" class="a"></div>
         <div id="rpos" class="a"></div>
@@ -180,7 +199,7 @@ body{font-family:var(--font);-webkit-tap-highlight-color:transparent;touch-actio
 </div>
 <div id="adbar" aria-label="Advertisement" data-i18n-label="ad"><div class="ad-slot" data-ad-slot-key="ADSENSE_SLOT_GAME"></div></div>
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js"}}</script>
-<script type="module" src="game.js?v=e50287aa"></script>
+<script type="module" src="game.js?v=49b3d6a0"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7f9a5c4a463b4b799b86c338ccb2bc99"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

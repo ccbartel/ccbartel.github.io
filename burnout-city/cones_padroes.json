@@ -1,0 +1,314 @@
+{
+ "versao": 1,
+ "padroes": [
+  {
+   "nome": "curva_longa",
+   "comprimento": 120,
+   "chaves": [
+    {
+     "s": 0,
+     "x": 0,
+     "ti": 0,
+     "to": 0,
+     "modo": "plana"
+    },
+    {
+     "s": 20,
+     "x": 2.6,
+     "ti": 0,
+     "to": 0,
+     "modo": "plana"
+    },
+    {
+     "s": 50,
+     "x": -2.8,
+     "ti": 0,
+     "to": 0,
+     "modo": "plana"
+    },
+    {
+     "s": 80,
+     "x": 2.8,
+     "ti": 0,
+     "to": 0,
+     "modo": "plana"
+    },
+    {
+     "s": 120,
+     "x": 0,
+     "ti": 0,
+     "to": 0,
+     "modo": "plana"
+    }
+   ],
+   "inicio": "M",
+   "fim": "M"
+  },
+  {
+   "nome": "direita_esquerda",
+   "comprimento": 100,
+   "chaves": [
+    {
+     "s": 0,
+     "x": 0,
+     "ti": 0,
+     "to": 0,
+     "modo": "plana"
+    },
+    {
+     "s": 4.953,
+     "x": -0.014,
+     "ti": 0,
+     "to": 0,
+     "modo": "plana"
+    },
+    {
+     "s": 22.482,
+     "x": 2.929,
+     "ti": 0.104,
+     "to": 0.104,
+     "modo": "auto"
+    },
+    {
+     "s": 36.255,
+     "x": 3.243,
+     "ti": 0,
+     "to": 0,
+     "modo": "plana"
+    },
+    {
+     "s": 59.293,
+     "x": -3.186,
+     "ti": -0.012,
+     "to": -0.012,
+     "modo": "livre"
+    },
+    {
+     "s": 74.152,
+     "x": -3.214,
+     "ti": 0,
+     "to": 0,
+     "modo": "plana"
+    },
+    {
+     "s": 94.853,
+     "x": -0.129,
+     "ti": 0.124,
+     "to": 0.124,
+     "modo": "auto"
+    },
+    {
+     "s": 100,
+     "x": 0,
+     "ti": 0,
+     "to": 0,
+     "modo": "plana"
+    }
+   ],
+   "inicio": "M",
+   "fim": "M"
+  },
+  {
+   "nome": "s_curto",
+   "comprimento": 100,
+   "chaves": [
+    {
+     "s": 0,
+     "x": 0,
+     "ti": 0,
+     "to": 0,
+     "modo": "plana"
+    },
+    {
+     "s": 9.126,
+     "x": 0.143,
+     "ti": 0.029,
+     "to": 0.029,
+     "modo": "livre"
+    },
+    {
+     "s": 37.143,
+     "x": 2.4,
+     "ti": 0,
+     "to": 0,
+     "modo": "plana"
+    },
+    {
+     "s": 65.714,
+     "x": -2.4,
+     "ti": 0,
+     "to": 0,
+     "modo": "plana"
+    },
+    {
+     "s": 89.761,
+     "x": -0.214,
+     "ti": 0.038,
+     "to": 0.038,
+     "modo": "livre"
+    },
+    {
+     "s": 100,
+     "x": 0,
+     "ti": 0,
+     "to": 0,
+     "modo": "plana"
+    }
+   ],
+   "inicio": "M",
+   "fim": "M"
+  },
+  {
+   "nome": "E_D",
+   "comprimento": 30,
+   "chaves": [
+    {
+     "s": 0,
+     "x": -2.3,
+     "ti": 0,
+     "to": 0,
+     "modo": "plana"
+    },
+    {
+     "s": 15.184,
+     "x": 0.1,
+     "ti": 0.153,
+     "to": 0.153,
+     "modo": "auto"
+    },
+    {
+     "s": 30,
+     "x": 2.3,
+     "ti": 0,
+     "to": 0,
+     "modo": "plana"
+    }
+   ],
+   "inicio": "E",
+   "fim": "D"
+  },
+  {
+   "nome": "D_E",
+   "inicio": "D",
+   "fim": "E",
+   "comprimento": 30,
+   "chaves": [
+    {
+     "s": 0,
+     "x": 2.3,
+     "ti": 0,
+     "to": 0,
+     "modo": "plana"
+    },
+    {
+     "s": 14.383,
+     "x": 0.029,
+     "ti": -0.153,
+     "to": -0.153,
+     "modo": "auto"
+    },
+    {
+     "s": 30,
+     "x": -2.3,
+     "ti": 0,
+     "to": 0,
+     "modo": "plana"
+    }
+   ]
+  },
+  {
+   "nome": "EE",
+   "inicio": "E",
+   "fim": "E",
+   "comprimento": 54,
+   "chaves": [
+    {
+     "s": 0,
+     "x": -2.3,
+     "ti": 0,
+     "to": 0,
+     "modo": "plana"
+    },
+    {
+     "s": 26.699,
+     "x": 3.129,
+     "ti": 0,
+     "to": 0,
+     "modo": "auto"
+    },
+    {
+     "s": 54,
+     "x": -2.3,
+     "ti": 0,
+     "to": 0,
+     "modo": "plana"
+    }
+   ]
+  },
+  {
+   "nome": "DD",
+   "inicio": "D",
+   "fim": "D",
+   "comprimento": 54,
+   "chaves": [
+    {
+     "s": 0,
+     "x": 2.3,
+     "ti": 0,
+     "to": 0,
+     "modo": "plana"
+    },
+    {
+     "s": 27.421,
+     "x": -3.043,
+     "ti": 0,
+     "to": 0,
+     "modo": "auto"
+    },
+    {
+     "s": 54,
+     "x": 2.3,
+     "ti": 0,
+     "to": 0,
+     "modo": "plana"
+    }
+   ]
+  },
+  {
+   "nome": "ddee",
+   "inicio": "D",
+   "fim": "E",
+   "comprimento": 55,
+   "chaves": [
+    {
+     "s": 0,
+     "x": 2.3,
+     "ti": 0,
+     "to": 0,
+     "modo": "plana"
+    },
+    {
+     "s": 20.078,
+     "x": 2.214,
+     "ti": -0.126,
+     "to": -0.126,
+     "modo": "auto"
+    },
+    {
+     "s": 34.999,
+     "x": -2.1,
+     "ti": -0.129,
+     "to": -0.129,
+     "modo": "auto"
+    },
+    {
+     "s": 55,
+     "x": -2.3,
+     "ti": 0,
+     "to": 0,
+     "modo": "plana"
+    }
+   ]
+  }
+ ]
+}
