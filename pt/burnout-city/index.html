@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<script>window.BG_LANG = "pt";</script><base href="/burnout-city/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Burnout City - Bartel Games</title>
+<meta name="description" content="Burnout City: dirija um muscle car por uma cidade em chamas, desvie de meteoros, tornados e lava, atropele zumbis para fazer combos e pegue caixas de armadura. Jogo de carro 3D grátis no navegador.">
+<meta name="theme-color" content="#140d0a">
+<link rel="manifest" href="/manifest.webmanifest">
+<script src="i18n.js"></script>
+<script src="share.js?v=3"></script>
+<script src="../social.js?v=7cd478a9" defer></script>
+<script src="social-ui.js" defer></script>
+<script src="../community.js?v=207ab18f" defer></script>
+<link rel="icon" type="image/png" href="assets/icon.png">
+<link rel="apple-touch-icon" href="assets/icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Bartel Games">
+<meta property="og:title" content="Burnout City - Bartel Games">
+<meta property="og:description" content="Burnout City: dirija um muscle car por uma cidade em chamas, desvie de meteoros, tornados e lava, atropele zumbis para fazer combos e pegue caixas de armadura. Jogo de carro 3D grátis no navegador.">
+<meta property="og:url" content="https://bartelgames.com.br/burnout-city/">
+<meta property="og:image" content="https://bartelgames.com.br/burnout-city/assets/og.jpg?v=3">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg0:#140d0a;--ink2:#1c1210;--gold:#f7b60c;--navy:#0d1430;--ink:#ffffff;--ivory:#f3f1ea;
+  --font:"Oswald","Arial Narrow","Impact","Arial Black",system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg0);color:var(--ink);overflow:hidden;overscroll-behavior:none}
+body{font-family:var(--font);-webkit-tap-highlight-color:transparent;touch-action:manipulation;user-select:none;-webkit-user-select:none}
+#app{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+  padding:env(safe-area-inset-top,0px) max(16px,env(safe-area-inset-right,0px)) env(safe-area-inset-bottom,0px) max(16px,env(safe-area-inset-left,0px));
+  background:radial-gradient(120% 80% at 50% 40%,#4a1d0c 0%,#2a120a 55%,var(--bg0) 100%)}
+#stage{position:relative;overflow:hidden;border-radius:18px;touch-action:none;background:#2a1a14;box-shadow:0 0 0 1px #ffffff1f,0 20px 60px #0008}
+#stage.full{border-radius:0;box-shadow:none}
+#gl,#fx{position:absolute;left:0;top:0;width:100%;height:100%;display:block}
+#fx{pointer-events:none}
+#hud{position:absolute;left:0;top:0;width:720px;height:1280px;transform-origin:0 0;pointer-events:none}
+.a{position:absolute;transform:translate(-50%,-50%);will-change:transform}
+.fancy{display:grid;place-items:center;line-height:1;white-space:nowrap}
+.fancy>span{grid-area:1/1;position:relative}
+.fancy .l0{color:var(--ink2);-webkit-text-stroke:var(--so) var(--ink2);filter:drop-shadow(var(--sh) var(--sh) 0 rgba(0,0,0,.85))}
+.fancy .l1{color:#7a2a00;-webkit-text-stroke:calc(var(--sw) * .5) #7a2a00}
+.fancy .l2{background:linear-gradient(180deg,#ffe680 6%,#ffc93a 52%,#f08c00 94%);-webkit-background-clip:text;background-clip:text;color:transparent}
+#mtitle{width:700px;height:260px;font-size:132px;--so:22px;--sw:9px;--sh:6px;text-align:center;line-height:.95;text-transform:uppercase}
+#mtitle span{white-space:pre;text-align:center}
+.mbtn{width:540px;height:124px;border-radius:24px;cursor:pointer;pointer-events:auto;display:flex;align-items:center;gap:20px;padding:0 30px;text-align:left;
+  font-family:var(--font);color:#fff;background:#1d1714e6;border:4px solid #ffffffd0;box-shadow:0 10px 0 #000a;transform:translate(-50%,-50%) scale(0);touch-action:manipulation}
+.mbtn.primary{color:#2a1306;background:linear-gradient(180deg,#ffe27a 0%,#f7b60c 100%);border-color:#fff;box-shadow:0 0 0 5px #2a1306,0 12px 0 5px #000a}
+.mbtn .mi{flex:none;width:56px;display:flex;justify-content:center}
+.mbtn .mt{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1;overflow:hidden}
+.mbtn b{font:700 48px/1.1 var(--font);white-space:nowrap;text-transform:uppercase;letter-spacing:.5px}
+.mbtn small{font:700 24px/1.2 system-ui,-apple-system,"Segoe UI",sans-serif;opacity:.88;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mbtn.done{opacity:.8}
+.mbtn:focus-visible{outline:5px solid #ffd84d;outline-offset:6px}
+#m-rank,#r-rank{width:84px;height:84px;border-radius:50%;cursor:pointer;pointer-events:auto;display:flex;align-items:center;justify-content:center;font-size:42px;line-height:1;padding:0;
+  background:#1d1714e6;border:4px solid #fff;box-shadow:0 6px 0 #000a;transform:translate(-50%,-50%) scale(0)}
+#m-rank:focus-visible,#r-rank:focus-visible{outline:5px solid #ffd84d;outline-offset:4px}
+#best{width:660px;text-align:center;font:700 36px/1.1 var(--font);color:#fff;-webkit-text-stroke:7px #000;paint-order:stroke fill;letter-spacing:.5px}
+#keys{width:660px;text-align:center;font:700 24px/1.2 system-ui,-apple-system,"Segoe UI",sans-serif;color:#fff;opacity:.85;-webkit-text-stroke:5px #000;paint-order:stroke fill}
+.pbtn{height:100px;padding:0 44px;border-radius:50px;cursor:pointer;pointer-events:auto;white-space:nowrap;display:flex;align-items:center;justify-content:center;gap:14px;
+  font:700 46px/1 var(--font);text-transform:uppercase;color:#2a1306;background:linear-gradient(180deg,#ffe27a 0%,#f7b60c 100%);border:0;
+  box-shadow:0 0 0 5px #fff,0 0 0 11px #2a1306,0 12px 0 11px #000a;transform:translate(-50%,-50%) scale(0);touch-action:manipulation}
+.pbtn.sec{color:#fff;background:#1d1714e6;box-shadow:0 0 0 4px #fff,0 9px 0 4px #000a;height:84px;font-size:38px;padding:0 34px}
+.pbtn:focus-visible{outline:5px solid #ffd84d;outline-offset:12px}
+.pbtn .ic{font-size:52px;margin-top:-4px}
+#rlabel{width:600px;text-align:center;font:700 40px/1.1 var(--font);color:var(--gold);-webkit-text-stroke:7px #000;paint-order:stroke fill;text-transform:uppercase}
+#rpos{width:600px;text-align:center;font:700 30px/1.1 system-ui,-apple-system,"Segoe UI",sans-serif;color:#fff;-webkit-text-stroke:5px #000;paint-order:stroke fill}
+#mcard{width:600px;padding:40px 36px 34px;border-radius:34px;background:#1d1714f2;box-shadow:0 0 0 5px #fff,0 0 0 11px #2a1306,0 16px 0 11px #000a;display:flex;flex-direction:column;align-items:center;gap:18px;pointer-events:auto;transform:translate(-50%,-50%) scale(0)}
+#mcard .mc-t{font:700 54px/1.05 var(--font);color:var(--gold);text-align:center;text-transform:uppercase}
+#mcard .mc-g{font:700 46px/1.15 var(--font);color:#fff;text-align:center}
+#mcard .mc-s{font:700 28px/1.25 system-ui,-apple-system,"Segoe UI",sans-serif;color:#d9cfc6;text-align:center}
+#mcard .mc-go{margin-top:10px;height:96px;padding:0 54px;border:0;border-radius:50px;cursor:pointer;font:700 46px/1 var(--font);text-transform:uppercase;color:#2a1306;background:linear-gradient(180deg,#ffe27a 0%,#f7b60c 100%);box-shadow:0 0 0 5px #fff,0 0 0 11px #2a1306,0 12px 0 11px #000a;touch-action:manipulation}
+#mcard .mc-back{border:0;background:none;cursor:pointer;font:700 32px/1 var(--font);color:#fff;opacity:.75;padding:8px 18px;text-decoration:underline}
+#mcard .mc-go:focus-visible,#mcard .mc-back:focus-visible{outline:5px solid #ffd84d;outline-offset:12px}
+#ccard{width:600px;padding:40px 36px 34px;border-radius:34px;background:#1d1714f2;box-shadow:0 0 0 5px #fff,0 0 0 11px #2a1306,0 16px 0 11px #000a;display:flex;flex-direction:column;align-items:center;gap:18px;pointer-events:auto;transform:translate(-50%,-50%) scale(0);text-align:center}
+#ccard .mc-t{font:700 60px/1.05 var(--font);color:var(--gold);text-transform:uppercase}
+#ccard #cc-txt{font:700 46px/1.15 var(--font);color:#fff}
+#ccard #cc-sub{font:700 28px/1.25 system-ui,-apple-system,"Segoe UI",sans-serif;color:#d9cfc6}
+#ccard .mc-go{margin-top:10px;height:96px;padding:0 54px;border:0;border-radius:50px;cursor:pointer;font:700 46px/1 var(--font);text-transform:uppercase;color:#2a1306;background:linear-gradient(180deg,#ffe27a 0%,#f7b60c 100%);box-shadow:0 0 0 5px #fff,0 0 0 11px #2a1306,0 12px 0 11px #000a;touch-action:manipulation}
+#ccard .mc-back{border:0;background:none;cursor:pointer;font:700 32px/1 var(--font);color:#fff;opacity:.75;padding:8px 18px;text-decoration:underline}
+#ccard .mc-go:focus-visible,#ccard .mc-back:focus-visible{outline:5px solid #ffd84d;outline-offset:12px}
+#dban{max-width:620px;padding:12px 28px;border-radius:36px;background:#1d1714eb;color:#fff;font:700 40px/1.1 var(--font);text-align:center;text-transform:uppercase;box-shadow:0 0 0 4px #fff,0 8px 0 4px #000a;pointer-events:none;animation:dban 2s ease-out both}
+#dban.gold{white-space:nowrap;font-size:44px;background:linear-gradient(180deg,#ffe27a,#f7b60c);color:#2a1306;box-shadow:0 0 0 5px #fff,0 0 0 10px #2a1306,0 10px 0 10px #000a}
+@keyframes dban{0%{transform:translate(-50%,-50%) scale(.3);opacity:0}18%{transform:translate(-50%,-50%) scale(1.08);opacity:1}30%{transform:translate(-50%,-50%) scale(1)}100%{transform:translate(-50%,-50%) scale(1);opacity:1}}
+@media (prefers-reduced-motion:reduce){#dban{animation-duration:.01s}}
+#dban.ok{pointer-events:auto;padding:22px 34px 30px;border-radius:40px}
+#dban .db-ok{display:block;margin:20px auto 0;height:80px;padding:0 64px;border:0;border-radius:44px;cursor:pointer;font:700 42px/1 var(--font);color:#2a1306;background:linear-gradient(180deg,#ffe27a 0%,#f7b60c 100%);box-shadow:0 0 0 5px #fff,0 0 0 10px #2a1306,0 10px 0 10px #000a;touch-action:manipulation}
+.hide,[hidden]{display:none!important}
+#loader{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;background:var(--bg0);z-index:5;transition:opacity .35s}
+#loader.done{opacity:0;pointer-events:none}
+#loader .ttl{font:700 clamp(30px,8vw,48px)/1 var(--font);color:#ffc93a;-webkit-text-stroke:3px #000;paint-order:stroke fill;text-transform:uppercase}
+#loader .bar{width:min(260px,64vw);height:14px;border-radius:7px;background:#ffffff1f;overflow:hidden;box-shadow:inset 0 0 0 2px #ffffff22}
+#loader .fill{height:100%;width:0;background:linear-gradient(90deg,#ff5a1a,#ffe27a);border-radius:7px;transition:width .15s}
+#loader .pct{font:700 18px/1 var(--font);color:#e4d0c0}
+#loader .err{font:600 16px/1.4 system-ui,sans-serif;color:#ffb3b3;max-width:80vw;text-align:center}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* ---- site: barra de cima e banner embaixo (igual aos outros jogos) ---- */
+:root{--topH:calc(48px + env(safe-area-inset-top,0px));--adH:calc(60px + env(safe-area-inset-bottom,0px))}
+@media (min-width:760px) and (min-height:640px){:root{--adH:calc(90px + env(safe-area-inset-bottom,0px))}}
+#app{top:var(--topH);bottom:var(--adH);padding-top:4px;padding-bottom:4px}
+#topbar{position:fixed;left:0;right:0;top:0;height:var(--topH);padding:env(safe-area-inset-top,0px) max(12px,env(safe-area-inset-right,0px)) 0 max(12px,env(safe-area-inset-left,0px));
+  display:flex;align-items:center;justify-content:space-between;background:var(--bg0);z-index:3}
+#topbar .back{display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 16px 0 10px;border-radius:999px;text-decoration:none;
+  font:700 17px/1 var(--font);color:#fff;background:#ffffff14;border:1.5px solid #ffffff38;transition:background .15s,border-color .15s,color .15s}
+#topbar .back:hover,#topbar .back:focus-visible{background:var(--gold);border-color:var(--gold);color:var(--navy);outline:none}
+#topbar .tb-r{display:flex;gap:8px}
+#topbar .topinfo{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;cursor:pointer;color:#fff;background:#ffffff14;border:1.5px solid #ffffff38}
+#topbar .topinfo:hover,#topbar .topinfo:focus-visible{background:var(--gold);border-color:var(--gold);color:var(--navy);outline:none}
+#topbar .topshare{display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 14px;border-radius:999px;cursor:pointer;font:700 17px/1 var(--font);color:#fff;background:#ffffff14;border:1.5px solid #ffffff38}
+#topbar .topshare:hover,#topbar .topshare:focus-visible{background:var(--gold);border-color:var(--gold);color:var(--navy);outline:none}
+#topbar .toplike{display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 12px;border-radius:999px;cursor:pointer;font:700 17px/1 var(--font);color:#fff;background:#ffffff14;border:1.5px solid #ffffff38}
+#topbar .toplike:hover,#topbar .toplike:focus-visible{border-color:var(--gold);outline:none}
+#topbar .toplike .hf{display:none}#topbar .toplike[aria-pressed="true"] .hf{display:block}#topbar .toplike[aria-pressed="true"] .ho{display:none}
+#topbar .toplike[aria-pressed="true"]{border-color:#ff4d6d}
+#topbar .toplike .lc:empty{display:none}
+#topbar .topsnd .so{display:none}#topbar .topsnd.on .so{display:block}#topbar .topsnd.on .sf{display:none}
+#topbar .topsnd.on{border-color:var(--gold)}
+@media (max-width:479px){#topbar .topshare span{display:none}#topbar .topshare{width:38px;padding:0;justify-content:center}#topbar .back{padding:0 12px 0 8px}}
+#howto{margin:auto;max-width:min(440px,calc(100vw - 32px));padding:22px 22px 18px;border:1.5px solid #ffffff26;border-radius:20px;background:#241814;color:#fff;font:400 16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;user-select:text;-webkit-user-select:text}
+#howto::backdrop{background:#0a0605cc}
+#howto h1{font:700 28px/1.1 var(--font);margin-bottom:10px;outline:none;text-transform:uppercase}
+#howto h2{font:700 19px/1.2 var(--font);color:var(--gold);margin:4px 0 6px;text-transform:uppercase}
+#howto ol,#howto ul{padding-left:20px;margin-bottom:12px}#howto li{margin-bottom:4px}
+#howto p{color:#e4d0c0;font-size:14.5px}
+#howto .cred{margin-top:10px;font-size:12px;opacity:.8}#howto .cred a{color:#ffd27a}
+#howto .close{margin-top:16px;width:100%;height:46px;border:0;border-radius:999px;cursor:pointer;font:700 18px/1 var(--font);color:var(--navy);background:linear-gradient(180deg,#ffe27a,#f7b60c)}
+#toast{position:fixed;left:50%;bottom:calc(var(--adH) + 18px);transform:translate(-50%,20px);opacity:0;z-index:30;pointer-events:none;padding:10px 18px;border-radius:999px;background:#fff;color:var(--navy);font:700 16px/1 var(--font);box-shadow:0 8px 24px #0008;transition:opacity .2s,transform .2s}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+#rank{margin:auto;width:min(420px,calc(100vw - 32px));padding:20px 20px 16px;border:1.5px solid #ffffff26;border-radius:20px;background:#241814;color:#fff;font:400 16px/1.4 system-ui,-apple-system,"Segoe UI",sans-serif}
+#rank::backdrop{background:#0a0605cc}
+#rank h1{font:700 24px/1.15 var(--font);margin-bottom:10px;color:var(--gold);text-transform:uppercase}
+#rank ol{list-style:none;margin:0 0 10px;padding:0}
+#rank li{display:flex;gap:10px;align-items:center;padding:7px 10px;border-radius:10px;background:#ffffff12;margin-bottom:4px;font-weight:700}
+#rank li.me{background:#ffd84d;color:var(--navy)}
+#rank li .rp{width:30px;text-align:right;opacity:.75}#rank li .rn{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}#rank li .rs{font:700 18px/1 var(--font)}
+#rank .rmsg{color:#e4d0c0;font-size:15px;margin:6px 0 10px}
+#rank .ryou{font:700 18px/1.2 var(--font);margin:4px 0 10px}
+#rank form.nk label{display:block;font-weight:700;margin-bottom:6px}
+#rank form.nk input{width:100%;height:46px;border-radius:12px;border:2px solid #ffffff55;background:#140d0a;color:#fff;font:700 18px/1 system-ui,sans-serif;padding:0 12px}
+#rank form.nk input:focus{outline:none;border-color:var(--gold)}
+#rank form.nk small{display:block;color:#e4d0c0;margin:6px 0 10px}
+#rank .rbtn{width:100%;height:46px;border:0;border-radius:999px;cursor:pointer;font:700 18px/1 var(--font);color:var(--navy);background:linear-gradient(180deg,#ffe27a,#f7b60c);margin-top:6px}
+#rank .rbtn.sec{background:#ffffff14;color:#fff;border:1.5px solid #ffffff38}
+#adbar{position:fixed;left:0;right:0;bottom:0;height:var(--adH);padding-bottom:env(safe-area-inset-bottom,0px);display:flex;align-items:center;justify-content:center;background:var(--bg0);z-index:3;overflow:hidden}
+#adbar .ad-slot{width:100%;max-width:728px;height:100%}
+</style>
+<script src="../site-config.js"></script>
+<script src="../site.js"></script>
+<meta name="google-adsense-account" content="ca-pub-0483439498705157">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-0483439498705157" crossorigin="anonymous"></script>
+<!--seo--><link rel="canonical" href="https://bartelgames.com.br/pt/burnout-city/"><link rel="alternate" hreflang="en" href="https://bartelgames.com.br/burnout-city/"><link rel="alternate" hreflang="pt" href="https://bartelgames.com.br/pt/burnout-city/"><link rel="alternate" hreflang="es" href="https://bartelgames.com.br/es/burnout-city/"><link rel="alternate" hreflang="x-default" href="https://bartelgames.com.br/burnout-city/"><script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Burnout City", "url": "https://bartelgames.com.br/pt/burnout-city/", "description": "Burnout City: dirija um muscle car por uma cidade em chamas, desvie de meteoros, tornados e lava, atropele zumbis para fazer combos e pegue caixas de armadura. Jogo de carro 3D grátis no navegador.", "image": "https://bartelgames.com.br/burnout-city/assets/og.jpg?v=3", "genre": ["Racing", "Action"], "gamePlatform": ["Web browser", "Android", "iOS", "Windows", "macOS"], "applicationCategory": "Game", "operatingSystem": "Any", "playMode": "SinglePlayer", "inLanguage": ["en", "pt", "es", "fr", "de", "it"], "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "Bartel Games", "url": "https://bartelgames.com.br/"}, "publisher": {"@type": "Organization", "name": "Bartel Games", "url": "https://bartelgames.com.br/"}}</script><!--/seo-->
+</head>
+<body>
+<nav id="topbar"><a class="back" href="/pt/"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M15 4 7 12l8 8" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="more">More games</span></a><span class="tb-r"><button class="topinfo topsnd" id="topsnd" type="button" aria-pressed="false" data-i18n-label="sound" hidden><svg class="sf" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M16.5 9.5l5 5m0-5l-5 5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg><svg class="so" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M16 8.5a5 5 0 0 1 0 7M18.6 5.8a9 9 0 0 1 0 12.4" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/></svg></button><button class="topinfo" type="button" aria-haspopup="dialog" aria-controls="howto" onclick="var d=document.getElementById('howto');d.showModal();d.scrollTop=0;document.getElementById('howto-t').focus({preventScroll:true})"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M12 11v6" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><circle cx="12" cy="7.3" r="1.6" fill="currentColor"/></svg><span class="sr" data-i18n="how">How to play</span></button><button class="toplike" id="toplike" type="button" aria-pressed="false" data-i18n-label="like" hidden><svg class="ho" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.2-9.4C1.6 7.6 3.9 4 7.4 4c2 0 3.6 1.1 4.6 2.7C13 5.1 14.6 4 16.6 4c3.5 0 5.8 3.6 4.6 7.1-1.7 4.8-9.2 9.4-9.2 9.4z" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linejoin="round"/></svg><svg class="hf" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.2-9.4C1.6 7.6 3.9 4 7.4 4c2 0 3.6 1.1 4.6 2.7C13 5.1 14.6 4 16.6 4c3.5 0 5.8 3.6 4.6 7.1-1.7 4.8-9.2 9.4-9.2 9.4z" fill="#ff3b5c" stroke="#ff3b5c" stroke-width="2.3" stroke-linejoin="round"/></svg><span class="lc"></span></button><button class="topshare" type="button" data-share><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 3v12M7 8l5-5 5 5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg><span data-i18n="share">Share</span></button></span></nav>
+<dialog id="howto" aria-labelledby="howto-t"><h1 id="howto-t" tabindex="-1" autofocus data-i18n="title">Burnout City</h1><h2 data-i18n="how">Como jogar</h2><ol><li data-i18n="h1">Seu carro anda sozinho por uma cidade em chamas. Arraste o dedo para a esquerda ou a direita (ou use as setas / A-D) para virar e derrapar.</li><li data-i18n="h2">Desvie de meteoros, tornados, prédios desabando, rachaduras na pista, rios de lava e carros destruídos. Use a rampa para pular a lava.</li><li data-i18n="h3">Você aguenta 2 batidas. Pegue as caixas de armadura brilhantes: cada uma instala uma nova camada de armadura no carro e dá +1 vida (até 5). Cada batida arranca uma camada.</li><li data-i18n="h4">Pontos: 1 por metro + 50 por zumbi atropelado. Acerte zumbis em sequência para fazer COMBO: 50, 100, 150... até 300 por zumbi.</li></ol><h2 data-i18n="modes">Modos de jogo</h2><ul><li data-i18n="hmPlay">Jogar: vá o mais longe que puder e suba no ranking mundial.</li><li data-i18n="hmDaily">Missão do dia: um objetivo, a mesma pista para todos hoje. Tentativas ilimitadas!</li></ul><p data-i18n="ab">Burnout City é um jogo de corrida 3D grátis: derrape um muscle car pelo apocalipse, atropele zumbis e sobreviva aos desastres. Roda no navegador do celular ou do computador. Sem download, sem cadastro.</p><form method="dialog"><button class="close" data-i18n="close">Fechar</button></form></dialog>
+<dialog id="rank" aria-labelledby="rank-t"><h1 id="rank-t"></h1><div class="rbody"></div><form method="dialog"><button class="rbtn sec" data-i18n="close">Close</button></form></dialog>
+<div id="app">
+  <div id="stage">
+    <canvas id="gl"></canvas>
+    <canvas id="fx"></canvas>
+    <div id="hud" translate="no">
+      <div id="menu" class="hide">
+        <h1 id="mtitle" class="a fancy"><span class="l0">Burnout&#10;City</span><span class="l1">Burnout&#10;City</span><span class="l2">Burnout&#10;City</span></h1>
+        <button id="m-play" class="a mbtn primary" type="button"><span class="mi" aria-hidden="true"><svg viewBox="0 0 24 24" width="46" height="46"><path d="M7 4.5v15l12.5-7.5z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span><span class="mt"><b data-i18n="play"></b><small data-i18n="playSub"></small></span></button>
+        <button id="m-cones" class="a mbtn hide" type="button" tabindex="-1" aria-hidden="true"><span class="mi" aria-hidden="true"><svg viewBox="0 0 24 24" width="46" height="46"><path d="M10.2 3h3.6l5 15H5.2z" fill="#ff7a1a" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M8.6 9h6.8l1 3H7.6zM6.9 14.2h10.2" stroke="#fff" stroke-width="2.2" fill="#fff"/><rect x="2.5" y="18" width="19" height="3" rx="1.2" fill="currentColor"/></svg></span><span class="mt"><b data-i18n="cones"></b><small></small></span></button>
+        <button id="m-daily" class="a mbtn" type="button"><span class="mi" aria-hidden="true"><svg viewBox="0 0 24 24" width="44" height="44"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="12" cy="12" r="5.5" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="12" cy="12" r="1.8" fill="currentColor"/></svg></span><span class="mt"><b data-i18n="daily"></b><small></small></span></button>
+        <button id="m-rank" class="a" type="button" aria-haspopup="dialog" aria-controls="rank" data-i18n-label="rank"><span aria-hidden="true">&#127942;</span></button>
+        <div id="best" class="a"></div>
+        <div id="keys" class="a" data-i18n="keys"></div>
+      </div>
+      <div id="mcard" class="a hide" role="dialog" aria-labelledby="mc-title">
+        <div id="mc-title" class="mc-t"><span aria-hidden="true">&#127919;</span> <span id="mc-n"></span></div>
+        <div id="mc-goal" class="mc-g"></div>
+        <div class="mc-s" data-i18n="misHow"></div>
+        <button id="mc-go" class="mc-go" type="button"><span aria-hidden="true">&#9654;</span> <span data-i18n="misGo">Start</span></button>
+        <button id="mc-back" class="mc-back" type="button" data-i18n="back">Back</button>
+      </div>
+      <div id="ccard" class="a hide" role="dialog" aria-labelledby="cc-t">
+        <div id="cc-t" class="mc-t"><span aria-hidden="true">&#9876;&#65039;</span> <span data-i18n="ccT">Challenge!</span></div>
+        <div id="cc-txt"></div>
+        <div id="cc-sub"></div>
+        <button id="cc-go" class="mc-go" type="button"><span aria-hidden="true">&#9654;</span> <span data-i18n="duelGo">Accept</span></button>
+        <button id="cc-back" class="mc-back" type="button" data-i18n="notNow">Not now</button>
+      </div>
+      <div id="dban" class="a hide" role="status"></div>
+      <div id="result" class="hide">
+        <div id="rlabel" class="a"></div>
+        <div id="rpos" class="a"></div>
+        <button id="again" class="a pbtn" type="button"><span class="ic" aria-hidden="true">&#8635;</span><span data-i18n="again">Play again</span></button>
+        <button id="share" class="a pbtn sec" type="button" data-share><svg viewBox="0 0 24 24" width="34" height="34" aria-hidden="true"><path d="M12 3v12M7 8l5-5 5 5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg><span data-i18n="share">Share</span></button>
+        <button id="r-rank" class="a" type="button" aria-haspopup="dialog" aria-controls="rank" data-i18n-label="rank"><span aria-hidden="true">&#127942;</span></button>
+      </div>
+      <div id="live" class="sr" aria-live="polite"></div>
+    </div>
+  </div>
+  <div id="loader"><div class="ttl" data-i18n="title">Burnout City</div><div class="bar"><div class="fill"></div></div><div class="pct">0%</div><div class="err"></div></div>
+</div>
+<div id="adbar" aria-label="Advertisement" data-i18n-label="ad"><div class="ad-slot" data-ad-slot-key="ADSENSE_SLOT_GAME"></div></div>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js"}}</script>
+<script type="module" src="game.js?v=1b3529a3"></script>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7f9a5c4a463b4b799b86c338ccb2bc99"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

@@ -209,7 +209,7 @@
   for (var lg in LOGIN_TXT) if (S[lg]) for (var lk in LOGIN_TXT[lg]) S[lg][lk] = LOGIN_TXT[lg][lk];
   var tag = "en";
   try {
-    var q = new URLSearchParams(location.search).get("lang");
+    var q = window.BG_LANG || new URLSearchParams(location.search).get("lang");
     var list = q ? [q] : (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || "en"]);
     for (var i = 0; i < list.length; i++) { var b = String(list[i]).toLowerCase().split("-")[0]; if (S[b]) { tag = String(list[i]); break; } }
   } catch (e) {}

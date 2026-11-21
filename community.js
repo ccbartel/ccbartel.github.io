@@ -3,12 +3,13 @@
 // Servidor: RPCs post_list / post_add / post_report / post_delete (src/supabase/2026-11-21_mural.sql), via BG_SOCIAL.wall.
 // Texto dos usuarios entra SEMPRE por textContent (nunca innerHTML).
 (function () {
-  var seg = (location.pathname.split("/").filter(Boolean)[0] || "").toLowerCase();
+  var parts = location.pathname.split("/").filter(Boolean), LP = /^(pt|es)$/.test(parts[0] || "") ? "/" + parts.shift() : ""; // /pt/..., /es/... = versao traduzida
+  var seg = (parts[0] || "").toLowerCase();
   var GAME = {"geo-quiz": "guess-the-flag", "bumpets-soccer": "bumpets", "bumpets-race": "bumpets"}[seg] || seg;
   var HOME = !GAME; // home (/): vitrine com os posts mais novos de todos os jogos (#bg-community)
   // como montar o link da sala de cada jogo online (sem entrada = o jogo nao tem sala, a opcao "parceiro" nao pede codigo)
   var ROOM = {"bumpets": function (c) { return location.origin + location.pathname + "#" + c; },
-              "candy-line": function (c) { return location.origin + "/candy-line/?sala=" + c; }}[GAME];
+              "candy-line": function (c) { return location.origin + LP + "/candy-line/?sala=" + c; }}[GAME];
   var TX = {
     en: {hT: "Community", hSub: "Ideas, feedback and people to play with. Open the wall in any game.", hEmpty: "No posts yet. Open a game and be the first!", hOpen: "Open wall", btn: "Community", ttl: "Community", all: "All", idea: "Idea", crit: "Feedback", mate: "Looking to play", chat: "Chat",
       ph: "Share an idea, give feedback or find someone to play with...", room: "Room code (optional)", post: "Post", rules: "Be kind. No swearing, no links, no personal info.",
@@ -219,7 +220,7 @@
     }, function () {});
   }
   var PAGE = {"guess-the-flag": "geo-quiz"}, GNAME = {"guess-the-flag": "Geo Quiz", "candy-line": "Candy Line", "burnout-city": "Burnout City", "drift-trail": "Drift Trail", "bumpets": "Bumpets"};
-  var ROOMS = {"bumpets": function (c) { return "/bumpets/#" + c; }, "candy-line": function (c) { return "/candy-line/?sala=" + c; }};
+  var ROOMS = {"bumpets": function (c) { return LP + "/bumpets/#" + c; }, "candy-line": function (c) { return LP + "/candy-line/?sala=" + c; }};
   function homeFeed() {
     var sec = document.getElementById("bg-community"); if (!sec) return;
     var h = sec.querySelector("h2"), sub = sec.querySelector(".cm-sub"), box = sec.querySelector(".cm-list");
@@ -228,7 +229,7 @@
       box.textContent = "";
       if (!rs || !rs.length) { box.appendChild(el("p", "cm-empty", T("hEmpty"))); return; }
       rs.forEach(function (p) {
-        var a = el("a", "cm-post"); a.href = "/" + (PAGE[p.game] || p.game) + "/#mural";
+        var a = el("a", "cm-post"); a.href = LP + "/" + (PAGE[p.game] || p.game) + "/#mural";
         var hd = el("div", "cm-h"), tg = el("span", "bgw-tag", T(p.kind)); tg.style.background = KCOL[p.kind] || "#ccc";
         hd.appendChild(tg); hd.appendChild(el("span", "cm-g", GNAME[p.game] || p.game));
         a.appendChild(hd); a.appendChild(el("p", "cm-tx", p.body.length > 160 ? p.body.slice(0, 157) + "..." : p.body));
