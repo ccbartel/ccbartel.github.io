@@ -48,6 +48,7 @@
       if (b.p_parent) return L.filter(function (p) { return p.parent === b.p_parent && !p.hidden; }).sort(function (a, c) { return a.id - c.id; }).map(row);
       return L.filter(function (p) { return !p.parent && !p.hidden && (!b.p_kind || p.kind === b.p_kind) && (!b.p_before || p.id < b.p_before); }).sort(function (a, c) { return c.id - a.id; }).slice(0, b.p_limit || 20).map(row);
     }
+    if (fn === "post_recent") return L.filter(function (p) { return !p.parent && !p.hidden; }).sort(function (a, c) { return c.id - a.id; }).slice(0, b.p_limit || 6).map(function (p) { var o = row(p); o.game = p.game || "bumpets"; return o; });
     if (fn === "post_add") {
       if (!me) return {code: "name"};
       var t = String(b.p_body || "").trim();
@@ -216,6 +217,7 @@
     end: function (game, mode, score, reason) { EV.ended = true; return event(game, "end", {mode: mode, score: score, reason: reason, secs: EV.t0 ? (performance.now() - EV.t0) / 1000 : null}); },
     device: device, compact: compact, auth: auth,
     // mural da comunidade (2026-11-21, community.js): RPC com a identidade (apelido do aparelho ou conta Google). Em localhost nada vai ao banco.
+    wallRecent: function (n) { return LOCAL ? Promise.resolve(fakeWall("post_recent", {p_limit: n})) : rpc("post_recent", {p_limit: n || 6}); }, // vitrine da home (sem identidade)
     wall: function (fn, body) {
       body = body || {}; body.p_device = device(); body.p_token = dtok();
       if (LOCAL) return Promise.resolve(fakeWall(fn, body));
