@@ -3,6 +3,7 @@
 (function () {
   var I = window.GTF_I18N || {t: function (k, f) { return k; }, lang: "en"};
   var URL_ = "https://bartelgames.com.br/geo-quiz/";
+  var LPx = (location.pathname.match(/^\/(pt|es)\//) || [""])[0]; if (LPx) URL_ = URL_.replace(".com.br/", ".com.br" + LPx); /* versao /pt/ /es/ compartilha o link no idioma */
   function toast(msg) {
     var d = document.getElementById("toast");
     if (!d) { d = document.createElement("div"); d.id = "toast"; d.setAttribute("role", "status"); document.body.appendChild(d); }
@@ -23,6 +24,8 @@
     var url = (L && L.link) || URL_; // desafio: link com a semente da partida (mesmas bandeiras)
     var data = {title: I.t("title"), text: text, url: url};
     // so no celular (toque): no PC a janela de compartilhar do Windows manda para o WhatsApp SEM a foto de previa; la copia o link e a pessoa cola (2026-11-19)
+    var SC = window.BG_card && L && (L.score > 0 || L.win || L.done) ? window.BG_card(L.score > 0 ? Number(L.score).toLocaleString(document.documentElement.lang || "en") : (L.win ? "🏆" : "✓"), text) : null; /* cartao com a pontuacao (scorecard.js, 2026-11-21): no celular vai a imagem junto */
+    if (SC && navigator.canShare && window.matchMedia && matchMedia("(pointer:coarse)").matches) { var d2 = {title: data.title, text: text + " " + url, files: [SC]}; if (navigator.canShare(d2)) { navigator.share(d2).catch(function () {}); return; } }
     if (navigator.share && window.matchMedia && matchMedia("(pointer:coarse)").matches) { navigator.share(data).catch(function () {}); return; }
     var all = text + " " + url;
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(all).then(function () { toast(I.t("copied")); }, function () { prompt("", all); });

@@ -176,7 +176,7 @@ def main():
 
     # 2b. scripts comuns do site com ?v = hash do arquivo (2026-11-21: social.js sem versao ficou 10 min no cache do Pages
     #     e o mural novo chamou a versao velha). Vale para toda pagina em HTML_FILES.
-    for common in ("social.js", "community.js"):
+    for common in ("social.js", "community.js", "scorecard.js"):
         cver = hashlib.sha1((ROOT / common).read_bytes()).hexdigest()[:8]
         for hf in HTML_FILES:
             hp = ROOT / hf
@@ -186,6 +186,20 @@ def main():
             ht2 = re.sub(r'src="((?:\.\./)?)' + re.escape(common) + r'(\?v=[0-9a-z]+)?"', lambda m: 'src="%s%s?v=%s"' % (m.group(1), common, cver), ht)
             if ht2 != ht:
                 hp.write_text(ht2, encoding="utf8")
+    # 2b2. share.js de cada jogo com ?v = hash (2026-11-21: cartao de pontuacao); pagina com <base href="/x/"> usa o share.js de /x/
+    for hf in HTML_FILES:
+        hp = ROOT / hf
+        if "/" not in hf or not hp.exists():
+            continue
+        ht = hp.read_text(encoding="utf8")
+        mb = re.search(r'<base href="/([a-z0-9-]+)/">', ht)
+        sj = ROOT / (mb.group(1) if mb else hf.split("/")[0]) / "share.js"
+        if not sj.exists():
+            continue
+        sv = hashlib.sha1(sj.read_bytes()).hexdigest()[:8]
+        ht2 = re.sub(r'src="share\.js(\?v=[0-9a-z]+)?"', 'src="share.js?v=%s"' % sv, ht)
+        if ht2 != ht:
+            hp.write_text(ht2, encoding="utf8")
     # 2c. SEO (2026-11-21): canonical + JSON-LD, "Como jogar" pre-preenchido em ingles, sitemap.xml e robots.txt (src/seo.py)
     sys.path.insert(0, str(ROOT / "src")); import seo
     print("    seo: %d paginas no sitemap" % seo.run(str(ROOT), HTML_FILES))
