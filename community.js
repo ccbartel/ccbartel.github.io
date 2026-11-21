@@ -107,7 +107,7 @@
     var x = el("button", "x", "×"); x.type = "button"; x.setAttribute("aria-label", T("close")); x.onclick = function () { dlg.close(); };
     hd.appendChild(h2); hd.appendChild(x); w.appendChild(hd);
     tabsBox = el("div", "tabs"); w.appendChild(tabsBox);
-    [[null, "all"], ["idea", "idea"], ["crit", "crit"], ["mate", "mate"], ["chat", "chat"]].forEach(function (t) {
+    [[null, "all"], ["idea", "idea"], ["crit", "crit"], ["mate", "mate"], ["chat", "chat"]].filter(function (t) { return ROOM || t[0] !== "mate"; }).forEach(function (t) {
       var b = el("button", "chip" + (t[0] === filter ? " on" : ""), T(t[1])); b.type = "button";
       b.onclick = function () { filter = t[0]; [].forEach.call(tabsBox.children, function (c) { c.classList.remove("on"); }); b.classList.add("on"); load(true); };
       tabsBox.appendChild(b);
@@ -120,7 +120,7 @@
   }
   function newForm() {
     var f = el("form", "new"), ks = el("div", "kinds"), ta = el("textarea"), room = el("input"), row = el("div", "row"), cnt = el("span", "cnt"), go = el("button", "go", T("post")), msg = el("div", "msg");
-    ["idea", "crit", "mate", "chat"].forEach(function (k) {
+    ["idea", "crit", "mate", "chat"].filter(function (k) { return ROOM || k !== "mate"; }).forEach(function (k) { /* sem online (Geo, Burnout, Drift) nao existe "procuro parceiro" (dele, 2026-11-21) */
       var b = el("button", "chip" + (k === kind ? " on" : ""), T(k)); b.type = "button"; b.style.setProperty("--c", KCOL[k]);
       b.onclick = function () { kind = k; [].forEach.call(ks.children, function (c) { c.classList.remove("on"); }); b.classList.add("on"); room.hidden = !(ROOM && k === "mate"); };
       ks.appendChild(b);
