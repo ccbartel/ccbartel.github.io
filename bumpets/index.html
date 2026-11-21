@@ -145,6 +145,12 @@ canvas{display:block;width:100%;height:100%}
 #boot .bbar i{display:block;height:100%;width:6%;border-radius:999px;background:linear-gradient(180deg,#ffe680,#ffc93a 55%,#f08c00);transition:width .3s}
 #boot .bdots{display:flex;gap:10px}#boot .bdots i{width:12px;height:12px;border-radius:50%;background:#fff;animation:bdot 1s ease-in-out infinite}#boot .bdots i:nth-child(2){animation-delay:.15s}#boot .bdots i:nth-child(3){animation-delay:.3s}
 @keyframes bdot{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(-8px);opacity:1}}
+/* placar do futebol (2026-11-21): grande, meu time a esquerda na cor dele, tempo no meio */
+.socsb{display:flex;align-items:center;justify-content:center;gap:8px;-webkit-text-stroke:0}
+.socsb b{min-width:58px;padding:4px 12px;border-radius:16px;background:var(--c);border:3px solid #fff;box-shadow:0 4px 0 #0d143066;font:700 40px/1 var(--font);color:#fff;-webkit-text-stroke:5px #0d1430;paint-order:stroke fill;text-align:center}
+.socsb span{padding:6px 12px;border-radius:12px;background:#0d1430d0;font:700 22px/1 var(--font);color:#fff;-webkit-text-stroke:0}.socsb span.gold{color:#ffd84d;font-size:18px}
+#msg.goal{font-size:clamp(64px,13cqh,110px);color:var(--gc,#ffd84d);-webkit-text-stroke:9px #0d1430;animation:golpop .9s cubic-bezier(.2,1.7,.35,1) both;text-shadow:0 8px 0 #0d143066}
+@keyframes golpop{0%{transform:scale(.2) rotate(-12deg);opacity:0}35%{transform:scale(1.25) rotate(4deg);opacity:1}55%{transform:scale(.95) rotate(-2deg)}75%{transform:scale(1.05)}100%{transform:scale(1) rotate(0)}}
 #cards{position:absolute;left:2%;right:2%;top:1.6%;display:flex;justify-content:center;gap:2%;pointer-events:none}
 .pcard{flex:1 1 0;max-width:118px;min-width:0;display:flex;align-items:center;gap:4px;background:#0d1430c4;border:2px solid var(--c);border-radius:999px;padding:2px 7px 2px 2px;position:relative;box-shadow:0 3px 0 #0005}
 .pcard img{width:34px;height:34px;flex:0 0 auto;border-radius:50%;background:radial-gradient(circle at 35% 28%,#ffffffb0,transparent 55%),var(--c);object-fit:cover}
@@ -232,7 +238,7 @@ canvas{display:block;width:100%;height:100%}
 </div>
 <div id="adbar" aria-label="Advertisement" data-i18n-label="ad"><div class="ad-slot" data-ad-slot-key="ADSENSE_SLOT_GAME"></div></div>
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.186.0/examples/jsm/"}}</script>
-<script type="module" src="game.js?v=6f5c8f77"></script>
+<script type="module" src="game.js?v=3edc4bdf"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7f9a5c4a463b4b799b86c338ccb2bc99"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>
