@@ -23,7 +23,10 @@ GAMES = ["geo-quiz", "candy-line", "burnout-city", "bumpets"]  # slug = pasta do
 STATE = ROOT / ".build_state.json"
 TMP = ROOT / "_build_tmp"
 OBF_VERSION = "javascript-obfuscator@4.1.1"
-HTML_FILES = ["index.html", "privacy.html", "contact.html"] + [g + "/index.html" for g in GAMES] + ["bumpets-soccer/index.html", "bumpets-race/index.html"]  # irmaos do Bumpets (src/bumpets/paginas.py)
+# paginas que rodam o game.js de OUTRO jogo (mesmo codigo travado num modo; 2026-11-21): pagina -> slug do codigo.
+# A pagina carrega ../<slug>/game.js e define o modo antes (ex.: Drift Trail = Burnout City so no Cones, window.BC_GAME).
+SHARED_PAGES = {"drift-trail": "burnout-city"}
+HTML_FILES = ["index.html", "privacy.html", "contact.html"] + [g + "/index.html" for g in GAMES] + ["bumpets-soccer/index.html", "bumpets-race/index.html"] + [p + "/index.html" for p in SHARED_PAGES]  # irmaos do Bumpets (src/bumpets/paginas.py) + paginas compartilhadas
 DEFAULT_STATE = {"SITE_NAME": "Bartel Games", "CONTACT_EMAIL": "contato@SEU-DOMINIO",
                  "SITE_URL": "https://bartelgames.com.br/"}
 OBF_OPTIONS = {
@@ -147,6 +150,16 @@ def main():
             die(slug + ': <script src="game.js"> nao encontrado em ' + str(page))
         if ht2 != ht:
             page.write_text(ht2, encoding="utf8")
+        for sp, code in SHARED_PAGES.items():  # paginas que usam este game.js: mesma versao no ?v
+            if code != slug:
+                continue
+            spage = ROOT / sp / "index.html"
+            st = spage.read_text(encoding="utf8")
+            st2, nv = re.subn(r'src="\.\./' + re.escape(slug) + r'/game\.js(\?v=[0-9a-f]+)?"', 'src="../%s/game.js?v=%s"' % (slug, ver), st)
+            if nv != 1:
+                die(sp + ': <script src="../' + slug + '/game.js"> nao encontrado em ' + str(spage))
+            if st2 != st:
+                spage.write_text(st2, encoding="utf8")
 
     # 3. CNAME e ads.txt
     cname = ROOT / "CNAME"

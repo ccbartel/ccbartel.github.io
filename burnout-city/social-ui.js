@@ -4,7 +4,7 @@
 // Gerado por src/supabase/gera_social_ui.py a partir de social-ui.template.js (nao editar a copia do jogo).
 (function () {
   var GAME = "burnout-city", MODE = "play", BEST = "bc_best", TPLAY = "rankPlay";
-  var XM = {"cones": {"best": "bc_best_cones", "title": "rankCones"}}; // modos extras com ranking proprio no mesmo jogo: {modo: {best: chave do recorde local, title: chave do titulo}}
+  var XM = {}; // modos extras com ranking proprio no mesmo jogo: {modo: {best: chave do recorde local, title: chave do titulo}}
   function T(k, f) { return window.CL_I18N ? window.CL_I18N.t(k, f) : k; }
   function S() { return window.BG_SOCIAL || null; }
   function lim(p, ms) { return Promise.race([p, new Promise(function (_, r) { setTimeout(function () { r(new Error("timeout")); }, ms || 5000); })]); }
