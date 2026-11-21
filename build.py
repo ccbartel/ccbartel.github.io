@@ -23,7 +23,7 @@ GAMES = ["geo-quiz", "candy-line", "burnout-city", "bumpets"]  # slug = pasta do
 STATE = ROOT / ".build_state.json"
 TMP = ROOT / "_build_tmp"
 OBF_VERSION = "javascript-obfuscator@4.1.1"
-HTML_FILES = ["index.html", "privacy.html", "contact.html"] + [g + "/index.html" for g in GAMES]
+HTML_FILES = ["index.html", "privacy.html", "contact.html"] + [g + "/index.html" for g in GAMES] + ["bumpets-soccer/index.html", "bumpets-race/index.html"]  # irmaos do Bumpets (src/bumpets/paginas.py)
 DEFAULT_STATE = {"SITE_NAME": "Bartel Games", "CONTACT_EMAIL": "contato@SEU-DOMINIO",
                  "SITE_URL": "https://bartelgames.com.br/"}
 OBF_OPTIONS = {
