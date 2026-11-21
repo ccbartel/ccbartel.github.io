@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /_arte/
+Disallow: /src/
+
+Sitemap: https://bartelgames.com.br/sitemap.xml

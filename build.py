@@ -186,6 +186,9 @@ def main():
             ht2 = re.sub(r'src="((?:\.\./)?)' + re.escape(common) + r'(\?v=[0-9a-z]+)?"', lambda m: 'src="%s%s?v=%s"' % (m.group(1), common, cver), ht)
             if ht2 != ht:
                 hp.write_text(ht2, encoding="utf8")
+    # 2c. SEO (2026-11-21): canonical + JSON-LD, "Como jogar" pre-preenchido em ingles, sitemap.xml e robots.txt (src/seo.py)
+    sys.path.insert(0, str(ROOT / "src")); import seo
+    print("    seo: %d paginas no sitemap" % seo.run(str(ROOT), HTML_FILES))
     # 3. CNAME e ads.txt
     cname = ROOT / "CNAME"
     if d:
