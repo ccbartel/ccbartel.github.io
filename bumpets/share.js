@@ -14,7 +14,8 @@
   function share() {
     var L = window.CL_LAST, m = String(location.hash || "").match(/^#([A-Z2-9]{5})$/);
     var url = URL_ + (m ? "#" + m[1] : "");
-    var text = L && L.win ? I.t("shWin") : m ? I.t("shRoom", m[1]) : I.t("shTxt0"); // venceu: conta a vitoria (com o link da sala, se houver)
+    var G = window.BB_GAME === "soccer" ? "S" : window.BB_GAME === "race" ? "R" : ""; /* Soccer/Race: frases proprias */
+    var text = L && L.win ? I.t(G ? "shWin" + G : "shWin") : m ? I.t("shRoom", m[1]) : I.t(G ? "shTxt" + G : "shTxt0"); // venceu: conta a vitoria (com o link da sala, se houver)
     var data = {title: I.t("title"), text: text, url: url};
     // so no celular (toque): no PC a janela de compartilhar do Windows manda para o WhatsApp SEM a foto de previa; la copia o link (2026-11-19)
     var SC = window.BG_card && L && (L.score > 0 || L.win || L.done) ? window.BG_card(L.score > 0 ? Number(L.score).toLocaleString(document.documentElement.lang || "en") : (L.win ? "🏆" : "✓"), text) : null; /* cartao com a pontuacao (scorecard.js, 2026-11-21): no celular vai a imagem junto */
