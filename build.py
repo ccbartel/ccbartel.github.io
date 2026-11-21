@@ -174,6 +174,18 @@ def main():
             if st2 != st:
                 spage.write_text(st2, encoding="utf8")
 
+    # 2b. scripts comuns do site com ?v = hash do arquivo (2026-11-21: social.js sem versao ficou 10 min no cache do Pages
+    #     e o mural novo chamou a versao velha). Vale para toda pagina em HTML_FILES.
+    for common in ("social.js", "community.js"):
+        cver = hashlib.sha1((ROOT / common).read_bytes()).hexdigest()[:8]
+        for hf in HTML_FILES:
+            hp = ROOT / hf
+            if not hp.exists():
+                continue
+            ht = hp.read_text(encoding="utf8")
+            ht2 = re.sub(r'src="((?:\.\./)?)' + re.escape(common) + r'(\?v=[0-9a-z]+)?"', lambda m: 'src="%s%s?v=%s"' % (m.group(1), common, cver), ht)
+            if ht2 != ht:
+                hp.write_text(ht2, encoding="utf8")
     # 3. CNAME e ads.txt
     cname = ROOT / "CNAME"
     if d:
