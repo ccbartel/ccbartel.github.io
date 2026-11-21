@@ -137,6 +137,13 @@ canvas{display:block;width:100%;height:100%}
 /* setinha 'voce' (3 s iniciais; pedido dele 2026-11-19: mais chamativa): ~2x, cor do jogador clareada, contorno escuro grosso, quique suave e brilho leve */
 .tag.me::before{content:'\25BC';display:block;text-align:center;font-size:24px;line-height:1;color:color-mix(in srgb,currentColor 55%,#fff);-webkit-text-stroke:5px #0d1430;paint-order:stroke fill;filter:drop-shadow(0 0 5px color-mix(in srgb,currentColor 70%,#fff));margin-bottom:1px;animation:meb .7s ease-in-out infinite}
 @keyframes meb{50%{transform:translateY(-6px)}}
+/* tela de carregamento (2026-11-21): aparece com a pagina; o jogo tira quando ilha, ceu e bichos estao prontos */
+#boot{position:absolute;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4cqh;background:linear-gradient(180deg,#bfe6ff 0%,#7ec8f5 55%,#5aa6e8 100%);transition:opacity .4s}
+#boot.out{opacity:0;pointer-events:none}#boot .blogo>span{font-size:clamp(46px,9cqh,84px)}
+#boot .bbar{width:62%;height:16px;border-radius:999px;background:#0d143055;border:3px solid #fff;overflow:hidden;box-shadow:0 4px 0 #0d143040}
+#boot .bbar i{display:block;height:100%;width:6%;border-radius:999px;background:linear-gradient(180deg,#ffe680,#ffc93a 55%,#f08c00);transition:width .3s}
+#boot .bdots{display:flex;gap:10px}#boot .bdots i{width:12px;height:12px;border-radius:50%;background:#fff;animation:bdot 1s ease-in-out infinite}#boot .bdots i:nth-child(2){animation-delay:.15s}#boot .bdots i:nth-child(3){animation-delay:.3s}
+@keyframes bdot{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(-8px);opacity:1}}
 #cards{position:absolute;left:2%;right:2%;top:1.6%;display:flex;justify-content:center;gap:2%;pointer-events:none}
 .pcard{flex:1 1 0;max-width:118px;min-width:0;display:flex;align-items:center;gap:4px;background:#0d1430c4;border:2px solid var(--c);border-radius:999px;padding:2px 7px 2px 2px;position:relative;box-shadow:0 3px 0 #0005}
 .pcard img{width:34px;height:34px;flex:0 0 auto;border-radius:50%;background:radial-gradient(circle at 35% 28%,#ffffffb0,transparent 55%),var(--c);object-fit:cover}
@@ -201,7 +208,7 @@ canvas{display:block;width:100%;height:100%}
 <dialog id="howto" aria-labelledby="howto-t"><h1 id="howto-t" tabindex="-1" autofocus data-i18n="title">Bumpets</h1><h2 data-i18n="how">How to play</h2><ol><li data-i18n="h1"></li><li data-i18n="h2"></li><li data-i18n="h3"></li><li data-i18n="h4"></li></ol><h2 data-i18n="modes">Game modes</h2><ul><li data-i18n="hmOn"></li><li data-i18n="hmCpu"></li></ul><p data-i18n="ab"></p><p class="cred" data-i18n="cred"></p><form method="dialog"><button class="close" data-i18n="close">Close</button></form></dialog>
 <dialog id="rank" aria-labelledby="rank-t"><h1 id="rank-t"></h1><div class="rbody"></div><form method="dialog"><button class="rbtn sec" data-i18n="close">Close</button></form></dialog>
 <div id="app">
-<div id="stage"><canvas id="cv"></canvas><div id="ui" translate="no">
+<div id="stage"><canvas id="cv"></canvas><div id="boot" aria-hidden="true"><h2 class="fancy blogo"><span class="l0">Bumpets</span><span class="l2">Bumpets</span></h2><div class="bbar"><i id="bootBar"></i></div><div class="bdots"><i></i><i></i><i></i></div></div><div id="ui" translate="no">
 <div id="hud"></div><div id="sc" class="hide"></div><div id="cards" class="hide"></div><div id="msg"></div><div id="cd" class="hide"></div><div id="tags"></div>
 <div id="joy" class="hide"></div><div id="knob" class="hide"></div><div id="hint" class="hide"></div><div id="dash" class="hide"><span>DASH</span></div><div id="flash"></div><div id="vig"></div>
 <!-- menu ENXUTO (pedido dele 2026-11-19): logo, o seu bicho em 3D (toque = trocar), modo com setas, JOGAR / Treino / Com amigos -->
@@ -224,7 +231,7 @@ canvas{display:block;width:100%;height:100%}
 </div>
 <div id="adbar" aria-label="Advertisement" data-i18n-label="ad"><div class="ad-slot" data-ad-slot-key="ADSENSE_SLOT_GAME"></div></div>
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.186.0/examples/jsm/"}}</script>
-<script type="module" src="game.js?v=374468b6"></script>
+<script type="module" src="game.js?v=3abe7825"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7f9a5c4a463b4b799b86c338ccb2bc99"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>
