@@ -11,37 +11,37 @@
   var ROOM = {"bumpets": function (c) { return location.origin + location.pathname + "#" + c; },
               "candy-line": function (c) { return location.origin + LP + "/candy-line/?sala=" + c; }}[GAME];
   var TX = {
-    en: {hT: "Community", hSub: "Ideas, feedback and people to play with. Open the wall in any game.", hEmpty: "No posts yet. Open a game and be the first!", hOpen: "Open wall", btn: "Community", ttl: "Community", all: "All", idea: "Idea", crit: "Feedback", mate: "Looking to play", chat: "Chat",
+    en: {tdT: "Today's challenge", tdSub: "A new daily mission every day in this game", tdGo: "Play", tdDone: "✓ played today", stN: "🔥 {n} days in a row", st1: "🔥 1 day - come back tomorrow to keep it going", stKeep: "Play today to keep your streak!", st0: "Play today and start a streak 🔥", cont: "Continue playing", hT: "Community", hSub: "Ideas, feedback and people to play with. Open the wall in any game.", hEmpty: "No posts yet. Open a game and be the first!", hOpen: "Open wall", btn: "Community", ttl: "Community", all: "All", idea: "Idea", crit: "Feedback", mate: "Looking to play", chat: "Chat",
       ph: "Share an idea, give feedback or find someone to play with...", room: "Room code (optional)", post: "Post", rules: "Be kind. No swearing, no links, no personal info.",
       reply: "Reply", replies: "Replies", report: "Report", reported: "Reported. Thanks!", del: "Delete", delQ: "Delete this post?", more: "Load more", empty: "No posts yet. Be the first!",
       join: "Join room {c}", rph: "Write a reply...", send: "Send", close: "Close", err: "Could not load. Check your connection.",
       len: "Write 2 to 400 characters.", bad: "That text has a word that is not allowed.", link: "Links are not allowed.", wait: "Too many posts in a short time. Try again in a few minutes.",
       roomBad: "Room code: 3 to 8 letters or numbers.", gone: "That post is no longer available.", pick: "Choose a nickname to post", off: "Could not post. Try again."},
-    pt: {hT: "Comunidade", hSub: "Ideias, críticas e gente para jogar junto. Abra o mural em qualquer jogo.", hEmpty: "Nenhum post ainda. Abra um jogo e seja o primeiro!", hOpen: "Abrir mural", btn: "Comunidade", ttl: "Comunidade", all: "Tudo", idea: "Ideia", crit: "Crítica", mate: "Procuro parceiro", chat: "Conversa",
+    pt: {tdT: "Desafio de hoje", tdSub: "Missão nova todo dia neste jogo", tdGo: "Jogar", tdDone: "✓ você jogou hoje", stN: "🔥 {n} dias seguidos", st1: "🔥 1 dia - volte amanhã para continuar a sequência", stKeep: "Jogue hoje para manter a sequência!", st0: "Jogue hoje e comece uma sequência 🔥", cont: "Continue jogando", hT: "Comunidade", hSub: "Ideias, críticas e gente para jogar junto. Abra o mural em qualquer jogo.", hEmpty: "Nenhum post ainda. Abra um jogo e seja o primeiro!", hOpen: "Abrir mural", btn: "Comunidade", ttl: "Comunidade", all: "Tudo", idea: "Ideia", crit: "Crítica", mate: "Procuro parceiro", chat: "Conversa",
       ph: "Dê uma ideia, faça uma crítica ou chame alguém para jogar...", room: "Código da sala (opcional)", post: "Publicar", rules: "Seja gentil. Sem palavrão, sem links, sem dados pessoais.",
       reply: "Responder", replies: "Respostas", report: "Denunciar", reported: "Denunciado. Obrigado!", del: "Apagar", delQ: "Apagar este post?", more: "Ver mais", empty: "Nenhum post ainda. Seja o primeiro!",
       join: "Entrar na sala {c}", rph: "Escreva uma resposta...", send: "Enviar", close: "Fechar", err: "Não deu para carregar. Confira sua conexão.",
       len: "Escreva de 2 a 400 caracteres.", bad: "Esse texto tem uma palavra que não é permitida.", link: "Links não são permitidos.", wait: "Muitos posts em pouco tempo. Tente de novo em alguns minutos.",
       roomBad: "Código da sala: 3 a 8 letras ou números.", gone: "Esse post não está mais disponível.", pick: "Escolha um apelido para publicar", off: "Não deu para publicar. Tente de novo."},
-    es: {hT: "Comunidad", hSub: "Ideas, críticas y gente para jugar. Abre el muro en cualquier juego.", hEmpty: "Aún no hay publicaciones. ¡Abre un juego y sé el primero!", hOpen: "Abrir muro", btn: "Comunidad", ttl: "Comunidad", all: "Todo", idea: "Idea", crit: "Crítica", mate: "Busco compañero", chat: "Charla",
+    es: {tdT: "Desafío de hoy", tdSub: "Una misión nueva cada día en este juego", tdGo: "Jugar", tdDone: "✓ jugaste hoy", stN: "🔥 {n} días seguidos", st1: "🔥 1 día - vuelve mañana para seguir la racha", stKeep: "¡Juega hoy para mantener la racha!", st0: "Juega hoy y empieza una racha 🔥", cont: "Sigue jugando", hT: "Comunidad", hSub: "Ideas, críticas y gente para jugar. Abre el muro en cualquier juego.", hEmpty: "Aún no hay publicaciones. ¡Abre un juego y sé el primero!", hOpen: "Abrir muro", btn: "Comunidad", ttl: "Comunidad", all: "Todo", idea: "Idea", crit: "Crítica", mate: "Busco compañero", chat: "Charla",
       ph: "Comparte una idea, deja una crítica o busca a alguien para jugar...", room: "Código de sala (opcional)", post: "Publicar", rules: "Sé amable. Sin groserías, sin enlaces, sin datos personales.",
       reply: "Responder", replies: "Respuestas", report: "Denunciar", reported: "Denunciado. ¡Gracias!", del: "Borrar", delQ: "¿Borrar esta publicación?", more: "Ver más", empty: "Aún no hay publicaciones. ¡Sé el primero!",
       join: "Entrar a la sala {c}", rph: "Escribe una respuesta...", send: "Enviar", close: "Cerrar", err: "No se pudo cargar. Revisa tu conexión.",
       len: "Escribe de 2 a 400 caracteres.", bad: "Ese texto tiene una palabra no permitida.", link: "No se permiten enlaces.", wait: "Demasiadas publicaciones en poco tiempo. Inténtalo en unos minutos.",
       roomBad: "Código de sala: 3 a 8 letras o números.", gone: "Esa publicación ya no está disponible.", pick: "Elige un apodo para publicar", off: "No se pudo publicar. Inténtalo de nuevo."},
-    fr: {hT: "Communauté", hSub: "Idées, avis et joueurs pour jouer ensemble. Ouvre le mur dans n'importe quel jeu.", hEmpty: "Aucun message pour l'instant. Ouvre un jeu et sois le premier !", hOpen: "Ouvrir le mur", btn: "Communauté", ttl: "Communauté", all: "Tout", idea: "Idée", crit: "Avis", mate: "Cherche partenaire", chat: "Discussion",
+    fr: {tdT: "Défi du jour", tdSub: "Une nouvelle mission chaque jour dans ce jeu", tdGo: "Jouer", tdDone: "✓ joué aujourd'hui", stN: "🔥 {n} jours de suite", st1: "🔥 1 jour - reviens demain pour continuer la série", stKeep: "Joue aujourd'hui pour garder ta série !", st0: "Joue aujourd'hui et lance une série 🔥", cont: "Continuer à jouer", hT: "Communauté", hSub: "Idées, avis et joueurs pour jouer ensemble. Ouvre le mur dans n'importe quel jeu.", hEmpty: "Aucun message pour l'instant. Ouvre un jeu et sois le premier !", hOpen: "Ouvrir le mur", btn: "Communauté", ttl: "Communauté", all: "Tout", idea: "Idée", crit: "Avis", mate: "Cherche partenaire", chat: "Discussion",
       ph: "Partage une idée, donne ton avis ou trouve quelqu'un pour jouer...", room: "Code du salon (facultatif)", post: "Publier", rules: "Sois gentil. Pas de grossièretés, pas de liens, pas d'infos personnelles.",
       reply: "Répondre", replies: "Réponses", report: "Signaler", reported: "Signalé. Merci !", del: "Supprimer", delQ: "Supprimer ce message ?", more: "Voir plus", empty: "Aucun message pour l'instant. Sois le premier !",
       join: "Rejoindre le salon {c}", rph: "Écris une réponse...", send: "Envoyer", close: "Fermer", err: "Chargement impossible. Vérifie ta connexion.",
       len: "Écris de 2 à 400 caractères.", bad: "Ce texte contient un mot interdit.", link: "Les liens ne sont pas autorisés.", wait: "Trop de messages en peu de temps. Réessaie dans quelques minutes.",
       roomBad: "Code du salon : 3 à 8 lettres ou chiffres.", gone: "Ce message n'est plus disponible.", pick: "Choisis un pseudo pour publier", off: "Publication impossible. Réessaie."},
-    de: {hT: "Community", hSub: "Ideen, Kritik und Leute zum Mitspielen. Öffne die Pinnwand in jedem Spiel.", hEmpty: "Noch keine Beiträge. Öffne ein Spiel und sei der Erste!", hOpen: "Pinnwand öffnen", btn: "Community", ttl: "Community", all: "Alle", idea: "Idee", crit: "Kritik", mate: "Suche Mitspieler", chat: "Plaudern",
+    de: {tdT: "Tagesherausforderung", tdSub: "Jeden Tag eine neue Mission in diesem Spiel", tdGo: "Spielen", tdDone: "✓ heute gespielt", stN: "🔥 {n} Tage in Folge", st1: "🔥 1 Tag - komm morgen wieder, um die Serie fortzusetzen", stKeep: "Spiel heute, um deine Serie zu halten!", st0: "Spiel heute und starte eine Serie 🔥", cont: "Weiterspielen", hT: "Community", hSub: "Ideen, Kritik und Leute zum Mitspielen. Öffne die Pinnwand in jedem Spiel.", hEmpty: "Noch keine Beiträge. Öffne ein Spiel und sei der Erste!", hOpen: "Pinnwand öffnen", btn: "Community", ttl: "Community", all: "Alle", idea: "Idee", crit: "Kritik", mate: "Suche Mitspieler", chat: "Plaudern",
       ph: "Teile eine Idee, gib Feedback oder finde jemanden zum Spielen...", room: "Raumcode (optional)", post: "Posten", rules: "Sei freundlich. Keine Schimpfwörter, keine Links, keine persönlichen Daten.",
       reply: "Antworten", replies: "Antworten", report: "Melden", reported: "Gemeldet. Danke!", del: "Löschen", delQ: "Diesen Beitrag löschen?", more: "Mehr laden", empty: "Noch keine Beiträge. Sei der Erste!",
       join: "Raum {c} beitreten", rph: "Schreib eine Antwort...", send: "Senden", close: "Schließen", err: "Laden fehlgeschlagen. Prüfe deine Verbindung.",
       len: "Schreib 2 bis 400 Zeichen.", bad: "Der Text enthält ein nicht erlaubtes Wort.", link: "Links sind nicht erlaubt.", wait: "Zu viele Beiträge in kurzer Zeit. Versuch es in ein paar Minuten.",
       roomBad: "Raumcode: 3 bis 8 Buchstaben oder Zahlen.", gone: "Dieser Beitrag ist nicht mehr verfügbar.", pick: "Wähle einen Spitznamen zum Posten", off: "Posten fehlgeschlagen. Versuch es erneut."},
-    it: {hT: "Community", hSub: "Idee, critiche e persone con cui giocare. Apri la bacheca in qualsiasi gioco.", hEmpty: "Ancora nessun post. Apri un gioco e sii il primo!", hOpen: "Apri bacheca", btn: "Community", ttl: "Community", all: "Tutto", idea: "Idea", crit: "Critica", mate: "Cerco compagno", chat: "Chiacchiere",
+    it: {tdT: "Sfida di oggi", tdSub: "Una nuova missione ogni giorno in questo gioco", tdGo: "Gioca", tdDone: "✓ giocato oggi", stN: "🔥 {n} giorni di fila", st1: "🔥 1 giorno - torna domani per continuare la serie", stKeep: "Gioca oggi per mantenere la serie!", st0: "Gioca oggi e inizia una serie 🔥", cont: "Continua a giocare", hT: "Community", hSub: "Idee, critiche e persone con cui giocare. Apri la bacheca in qualsiasi gioco.", hEmpty: "Ancora nessun post. Apri un gioco e sii il primo!", hOpen: "Apri bacheca", btn: "Community", ttl: "Community", all: "Tutto", idea: "Idea", crit: "Critica", mate: "Cerco compagno", chat: "Chiacchiere",
       ph: "Condividi un'idea, lascia una critica o trova qualcuno con cui giocare...", room: "Codice stanza (facoltativo)", post: "Pubblica", rules: "Sii gentile. Niente parolacce, niente link, niente dati personali.",
       reply: "Rispondi", replies: "Risposte", report: "Segnala", reported: "Segnalato. Grazie!", del: "Elimina", delQ: "Eliminare questo post?", more: "Mostra altri", empty: "Ancora nessun post. Sii il primo!",
       join: "Entra nella stanza {c}", rph: "Scrivi una risposta...", send: "Invia", close: "Chiudi", err: "Impossibile caricare. Controlla la connessione.",
@@ -89,6 +89,19 @@
     "#bgw .reps form{display:flex;gap:6px;margin-top:6px}#bgw .reps textarea{min-height:40px;font-size:15px}" +
     "#bgw .empty,#bgw .load{text-align:center;color:#b9c6e8;padding:24px 0}" +
     "#bgw .moreb{display:block;margin:4px auto 0;padding:8px 16px;border-radius:999px;border:1.5px solid #ffffff38;background:none;color:#fff;font:600 14px/1 var(--font,system-ui);cursor:pointer}";
+  css += "#bg-today{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:14px;margin:26px 0 2px}#bg-today[hidden]{display:none}#bg-today.td-solo{grid-template-columns:1fr}@media (max-width:680px){#bg-today{grid-template-columns:1fr}}" +
+    "#bg-today .td-daily{display:flex;gap:14px;align-items:center;padding:12px;border-radius:18px;text-decoration:none;color:#fff;background:linear-gradient(135deg,#3a1f78 0%,#13265a 70%);border:1px solid #f7b60c66;transition:transform .15s,border-color .15s}" +
+    "#bg-today .td-daily:hover,#bg-today .td-daily:focus-visible{transform:translateY(-2px);border-color:var(--gold,#f7b60c);outline:none}" +
+    "#bg-today .td-daily img{width:84px;height:112px;object-fit:cover;border-radius:12px;flex:none;box-shadow:0 6px 16px #0007}" +
+    "#bg-today .td-tx{display:flex;flex-direction:column;gap:3px;min-width:0}#bg-today .td-tx small{color:var(--gold2,#ffe27a);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.04em}" +
+    "#bg-today .td-tx b{font:800 24px/1.1 var(--title,system-ui)}#bg-today .td-tx span{color:var(--muted,#b9c6e8);font-size:14px;line-height:1.3}" +
+    "#bg-today .td-go,#bg-today .td-done{align-self:flex-start;margin-top:6px;font-style:normal;font-weight:700;padding:6px 14px;border-radius:999px}" +
+    "#bg-today .td-go{background:linear-gradient(180deg,#ffe27a,#f7b60c);color:#2a1306}#bg-today .td-done{background:#36c98e33;color:#8ff0c4}" +
+    "#bg-today .td-side{padding:12px 14px;border-radius:18px;background:var(--card,#0b1736);border:1px solid var(--line,#ffffff1a)}" +
+    "#bg-today .td-streak{margin:0;font:800 19px/1.25 var(--title,system-ui)}#bg-today .td-keep{margin:4px 0 0;color:var(--gold2,#ffe27a);font-size:14px}" +
+    "#bg-today .td-ct{margin:10px 0 6px;color:var(--muted,#b9c6e8);font-size:13px;font-weight:700}#bg-today .td-row{display:flex;gap:8px;flex-wrap:wrap}" +
+    "#bg-today .td-chip{display:flex;align-items:center;gap:8px;padding:4px 10px 4px 4px;border-radius:12px;background:#ffffff0d;border:1px solid #ffffff1a;color:#fff;text-decoration:none;font-weight:700;font-size:14px}" +
+    "#bg-today .td-chip:hover{border-color:var(--gold,#f7b60c)}#bg-today .td-chip img{width:30px;height:40px;object-fit:cover;border-radius:7px}";
   css += "#bg-community .cm-sub{color:var(--muted,#b9c6e8);margin:-6px 0 14px;font-size:15px}" +
     "#bg-community .cm-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}" +
     "#bg-community .cm-post{display:flex;flex-direction:column;gap:6px;padding:12px 14px;border-radius:16px;background:var(--card,#0b1736);border:1px solid var(--line,#ffffff1a);color:#fff;text-decoration:none;transition:transform .15s,border-color .15s}" +
@@ -222,6 +235,39 @@
   }
   var PAGE = {"guess-the-flag": "geo-quiz"}, GNAME = {"guess-the-flag": "Geo Quiz", "candy-line": "Candy Line", "burnout-city": "Burnout City", "drift-trail": "Drift Trail", "bumpets": "Bumpets"};
   var ROOMS = {"bumpets": function (c) { return LP + "/bumpets/#" + c; }, "candy-line": function (c) { return LP + "/candy-line/?sala=" + c; }};
+  // caixa "Hoje" da home (2026-11-21): desafio do dia (gira entre os jogos com missao diaria), sequencia de dias e continue jogando
+  var DAILY = ["geo-quiz", "candy-line", "burnout-city"];
+  function todayBox() {
+    var box = document.getElementById("bg-today"); if (!box) return;
+    var dd = new Date().toLocaleDateString("sv"), RC = [], DY = [];
+    try { RC = JSON.parse(localStorage.getItem("bg_recent") || "[]"); DY = JSON.parse(localStorage.getItem("bg_days") || "[]"); } catch (e) {}
+    function card(pg) { var cs = document.querySelectorAll(".grid .card"); for (var i = 0; i < cs.length; i++) { var h = (cs[i].getAttribute("href") || "").replace(/^(pt|es)\//, ""); if (h === pg + "/") return cs[i]; } return null; }
+    function title(c) { var t = c && c.querySelector(".cover-t"); return t ? [].map.call(t.children, function (x) { return x.textContent; }).join(" ") : ""; }
+    function cover(c) { var i = c.querySelector("img.cover"); return i ? i.getAttribute("src") : ""; }
+    var dayN = Math.floor(Date.parse(dd + "T12:00:00Z") / 864e5), pg = DAILY[dayN % DAILY.length], c = card(pg);
+    box.textContent = "";
+    if (c) {
+      var a = el("a", "td-daily"); a.href = LP + "/" + pg + "/";
+      var im = el("img"); im.src = cover(c); im.alt = ""; im.width = 84; im.height = 112; a.appendChild(im);
+      var tx = el("div", "td-tx"); tx.appendChild(el("small", null, T("tdT"))); tx.appendChild(el("b", null, title(c))); tx.appendChild(el("span", null, T("tdSub")));
+      var done = RC.some(function (x) { return x.p === pg && x.d === dd; }); tx.appendChild(el("i", done ? "td-done" : "td-go", done ? T("tdDone") : T("tdGo") + " ›"));
+      a.appendChild(tx); box.appendChild(a);
+    }
+    if (!DY.length && !RC.length) { box.classList.add("td-solo"); box.hidden = false; return; } /* 1a visita: so o desafio (jogos primeiro na home) */
+    box.classList.remove("td-solo");
+    var side = el("div", "td-side"), n = 0, d0 = new Date(dd + "T12:00:00");
+    var played = DY.indexOf(dd) >= 0;
+    for (var k = played ? 0 : 1; k < 400; k++) { var dk = new Date(d0.getTime() - k * 864e5).toLocaleDateString("sv"); if (DY.indexOf(dk) >= 0) n++; else break; }
+    side.appendChild(el("p", "td-streak", n >= 2 ? T("stN").replace("{n}", n) : (n === 1 && played) ? T("st1") : n >= 1 ? T("stN").replace("{n}", n) : T("st0")));
+    if (n >= 1 && !played) side.appendChild(el("p", "td-keep", T("stKeep")));
+    var cont = RC.filter(function (x) { return card(x.p); }).slice(0, 3);
+    if (cont.length) {
+      side.appendChild(el("p", "td-ct", T("cont"))); var row = el("div", "td-row");
+      cont.forEach(function (x) { var cc = card(x.p), l = el("a", "td-chip"); l.href = LP + "/" + x.p + "/"; var i2 = el("img"); i2.src = cover(cc); i2.alt = ""; l.appendChild(i2); l.appendChild(el("span", null, title(cc))); row.appendChild(l); });
+      side.appendChild(row);
+    }
+    box.appendChild(side); box.hidden = false;
+  }
   function homeFeed() {
     var sec = document.getElementById("bg-community"); if (!sec) return;
     var h = sec.querySelector("h2"), sub = sec.querySelector(".cm-sub"), box = sec.querySelector(".cm-list");
@@ -252,6 +298,6 @@
     bar.insertBefore(b, bar.firstChild.nextSibling); // depois do "como jogar"
     if (/[#?&]mural\b/.test(location.search + location.hash)) setTimeout(open, 300);
   }
-  function init() { if (HOME) homeFeed(); else { addButton(); checkNew(); } }
+  function init() { if (HOME) { todayBox(); homeFeed(); } else { addButton(); checkNew(); } }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
 })();
