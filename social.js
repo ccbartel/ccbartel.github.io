@@ -36,6 +36,32 @@
     if (fn === "top_scores") { var me0 = null; try { me0 = localStorage.getItem("bg_fake_dev_name"); } catch (e) {}
       return Promise.resolve([{rank: 1, name: "MariaTurbo", score: 2380, is_me: false}].concat(me0 ? [{rank: 2, name: me0, score: 1835, is_me: true}] : [], [{rank: me0 ? 3 : 2, name: "Speedy", score: 1420, is_me: false}])); }
     return _rpc(fn, body); }; }
+  // mural falso do teste local (localStorage bg_fake_posts): mesmas regras e codigos do servidor (src/supabase/2026-11-21_mural.sql)
+  function fakeWall(fn, b) {
+    var L = []; try { L = JSON.parse(localStorage.getItem("bg_fake_posts") || "[]"); } catch (e) {}
+    var me = null; try { me = localStorage.getItem("bg_fake_dev_name"); } catch (e) {}
+    if (!L.length) L = [{id: 2, game: b.p_game, kind: "mate", body: "Alguem quer jogar agora? Criei a sala.", room: "KJ4P", name: "Speedy", at: new Date(Date.now() - 6e5).toISOString(), mine: false, parent: null},
+      {id: 1, game: b.p_game, kind: "idea", body: "Podia ter um modo com 8 jogadores!", room: null, name: "MariaTurbo", at: new Date(Date.now() - 864e5).toISOString(), mine: false, parent: null}];
+    function save() { try { localStorage.setItem("bg_fake_posts", JSON.stringify(L)); } catch (e) {} }
+    function row(p) { var o = JSON.parse(JSON.stringify(p)); o.mine = !!(me && p.name === me); o.replies = L.filter(function (r) { return r.parent === p.id && !r.hidden; }).length; return o; }
+    if (fn === "post_list") {
+      if (b.p_parent) return L.filter(function (p) { return p.parent === b.p_parent && !p.hidden; }).sort(function (a, c) { return a.id - c.id; }).map(row);
+      return L.filter(function (p) { return !p.parent && !p.hidden && (!b.p_kind || p.kind === b.p_kind) && (!b.p_before || p.id < b.p_before); }).sort(function (a, c) { return c.id - a.id; }).slice(0, b.p_limit || 20).map(row);
+    }
+    if (fn === "post_add") {
+      if (!me) return {code: "name"};
+      var t = String(b.p_body || "").trim();
+      if (t.length < 2 || t.length > 400) return {code: "len"};
+      if (/porra|fuck/i.test(t)) return {code: "bad"};
+      if (/(https?:\/\/|www\.|\.com\b)/i.test(t)) return {code: "link"};
+      var id = L.reduce(function (m, p) { return Math.max(m, p.id); }, 0) + 1, room = String(b.p_room || "").toUpperCase().replace(/[^A-Z0-9]/g, "") || null;
+      L.push({id: id, game: b.p_game, kind: b.p_parent ? "chat" : b.p_kind, body: t, room: b.p_parent ? null : room, name: me, at: new Date().toISOString(), parent: b.p_parent || null});
+      save(); return {code: "ok", id: id};
+    }
+    if (fn === "post_report") { if (!me) return "name"; L.forEach(function (p) { if (p.id === b.p_id) { p.reports = (p.reports || 0) + 1; if (p.reports >= 3) p.hidden = true; } }); save(); return "ok"; }
+    if (fn === "post_delete") { if (!L.some(function (p) { return p.id === b.p_id && p.name === me; })) return "no"; L = L.filter(function (p) { return p.id !== b.p_id && p.parent !== b.p_id; }); save(); return "ok"; }
+    return null;
+  }
   // token secreto do aparelho: prova que o apelido do aparelho e deste navegador (o servidor guarda so o hash)
   function dtok() {
     var k = "bg_dtok", t = null;
@@ -189,6 +215,13 @@
     // fim de partida: o jogo manda pontuacao e motivo; a duracao e medida aqui (desde o play)
     end: function (game, mode, score, reason) { EV.ended = true; return event(game, "end", {mode: mode, score: score, reason: reason, secs: EV.t0 ? (performance.now() - EV.t0) / 1000 : null}); },
     device: device, compact: compact, auth: auth,
+    // mural da comunidade (2026-11-21, community.js): RPC com a identidade (apelido do aparelho ou conta Google). Em localhost nada vai ao banco.
+    wall: function (fn, body) {
+      body = body || {}; body.p_device = device(); body.p_token = dtok();
+      if (LOCAL) return Promise.resolve(fakeWall(fn, body));
+      if (session) return sb().then(function (c) { return c.rpc(fn, body); }).then(function (r) { if (r.error) throw r.error; return r.data; });
+      return rpc(fn, body);
+    },
     // identidade para um servidor proprio conferir o apelido no Supabase (Bumpets: Worker do multijogador); o token do aparelho so vai ao nosso servidor
     ident: function () { return {dev: device(), tok: dtok(), jwt: session && session.access_token ? session.access_token : ""}; },
     // nome exibido da conta logada (o mesmo do ranking); sem login = "" (o apelido livre saiu)
