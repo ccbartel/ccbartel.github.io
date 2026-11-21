@@ -52,7 +52,8 @@
   function T(k) { var t = TX[LG] || TX.en; return t[k] || TX.en[k] || k; }
   var KCOL = {idea: "#f7b60c", crit: "#ff7a59", mate: "#36c98e", chat: "#6aa8ff"};
 
-  var css = "#bgw-btn{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;cursor:pointer;color:#fff;background:#ffffff14;border:1.5px solid #ffffff38}" +
+  var css = "#topbar .back span{white-space:nowrap}@media (max-width:430px){#topbar .tb-r{gap:5px}#topbar .back{padding:0 12px 0 8px}#topbar .topshare{padding:0 10px}}@media (max-width:400px){#topbar:has(.topsnd) .back span{display:none}#topbar:has(.topsnd) .back{padding:0 9px}}" + /* com o botao do mural a barra apertou no celular (2026-11-21) */
+    "#bgw-btn{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;cursor:pointer;color:#fff;background:#ffffff14;border:1.5px solid #ffffff38}" +
     "#bgw-btn{position:relative}#bgw-btn.new::after{content:\"\";position:absolute;top:1px;right:1px;width:11px;height:11px;border-radius:50%;background:#ff3b5c;border:2px solid #0d1430}" +
     "#bgw-btn:hover,#bgw-btn:focus-visible{background:var(--gold,#f7b60c);border-color:var(--gold,#f7b60c);color:var(--navy,#0d1430);outline:none}" +
     "#bgw{border:0;padding:0;margin:auto;width:min(560px,100vw);height:min(860px,100dvh);max-width:100vw;max-height:100dvh;background:#0b1736;color:#fff;border-radius:18px;font-family:var(--font,system-ui,sans-serif);overflow:hidden}" +
