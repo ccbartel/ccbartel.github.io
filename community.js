@@ -92,8 +92,8 @@
   css += "#bg-today{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:14px;margin:26px 0 2px}#bg-today[hidden]{display:none}#bg-today.td-solo{grid-template-columns:1fr}#bg-today .td-daily{position:relative;overflow:hidden}#bg-today .td-daily>*{position:relative}#bg-today .td-daily::before{content:\"\";position:absolute;top:0;right:0;bottom:0;width:58%;background:var(--bg) center 30%/cover no-repeat;opacity:.55;-webkit-mask-image:linear-gradient(90deg,transparent,#000 70%);mask-image:linear-gradient(90deg,transparent,#000 70%)}#bg-today:not(.td-solo) .td-daily::before{width:45%;opacity:.35}#bg-today .td-next{font-style:normal;font-size:13px;color:#c9b8ff;margin-top:6px}@media (max-width:680px){#bg-today .td-daily::before{width:55%;opacity:.22}}@media (max-width:680px){#bg-today{grid-template-columns:1fr}}" +
     "#bg-today .td-daily{display:flex;gap:14px;align-items:center;padding:12px;border-radius:18px;text-decoration:none;color:#fff;background:linear-gradient(135deg,#3a1f78 0%,#13265a 70%);border:1px solid #f7b60c66;transition:transform .15s,border-color .15s}" +
     "#bg-today .td-daily:hover,#bg-today .td-daily:focus-visible{transform:translateY(-2px);border-color:var(--gold,#f7b60c);outline:none}" +
-    "#bg-today .td-daily img{width:84px;height:112px;object-fit:cover;border-radius:12px;flex:none;box-shadow:0 6px 16px #0007}" +
-    "#bg-today .td-tx{display:flex;flex-direction:column;gap:3px;min-width:0}#bg-today .td-tx small{color:var(--gold2,#ffe27a);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.04em}" +
+    "#bg-today .td-daily img{align-self:center;height:112px;width:auto;aspect-ratio:3/4;object-fit:cover;border-radius:12px;flex:none;box-shadow:0 6px 16px #0007}" +
+    "#bg-today .td-tx{display:flex;flex-direction:column;justify-content:center;gap:3px;min-width:0}#bg-today .td-tx small{color:var(--gold2,#ffe27a);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.04em}" +
     "#bg-today .td-tx b{font:800 24px/1.1 var(--title,system-ui)}#bg-today .td-tx span{color:var(--muted,#b9c6e8);font-size:14px;line-height:1.3}" +
     "#bg-today .td-go,#bg-today .td-done{align-self:flex-start;margin-top:6px;font-style:normal;font-weight:700;padding:6px 14px;border-radius:999px}" +
     "#bg-today .td-go{background:linear-gradient(180deg,#ffe27a,#f7b60c);color:#2a1306}#bg-today .td-done{background:#36c98e33;color:#8ff0c4}" +
@@ -255,6 +255,9 @@
       var nx = card(DAILY[(dayN + 1) % DAILY.length]); if (nx) tx.appendChild(el("em", "td-next", T("tmrw").replace("{g}", title(nx))));
       a.style.setProperty("--bg", "url(\"" + cover(c) + "\")");
       a.appendChild(tx); box.appendChild(a);
+      /* capa da altura do texto: do topo do "Desafio de hoje" a base do "Amanha" (pedido dele 2026-11-21) */
+      var fit = function () { var f = tx.firstChild.getBoundingClientRect(), l = tx.lastChild.getBoundingClientRect(); if (l.bottom > f.top) im.style.height = Math.max(96, Math.round(l.bottom - f.top)) + "px"; };
+      requestAnimationFrame(fit); addEventListener("resize", fit); if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
     }
     if (!DY.length && !RC.length) { box.classList.add("td-solo"); box.hidden = false; return; } /* 1a visita: so o desafio (jogos primeiro na home) */
     box.classList.remove("td-solo");
