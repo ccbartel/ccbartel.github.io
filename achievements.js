@@ -19,6 +19,11 @@
     ["plays25", "⭐", {en: ["Getting good", "Play 25 games"], pt: ["Pegando o jeito", "Jogue 25 partidas"], es: ["Agarrando la mano", "Juega 25 partidas"]}],
     ["plays100", "🏆", {en: ["Veteran", "Play 100 games"], pt: ["Veterano", "Jogue 100 partidas"], es: ["Veterano", "Juega 100 partidas"]}],
     ["bp-win", "🫧", {en: ["Bubble champ", "Win a round of Bumpets"], pt: ["Campeão das bolhas", "Vença uma rodada de Bumpets"], es: ["Campeón de burbujas", "Gana una ronda de Bumpets"]}],
+    ["bp-goal3", "⚽", {en: ["Top scorer", "Score 3 goals in a Bumpets Soccer match"], pt: ["Artilheiro", "Faça 3 gols numa partida de Bumpets Soccer"], es: ["Goleador", "Mete 3 goles en una partida de Bumpets Soccer"]}],
+    ["bp-race", "🏁", {en: ["First to the flag", "Win a race in Bumpets Race"], pt: ["Primeiro na chegada", "Vença uma corrida no Bumpets Race"], es: ["Primero en llegar", "Gana una carrera en Bumpets Race"]}],
+    ["bp-zone", "🎯", {en: ["Zone boss", "Win a match in Bumpets Zone"], pt: ["Dono da zona", "Vença uma partida no Bumpets Zone"], es: ["Dueño de la zona", "Gana una partida en Bumpets Zone"]}],
+    ["bp-all4", "🐾", {en: ["Bubble tour", "Play all 4 Bumpets games"], pt: ["Tour das bolhas", "Jogue os 4 Bumpets"], es: ["Tour de burbujas", "Juega los 4 Bumpets"]}],
+    ["bp-mis", "✅", {en: ["On a mission", "Complete a Bumpets daily mission"], pt: ["Missão dada", "Cumpra uma missão do dia dos Bumpets"], es: ["Misión cumplida", "Cumple una misión del día de Bumpets"]}],
     ["geo-3", "🌍", {en: ["Globetrotter", "Get 3/3 in Geo Quiz"], pt: ["Viajante", "Faça 3/3 no Geo Quiz"], es: ["Trotamundos", "Haz 3/3 en Geo Quiz"]}],
     ["candy-10", "🍬", {en: ["Sweet tooth", "Fill 10 bags in Candy Line"], pt: ["Formiguinha", "Encha 10 pacotes no Candy Line"], es: ["Goloso", "Llena 10 bolsas en Candy Line"]}],
     ["burn-1000", "🚗", {en: ["Survivor", "Score 1,000 in Burnout City"], pt: ["Sobrevivente", "Faça 1.000 pontos no Burnout City"], es: ["Superviviente", "Haz 1.000 puntos en Burnout City"]}],
@@ -102,6 +107,10 @@
     setTimeout(flush, 1800);
   });
   addEventListener("bg-post", function () { unlock("wall-post"); });
+  // Bumpets (2026-11-22): o jogo avisa modo, vitoria, gols/zonas e missao cumprida
+  addEventListener("bb-end", function (e) { var d = (e && e.detail) || {}, m = d.mode;
+    if (m === "soccer" && d.val >= 3) unlock("bp-goal3"); if (m === "race" && d.win) unlock("bp-race"); if (m === "zone" && d.win) unlock("bp-zone"); if (d.mis) unlock("bp-mis");
+    var M = get("bg_bpm", []); if (m && M.indexOf(m) < 0) { M.push(m); put("bg_bpm", M); } if (M.length >= 4) unlock("bp-all4"); });
   window.BG_ACH = {open: open, count: function () { var n = 0; for (var k in got) n++; return n; }, total: A.length};
   check();
 })();
