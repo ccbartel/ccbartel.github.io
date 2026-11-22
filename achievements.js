@@ -22,7 +22,8 @@
     ["bp-goal3", "⚽", {en: ["Top scorer", "Score 3 goals in a Bumpets Soccer match"], pt: ["Artilheiro", "Faça 3 gols numa partida de Bumpets Soccer"], es: ["Goleador", "Mete 3 goles en una partida de Bumpets Soccer"]}],
     ["bp-race", "🏁", {en: ["First to the flag", "Win a race in Bumpets Race"], pt: ["Primeiro na chegada", "Vença uma corrida no Bumpets Race"], es: ["Primero en llegar", "Gana una carrera en Bumpets Race"]}],
     ["bp-zone", "🎯", {en: ["Zone boss", "Win a match in Bumpets Zone"], pt: ["Dono da zona", "Vença uma partida no Bumpets Zone"], es: ["Dueño de la zona", "Gana una partida en Bumpets Zone"]}],
-    ["bp-all4", "🐾", {en: ["Bubble tour", "Play all 4 Bumpets games"], pt: ["Tour das bolhas", "Jogue os 4 Bumpets"], es: ["Tour de burbujas", "Juega los 4 Bumpets"]}],
+    ["bp-flag", "🚩", {en: ["Flag thief", "Win a match in Bumpets Flag"], pt: ["Ladrão de bandeira", "Vença uma partida no Bumpets Flag"], es: ["Ladrón de banderas", "Gana una partida en Bumpets Flag"]}],
+    ["bp-all4", "🐾", {en: ["Bubble tour", "Play all 5 Bumpets games"], pt: ["Tour das bolhas", "Jogue os 5 Bumpets"], es: ["Tour de burbujas", "Juega los 5 Bumpets"]}],
     ["bp-mis", "✅", {en: ["On a mission", "Complete a Bumpets daily mission"], pt: ["Missão dada", "Cumpra uma missão do dia dos Bumpets"], es: ["Misión cumplida", "Cumple una misión del día de Bumpets"]}],
     ["geo-3", "🌍", {en: ["Globetrotter", "Get 3/3 in Geo Quiz"], pt: ["Viajante", "Faça 3/3 no Geo Quiz"], es: ["Trotamundos", "Haz 3/3 en Geo Quiz"]}],
     ["candy-10", "🍬", {en: ["Sweet tooth", "Fill 10 bags in Candy Line"], pt: ["Formiguinha", "Encha 10 pacotes no Candy Line"], es: ["Goloso", "Llena 10 bolsas en Candy Line"]}],
@@ -109,8 +110,8 @@
   addEventListener("bg-post", function () { unlock("wall-post"); });
   // Bumpets (2026-11-22): o jogo avisa modo, vitoria, gols/zonas e missao cumprida
   addEventListener("bb-end", function (e) { var d = (e && e.detail) || {}, m = d.mode;
-    if (m === "soccer" && d.val >= 3) unlock("bp-goal3"); if (m === "race" && d.win) unlock("bp-race"); if (m === "zone" && d.win) unlock("bp-zone"); if (d.mis) unlock("bp-mis");
-    var M = get("bg_bpm", []); if (m && M.indexOf(m) < 0) { M.push(m); put("bg_bpm", M); } if (M.length >= 4) unlock("bp-all4"); });
+    if (m === "soccer" && d.val >= 3) unlock("bp-goal3"); if (m === "race" && d.win) unlock("bp-race"); if (m === "zone" && d.win) unlock("bp-zone"); if (m === "flag" && d.win) unlock("bp-flag"); if (d.mis) unlock("bp-mis");
+    var M = get("bg_bpm", []); if (m && M.indexOf(m) < 0) { M.push(m); put("bg_bpm", M); } if (M.length >= 5) unlock("bp-all4"); });
   window.BG_ACH = {open: open, count: function () { var n = 0; for (var k in got) n++; return n; }, total: A.length};
   check();
 })();
