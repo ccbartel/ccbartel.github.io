@@ -28,8 +28,8 @@ OBF_VERSION = "javascript-obfuscator@4.1.1"
 SHARED_PAGES = {"drift-trail": "burnout-city"}
 # paginas GERADAS com <base href="/<slug>/"> (src/bumpets/paginas.py roda no prebuild, ANTES do ?v novo): mesma versao do irmao.
 # Sem isso Soccer/Race ficavam com o ?v anterior (game.js velho do cache por ate 10 min) - corrigido 2026-11-21.
-BASE_PAGES = {"bumpets-soccer": "bumpets", "bumpets-race": "bumpets"}
-HTML_FILES = ["index.html", "privacy.html", "contact.html"] + [g + "/index.html" for g in GAMES] + ["bumpets-soccer/index.html", "bumpets-race/index.html"] + [p + "/index.html" for p in SHARED_PAGES]  # irmaos do Bumpets (src/bumpets/paginas.py) + paginas compartilhadas
+BASE_PAGES = {"bumpets-soccer": "bumpets", "bumpets-race": "bumpets", "bumpets-zone": "bumpets"}
+HTML_FILES = ["index.html", "privacy.html", "contact.html"] + [g + "/index.html" for g in GAMES] + ["bumpets-soccer/index.html", "bumpets-race/index.html", "bumpets-zone/index.html"] + [p + "/index.html" for p in SHARED_PAGES]  # irmaos do Bumpets (src/bumpets/paginas.py) + paginas compartilhadas
 DEFAULT_STATE = {"SITE_NAME": "Bartel Games", "CONTACT_EMAIL": "contato@SEU-DOMINIO",
                  "SITE_URL": "https://bartelgames.com.br/"}
 OBF_OPTIONS = {
