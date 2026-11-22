@@ -1,0 +1,599 @@
+<!doctype html><html lang="en" translate="no"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><style>#nuiHelpB{display:none!important}</style></head><body>
+<title>The Last Driver</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="assets/icon.png">
+<link rel="preload" as="image" href="p/gui/loading_retrato.webp" media="(orientation: portrait)">
+<link rel="preload" as="image" href="p/gui/loading_paisagem.webp" media="(orientation: landscape)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=VT323&family=Barlow+Condensed:wght@600;800&display=swap">
+<style>
+/* Layout: full-bleed 3D view, HUD plates in the corners like the original game's LCD panels. Single dark look on purpose. */
+:root {
+  --bg: #1b1d1c;
+  --plate: #2a2d2c;
+  --plate-edge: #8d918e;
+  --lcd: #0a0c0b;
+  --lcd-green: #38f05a;
+  --ink: #e9ece8;
+  --muted: #9aa39c;
+  --warn: #ffb02e;
+  --f-lcd: "VT323", ui-monospace, "Courier New", monospace;
+  --f-label: "Barlow Condensed", "Arial Narrow", system-ui, sans-serif;
+  color-scheme: dark;
+}
+html, body { height: 100%; }
+[hidden] { display: none !important; }
+#info, #controls, #menu, #dist, #coinbox, #lifebox, #bJumpR, #bGunR, #popup, #hit, #toast { display: none !important; }
+body.lv-scene > :not(#stage):not(#loading):not(script):not(#nui):not(#menu) { display: none !important; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f-label); overflow: hidden; }
+#stage { position: fixed; inset: 0; }
+canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+.plate {
+  position: fixed; z-index: 2;
+  background: linear-gradient(180deg, #3a3e3c, var(--plate));
+  border: 2px solid var(--plate-edge); border-radius: 10px;
+  box-shadow: 0 2px 0 #000, inset 0 1px 0 rgba(255,255,255,.18);
+  padding: 8px 10px;
+}
+.lcd { background: var(--lcd); color: var(--lcd-green); font-family: var(--f-lcd); border-radius: 6px; padding: 2px 8px; letter-spacing: .04em; font-variant-numeric: tabular-nums; }
+#dist { top: calc(10px + env(safe-area-inset-top, 0px)); right: max(10px, env(safe-area-inset-right, 0px)); font-size: 34px; line-height: 1; }
+#dist .lcd { font-size: 40px; }
+#info { top: calc(10px + env(safe-area-inset-top, 0px)); left: max(10px, env(safe-area-inset-left, 0px)); max-width: min(330px, calc(100vw - 150px)); }
+#info h1 { margin: 0 0 2px; font-weight: 800; font-size: 20px; letter-spacing: .06em; text-transform: uppercase; color: #ffd13a; text-shadow: 0 2px 0 #000; }
+#info p { margin: 0 0 6px; font-weight: 600; font-size: 14px; color: var(--muted); line-height: 1.25; }
+#info .lcd { font-size: 19px; display: block; }
+#controls { bottom: calc(10px + env(safe-area-inset-bottom, 0px)); left: 50%; transform: translateX(-50%); display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; width: max-content; max-width: calc(100vw - 32px); }
+button {
+  font-family: var(--f-label); font-weight: 800; font-size: 16px; letter-spacing: .05em; text-transform: uppercase;
+  color: #2b2b2b; background: linear-gradient(180deg, #f1f2f0, #a9ada9); border: 2px solid #4b4e4c; border-radius: 8px;
+  padding: 6px 12px; cursor: pointer; box-shadow: 0 2px 0 #000;
+}
+button[aria-pressed="true"] { background: linear-gradient(180deg, #7dff8f, #2fb447); }
+button:focus-visible { outline: 3px solid var(--warn); outline-offset: 2px; }
+.paint { display: inline-flex; align-items: center; gap: 6px; font-weight: 800; font-size: 16px; letter-spacing: .05em; text-transform: uppercase; color: var(--ink); }
+.paint input { width: 34px; height: 30px; border: 2px solid #4b4e4c; border-radius: 6px; padding: 0; background: none; cursor: pointer; }
+#lifebox { top: calc(10px + env(safe-area-inset-top, 0px)); left: 50%; transform: translateX(-50%); }
+#lifebox .lcd { font-size: 26px; letter-spacing: 0; }
+#lifebox .lbl { letter-spacing: .04em; } #lifebox .on { color: var(--lcd-green); } #lifebox .off { color: #e21f1f; }
+#coinbox { top: calc(70px + env(safe-area-inset-top, 0px)); right: max(10px, env(safe-area-inset-right, 0px)); display: flex; align-items: center; gap: 6px; }
+#coinbox .lcd { font-size: 30px; min-width: 3ch; text-align: right; }
+.coin { width: 24px; height: 24px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #fff6b0, #e2b524 60%, #9a7413); color: #7a5a0c; font: 800 13px/24px var(--f-label); text-align: center; }
+.round { position: fixed; z-index: 2; width: 74px; height: 74px; border-radius: 50%; font-size: 30px; padding: 0; bottom: calc(76px + env(safe-area-inset-bottom, 0px)); }
+#bJumpR { left: max(14px, env(safe-area-inset-left, 0px)); } #bGunR { right: max(14px, env(safe-area-inset-right, 0px)); }
+.round .cnt { position: absolute; top: -14px; right: -10px; font-size: 22px; padding: 0 6px; border: 2px solid var(--plate-edge); }
+.round .cnt.empty { color: #e21f1f; }
+#popup { position: fixed; z-index: 3; left: 50%; top: 42%; width: min(300px, 60vw); transform: translate(-50%, -50%) scale(0); opacity: 0; pointer-events: none; }
+#popup.show { animation: pop 1.1s ease-out forwards; }
+@keyframes pop { 0% { transform: translate(-50%, -50%) scale(.3); opacity: 0 } 12% { transform: translate(-50%, -50%) scale(1.1); opacity: 1 } 75% { transform: translate(-50%, -60%) scale(1); opacity: 1 } 100% { transform: translate(-50%, -70%) scale(1); opacity: 0 } }
+#hit { position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: 0; background: radial-gradient(ellipse at center, transparent 45%, rgba(220, 0, 0, .65)); }
+#hit.show { animation: hitf .45s ease-out; }
+@keyframes hitf { 0% { opacity: 1 } 100% { opacity: 0 } }
+#gameover { position: fixed; inset: 0; z-index: 4; display: grid; place-items: center; background: rgba(0, 0, 0, .35); padding: 16px; }
+.goPanel { background: linear-gradient(180deg, #4a4e4c, var(--plate)); border: 3px solid var(--plate-edge); border-radius: 14px; padding: 16px 18px; width: min(420px, 100%); box-shadow: 0 4px 0 #000; display: grid; gap: 12px; }
+.goWhy { font-weight: 800; font-size: 28px; color: #ffd13a; text-shadow: 0 2px 0 #000; text-transform: uppercase; letter-spacing: .05em; text-align: center; }
+.goPanel dl { display: grid; grid-template-columns: auto 1fr; gap: 6px 12px; margin: 0; align-items: center; }
+.goPanel dt { font-weight: 800; color: #ffc93a; text-transform: uppercase; text-shadow: 0 1px 0 #000; font-size: 17px; }
+.goPanel dd { margin: 0; font-size: 26px; text-align: right; }
+#bAgain { font-size: 22px; padding: 10px; }
+@media (prefers-reduced-motion: reduce) { #popup.show { animation-duration: .01s } #hit.show { animation: none } }
+#loading { position: fixed; inset: 0; display: grid; place-items: center; z-index: 3; background: var(--bg); font-family: var(--f-lcd); color: var(--lcd-green); font-size: 28px; }
+#err { color: var(--warn); white-space: pre-wrap; font-family: var(--f-label); font-size: 18px; max-width: 80ch; padding: 0 16px; }
+#menu { position: fixed; inset: 0; z-index: 5; display: flex; align-items: center; padding: 16px; pointer-events: none; }
+#menu > .mpanel { pointer-events: auto; width: min(400px, 100%); max-height: calc(100vh - 32px); overflow: auto; display: grid; gap: 12px; padding: 16px 18px;
+  background: linear-gradient(180deg, rgba(74,78,76,.96), rgba(42,45,43,.96)); border: 3px solid var(--plate-edge); border-radius: 14px; box-shadow: 0 4px 0 #000; }
+.logo { margin: 0; font-weight: 800; font-size: 40px; line-height: .9; letter-spacing: .04em; text-transform: uppercase; color: #ffd13a; text-shadow: 0 3px 0 #000, 0 0 18px rgba(255,120,0,.35); }
+.logo small { display: block; font-size: 16px; color: var(--muted); letter-spacing: .2em; text-shadow: none; margin-top: 6px; }
+.mrow { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.mrow .lcd { font-size: 24px; }
+.mbig { display: grid; gap: 8px; }
+.mbig button { font-size: 24px; padding: 10px; }
+.mbig button.go { background: linear-gradient(180deg, #ffe066, #e2a50b); }
+.star { font-size: 22px; color: #555; text-shadow: 0 1px 0 #000; } .star.on { color: #ffd13a; }
+.mh { margin: 0; font-weight: 800; font-size: 24px; text-transform: uppercase; color: #ffd13a; text-shadow: 0 2px 0 #000; letter-spacing: .05em; }
+.mlist { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.mlist li { display: flex; gap: 10px; align-items: center; font-size: 18px; font-weight: 600; text-transform: capitalize; background: rgba(0,0,0,.25); border-radius: 8px; padding: 8px 10px; }
+.mlist li.done { color: var(--lcd-green); }
+.chk { width: 24px; height: 24px; flex: none; border-radius: 6px; border: 2px solid var(--plate-edge); display: grid; place-items: center; background: var(--lcd); color: var(--lcd-green); font-size: 16px; }
+.sel { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 8px; }
+.sel .nm { text-align: center; font-weight: 800; font-size: 22px; text-transform: uppercase; }
+.sel .nm small { display: block; font-size: 14px; color: var(--muted); }
+.buyrow { display: flex; justify-content: center; } .buyrow button { background: linear-gradient(180deg, #ffe066, #e2a50b); }
+.owned { color: var(--lcd-green); font-weight: 800; text-align: center; text-transform: uppercase; }
+.uprow { display: grid; grid-template-columns: 76px 1fr 52px 86px; align-items: center; gap: 8px; }
+.ulbl { font-weight: 800; text-transform: uppercase; font-size: 15px; }
+.bar { height: 12px; border-radius: 6px; background: var(--lcd); border: 2px solid var(--plate-edge); overflow: hidden; } .bar i { display: block; height: 100%; background: linear-gradient(90deg, #2fb447, #7dff8f); }
+.ulv { font-size: 18px; text-align: center; padding: 0 4px; }
+.uprow button { font-size: 14px; padding: 4px 6px; }
+button:disabled { opacity: .45; cursor: not-allowed; }
+.mnote { color: var(--warn); font-weight: 600; min-height: 1em; margin: 0; }
+.tests { display: flex; flex-wrap: wrap; gap: 8px; }
+body.inmenu #controls, body.inmenu #info, body.inmenu .round, body.inmenu #lifebox, body.inmenu #dist, body.inmenu #coinbox { display: none; }
+#toast { position: fixed; z-index: 3; left: 50%; top: 22%; transform: translateX(-50%); text-align: center; pointer-events: none; }
+#toast span { display: block; font-weight: 800; font-size: 22px; color: #ffd13a; text-transform: uppercase; text-shadow: 0 2px 0 #000; letter-spacing: .06em; }
+#toast b { display: block; font-size: 20px; text-transform: capitalize; color: #fff; text-shadow: 0 2px 0 #000; }
+#toast.show { animation: toastIn 3.2s ease-out forwards; }
+@keyframes toastIn { 0% { opacity: 0; transform: translate(-50%, -10px) scale(.8) } 10% { opacity: 1; transform: translate(-50%, 0) scale(1.05) } 80% { opacity: 1 } 100% { opacity: 0 } }
+.goMiss { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; font-size: 16px; font-weight: 600; text-transform: capitalize; }
+.goMiss li.done { color: var(--lcd-green); }
+.goBtns { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+.goBtns button { font-size: 18px; padding: 8px 4px; }
+@media (max-width: 520px) { #info p { display: none; } #dist .lcd { font-size: 30px; } button { font-size: 14px; padding: 5px 9px; } }
+</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap">
+<style>
+/* ===== NUI: amostra da direcao C "Arcade limpo do Bartel Games" (menu inicial + HUD). Padrao: SiteJogos/burnout-city/index.html:30-52 ===== */
+#nui { --gold: #f7b60c; --panel: #1d1714e6; --top: calc(56px + env(safe-area-inset-top, 0px));
+  --nf: "Oswald", "Arial Narrow", Impact, system-ui, sans-serif;
+  position: fixed; inset: 0; z-index: 6; pointer-events: none; font-family: var(--nf); color: #fff; -webkit-user-select: none; user-select: none; }
+#nui [hidden] { display: none !important; }
+#nui button { font-family: var(--nf); text-transform: none; letter-spacing: 0; padding: 0; margin: 0; cursor: pointer; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+#nui svg { display: block; }
+/* --- menu --- */
+#nuiMenu { position: absolute; inset: 0; pointer-events: auto; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: clamp(10px, 2.2vh, 20px); padding: calc(var(--top) + 64px) 16px calc(18px + env(safe-area-inset-bottom, 0px)); /* +64: o logo nao sobe atras do botao "?" (top: --top+6, 50 px) */
+  background: linear-gradient(180deg, #0000 0%, #0000 35%, #140d0acc 100%); }
+#nuiLogo { width: min(84vw, 470px, 52vh); height: auto; aspect-ratio: 512 / 308; filter: drop-shadow(0 6px 0 #000a) drop-shadow(0 0 18px #000c); flex: none; }
+.nchips { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.nchip { display: flex; align-items: center; gap: 8px; height: 46px; padding: 0 16px 0 10px; border-radius: 23px; background: var(--panel); border: 4px solid #ffffffd0; box-shadow: 0 5px 0 #000a; }
+.nchip small { font: 700 16px/1 var(--nf); text-transform: uppercase; letter-spacing: .06em; color: #ffe9a8; }
+.nchip b { font: 700 24px/1 var(--nf); color: #fff; font-variant-numeric: tabular-nums; }
+.nbtns { display: flex; flex-direction: column; gap: clamp(10px, 1.8vh, 16px); width: min(86vw, 400px); }
+.nbtn { display: flex; align-items: center; gap: 16px; height: clamp(58px, 9.5vh, 76px); padding: 0 22px; border-radius: 20px; text-align: left;
+  color: #fff; background: var(--panel); border: 4px solid #ffffffd0; box-shadow: 0 8px 0 #000a; transition: transform .08s; }
+.nbtn:active { transform: translateY(4px); box-shadow: 0 4px 0 #000a; }
+.nbtn b { font: 700 clamp(26px, 4.6vh, 36px)/1 var(--nf); text-transform: uppercase; letter-spacing: .04em; white-space: nowrap; }
+.nbtn svg { width: 36px; height: 36px; flex: none; }
+.nbtn.primary { color: #2a1306; background: linear-gradient(180deg, #ffe27a 0%, #f7b60c 100%); border-color: #fff; box-shadow: 0 0 0 4px #2a1306, 0 10px 0 4px #000a; }
+.nbtn.primary:active { box-shadow: 0 0 0 4px #2a1306, 0 5px 0 4px #000a; }
+.nbtn.test { height: 48px; border-style: dashed; border-color: #7f7; color: #bfffbf; }
+.nbtn.test b { font-size: 22px; }
+.nbtn:disabled { opacity: .45; cursor: not-allowed; }
+.nbtn:focus-visible, .nround:focus-visible, .npause:focus-visible { outline: 4px solid #ffd84d; outline-offset: 4px; }
+/* missoes */
+#nuiMiss { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: var(--top) 16px 16px; background: #000a; pointer-events: auto; }
+.npanel { width: min(92vw, 440px); background: #1d1714f2; border: 4px solid #ffffffd0; border-radius: 24px; box-shadow: 0 10px 0 #000a; padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+.npanel h2 { margin: 0; text-align: center; font: 700 34px/1 var(--nf); text-transform: uppercase; color: var(--gold); text-shadow: 0 3px 0 #000; }
+.nmlist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.nmlist li { display: flex; align-items: center; gap: 12px; min-height: 54px; padding: 8px 12px; border-radius: 14px; background: #0006; font: 700 20px/1.15 var(--nf); }
+.nmlist li i { flex: none; width: 34px; height: 34px; border-radius: 50%; border: 3px solid #ffffffa0; display: grid; place-items: center; font-style: normal; }
+.nmlist li.ok i { background: #36c24a; border-color: #fff; }
+.nmlist li.ok { color: #b8f5c0; }
+/* --- HUD --- */
+#nuiHud { position: absolute; inset: 0; }
+#nuiVig { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse at center, transparent 42%, rgba(190, 0, 0, .55) 75%, rgba(150, 0, 0, .95) 100%); }
+.ntop { position: absolute; top: calc(var(--top) + 6px); left: max(12px, env(safe-area-inset-left, 0px)); right: max(12px, env(safe-area-inset-right, 0px)); height: 58px; }
+.npause { position: absolute; left: 0; top: 4px; width: 50px; height: 50px; border-radius: 50%; pointer-events: auto; color: #fff; background: var(--panel); border: 4px solid #ffffffd0; box-shadow: 0 5px 0 #000a; display: grid; place-items: center; }
+.npause svg { width: 22px; height: 22px; }
+.ncoins { position: absolute; right: 0; top: 6px; height: 46px; display: flex; align-items: center; gap: 6px; padding: 0 14px 0 6px; border-radius: 23px; background: var(--panel); border: 4px solid #ffffffd0; box-shadow: 0 5px 0 #000a; }
+.ncoins svg { width: 30px; height: 30px; }
+.ncoins b { font: 700 26px/1 var(--nf); font-variant-numeric: tabular-nums; min-width: 2ch; text-align: right; }
+.ndist { position: absolute; left: 50%; top: -2px; transform: translateX(-50%); display: grid; place-items: center; white-space: nowrap; font: 700 54px/1 var(--nf); font-variant-numeric: tabular-nums; }
+.ndist > span { grid-area: 1 / 1; }
+.nhaz { position: absolute; left: calc(50% + min(31vw, 150px) + 4px); top: calc(var(--top) + 70px); height: 30px; display: flex; align-items: center; gap: 2px; filter: drop-shadow(0 3px 0 #000c); animation: nhazP .3s ease-in-out infinite alternate; transform-origin: left center; }   /* LOTE 4: aviso de buraco; retrato: ao lado da barra de vida, fora da pista */
+.nhaz[hidden] { display: none; }
+.nhaz svg { width: 32px; height: 28px; flex: none; }
+.nhaz .hdir { width: 20px; height: 20px; transition: transform .1s; }
+.nhaz[data-dir=l] .hdir { transform: rotate(-90deg); } .nhaz[data-dir=r] .hdir { transform: rotate(90deg); }
+@keyframes nhazP { from { transform: scale(1) } to { transform: scale(1.14) } }
+.ndist .s { color: #2a1306; -webkit-text-stroke: 12px #2a1306; filter: drop-shadow(0 4px 0 #000c); }
+.ndist .f { position: relative; background: linear-gradient(180deg, #fff0a0 8%, #ffc93a 52%, #f08c00 94%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.ndist small { font-size: .5em; }
+.nlife { position: absolute; left: 50%; top: calc(var(--top) + 72px); transform: translateX(-50%); width: min(62vw, 300px); height: 30px; display: flex; align-items: center; gap: 6px; }
+.nlife svg { width: 30px; height: 30px; flex: none; filter: drop-shadow(0 3px 0 #000a); }
+.nbar { position: relative; flex: 1; height: 20px; border-radius: 10px; overflow: hidden; border: 3px solid #fff; box-shadow: 0 4px 0 #000a; background: linear-gradient(90deg, #e3261b 0%, #f7b60c 50%, #35c94a 100%); }
+.nbar i { position: absolute; inset: 0; background: #241a16; transform-origin: 100% 50%; transform: scaleX(0); transition: transform .18s ease-out; }
+.nctl { position: absolute; bottom: calc(18px + env(safe-area-inset-bottom, 0px)); display: flex; gap: 12px; }
+.nctl.l { left: max(12px, env(safe-area-inset-left, 0px)); } .nctl.r { right: max(12px, env(safe-area-inset-right, 0px)); }
+.nround { position: relative; width: 78px; height: 78px; border-radius: 50%; pointer-events: auto; color: #fff; background: #1d1714cc; border: 4px solid #ffffffd0; box-shadow: 0 7px 0 #000a; display: grid; place-items: center; touch-action: none; }
+.nround svg { width: 40px; height: 40px; }
+.nround.on { transform: translateY(4px) scale(.96); box-shadow: 0 3px 0 #000a; }
+/* v3 controle: stick virtual no polegar esquerdo (aparece onde toca na metade esquerda de baixo) + tiro/pulo em diagonal no arco do polegar direito */
+body:not(.setas) .nctl.l { display: none; }
+#nuiStickZone { position: absolute; left: 0; bottom: 0; width: 46%; height: 58%; pointer-events: auto; touch-action: none; }
+body.setas #nuiStickZone { display: none; }
+@media (orientation: landscape) { #nuiStickZone { width: 22%; } }   /* deitado: a base do stick nao alcanca o carro (medido em 1700x940) */
+#nuiStick { position: absolute; left: 0; top: 0; width: 132px; height: 132px; margin: -66px 0 0 -66px; border-radius: 50%; pointer-events: none; background: radial-gradient(circle, #1d171455 0%, #1d1714a8 70%); border: 4px solid #ffffffb8; box-shadow: 0 6px 0 #0006; }
+#nuiStick i { position: absolute; left: 50%; top: 50%; width: 62px; height: 62px; margin: -31px 0 0 -31px; border-radius: 50%; background: linear-gradient(180deg, #ffe27a 0%, #f7b60c 100%); border: 4px solid #fff; box-shadow: 0 5px 0 #000a; }
+#nuiStick.ghost { opacity: .9; scale: .7; } #nuiStick.ghost i { animation: nstick 1.1s ease-in-out 2; }
+@keyframes nstick { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-36px); } 75% { transform: translateX(36px); } }
+@media (prefers-reduced-motion: reduce) { #nuiStick.ghost i { animation: none; } }
+#nuiStick .nkey { left: 50%; top: -18px; transform: translateX(-50%); }
+body:not(.setas) .nctl.r { display: block; width: 200px; height: 200px; pointer-events: none; }
+body:not(.setas) .nctl.r .nround { position: absolute; }
+body:not(.setas) #nuiGun { right: 12px; bottom: 29px; }
+body:not(.setas) #nuiJump { right: 57px; bottom: 139px; }
+@media (min-width: 900px) and (min-height: 600px) { body:not(.setas) .nctl.r { width: 230px; height: 230px; } body:not(.setas) #nuiGun { right: 26px; bottom: 30px; } body:not(.setas) #nuiJump { right: 82px; bottom: 166px; } }
+.nround.act { color: #2a1306; background: linear-gradient(180deg, #ffe27a 0%, #f7b60c 100%); border-color: #fff; }
+.nround.empty { opacity: .55; filter: grayscale(1); }
+.nround em { position: absolute; top: -8px; right: -8px; min-width: 32px; height: 32px; padding: 0 6px; border-radius: 16px; display: grid; place-items: center; font: 700 20px/1 var(--nf); font-style: normal; color: #fff; background: #2a1306; border: 3px solid #fff; }
+.nround.empty em { background: #c81e14; }
+@media (min-width: 900px) and (min-height: 600px) { .nround { width: 88px; height: 88px; } .nround svg { width: 44px; height: 44px; } }
+@media (prefers-reduced-motion: reduce) { .nbar i { transition: none; } }
+/* ===== v2: carregamento, faixa de missoes, pausa+loja, fim, garagem, como jogar (mesmos tokens do #nui) ===== */
+#loading { display: flex !important; flex-direction: column; align-items: center; justify-content: center; gap: 22px; padding: 70px 20px 30px;
+  background: radial-gradient(120% 80% at 50% 40%, #4a1d0c 0%, #2a120a 55%, #140d0a 100%); font-family: "Oswald", "Arial Narrow", Impact, sans-serif; color: #fff; z-index: 8; }
+#loading[hidden] { display: none !important; }
+#loading img { width: min(84vw, 460px, 50vh); height: auto; aspect-ratio: 512 / 308; filter: drop-shadow(0 6px 0 #000a); }
+/* v3: ilustracao nova (carro no centro, terco de baixo = asfalto escuro com a barra e a dica); logo pequeno no alto, fora do carro */
+#loading, .nloadart { background: #0d0b0a url(p/gui/loading_paisagem.webp) center / cover no-repeat; }
+@media (orientation: portrait) { .nloadart { background-image: url(p/gui/loading_retrato.webp); } #loading { background-image: linear-gradient(180deg, transparent 72%, #000b 90%), url(p/gui/loading_retrato.webp) !important; } }
+#loading { background-image: linear-gradient(180deg, transparent 72%, #000b 90%), url(p/gui/loading_paisagem.webp); justify-content: flex-start; gap: 8px; padding: calc(14px + env(safe-area-inset-top, 0px)) 20px calc(28px + env(safe-area-inset-bottom, 0px)); }
+#loading img { height: min(17vh, 190px); width: auto; margin-bottom: auto; }
+#loading .ltip, #loading .lpct { text-shadow: 0 2px 0 #000, 0 0 8px #000; }
+.nloadart { position: absolute; inset: 0; }
+@media (orientation: landscape) {
+  #loading, .nloadart { background-size: auto, max(118vw, 210vh) auto; background-position: 0 0, 0% 42%; }
+  .nloadart { background-size: max(118vw, 210vh) auto; background-position: 0% 42%; }
+  #loading .lbar, #loading .lpct, #loading .ltip { position: absolute; left: max(3vw, 16px, env(safe-area-inset-left, 0px)); width: 30vw; max-width: none; text-align: left; z-index: 1; }
+  #loading .lbar { bottom: calc(110px + env(safe-area-inset-bottom, 0px)); }
+  #loading .lpct { bottom: calc(72px + env(safe-area-inset-bottom, 0px)); }
+  #loading .ltip { bottom: calc(22px + env(safe-area-inset-bottom, 0px)); font-size: 17px; }
+  #loading::before { content: ''; position: absolute; left: max(1.5vw, 8px); bottom: calc(10px + env(safe-area-inset-bottom, 0px)); width: calc(30vw + 3vw); height: 150px; border-radius: 20px; background: #000a; border: 4px solid #fff; box-sizing: border-box; }
+  #nui #nuiLoad2 { left: max(3vw, 16px, env(safe-area-inset-left, 0px)); transform: none; width: 32vw; }
+}
+.lbar { width: min(80vw, 380px); height: 24px; border-radius: 12px; border: 4px solid #fff; background: #241a16; overflow: hidden; box-shadow: 0 5px 0 #000a; }
+.lbar i { display: block; height: 100%; width: 100%; transform-origin: 0 50%; transform: scaleX(0); background: linear-gradient(180deg, #ffe27a, #f7b60c); transition: transform .2s; }
+.lpct { font: 700 22px/1 "Oswald", sans-serif; color: #ffe9a8; }
+.ltip { max-width: min(86vw, 420px); text-align: center; font: 700 19px/1.3 "Oswald", sans-serif; color: #fff; opacity: .92; }
+#err { font: 12px/1.3 monospace; color: #7f7; max-width: 90vw; text-align: center; min-height: 1em; }
+/* faixa de missoes no inicio (nao pausa) */
+.nstrip { position: absolute; left: 50%; top: calc(var(--top) + 116px); transform: translateX(-50%); width: min(92vw, 400px); padding: 10px 14px 12px; border-radius: 18px; background: #1d1714e0; border: 4px solid #ffffffd0; box-shadow: 0 8px 0 #000a; }
+.nstrip h3 { margin: 0 0 6px; text-align: center; font: 700 22px/1 var(--nf); text-transform: uppercase; color: var(--gold); text-shadow: 0 2px 0 #000; }
+.nstrip ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.nstrip li, .nmlist li { display: flex; align-items: center; gap: 10px; font: 700 18px/1.15 var(--nf); }
+.nstrip li i { flex: none; width: 28px; height: 28px; border-radius: 50%; border: 3px solid #ffffffa0; display: grid; place-items: center; font-style: normal; font-size: 16px; }
+.nstrip li.ok i { background: #36c24a; border-color: #fff; } .nstrip li.ok { color: #b8f5c0; }
+/* paineis em tela cheia (pausa, fim, como jogar) */
+.nfull { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: calc(var(--top) + 8px) 12px calc(12px + env(safe-area-inset-bottom, 0px)); background: #000b; pointer-events: auto; overflow-y: auto; }
+.nfull .npanel { max-height: 100%; overflow-y: auto; margin: auto; }
+.nrow { display: flex; gap: 10px; } .nrow > * { flex: 1; min-width: 0; }
+.nbtn.sm { height: 56px; padding: 0 14px; gap: 10px; justify-content: center; } .nbtn.sm b { font-size: 24px; } .nbtn.sm svg { width: 28px; height: 28px; }
+.nsub { margin: 2px 0 0; text-align: center; font: 700 16px/1 var(--nf); text-transform: uppercase; letter-spacing: .08em; color: #ffe9a8; }
+.nshop { display: flex; flex-direction: column; gap: 8px; }
+.nitem { display: flex; align-items: center; gap: 10px; min-height: 60px; padding: 6px 8px 6px 12px; border-radius: 14px; background: #0006; }
+.nitem .ic { flex: none; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; color: #2a1306; background: linear-gradient(180deg, #ffe27a, #f7b60c); border: 3px solid #fff; }
+.nitem .ic svg { width: 22px; height: 22px; }
+.nitem .tx { flex: 1; min-width: 0; font: 700 19px/1.1 var(--nf); } .nitem .tx small { display: block; font-size: 15px; color: #ffe9a8; }
+.nbuy { flex: none; min-width: 104px; height: 48px; padding: 0 12px; border-radius: 14px; display: flex; align-items: center; justify-content: center; gap: 6px; color: #2a1306; background: linear-gradient(180deg, #ffe27a, #f7b60c); border: 4px solid #fff; box-shadow: 0 5px 0 #000a; font: 700 20px/1 var(--nf) !important; pointer-events: auto; }
+.nbuy svg { width: 20px; height: 20px; } .nbuy.no { filter: grayscale(.8); opacity: .7; } .nbuy.max, .nbuy.on { background: #36c24a; color: #fff; } .nbuy.off { background: #4a3c36; color: #fff; }
+.nbuy:disabled { cursor: default; }
+.nmoney { display: inline-flex; align-items: center; gap: 6px; font: 700 22px/1 var(--nf); } .nmoney svg { width: 24px; height: 24px; }
+.nmsg { min-height: 22px; text-align: center; font: 700 18px/1.1 var(--nf); color: #ff8a7a; }
+/* fim de partida */
+.nend .why { margin: 0; display: grid; place-items: center; font: 700 clamp(46px, 9vh, 64px)/1 var(--nf); text-transform: uppercase; white-space: nowrap; }
+.nend .why > span { grid-area: 1 / 1; }
+.nend .why .s { color: #2a1306; -webkit-text-stroke: 12px #2a1306; filter: drop-shadow(0 5px 0 #000c); }
+.nend .why .f { position: relative; background: linear-gradient(180deg, #fff0a0 8%, #ffc93a 52%, #f08c00 94%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.nend .why span { text-shadow: none; }
+.nrow .nbtn.sm b { font-size: clamp(18px, 5.2vw, 24px); }
+@media (max-width: 420px) { #nui .nrow .nbtn.sm svg { display: none; } #nui #nuiShare svg { display: block; } }
+#nuiShare { flex: none; width: 64px; padding: 0; }
+.nscore { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.nscore small { font: 700 16px/1 var(--nf); text-transform: uppercase; letter-spacing: .08em; color: #ffe9a8; }
+.nscore b { font: 700 52px/1 var(--nf); font-variant-numeric: tabular-nums; }
+.nbest { align-self: center; display: flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px; border-radius: 20px; font: 700 19px/1 var(--nf); background: #0006; }
+.nbest.new { color: #2a1306; background: linear-gradient(180deg, #ffe27a, #f7b60c); border: 3px solid #fff; animation: npulse 1s ease-in-out infinite alternate; }
+@keyframes npulse { from { transform: scale(1); } to { transform: scale(1.07); } }
+.nstats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.nstats div { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 4px; border-radius: 14px; background: #0006; }
+.nstats svg { width: 26px; height: 26px; } .nstats b { font: 700 24px/1 var(--nf); font-variant-numeric: tabular-nums; } .nstats small { font: 700 13px/1 var(--nf); text-transform: uppercase; color: #ffe9a8; }
+.nrew { text-align: center; font: 700 19px/1.2 var(--nf); color: #b8f5c0; }
+.nend { animation: nin .35s .6s both ease-out; } @keyframes nin { from { opacity: 0; transform: scale(.9); } to { opacity: 1; transform: none; } }
+/* garagem */
+#nuiGar { position: absolute; inset: 0; }
+.gtop { position: absolute; top: calc(var(--top) + 6px); left: 12px; right: 12px; height: 52px; display: flex; justify-content: space-between; align-items: center; }
+.gtop .nchip { pointer-events: none; }
+.gsheet { position: absolute; left: 0; right: 0; bottom: 0; max-height: 60%; display: flex; flex-direction: column; gap: 10px; padding: 12px 12px calc(12px + env(safe-area-inset-bottom, 0px)); background: #1d1714f2; border-top: 4px solid #ffffffd0; border-radius: 24px 24px 0 0; pointer-events: auto; }
+@media (min-width: 900px) { .gsheet { left: auto; top: calc(var(--top) + 70px); width: 440px; max-height: none; right: 12px; bottom: 12px; border: 4px solid #ffffffd0; border-radius: 24px; } }
+.gtabs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; flex: none; }
+.gtab { height: 48px; border-radius: 14px; color: #fff; background: #0006; border: 3px solid #ffffff60; font: 700 17px/1 var(--nf) !important; text-transform: uppercase !important; }
+.gtab[aria-selected="true"] { color: #2a1306; background: linear-gradient(180deg, #ffe27a, #f7b60c); border-color: #fff; }
+.gtab:disabled { opacity: .4; }
+.gbody { flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
+.gsel { display: flex; align-items: center; gap: 8px; } .gsel .nm { flex: 1; text-align: center; font: 700 26px/1.05 var(--nf); text-transform: uppercase; } .gsel .nm small { display: block; font-size: 15px; color: #ffe9a8; }
+.garr { flex: none; width: 52px; height: 52px; border-radius: 50%; color: #fff; background: #0006; border: 4px solid #ffffffd0; display: grid; place-items: center; } .garr svg { width: 26px; height: 26px; }
+.gstate { display: flex; justify-content: center; }
+.gsw { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; padding: 8px 4px 10px; }
+.gsw button { width: 44px; height: 44px; border-radius: 50%; border: 4px solid #fff; box-shadow: 0 4px 0 #000a; }
+.gsw button[aria-pressed="true"] { outline: 4px solid var(--gold); outline-offset: 2px; }
+.gbar { display: flex; gap: 3px; margin-top: 4px; } .gbar i { flex: 1; height: 8px; border-radius: 4px; background: #ffffff30; } .gbar i.on { background: #35c94a; }
+.gplay { flex: none; }
+.gtoast { position: absolute; left: 50%; top: calc(var(--top) + 70px); transform: translateX(-50%); padding: 8px 18px; border-radius: 16px; font: 700 20px/1.1 var(--nf); background: #c81e14; border: 3px solid #fff; opacity: 0; pointer-events: none; white-space: nowrap; }
+/* como jogar */
+.nhelp { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.nhelp div { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 10px 6px; border-radius: 14px; background: #0006; text-align: center; font: 700 17px/1.15 var(--nf); }
+.nhelp .nround { pointer-events: none; width: 60px; height: 60px; } .nhelp .nround svg { width: 30px; height: 30px; }
+.nhelp .nhd { position: relative; min-height: 210px; padding: 0; background: #0006; }
+.nhelp .nhd > div { position: absolute; padding: 0; background: none; gap: 4px; } .nhelp .nhd .j { left: 8px; top: 8px; } .nhelp .nhd .g { right: 8px; bottom: 8px; }
+.nhelp .nhs { justify-content: center; }
+.nstk { position: relative; width: 84px; height: 84px; border-radius: 50%; background: #1d1714a8; border: 4px solid #ffffffb8; }
+.nstk i { position: absolute; left: 50%; top: 50%; width: 40px; height: 40px; margin: -20px 0 0 -20px; border-radius: 50%; background: linear-gradient(180deg, #ffe27a, #f7b60c); border: 3px solid #fff; animation: nstk2 1.6s ease-in-out infinite; }
+@keyframes nstk2 { 0%, 100% { transform: translateX(-16px); } 50% { transform: translateX(16px); } }
+@media (prefers-reduced-motion: reduce) { .nstk i { animation: none; transform: translateX(14px); } }
+.nhelp kbd { font: 700 15px/1 var(--nf); padding: 3px 8px; border-radius: 6px; background: #fff; color: #2a1306; }
+.nkeys { display: none; } @media (hover: hover) and (pointer: fine) { .nkeys { display: inline; } }
+.nbtn.help { height: 50px; } .nbtn.help b { font-size: 22px; } .nbtn.help svg { width: 28px; height: 28px; }
+/* v2b: ajustes do avaliador */
+#nui .nfull .npanel { max-height: calc(100dvh - var(--top) - 24px); }
+#nuiEMiss:empty, #nuiERew:empty, #nuiShopMsg:empty { display: none; }
+#nui .npanel p { margin: 0; }
+#nui .nbuy:disabled { opacity: 1; }
+#nui .nbuy.max { background: #36c24a; color: #fff; border-color: #fff; text-shadow: 0 2px 0 #0006; }
+.nitem.flash .tx small { color: #7dff8f; }
+@media (max-height: 760px) { .nend .why { font-size: 42px; } .nscore b { font-size: 40px; } .nend.npanel { gap: 9px; padding: 14px 18px; } .nstats div { padding: 5px 4px; }
+  .nend .nbtn.primary { height: 58px; } .nend .nbtn.sm { height: 48px; } .nend .nmlist li { min-height: 40px; padding: 4px 10px; } .nbest { height: 34px; } }
+@media (max-width: 400px) { #nuiAgain b { font-size: 27px; letter-spacing: 0; } #nuiAgain { gap: 10px; padding: 0 14px; } }
+.gbody { background: linear-gradient(#1d1714 30%, #1d171400) top / 100% 30px no-repeat local, linear-gradient(#1d171400, #1d1714 70%) bottom / 100% 30px no-repeat local, radial-gradient(farthest-side at 50% 0, #0009, #0000) top / 100% 12px no-repeat scroll, radial-gradient(farthest-side at 50% 100%, #0009, #0000) bottom / 100% 12px no-repeat scroll; }
+.nmlist li .nbuy { margin-left: auto; height: 42px; min-width: 90px; font-size: 18px !important; }
+/* v2c: pedidos do Cristiano jogando no PC (2026-11-21) */
+/* sombras mais leves, so neste jogo: sombra dura de 3-4 px, sem anel escuro; borda branca mantida */
+#nui .nbtn { box-shadow: 0 4px 0 #000a; } #nui .nbtn:active { transform: translateY(2px); box-shadow: 0 2px 0 #000a; }
+#nui .nbtn.primary { box-shadow: 0 4px 0 #000a; } #nui .nbtn.primary:active { box-shadow: 0 2px 0 #000a; }
+#nui .nround { box-shadow: 0 4px 0 #000a; } #nui .nround.on { box-shadow: 0 1px 0 #000a; transform: translateY(3px); }
+#nui .nbuy { box-shadow: 0 3px 0 #000a; } #nui .nchip, #nui .npause, #nui .ncoins, #nui .nbar { box-shadow: 0 3px 0 #000a; }
+#nui .npanel, #nui .nstrip { box-shadow: 0 6px 0 #0008; } #nui .ntoast { box-shadow: 0 4px 0 #000a; }
+/* foco: so por teclado, discreto */
+#nui button:focus { outline: none; } #nui button:focus-visible { outline: 3px solid #ffffffa0; outline-offset: 3px; }
+/* fim: contorno so no texto (12 px fundia as letras numa caixa) */
+.nend .why { letter-spacing: .03em; } .nend .why .s { -webkit-text-stroke: 7px #2a1306; }
+.nend .nmlist li { min-height: 38px; padding: 4px 10px; font-size: 17px; } .nend .nmlist li i { width: 28px; height: 28px; }
+#nui .nfull .npanel { max-height: none; overflow: visible; }   /* cabe pela altura via zoom (nuiFit) */
+/* tela deitada: distancia e vida no canto superior esquerdo; faixa central da estrada livre */
+@media (min-aspect-ratio: 1/1) {
+  .ndist { left: 62px; top: 0; transform: none; font-size: 44px; place-items: center start; }
+  .ndist { letter-spacing: .03em; } .ndist .s { -webkit-text-stroke: 7px #2a1306; }
+  .nlife { left: max(12px, env(safe-area-inset-left, 0px)); top: calc(var(--top) + 66px); transform: none; width: min(30vw, 280px); }
+  .nhaz { left: calc(max(12px, env(safe-area-inset-left, 0px)) + min(30vw, 280px) + 10px); top: calc(var(--top) + 58px); height: 46px; }   /* deitado: no bloco do canto, ao lado da vida */
+  .nhaz svg { width: 52px; height: 46px; } .nhaz .hdir { width: 32px; height: 32px; }
+  .nstrip, .ntoast { left: max(12px, env(safe-area-inset-left, 0px)); transform: none; width: min(36vw, 380px); }
+  .nstrip { top: calc(var(--top) + 106px); } .ntoast { top: calc(var(--top) + 106px); width: auto; max-width: min(40vw, 420px); }
+}
+/* garagem deitada: painel a direita com ~40% da largura (max 520), sem encostar embaixo; a vista 3D e deslocada (nuiGarOffset) */
+@media (min-width: 900px) { .gsheet { width: min(40vw, 520px); bottom: auto; max-height: calc(100dvh - var(--top) - 88px); } }
+/* v2d: cena Unity 'Load' (ilustracao + carro 3D ficam; dica e barra em HTML) */
+#nuiLoad2 { box-sizing: border-box; position: absolute; left: 50%; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); width: min(92vw, 520px); display: flex; flex-direction: column; gap: 10px; padding: 14px 16px 16px; border-radius: 20px; background: #1d1714e6; border: 4px solid #ffffffd0; box-shadow: 0 6px 0 #0008; }
+#nuiLoad2 b { font: 700 18px/1 var(--nf); text-transform: uppercase; letter-spacing: .08em; color: var(--gold); }
+#nuiLoad2 p { margin: 0; font: 700 20px/1.25 var(--nf); color: #fff; overflow-wrap: anywhere; }
+#nuiLoad2 .lbar { width: 100%; }
+/* v2e: avisos de combo/itens em HTML (substituem os Splash Unity) numa coluna que empilha faixa, aviso de missao e combo */
+.nnotes { position: absolute; top: calc(var(--top) + 112px); left: 50%; transform: translateX(-50%); width: min(92vw, 400px); display: flex; flex-direction: column; align-items: center; gap: 8px; pointer-events: none; }
+#nui .nnotes .nstrip, #nui .nnotes .ntoast { position: static; transform: none; left: auto; top: auto; }
+#nui .nnotes .ntoast { opacity: 1; }
+.npop { display: flex; align-items: center; gap: 10px; white-space: nowrap; }
+.npop svg { width: 40px; height: 40px; flex: none; filter: drop-shadow(0 3px 0 #2a1306); }
+.npop .w { display: grid; place-items: center; font: 700 clamp(24px, 8vw, 42px)/1 var(--nf); text-transform: uppercase; letter-spacing: .03em; }
+.npop .w > span { grid-area: 1 / 1; } .npop .s { color: #2a1306; -webkit-text-stroke: 7px #2a1306; filter: drop-shadow(0 4px 0 #000c); }
+.npop .f { position: relative; background: linear-gradient(180deg, #fff0a0 8%, #ffc93a 52%, #f08c00 94%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+@media (min-aspect-ratio: 1/1) { .nnotes { left: max(12px, env(safe-area-inset-left, 0px)); transform: none; align-items: flex-start; width: min(40vw, 420px); top: calc(var(--top) + 106px); } #nui .nnotes .nstrip { width: 100%; } }
+#nuiGar .gvig { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 62% 30% at var(--gx, 50%) var(--gy, 30%), #0000 55%, #000a 100%); }
+@media (min-width: 900px) { #nuiGar .gvig { background: radial-gradient(ellipse 34% 42% at var(--gx, 30%) var(--gy, 50%), #0000 55%, #000a 100%); } }
+/* v2f: garagem showroom + pulso da missao 'melhore a blindagem' */
+@media (max-width: 899px) { .gsheet { max-height: 50%; } }
+@keyframes ngpulse { 0%, 100% { transform: scale(1); box-shadow: 0 3px 0 #000a, 0 0 0 0 #f7b60c00; } 50% { transform: scale(1.08); box-shadow: 0 3px 0 #000a, 0 0 18px 4px #f7b60caa; } }
+@keyframes ngglow { 0%, 100% { box-shadow: 0 3px 0 #000a, 0 0 0 0 #f7b60c00; } 50% { box-shadow: 0 3px 0 #000a, 0 0 18px 4px #f7b60caa; } }
+#nui .nbuy[data-pulse] { animation: ngpulse 1s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { #nui .nbuy[data-pulse] { animation: ngglow 1s ease-in-out infinite; } }
+/* v3: juice e dica da 1a partida */
+.nfloat { position: absolute; left: 0; top: 0; display: grid; place-items: center; font: 700 30px/1 var(--nf); pointer-events: none; white-space: nowrap; }
+.nfloat > span { grid-area: 1 / 1; } .nfloat .s { color: #2a1306; -webkit-text-stroke: 6px #2a1306; } .nfloat .f { position: relative; background: linear-gradient(180deg, #fff0a0 8%, #ffc93a 52%, #f08c00 94%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.ncoinfly { position: absolute; left: 0; top: 0; width: 28px; height: 28px; pointer-events: none; filter: drop-shadow(0 2px 0 #2a1306); } .ncoinfly svg { width: 100%; height: 100%; }
+@keyframes nhintp { 0%, 100% { transform: scale(1); box-shadow: 0 4px 0 #000a, 0 0 18px 6px #ffd23a99; } 50% { transform: scale(1.16); box-shadow: 0 4px 0 #000a, 0 0 34px 14px #ffd23aee; } }
+@keyframes nhintg { 0%, 100% { box-shadow: 0 4px 0 #000a, 0 0 18px 6px #ffd23a99; } 50% { box-shadow: 0 4px 0 #000a, 0 0 34px 14px #ffd23aee; } }
+#nui .nround.nhint { animation: nhintp .45s ease-in-out 2; outline: 5px solid #f7b60c; outline-offset: 4px; }
+@media (prefers-reduced-motion: reduce) { #nui .nround.nhint { animation: nhintg .45s ease-in-out 2; } }
+.nkey { position: absolute; left: -6px; top: -10px; min-width: 28px; height: 28px; padding: 0 6px; border-radius: 8px; display: grid; place-items: center; font: 700 17px/1 var(--nf); color: #2a1306; background: #fff; border: 2px solid #2a1306; box-shadow: 0 3px 0 #000a; }
+#nuiShareMsg { color: #b8f5c0; overflow-wrap: anywhere; font-size: 17px; }
+/* Testes (so em ?teste=1 / localhost): mostra o painel HTML antigo de testes */
+.ntoast { position: absolute; left: 50%; top: calc(var(--top) + 116px); transform: translateX(-50%); width: max-content; max-width: 90vw; padding: 10px 22px; border-radius: 18px; text-align: center; background: var(--panel); border: 4px solid #fff; box-shadow: 0 0 0 4px #2a1306, 0 8px 0 4px #000a; opacity: 0; pointer-events: none; }
+.ntoast b { display: block; font: 700 26px/1.1 var(--nf); text-transform: uppercase; color: var(--gold); text-shadow: 0 3px 0 #000; }
+.ntoast span { display: block; font: 700 20px/1.2 var(--nf); color: #fff; }
+body.nui-tests #menu { display: block !important; position: fixed; inset: 0; z-index: 7; overflow: auto; background: #000c; padding: 70px 12px 12px; }
+</style>
+
+<div id="stage"></div>
+<div id="loading"><img src="p/tex/3399cf1cc1f6c4304b9a012854043c56.webp" alt="The Last Driver"><div class="lbar" role="progressbar" aria-valuemin="0" aria-valuemax="100"><i id="nuiLBar"></i></div><div class="lpct" id="nuiLPct">0%</div><p class="ltip" id="nuiLTip"></p><div id="err"></div></div>
+<div id="nui">
+  <section id="nuiMenu" hidden>
+    <button class="npause" id="nuiHelpB" data-ia="howto" aria-label="Como jogar" style="position:absolute;left:auto;right:12px;top:calc(var(--top) + 6px)"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M11 17h2v2h-2zm1-14a6 6 0 0 0-6 6h2a4 4 0 1 1 6.3 3.3c-1.4.9-2.3 2-2.3 3.7v.5h2V16c0-1 .5-1.6 1.4-2.2A6 6 0 0 0 12 3z"/></svg></button>
+    <button class="npause" id="nuiRankB" aria-label="Ranking" hidden style="position:absolute;left:auto;right:12px;top:calc(var(--top) + 6px)"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 3h12v2h3v3a5 5 0 0 1-4.6 5A5 5 0 0 1 13 15.9V18h3v3H8v-3h3v-2.1A5 5 0 0 1 7.6 13 5 5 0 0 1 3 8V5h3zm0 4H5v1a3 3 0 0 0 1.3 2.5A5 5 0 0 1 6 9zm12 0v2a5 5 0 0 1-.3 1.5A3 3 0 0 0 19 8V7z"/></svg></button>
+    <img id="nuiLogo" src="p/tex/3399cf1cc1f6c4304b9a012854043c56.webp" alt="The Last Driver" draggable="false">
+    <div class="nchips">
+      <div class="nchip"><svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="#f7b60c" stroke="#2a1306" stroke-width="1.5" d="M6 3h12v3h3v2a5 5 0 0 1-5 5h-.3A5 5 0 0 1 13 15.7V18h3v3H8v-3h3v-2.3A5 5 0 0 1 8.3 13H8a5 5 0 0 1-5-5V6h3zm-1 5a3 3 0 0 0 1 2.2V8zm14 0h-1v2.2A3 3 0 0 0 19 8z"/></svg><small data-i="record">Recorde</small><b id="nuiHigh">0</b></div>
+      <div class="nchip"><svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#f7b60c" stroke="#2a1306" stroke-width="2"/><path fill="#2a1306" d="M11 5h2v1.6c1.3.2 2.4.9 2.9 2l-1.7.9c-.4-.7-1.1-1.1-2.2-1.1-1.2 0-1.8.5-1.8 1.1 0 .7.6 1 2.1 1.3 2.1.4 3.6 1.1 3.6 3 0 1.5-1.1 2.5-2.9 2.8V18h-2v-1.4c-1.6-.2-2.8-1-3.3-2.3l1.8-.8c.4.9 1.3 1.4 2.5 1.4 1.3 0 1.9-.5 1.9-1.1 0-.7-.6-1-2.2-1.3-2-.4-3.5-1.1-3.5-3 0-1.4 1-2.4 2.8-2.7z"/></svg><small data-i="money">Dinheiro</small><b id="nuiMoney">0</b></div>
+    </div>
+    <div class="nbtns">
+      <button class="nbtn primary" id="nuiPlay"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 4.5v15l13-7.5z"/></svg><b data-i="play">Jogar</b></button>
+      <button class="nbtn" id="nuiGarage"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5 11l1.6-4.6A2 2 0 0 1 8.5 5h7a2 2 0 0 1 1.9 1.4L19 11a2 2 0 0 1 2 2v4h-2v2h-3v-2H8v2H5v-2H3v-4a2 2 0 0 1 2-2zm2.2 0h9.6l-1.1-3.3a1 1 0 0 0-.9-.7H9.2a1 1 0 0 0-.9.7zM6.5 13a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/></svg><b data-i="garage">Garagem</b></button>
+      <button class="nbtn" id="nuiMissions"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm1.3 6.6l-1 1 2.6 2.6 4.4-4.4-1-1-3.4 3.4zm0 6.5l-1 1 2.6 2.6 4.4-4.4-1-1-3.4 3.4zM15 9h3v1.5h-3zm0 6.5h3V17h-3z"/></svg><b data-i="missions">Missões</b></button>
+      <button class="nbtn test" id="nuiTests" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M9 2h6v2h-1v5.3l5.6 9.4A2 2 0 0 1 17.9 22H6.1a2 2 0 0 1-1.7-3.3L10 9.3V4H9zm3 9.5L8.2 18h7.6z"/></svg><b data-i="tests">Testes</b></button>
+    </div>
+  </section>
+  <section id="nuiMiss" hidden role="dialog" aria-modal="true" aria-labelledby="nuiMissT">
+    <div class="npanel"><h2 id="nuiMissT" data-i="missions">Missões</h2><ul class="nmlist" id="nuiMList"></ul>
+      <button class="nbtn primary" id="nuiMissOk" style="justify-content:center"><b data-i="ok">OK</b></button></div>
+  </section>
+  <section id="nuiHud" hidden>
+    <div id="nuiVig" hidden></div>
+    <div class="ntop">
+      <button class="npause" id="nuiPause" data-ia="pause" aria-label="Pausar"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 4h4v16H6zm8 0h4v16h-4z"/></svg></button>
+      <div class="ndist"><span class="s" id="nuiDistS">0 m</span><span class="f" id="nuiDist">0 m</span></div>
+      <div class="ncoins"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#f7b60c" stroke="#2a1306" stroke-width="2"/><circle cx="12" cy="12" r="6" fill="none" stroke="#a86a00" stroke-width="2"/></svg><b id="nuiCoins">0</b></div>
+    </div>
+    <div class="nhaz" id="nuiHaz" hidden aria-hidden="true"><svg viewBox="0 0 64 56"><path d="M32 4 60 52H4z" fill="#ffc400" stroke="#141414" stroke-width="5" stroke-linejoin="round"/><rect x="28.5" y="18" width="7" height="20" rx="2" fill="#141414"/><circle cx="32" cy="45" r="4" fill="#141414"/></svg><svg class="hdir" viewBox="0 0 24 24"><path d="M12 3 21 13h-5.5v8h-7v-8H3z" fill="#ffc400" stroke="#141414" stroke-width="2.2" stroke-linejoin="round"/></svg></div>
+    <div class="nlife" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" id="nuiLife" data-ia="life" aria-label="Vida"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#e3261b" stroke="#fff" stroke-width="2" d="M12 21s-8-5.2-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.8-8 11-8 11z"/></svg><div class="nbar"><i id="nuiLifeCover"></i></div></div>
+    <div class="nnotes">
+<div class="nstrip" id="nuiStrip" hidden role="status"><h3 data-i="missions">Missões</h3><ul id="nuiStripL"></ul></div>
+    <div class="npop" id="nuiPop" hidden aria-live="polite"><span id="nuiPopI"></span><span class="w"><span class="s" id="nuiPopS"></span><span class="f" id="nuiPopT"></span></span></div>
+    <div class="ntoast" id="nuiToast" hidden role="status"><b data-i="mdone">Missão concluída!</b><span id="nuiToastT"></span></div>
+    </div>
+    <div id="nuiStickZone" aria-hidden="true"></div>
+    <div id="nuiStick" hidden aria-hidden="true"><i></i></div>
+    <div class="nctl l">
+      <button class="nround" id="nuiLeft" data-ia="left" aria-label="Esquerda"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M15.5 3.5 7 12l8.5 8.5 2.1-2.1L11.2 12l6.4-6.4z"/></svg></button>
+      <button class="nround" id="nuiRight" data-ia="right" aria-label="Direita"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8.5 3.5 17 12l-8.5 8.5-2.1-2.1L12.8 12 6.4 5.6z"/></svg></button>
+    </div>
+    <div class="nctl r">
+      <button class="nround act" id="nuiJump" data-ia="jump" aria-label="Pular"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2 4.5 9.5h4.5V14h6V9.5h4.5zM5 16.5h14V19H5z"/></svg><em id="nuiNJump">0</em></button>
+      <button class="nround act" id="nuiGun" data-ia="gun" aria-label="Atirar"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" d="M12 4.5a7.5 7.5 0 1 0 0 15 7.5 7.5 0 0 0 0-15zM12 1v6M12 17v6M1 12h6M17 12h6"/><circle cx="12" cy="12" r="2" fill="currentColor"/></svg><em id="nuiNGun">0</em></button>
+    </div>
+  </section>
+  <div id="nuiLoadArt" class="nloadart" hidden aria-hidden="true"></div>
+  <div id="nuiLoad2" hidden role="status"><b data-i="tip">Dica</b><p id="nuiLoad2T"></p><div class="lbar" aria-hidden="true"><i id="nuiLoad2Bar"></i></div></div>
+
+  <section id="nuiPauseP" class="nfull" hidden role="dialog" aria-modal="true" aria-labelledby="nuiPauseT">
+    <div class="npanel">
+      <h2 id="nuiPauseT" data-i="paused">Pausado</h2>
+      <button class="nbtn primary sm" id="nuiResume"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 4.5v15l13-7.5z"/></svg><b data-i="resume">Continuar</b></button>
+      <div class="nrow">
+        <button class="nbtn sm" id="nuiRetry"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 4V1L7 5.5 12 10V6.5a5.5 5.5 0 1 1-5.5 5.5H4a8 8 0 1 0 8-8z"/></svg><b data-i="retry">Recomeçar</b></button>
+        <button class="nbtn sm" id="nuiQuit"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3 2 12h3v8h5v-5h4v5h5v-8h3z"/></svg><b data-i="menu">Menu</b></button>
+      </div>
+      <p class="nsub"><span data-i="shop">Loja</span> · <span class="nmoney" id="nuiShopMoney"></span></p>
+      <div class="nshop" id="nuiShop"></div>
+      <p class="nmsg" id="nuiShopMsg" role="status"></p>
+    </div>
+  </section>
+  <section id="nuiEnd" class="nfull" hidden role="dialog" aria-modal="true" aria-labelledby="nuiWhy">
+    <div class="npanel nend">
+      <h2 class="why"><span class="s" id="nuiWhyS" aria-hidden="true"></span><span class="f" id="nuiWhy"></span></h2>
+      <div class="nscore"><small data-i="score">Pontuação</small><b id="nuiScore">0</b></div>
+      <div class="nbest" id="nuiBest"></div>
+      <div class="nstats">
+        <div><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#f7b60c" d="M12 2 4 22h4l1.2-3h5.6l1.2 3h4zm0 7 1.8 6h-3.6z"/></svg><b id="nuiEDist">0</b><small data-i="distance">Distância</small></div>
+        <div><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#7ad36b" d="M12 2a8 8 0 0 0-8 8c0 3 1.6 4.6 3 5.5V19a1 1 0 0 0 1 1h1v2h2v-2h2v2h2v-2h1a1 1 0 0 0 1-1v-3.5c1.4-.9 3-2.5 3-5.5a8 8 0 0 0-8-8zm-3 7.5a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm6 0a2 2 0 1 1 0 4 2 2 0 0 1 0-4z"/></svg><b id="nuiEKills">0</b><small data-i="zombies">Zumbis</small></div>
+        <div><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#f7b60c" stroke="#2a1306" stroke-width="2"/><circle cx="12" cy="12" r="6" fill="none" stroke="#a86a00" stroke-width="2"/></svg><b id="nuiECoins">0</b><small data-i="coins">Moedas</small></div>
+      </div>
+      <div id="nuiEMiss"></div>
+      <p class="nrew" id="nuiERew"></p>
+      <button class="nbtn primary" id="nuiAgain" style="justify-content:center"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 4V1L7 5.5 12 10V6.5a5.5 5.5 0 1 1-5.5 5.5H4a8 8 0 1 0 8-8z"/></svg><b data-i="again">Jogar de novo</b></button>
+      <div class="nrow">
+        <button class="nbtn sm" id="nuiEGarage"><b data-i="garage">Garagem</b></button>
+        <button class="nbtn sm" id="nuiEMenu"><b data-i="menu">Menu</b></button>
+        <button class="nbtn sm" id="nuiShare" data-ia="share" aria-label="Compartilhar"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M18 16a3 3 0 0 0-2.2 1l-7-4a3 3 0 0 0 0-2l7-4A3 3 0 1 0 15 5a3 3 0 0 0 .1.7l-7 4a3 3 0 1 0 0 4.6l7 4A3 3 0 1 0 18 16z"/></svg></button>
+      </div>
+      <p class="nrew" id="nuiShareMsg" hidden role="status"></p>
+    </div>
+  </section>
+  <section id="nuiGar" hidden>
+    <div class="gvig" aria-hidden="true"></div>
+    <div class="gtop">
+      <button class="npause" style="position:static" id="nuiGBack" data-ia="back" aria-label="Voltar"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M15.5 3.5 7 12l8.5 8.5 2.1-2.1L11.2 12l6.4-6.4z"/></svg></button>
+      <div class="nchip"><svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#f7b60c" stroke="#2a1306" stroke-width="2"/><circle cx="12" cy="12" r="6" fill="none" stroke="#a86a00" stroke-width="2"/></svg><small data-i="money">Dinheiro</small><b id="nuiGMoney">0</b></div>
+    </div>
+    <div class="gtoast" id="nuiGToast" role="status"></div>
+    <div class="gsheet">
+      <div class="gtabs" role="tablist">
+        <button class="gtab" role="tab" data-tab="car" data-i="tcar">Carro</button>
+        <button class="gtab" role="tab" data-tab="up" data-i="tup">Melhorias</button>
+        <button class="gtab" role="tab" data-tab="gun" data-i="tgun">Arma</button>
+        <button class="gtab" role="tab" data-tab="sp" data-i="tsp">Especiais</button>
+      </div>
+      <div class="gbody" id="nuiGBody"></div>
+      <button class="nbtn primary gplay" id="nuiGPlay" style="justify-content:center"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 4.5v15l13-7.5z"/></svg><b data-i="play">Jogar</b></button>
+    </div>
+  </section>
+  <section id="nuiHelp" class="nfull" hidden role="dialog" aria-modal="true" aria-labelledby="nuiHelpT">
+    <div class="npanel">
+      <h2 id="nuiHelpT" data-i="howto">Como jogar</h2>
+      <p class="ltip" style="margin:0 auto" data-i="howtoTxt">Desvie dos carros e dos buracos, atropele zumbis e junte moedas.</p>
+      <div class="nhelp">
+        <div class="nhs"><span class="nstk" aria-hidden="true"><i></i></span><span data-i="hStick">Arraste para virar</span><kbd class="nkeys">← →</kbd></div>
+        <div class="nhd"><div class="j"><span class="nround act"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2 4.5 9.5h4.5V14h6V9.5h4.5zM5 16.5h14V19H5z"/></svg></span><span data-i="hJump">Pular por cima</span><kbd class="nkeys">S</kbd></div><div class="g"><span class="nround act"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" d="M12 4.5a7.5 7.5 0 1 0 0 15 7.5 7.5 0 0 0 0-15zM12 1v6M12 17v6M1 12h6M17 12h6"/></svg></span><span data-i="hGun">Atirar</span><kbd class="nkeys">A</kbd></div></div>
+      </div>
+      <button class="nbtn primary" id="nuiHelpOk" style="justify-content:center"><b data-i="ok">OK</b></button>
+    </div>
+  </section>
+</div>
+
+<div class="plate" id="info">
+  <h1 id="title">RoadRage · Cidade</h1>
+  <p>Setas: desviar · Espaço: pular · F: atirar</p>
+  <span class="lcd" id="stats">--</span>
+</div>
+<div class="plate" id="dist"><span class="lcd" id="meters">00000</span> M</div>
+<div class="plate" id="coinbox"><span class="lcd" id="coins">0</span><span class="coin" aria-hidden="true">1</span></div>
+<div class="plate" id="lifebox"><span class="lcd"><span class="lbl">LIFE</span> <span id="lifeOn" class="on">IIIIIIIIIIIIIIIIII</span><span id="lifeOff" class="off"></span></span></div>
+<button class="round" id="bJumpR" aria-label="Pular"><span class="cnt lcd" id="nJump">2</span>⤒</button>
+<button class="round" id="bGunR" aria-label="Atirar"><span class="cnt lcd" id="nGun">3</span>◎</button>
+<img id="popup" alt="">
+<div id="hit"></div>
+<div id="gameover" hidden>
+  <div class="goPanel">
+    <div class="goWhy" id="goWhy"></div>
+    <dl>
+      <dt>Your Score</dt><dd class="lcd" id="goScore">0</dd>
+      <dt>High Score</dt><dd class="lcd" id="goHigh">0</dd>
+      <dt>Distance</dt><dd class="lcd" id="goDist">0 m</dd>
+      <dt>Zombies Killed</dt><dd class="lcd" id="goKills">0</dd>
+      <dt>Collected Coins</dt><dd class="lcd" id="goCoins">0</dd>
+      <dt>Money</dt><dd class="lcd" id="goMoney">0</dd>
+    </dl>
+    <ul class="goMiss" id="goMiss"></ul>
+    <div class="goBtns"><button id="bGoMenu">Menu</button><button id="bGoGarage">Garage</button><button id="bAgain">Play</button></div>
+  </div>
+</div>
+<div class="plate" id="controls">
+  <button id="bPause" aria-label="Pausar">❚❚ Pause</button>
+  <button id="bSound" aria-pressed="true">Som</button>
+</div>
+<div id="toast" hidden><span>Mission completed!</span><b></b></div>
+<div id="menu" hidden>
+  <div class="mpanel">
+    <section id="m-main" class="mbig">
+      <h2 class="logo">The Last Driver<small>zombie road rage</small></h2>
+      <div class="mrow"><span><span class="ulbl">Rank</span> <b id="mRank" style="font-size:22px;text-transform:uppercase"></b></span><span id="mStars"></span></div>
+      <div class="mrow"><span class="ulbl">Money</span><span class="lcd">$ <span id="mMoney">0</span></span></div>
+      <div class="mrow"><span class="ulbl">High score</span><span class="lcd" id="mHigh">0</span></div>
+      <button class="go" id="bPlay">Play</button>
+      <button id="bGarage">Garage</button>
+      <button id="bMissions">Missions</button>
+      <button id="bTests">Testes</button>
+    </section>
+    <section id="m-garage" class="mbig" hidden>
+      <h2 class="mh">Garage <span class="lcd" style="float:right;font-size:22px">$ <span id="gMoney"></span></span></h2>
+      <div class="sel"><button id="gCarPrev" aria-label="Carro anterior">◀</button><div class="nm"><span id="gCarName"></span><small id="gCarIdx"></small></div><button id="gCarNext" aria-label="Próximo carro">▶</button></div>
+      <div class="buyrow"><button id="gCarBuy"></button></div><div class="owned" id="gCarOk">selected</div>
+      <div id="gUp" style="display:grid;gap:8px"></div>
+      <p class="mnote" id="gNote"></p>
+      <div class="sel"><button id="gWPrev" aria-label="Arma anterior">◀</button><div class="nm"><span id="gWName"></span><small id="gWIdx"></small></div><button id="gWNext" aria-label="Próxima arma">▶</button></div>
+      <div class="buyrow"><button id="gWBuy"></button></div><div class="owned" id="gWOk">equipped</div>
+      <label class="paint" for="paint" style="justify-content:center">Paint <input type="color" id="paint" value="#c4161c"></label>
+      <button class="go" id="gPlay">Play</button>
+      <button id="gBack">Back</button>
+    </section>
+    <section id="m-missions" class="mbig" hidden>
+      <h2 class="mh">Missions</h2>
+      <ul class="mlist" id="mList"></ul>
+      <p style="margin:0;color:var(--muted);font-weight:600">Complete all three to rank up and earn <b style="color:#ffd13a">$<span id="mReward"></span></b>.</p>
+      <button class="go" id="mPlay">Play</button>
+      <button id="mBack">Back</button>
+    </section>
+    <section id="m-tests" class="mbig" hidden>
+      <h2 class="mh">Testes</h2>
+      <p style="margin:0;color:var(--muted);font-weight:600">Atalhos para testar partes do jogo.</p>
+      <div class="tests">
+        <button id="bScen">Cenário: Cidade</button>
+        <button id="bHead" aria-pressed="false">Big Head</button>
+        <button id="bZomb">+ Zumbis</button>
+        <button id="bBoss">+ Monstro</button>
+        <button id="bOrbit" aria-pressed="false">Orbitar</button>
+        <button id="bDrive" aria-pressed="true">Dirigir</button>
+        <button id="bNew">Nova rua</button>
+        <button id="bMoney">+ $ 50.000</button>
+        <button id="bReset">Zerar save</button>
+      </div>
+      <button class="go" id="tPlay">Play</button>
+      <button id="tBack">Back</button>
+    </section>
+  </div>
+</div>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+<script type="module" src="game.js?v=7e021903"></script>
+
+</body></html>

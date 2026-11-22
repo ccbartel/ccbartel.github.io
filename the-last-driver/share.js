@@ -1,0 +1,37 @@
+// Compartilhar: celular abre a janela nativa (WhatsApp, TikTok...); computador copia o link.
+// The Last Driver: o jogo (iframe play.html) grava window.CL_LAST = {mode:"play", score, dist} nesta pagina e chama window.CL_share().
+(function () {
+  var I = window.CL_I18N || {t: function (k, f) { return k; }, lang: "en"};
+  var URL_ = "https://bartelgames.com.br/the-last-driver/";
+  var LPx = (location.pathname.match(/^\/(pt|es)\//) || [""])[0]; if (LPx) URL_ = URL_.replace(".com.br/", ".com.br" + LPx); /* versao /pt/ /es/ compartilha o link no idioma */
+  function toast(msg) {
+    var d = document.getElementById("toast");
+    if (!d) { d = document.createElement("div"); d.id = "toast"; d.setAttribute("role", "status"); document.body.appendChild(d); }
+    d.textContent = msg; d.classList.add("on");
+    clearTimeout(d._t); d._t = setTimeout(function () { d.classList.remove("on"); }, 1800);
+  }
+  function share() {
+    var L = window.CL_LAST;
+    var text = I.t("shTxt0");
+    if (L && L.mode === "daily") text = L.done ? (L.tries === 1 ? I.t("shMis1", {n: String(L.daily)}) : I.t("shMis", {n: String(L.daily), t: String(L.tries)})) : I.t("shMisTry", {n: String(L.daily), s: String(L.score), g: String(L.goal)});
+    else if (L && L.mode === "duel" && L.score > 0) text = I.t(L.score > L.vs ? "shDuelW" : "shDuelL", {n: L.nick || I.t("friend"), s: String(L.score), v: String(L.vs)});
+    else if (L && L.mode === "cones" && L.link) text = I.t("shPlayC", String(L.score));
+    else if (L && L.mode === "cones") text = I.t("shCones", String(L.score));
+    else if (L) text = I.t("shTxt", String(L.score));
+    var url = (L && L.link) || URL_; // desafio de amigo no Cones: link com a semente da partida (gerado pelo jogo), como no Candy Line
+    var data = {title: I.t("title"), text: text, url: url};
+    // so no celular (toque): no PC a janela de compartilhar do Windows manda para o WhatsApp SEM a foto de previa; la copia o link e a pessoa cola (2026-11-19)
+    var SC = window.BG_card && L && (L.score > 0 || L.win || L.done) ? window.BG_card(L.score > 0 ? Number(L.score).toLocaleString(document.documentElement.lang || "en") : (L.win ? "🏆" : "✓"), text) : null; /* cartao com a pontuacao (scorecard.js, 2026-11-21): no celular vai a imagem junto */
+    if (SC && navigator.canShare && window.matchMedia && matchMedia("(pointer:coarse)").matches) { var d2 = {title: data.title, text: text + " " + url, files: [SC]}; if (navigator.canShare(d2)) { navigator.share(d2).catch(function () {}); return; } }
+    if (navigator.share && window.matchMedia && matchMedia("(pointer:coarse)").matches) { navigator.share(data).catch(function () {}); return; }
+    var all = text + " " + url;
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(all).then(function () { toast(I.t("copied")); }, function () { prompt("", all); });
+    else prompt("", all);
+  }
+  window.CL_share = share;
+  function bind() {
+    var b = document.querySelectorAll("[data-share]");
+    for (var i = 0; i < b.length; i++) b[i].addEventListener("click", function (e) { e.preventDefault(); share(); });
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", bind); else bind();
+})();

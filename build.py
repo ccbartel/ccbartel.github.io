@@ -18,7 +18,7 @@ import hashlib, json, os, re, shutil, subprocess, sys, pathlib
 
 ROOT = pathlib.Path(__file__).resolve().parent
 CONFIG = ROOT / "site-config.js"
-GAMES = ["geo-quiz", "candy-line", "burnout-city", "bumpets"]  # slug = pasta do jogo; fonte em src/<slug>/game.src.js
+GAMES = ["geo-quiz", "candy-line", "burnout-city", "bumpets", "the-last-driver"]  # slug = pasta do jogo; fonte em src/<slug>/game.src.js
 # jogo com src/<slug>/prebuild.py: o build roda esse script antes (ex.: Bumpets junta os modulos do cliente e copia os assets)
 STATE = ROOT / ".build_state.json"
 TMP = ROOT / "_build_tmp"
@@ -146,6 +146,8 @@ def main():
         # versao no <script src="game.js?v=..."> = hash do FONTE: o navegador baixa o jogo novo logo apos publicar
         # (o GitHub Pages guarda game.js por 10 min; sem isso ele ouvia/via a versao velha). Fonte igual = mesmo ?v.
         page = ROOT / slug / "index.html"
+        if (ROOT / slug / "play.html").exists():  # jogo dentro de <iframe> (The Last Driver, 2026-11-22): o game.js fica no play.html
+            page = ROOT / slug / "play.html"
         ver = hashlib.sha1(SRC.read_bytes()).hexdigest()[:8]
         ht = page.read_text(encoding="utf8")
         ht2, nv = re.subn(r'src="game\.js(\?v=[0-9a-f]+)?"', 'src="game.js?v=%s"' % ver, ht)
