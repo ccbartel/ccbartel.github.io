@@ -364,6 +364,19 @@ body:not(.setas) #nuiJump { right: 12px; bottom: 139px; }
 .npop .w { display: grid; place-items: center; font: 700 clamp(24px, 8vw, 42px)/1 var(--nf); text-transform: uppercase; letter-spacing: .03em; }
 .npop .w > span { grid-area: 1 / 1; } .npop .s { color: #2a1306; -webkit-text-stroke: 7px #2a1306; filter: drop-shadow(0 4px 0 #000c); }
 .npop .f { position: relative; background: linear-gradient(180deg, #fff0a0 8%, #ffc93a 52%, #f08c00 94%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+/* 2026-11-22 (celular: "mensagem de missao concluida ocupa quase toda a visao da pista"): em pe, lista de missoes e avisos viram pilulas compactas */
+@media (max-aspect-ratio: 1/1) {
+  .nnotes { width: auto; max-width: 80vw; gap: 5px; }
+  #nui .nstrip { width: auto; padding: 5px 11px 6px; border-radius: 12px; border-width: 2px; box-shadow: 0 3px 0 #000a; background: #1d1714c8; }
+  #nui .nstrip h3 { font-size: 13px; margin-bottom: 3px; }
+  #nui .nstrip ul { gap: 3px; }
+  #nui .nstrip li { font-size: 13px; gap: 6px; }
+  #nui .nstrip li i { width: 16px; height: 16px; border-width: 2px; font-size: 10px; }
+  #nui .ntoast { padding: 5px 12px 6px; border-radius: 12px; border-width: 2px; box-shadow: 0 0 0 2px #2a1306, 0 3px 0 2px #000a; max-width: 80vw; }
+  #nui .ntoast b { font-size: 15px; text-shadow: 0 2px 0 #000; }
+  #nui .ntoast span { font-size: 13px; }
+  #nui .ntoast.nday .r { font-size: 20px; } #nui .ntoast.nday .r .ncoin svg { width: 18px; height: 18px; } #nui .ntoast.nday .st svg { width: 14px; height: 14px; }
+}
 @media (min-aspect-ratio: 1/1) { .nnotes { left: max(12px, env(safe-area-inset-left, 0px)); transform: none; align-items: flex-start; width: min(40vw, 420px); top: calc(var(--top) + 106px); } #nui .nnotes .nstrip { width: 100%; } }
 #nuiGar .gvig { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 62% 30% at var(--gx, 50%) var(--gy, 30%), #0000 55%, #000a 100%); }
 @media (min-width: 900px) { #nuiGar .gvig { background: radial-gradient(ellipse 34% 42% at var(--gx, 30%) var(--gy, 50%), #0000 55%, #000a 100%); } }
@@ -466,8 +479,19 @@ body.nui-tests #menu { display: block !important; position: fixed; inset: 0; z-i
   #nuiGar .gsel .nm { font-size: clamp(18px, 5.6vw, 24px); } #nuiGar .gsel .nm small { font-size: 13px; }
   #nuiGar .garr { width: 40px; height: 40px; border-width: 3px; } #nuiGar .garr svg { width: 20px; height: 20px; }
   #nuiGar .gsw { gap: 8px; padding: 4px 2px 6px; } #nuiGar .gsw button { width: 34px; height: 34px; border-width: 3px; }
+  /* 2a passada (2026-11-22, "na garagem ta terrivel"): cores numa linha so, estado do carro em pilula pequena, topo mais baixo e menor */
+  #nuiGar .gsw { flex-wrap: nowrap; gap: clamp(4px, 1.6vw, 8px); padding: 2px 0 4px; } #nuiGar .gsw button { flex: none; width: clamp(24px, 8vw, 32px); height: clamp(24px, 8vw, 32px); border-width: 2px; box-shadow: 0 2px 0 #000a; }
+  #nuiGar .gsw button[aria-pressed="true"] { outline-width: 3px; outline-offset: 1px; }
+  #nuiGar .gstate .nbuy { height: 30px; min-width: 0; padding: 0 12px; font-size: 15px !important; box-shadow: 0 2px 0 #000a; }
+  #nuiGar .gsel { gap: 6px; } #nuiGar .gsel .nm { line-height: 1; } #nuiGar .gsel .nm small { margin-top: 2px; }
+  #nuiGar .garr { width: 34px; height: 34px; } #nuiGar .garr svg { width: 18px; height: 18px; }
+  #nuiGar .gtop { height: 40px; left: 10px; right: 10px; }
+  #nuiGar .gtop .npause { width: 40px; height: 40px; border-width: 3px; } #nuiGar .gtop .npause svg { width: 18px; height: 18px; }
+  #nuiGar .gtop .nchip { height: 34px; border-width: 3px; box-shadow: 0 3px 0 #000a; } #nuiGar .gtop .nchip b { font-size: 18px; } #nuiGar .gtop .nchip small { font-size: 11px; } #nuiGar .gtop .nchip svg { width: 18px; height: 18px; }
   #nuiGar .gplay { height: clamp(44px, 7vh, 54px); border-radius: 15px; box-shadow: 0 0 0 3px #2a1306, 0 6px 0 3px #000a; } #nuiGar .gplay b { font-size: clamp(20px, 3.6vh, 28px); } #nuiGar .gplay svg { width: 26px; height: 26px; }
 }
+html.emb #nui { --top: calc(8px + env(safe-area-inset-top, 0px)); }   /* no site (iframe): sem a faixa de 56 px no topo */
+@media (max-aspect-ratio: 1/1) { html.emb #nuiHud { --top: calc(8px * var(--k, 1) + env(safe-area-inset-top, 0px)); } }
 /* 2026-11-22: HUD e controles escalam pelo palco (iframe do site ~250x440 a 375x812). --k = clamp(.72, min(L/375, A/740), 1) por JS (nuiScale);
    --kb = fator dos botoes de acao (nunca menores que 56 px). So em pe: o deitado (PC) fica como aprovado. Em 375x812 ou maior, k = 1 (igual ao aprovado). */
 @media (max-aspect-ratio: 1/1) {
@@ -715,6 +739,6 @@ body.nui-tests #menu { display: block !important; position: fixed; inset: 0; z-i
   "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
 } }
 </script>
-<script type="module" src="game.js?v=8ce633b3"></script>
+<script type="module" src="game.js?v=859b9e9e"></script>
 
 </body></html>
