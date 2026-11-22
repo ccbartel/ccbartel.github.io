@@ -214,7 +214,7 @@
     event: event,
     game: function (g) { if (g) EV.game = g; return EV.game; },
     // fim de partida: o jogo manda pontuacao e motivo; a duracao e medida aqui (desde o play)
-    end: function (game, mode, score, reason) { EV.ended = true; return event(game, "end", {mode: mode, score: score, reason: reason, secs: EV.t0 ? (performance.now() - EV.t0) / 1000 : null}); },
+    end: function (game, mode, score, reason) { try { window.dispatchEvent(new CustomEvent("bg-end", {detail: {game: game, mode: mode, score: score, reason: reason}})); } catch (e) {} EV.ended = true; return event(game, "end", {mode: mode, score: score, reason: reason, secs: EV.t0 ? (performance.now() - EV.t0) / 1000 : null}); },
     device: device, compact: compact, auth: auth,
     // mural da comunidade (2026-11-21, community.js): RPC com a identidade (apelido do aparelho ou conta Google). Em localhost nada vai ao banco.
     wallRecent: function (n) { return LOCAL ? Promise.resolve(fakeWall("post_recent", {p_limit: n})) : rpc("post_recent", {p_limit: n || 6}); }, // vitrine da home (sem identidade)
@@ -230,7 +230,7 @@
     name: function () { var u = user(); return u ? u.name || "" : ""; },
     stats: function (games) { return rpc("get_stats", {p_games: games, p_device: device()}); },
     play: function (game, mode) {
-      try { window.dispatchEvent(new Event("bg-play")); } catch (e) {}
+      try { window.dispatchEvent(new CustomEvent("bg-play", {detail: {game: game, mode: mode}})); } catch (e) {}
       // sequencia de dias e "continue jogando" da home (2026-11-21): so no aparelho (localStorage bg_days / bg_recent), nada vai ao servidor
       try { var dd = new Date().toLocaleDateString("sv"), pg = (location.pathname.replace(/^\/(pt|es)\//, "/").split("/")[1] || "");
         if (pg) { var RC = JSON.parse(localStorage.getItem("bg_recent") || "[]").filter(function (x) { return x.p !== pg; }); RC.unshift({p: pg, d: dd}); localStorage.setItem("bg_recent", JSON.stringify(RC.slice(0, 6))); }

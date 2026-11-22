@@ -1,8 +1,9 @@
 {
+  "id": "/",
   "name": "Bartel Games",
   "short_name": "Bartel Games",
   "description": "Free quick games you play right in your browser.",
-  "start_url": "/",
+  "start_url": "/?pwa=1",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
@@ -10,6 +11,14 @@
   "theme_color": "#02050f",
   "icons": [
     {"src": "/assets/app-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
-    {"src": "/assets/app-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"}
+    {"src": "/assets/app-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "/assets/app-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable"},
+    {"src": "/assets/app-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ],
+  "shortcuts": [
+    {"name": "Bumpets Arena", "url": "/bumpets/?pwa=1", "icons": [{"src": "/bumpets/assets/icon.png", "sizes": "256x256", "type": "image/png"}]},
+    {"name": "Geo Quiz", "url": "/geo-quiz/?pwa=1", "icons": [{"src": "/geo-quiz/assets/icon.png", "sizes": "192x192", "type": "image/png"}]},
+    {"name": "Candy Line", "url": "/candy-line/?pwa=1", "icons": [{"src": "/candy-line/assets/icon.png", "sizes": "192x192", "type": "image/png"}]},
+    {"name": "Burnout City", "url": "/burnout-city/?pwa=1", "icons": [{"src": "/burnout-city/assets/icon.png", "sizes": "192x192", "type": "image/png"}]}
   ]
 }

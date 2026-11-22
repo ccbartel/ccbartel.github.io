@@ -176,7 +176,7 @@ def main():
 
     # 2b. scripts comuns do site com ?v = hash do arquivo (2026-11-21: social.js sem versao ficou 10 min no cache do Pages
     #     e o mural novo chamou a versao velha). Vale para toda pagina em HTML_FILES.
-    for common in ("social.js", "community.js", "scorecard.js"):
+    for common in ("social.js", "community.js", "scorecard.js", "install.js", "achievements.js"):
         cver = hashlib.sha1((ROOT / common).read_bytes()).hexdigest()[:8]
         for hf in HTML_FILES:
             hp = ROOT / hf
