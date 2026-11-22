@@ -78,19 +78,19 @@ body{font-family:var(--font);-webkit-tap-highlight-color:transparent;touch-actio
 .mbtn b{font:800 44px/1.1 var(--font);white-space:nowrap}
 .mbtn small{font:700 24px/1.2 system-ui,-apple-system,"Segoe UI",sans-serif;opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mbtn.done{opacity:.65;cursor:default}
-.mbtn:focus-visible{outline:5px solid #ffd84d;outline-offset:6px}
+.mbtn:focus-visible{outline:none;filter:brightness(1.08)}
 
 #count.mis{font-size:54px;--so:12px;--sw:5px}
 #sub.win{font-size:58px;line-height:1.05;color:#ffe27a;-webkit-text-stroke:10px var(--ink2)}
 #m-rank,#r-rank{width:76px;height:76px;border-radius:50%;cursor:pointer;pointer-events:auto;display:flex;align-items:center;justify-content:center;font-size:40px;line-height:1;padding:0;
   background:linear-gradient(180deg,#ffe27a,#f7b60c);border:4px solid #fff;box-shadow:0 6px 0 #2a0b3daa;transform:translate(-50%,-50%) scale(0)}
-#m-rank:focus-visible,#r-rank:focus-visible{outline:5px solid #ffd84d;outline-offset:4px}
+#m-rank:focus-visible,#r-rank:focus-visible{outline:none;filter:brightness(1.08)}
 #r-rank{background:#3a0f4ae6} /* trofeu dourado sumia no botao dourado (2026-11-16): fundo escuro igual ao Desafiar */
 .pbtn{height:96px;padding:0 40px;border-radius:50px;cursor:pointer;pointer-events:auto;white-space:nowrap;display:flex;align-items:center;justify-content:center;gap:14px;
   font:800 44px/1 var(--font);color:var(--ink2);background:linear-gradient(180deg,#ffe27a 0%,#f7b60c 100%);border:0;
   box-shadow:0 0 0 5px #fff,0 7px 0 5px #2a0b3daa;transform:translate(-50%,-50%) scale(0);touch-action:manipulation}
 .pbtn.sec{color:#fff;background:#3a0f4ae6;box-shadow:0 0 0 4px #fff,0 7px 0 4px #2a0b3daa;height:82px;font-size:36px;padding:0 32px}
-.pbtn:focus-visible{outline:5px solid #ffd84d;outline-offset:12px}
+.pbtn:focus-visible{outline:none;filter:brightness(1.08)}
 .pbtn .ic{font-size:50px;margin-top:-4px}
 #rbtns{position:absolute;left:0;top:0;width:720px;height:1280px}
 #flash{position:absolute;left:-90px;top:-110px;width:900px;height:1500px;background:#fff;opacity:0;pointer-events:none}
@@ -102,7 +102,7 @@ body{font-family:var(--font);-webkit-tap-highlight-color:transparent;touch-actio
 #mcard .mc-seq{flex:none;display:flex;align-items:center;padding:6px 10px;border-radius:40px;background:linear-gradient(90deg,#ff4096,#ff4096);box-shadow:0 0 0 4px #96145f}
 #mcard .mc-seq img{width:52px;height:52px;margin:0 -2px}
 #mcard .mc-go{margin-top:10px;height:96px;padding:0 54px;border:0;border-radius:50px;cursor:pointer;font:800 46px/1 var(--font);color:#3a0f4a;background:linear-gradient(180deg,#ffe27a 0%,#f7b60c 100%);box-shadow:0 0 0 5px #fff,0 7px 0 5px #2a0b3daa;touch-action:manipulation}
-#mcard .mc-go:focus-visible,#mcard .mc-back:focus-visible{outline:5px solid #ffd84d;outline-offset:12px}
+#mcard .mc-go:focus-visible,#mcard .mc-back:focus-visible{outline:none;filter:brightness(1.08)}
 #mcard .mc-back{border:0;background:none;cursor:pointer;font:800 32px/1 var(--font);color:#3a0f4a;opacity:.7;padding:8px 18px;text-decoration:underline}
 .hide{display:none!important}
 #loader{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;background:var(--bg0);z-index:5;transition:opacity .35s}
@@ -165,7 +165,7 @@ body{font-family:var(--font);-webkit-tap-highlight-color:transparent;touch-actio
 #menu .ibtn{position:relative;width:auto;height:86px;min-width:230px;padding:0 30px;border-radius:44px;cursor:pointer;pointer-events:auto;display:flex;align-items:center;justify-content:center;gap:12px;
   font:800 36px/1 var(--font);color:#fff;background:#3a0f4ad9;border:4px solid #ffffffd9;box-shadow:0 7px 0 #2a0b3daa;transform:none;white-space:nowrap;touch-action:manipulation}
 #menu .ibtn span[aria-hidden]{font-size:40px}
-#menu .ibtn:focus-visible{outline:5px solid #ffd84d;outline-offset:6px}
+#menu .ibtn:focus-visible{outline:none;filter:brightness(1.08)}
 #m-album.dot::after{content:"";position:absolute;right:-6px;top:-6px;width:26px;height:26px;border-radius:50%;background:#ff2d55;box-shadow:0 0 0 4px #fff}
 #topbar .topsnd .so{display:none}#topbar .topsnd.on .so{display:block}#topbar .topsnd.on .sf{display:none}
 #topbar .topsnd.on{border-color:var(--gold)}
@@ -175,7 +175,7 @@ body{font-family:var(--font);-webkit-tap-highlight-color:transparent;touch-actio
 #ccard #cc-sub{font:700 30px/1.25 system-ui,-apple-system,"Segoe UI",sans-serif;color:#3a0f4a}
 #ccard .mc-go,#album .mc-go{margin-top:10px;height:96px;padding:0 54px;border:0;border-radius:50px;cursor:pointer;font:800 46px/1 var(--font);color:#3a0f4a;background:linear-gradient(180deg,#ffe27a 0%,#f7b60c 100%);box-shadow:0 0 0 5px #fff,0 7px 0 5px #2a0b3daa;touch-action:manipulation}
 #ccard .mc-back{border:0;background:none;cursor:pointer;font:800 32px/1 var(--font);color:#3a0f4a;opacity:.7;padding:8px 18px;text-decoration:underline}
-#ccard .mc-go:focus-visible,#ccard .mc-back:focus-visible,#album .mc-go:focus-visible{outline:5px solid #ffd84d;outline-offset:12px}
+#ccard .mc-go:focus-visible,#ccard .mc-back:focus-visible,#album .mc-go:focus-visible{outline:none;filter:brightness(1.08)}
 #album{width:660px;height:1150px;padding:30px 24px 34px;border-radius:40px;background:#fff5fb;box-shadow:0 0 0 6px #3a0f4a,0 16px 0 6px #2a0b3daa;display:flex;flex-direction:column;align-items:center;gap:16px;pointer-events:auto;transform:translate(-50%,-50%) scale(0)}
 #album .al-h{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 10px}
 #album #al-t{font:800 50px/1.05 var(--font);color:#3a0f4a}
@@ -208,7 +208,7 @@ body{font-family:var(--font);-webkit-tap-highlight-color:transparent;touch-actio
 .mpc .mpb b{font:800 40px/1.05 var(--font)}.mpc .mpb small{font:700 23px/1.2 system-ui,-apple-system,"Segoe UI",sans-serif;opacity:.85}
 .mpc .mpb.pri{color:#3a0f4a;background:linear-gradient(180deg,#ffe27a 0%,#f7b60c 100%);box-shadow:0 0 0 5px #fff,0 7px 0 5px #2a0b3daa;margin:8px 10px}
 .mpc .mpb:disabled{opacity:.45;cursor:default}
-.mpc .mpb:focus-visible,.mpc .mpx:focus-visible,.mpc .mpst:focus-visible,.mpc .mpchip:focus-visible{outline:5px solid #ffd84d;outline-offset:6px}
+.mpc .mpb:focus-visible,.mpc .mpx:focus-visible,.mpc .mpst:focus-visible,.mpc .mpchip:focus-visible{outline:none;filter:brightness(1.08)}
 .mpc .mpx{border:0;background:none;cursor:pointer;font:800 32px/1 var(--font);color:#3a0f4a;opacity:.75;min-height:88px;padding:12px 24px;text-decoration:underline;align-self:center}
 .mpc .mpyou{display:flex;align-items:center;justify-content:center;gap:12px;font:800 32px/1.1 var(--font);color:#c2187a}
 .mpc .mpav,#mpbar .mpav{flex:none;width:54px;height:54px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:#ff4096;color:#fff;font:800 32px/1 var(--font);box-shadow:0 0 0 4px #fff,0 0 0 7px #3a0f4a}
