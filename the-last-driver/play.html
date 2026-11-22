@@ -452,6 +452,22 @@ body.nui-tests #menu { display: block !important; position: fixed; inset: 0; z-i
 #nuiGar .gtop .nchip svg { width: clamp(18px, 4.2vh, 26px); height: clamp(18px, 4.2vh, 26px); }
 @media (max-width: 300px) { #nuiGar .gtop .nchip small { display: none; } }
 #nuiGar .gtab { font-size: clamp(11px, 4.2vw, 17px) !important; padding: 0 2px; height: clamp(36px, 7vh, 48px); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* 2026-11-22 (celular do Cristiano: "botoes grandoes ocupam muito da tela"): garagem em pe mais compacta, a cena do carro ganha espaco */
+@media (max-aspect-ratio: 1/1) {
+  #nuiGar .gsheet { max-height: 46%; gap: 7px; padding: 9px 10px calc(9px + env(safe-area-inset-bottom, 0px)); border-radius: 18px 18px 0 0; border-top-width: 3px; }
+  #nuiGar .gtabs { gap: 4px; }
+  #nuiGar .gtab { height: clamp(30px, 5vh, 38px); font-size: clamp(11px, 3.6vw, 15px) !important; letter-spacing: 0; border-width: 2px; border-radius: 11px; }
+  #nuiGar .gbody { gap: 6px; }
+  #nuiGar .nitem { min-height: 44px; padding: 4px 6px 4px 10px; border-radius: 12px; }
+  #nuiGar .nitem .tx { font-size: clamp(14px, 4.4vw, 17px); } #nuiGar .nitem .tx small { font-size: 13px; }
+  #nuiGar .nitem .ic { width: 32px; height: 32px; } #nuiGar .nitem .ic svg { width: 18px; height: 18px; }
+  #nuiGar .gbar i { height: 6px; }
+  #nuiGar .nbuy { min-width: 80px; height: 36px; padding: 0 9px; border-width: 3px; border-radius: 11px; box-shadow: 0 3px 0 #000a; font-size: clamp(15px, 4.4vw, 18px) !important; } #nuiGar .nbuy svg { width: 16px; height: 16px; }
+  #nuiGar .gsel .nm { font-size: clamp(18px, 5.6vw, 24px); } #nuiGar .gsel .nm small { font-size: 13px; }
+  #nuiGar .garr { width: 40px; height: 40px; border-width: 3px; } #nuiGar .garr svg { width: 20px; height: 20px; }
+  #nuiGar .gsw { gap: 8px; padding: 4px 2px 6px; } #nuiGar .gsw button { width: 34px; height: 34px; border-width: 3px; }
+  #nuiGar .gplay { height: clamp(44px, 7vh, 54px); border-radius: 15px; box-shadow: 0 0 0 3px #2a1306, 0 6px 0 3px #000a; } #nuiGar .gplay b { font-size: clamp(20px, 3.6vh, 28px); } #nuiGar .gplay svg { width: 26px; height: 26px; }
+}
 /* 2026-11-22: HUD e controles escalam pelo palco (iframe do site ~250x440 a 375x812). --k = clamp(.72, min(L/375, A/740), 1) por JS (nuiScale);
    --kb = fator dos botoes de acao (nunca menores que 56 px). So em pe: o deitado (PC) fica como aprovado. Em 375x812 ou maior, k = 1 (igual ao aprovado). */
 @media (max-aspect-ratio: 1/1) {
@@ -699,6 +715,6 @@ body.nui-tests #menu { display: block !important; position: fixed; inset: 0; z-i
   "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
 } }
 </script>
-<script type="module" src="game.js?v=89edc557"></script>
+<script type="module" src="game.js?v=f4cf7fe0"></script>
 
 </body></html>
