@@ -111,7 +111,7 @@
   function apply() {
     var t = document.documentElement.getAttribute("data-title-key"); if (t) document.title = I.t(t);
     var j, e;
-    e = document.querySelectorAll("[data-i18n]"); for (j = 0; j < e.length; j++) e[j].textContent = I.t(e[j].getAttribute("data-i18n"));
+    e = document.querySelectorAll("[data-i18n]"); for (j = 0; j < e.length; j++) { var k = e[j].getAttribute("data-i18n"), v = I.t(k); if (v !== k) e[j].textContent = v; } /* chave faltando (arquivo velho no cache): mantem o texto da pagina */
     e = document.querySelectorAll("[data-i18n-html]"); for (j = 0; j < e.length; j++) e[j].innerHTML = I.t(e[j].getAttribute("data-i18n-html"));
     e = document.querySelectorAll("[data-i18n-alt]"); for (j = 0; j < e.length; j++) e[j].alt = I.t(e[j].getAttribute("data-i18n-alt"));
     e = document.querySelectorAll("[data-i18n-label]"); for (j = 0; j < e.length; j++) e[j].setAttribute("aria-label", I.t(e[j].getAttribute("data-i18n-label")));
