@@ -177,6 +177,16 @@ canvas{display:block;width:100%;height:100%}
 .psp.out{opacity:0;transform:rotate(var(--r)) translateY(26px) scale(1.05)}
 @keyframes pspIn{from{transform:rotate(var(--r)) scale(0)}to{transform:rotate(var(--r)) scale(1)}}
 .pbar.big{height:30px;border-radius:15px;box-shadow:0 0 0 3px #0b1330}.pbar.big i{display:flex;align-items:center;justify-content:center;background-image:linear-gradient(#ffffff70,#fff0 45%,#0000 70%,#0000002a)}
+#prv .sbx{display:flex;align-items:center;gap:30px;margin-top:22px}#prv .sbx i{font:900 34px/1 var(--font);color:#fff;text-shadow:0 3px 0 #0b1330;font-style:normal}
+#prv .sbx b,.sbx.mini b{display:inline-flex;align-items:center;justify-content:center;min-width:96px;height:96px;padding:0 12px;border-radius:24px;background:var(--c);background-image:linear-gradient(#ffffff55,#fff0 45%,#0000 70%,#0002);box-shadow:0 0 0 4px #0b1330,0 7px 0 4px #0b1330;font:900 60px/1 var(--font);color:#fff;text-shadow:0 4px 0 #0b133088;position:relative;transition:transform .35s cubic-bezier(.2,1.8,.4,1),opacity .35s}
+#prv .sbx b.tk{animation:pnTk .14s}#prv .sbx b.w{transform:scale(1.16);animation:none}#prv .sbx b.l{transform:scale(.82);opacity:.6;animation:none}
+#prv .sbx b.w::before{content:'👑';position:absolute;left:50%;top:-28px;transform:translateX(-50%) rotate(-8deg);font-size:30px;text-shadow:none;animation:ptPop .5s cubic-bezier(.2,1.8,.4,1)}
+#prv .sbl,.sbl.mini{display:flex;justify-content:space-between;width:min(64%,250px);font:800 15px/1 var(--font);color:#fff;text-shadow:0 2px 0 #0b1330}
+.sbx.mini{display:flex;align-items:center;justify-content:center;gap:10px;margin:8px 0 4px}.sbx.mini i{font:900 22px/1 var(--font);color:#fff;font-style:normal}
+.sbx.mini b{min-width:62px;height:58px;border-radius:16px;font-size:36px;box-shadow:0 0 0 3px #0b1330,0 5px 0 3px #0b1330}.sbl.mini{margin:6px auto 8px;width:200px;font-size:13px}
+.cft{position:absolute;top:-16px;width:9px;height:14px;border-radius:2px;z-index:41;pointer-events:none;animation:cftFall 2s linear both}
+@keyframes cftFall{from{transform:translate(0,0) rotate(0)}to{transform:translate(var(--dx),110cqh) rotate(var(--rx));opacity:.9}}
+#rOpt{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:6px 0 4px}#rOpt .ropt{flex:1 1 30%;min-width:96px;margin:0;padding:9px 6px;font-size:15px}#rOpt .ropt:disabled{opacity:.75;cursor:default}
 .pbar.big i span{font:900 17px/1 var(--font);color:#fff;text-shadow:0 2px 0 #0b1330;white-space:nowrap}.socsb b.zp{animation:zpp .9s cubic-bezier(.2,1.7,.35,1)}@keyframes zpp{0%{transform:scale(1)}25%{transform:scale(1.45)}100%{transform:scale(1)}}#msg.zsc{color:var(--gc,#ffd84d);animation:golpop .9s cubic-bezier(.2,1.7,.35,1) both}.socsb span.zc{color:#ffd21a;animation:zcp .5s infinite alternate}@keyframes zcp{to{transform:scale(1.12)}}.socsb span{padding:6px 12px;border-radius:12px;background:#0d1430d0;font:700 22px/1 var(--font);color:#fff;-webkit-text-stroke:0}.socsb span.gold{color:#ffd84d;font-size:18px}
 #msg.goal{font-size:clamp(64px,13cqh,110px);color:var(--gc,#ffd84d);-webkit-text-stroke:9px #0d1430;animation:golpop .9s cubic-bezier(.2,1.7,.35,1) both;text-shadow:0 8px 0 #0d143066}
 @keyframes golpop{0%{transform:scale(.2) rotate(-12deg);opacity:0}35%{transform:scale(1.25) rotate(4deg);opacity:1}55%{transform:scale(.95) rotate(-2deg)}75%{transform:scale(1.05)}100%{transform:scale(1) rotate(0)}}
@@ -268,7 +278,7 @@ canvas{display:block;width:100%;height:100%}
 </div>
 <div id="adbar" aria-label="Advertisement" data-i18n-label="ad"><div class="ad-slot" data-ad-slot-key="ADSENSE_SLOT_GAME"></div></div>
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.186.0/examples/jsm/"}}</script>
-<script type="module" src="game.js?v=be83e7e8"></script>
+<script type="module" src="game.js?v=5975e4b5"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7f9a5c4a463b4b799b86c338ccb2bc99"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>
