@@ -23,7 +23,7 @@
   // MANUTENCAO (2026-11-22, pedido do Cristiano: jogo pesado no celular). Em manutencao o jogo NAO carrega para o publico;
   // so no localhost/127.0.0.1 (testes). Para reabrir: MANUT = false e publicar (e voltar o card/DAILY).
   var MANUT = true, LOCAL = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
-  if (MANUT && !LOCAL) {
+  if (MANUT && !LOCAL && !q.has("preview")) {   // ?preview=1: o Cristiano testa no celular mesmo em manutencao
     var L = (I.lang || "en").slice(0, 2), T = {
       pt: ["Em manutenção", "Estamos deixando o The Last Driver mais leve e rápido no celular. Volte em breve!", "Ver outros jogos"],
       es: ["En mantenimiento", "Estamos haciendo The Last Driver más ligero y rápido en el móvil. ¡Vuelve pronto!", "Ver otros juegos"],
