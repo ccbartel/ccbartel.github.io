@@ -388,12 +388,46 @@ body:not(.setas) #nuiJump { right: 57px; bottom: 139px; }
 .ntoast b { display: block; font: 700 26px/1.1 var(--nf); text-transform: uppercase; color: var(--gold); text-shadow: 0 3px 0 #000; }
 .ntoast span { display: block; font: 700 20px/1.2 var(--nf); color: #fff; }
 body.nui-tests #menu { display: block !important; position: fixed; inset: 0; z-index: 7; overflow: auto; background: #000c; padding: 70px 12px 12px; }
+/* missao do dia (2026-11-22): cartao do menu, painel, progresso no HUD, comemoracao */
+.nbtn.nday { height: auto; min-height: clamp(58px, 9.5vh, 76px); padding: 8px 14px 8px 18px; gap: 12px; border-color: #ffd84d; background: linear-gradient(180deg, #3a2a12f0 0%, #1d1714f0 100%); }
+.nbtn.nday .ndt { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.nbtn.nday small { font: 700 15px/1 var(--nf); text-transform: uppercase; letter-spacing: .08em; color: var(--gold); }
+.nbtn.nday .ndt b { font: 700 clamp(20px, 3.4vh, 26px)/1.05 var(--nf); text-transform: none; letter-spacing: 0; white-space: normal; }
+.nbtn.nday .ndt b { overflow-wrap: anywhere; } .nbtn.nday .ndf { flex: none; } .nbtn.nday .ndr { flex: none; display: flex; align-items: center; gap: 6px; }
+.nbtn.nday .ndr span { font: 700 22px/1 var(--nf); color: #2a1306; background: linear-gradient(180deg, #ffe27a, #f7b60c); border: 3px solid #fff; border-radius: 14px; padding: 5px 9px; box-shadow: 0 3px 0 #000a; }
+.nbtn.nday .ndf { flex: none; display: flex; align-items: center; gap: 2px; font: 700 24px/1 var(--nf); color: #ffd84d; }
+.nbtn.nday .ndf svg, .nflame { width: 28px; height: 28px; filter: drop-shadow(0 2px 0 #000a); }
+.nbtn.nday.done { border-color: #7ad36b; } .nbtn.nday.done .ndt b { color: #b8f5c0; }
+.nok { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: #36c24a; border: 3px solid #fff; font-style: normal; font-size: 20px; box-shadow: 0 3px 0 #000a; }
+#nuiDayP { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: var(--top) 16px 16px; background: #000a; pointer-events: auto; z-index: 2; }
+#nuiDayPG { display: flex; align-items: center; gap: 12px; justify-content: center; padding: 10px 12px; border-radius: 14px; background: #0006; }
+#nuiDayPG i svg { width: 40px; height: 40px; } #nuiDayPG b { font: 700 28px/1.1 var(--nf); }
+#nuiDayPS { display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 28px; font: 700 22px/1 var(--nf); color: #ffd84d; }
+#nuiDayPS:empty { display: none; }
+.nnet { position: absolute; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); margin: 0; padding: 10px 18px; border-radius: 16px; background: var(--panel); border: 4px solid #ffffffd0; box-shadow: 0 4px 0 #000a; font: 700 20px/1.2 var(--nf); color: #ffb3a8; white-space: nowrap; z-index: 3; }
+.ndrow { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
+.ndrow li { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 2px; border-radius: 12px; background: #0006; border: 3px solid #ffffff30; }
+.ndrow li small { font: 700 12px/1 var(--nf); text-transform: uppercase; color: #ffe9a8; white-space: nowrap; }
+.ndrow li i { width: 24px; height: 24px; border-radius: 50%; border: 3px solid #ffffff80; display: grid; place-items: center; font-style: normal; font-size: 13px; }
+.ndrow li b { font: 700 14px/1 var(--nf); color: #fff; }
+.ndrow li.ok { border-color: #7ad36b; } .ndrow li.ok i { background: #36c24a; border-color: #fff; }
+.ndrow li.now { border-color: #ffd84d; background: #3a2a12; } .ndrow li.now b { color: #ffd84d; }
+#nuiDayPI { margin: 0; text-align: center; font: 700 17px/1.25 var(--nf); color: #ddd; }
+.ndayh { position: absolute; left: max(12px, env(safe-area-inset-left, 0px)); top: calc(var(--top) + 110px); display: flex; align-items: center; gap: 6px; padding: 3px 10px 3px 5px; border-radius: 20px; background: var(--panel); border: 4px solid #ffffffd0; box-shadow: 0 3px 0 #000a; }   /* bloco do canto esquerdo, abaixo da vida: fora da pista (o centro do topo fica livre) */
+@media (min-aspect-ratio: 1/1) { .ndayh { top: calc(var(--top) + 104px); } .nnotes { top: calc(var(--top) + 150px) !important; } }
+.ndayh i svg { width: 26px; height: 26px; color: #fff; } .ndayh b { font: 700 20px/1 var(--nf); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.ndayh .nbar2 { position: relative; width: 48px; height: 10px; border-radius: 5px; background: #0008; overflow: hidden; border: 2px solid #fff; }
+.ndayh .nbar2 em { position: absolute; inset: 0; background: linear-gradient(90deg, #ffe27a, #f7b60c); transform-origin: 0 50%; transform: scaleX(0); transition: transform .2s; }
+.ntoast.nday { border-color: #ffd84d; } .ntoast.nday .r { display: flex; align-items: center; justify-content: center; gap: 6px; font: 700 34px/1.1 var(--nf); color: #ffd84d; text-shadow: 0 3px 0 #000; }
+.ntoast.nday .r .ncoin svg { width: 30px; height: 30px; } .ntoast.nday .st { display: flex; align-items: center; justify-content: center; gap: 4px; }
+.nrew.nday { color: #ffe9a8; } .nrew.nday.ok { color: #b8f5c0; }
 </style>
 
 <div id="stage"></div>
 <div id="loading"><img src="p/tex/3399cf1cc1f6c4304b9a012854043c56.webp" alt="The Last Driver"><div class="lbar" role="progressbar" aria-valuemin="0" aria-valuemax="100"><i id="nuiLBar"></i></div><div class="lpct" id="nuiLPct">0%</div><p class="ltip" id="nuiLTip"></p><div id="err"></div></div>
 <div id="nui">
   <section id="nuiMenu" hidden>
+    <p class="nnet" id="nuiNetMsg" hidden role="status"></p>
     <button class="npause" id="nuiHelpB" data-ia="howto" aria-label="Como jogar" style="position:absolute;left:auto;right:12px;top:calc(var(--top) + 6px)"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M11 17h2v2h-2zm1-14a6 6 0 0 0-6 6h2a4 4 0 1 1 6.3 3.3c-1.4.9-2.3 2-2.3 3.7v.5h2V16c0-1 .5-1.6 1.4-2.2A6 6 0 0 0 12 3z"/></svg></button>
     <button class="npause" id="nuiRankB" aria-label="Ranking" hidden style="position:absolute;left:auto;right:12px;top:calc(var(--top) + 6px)"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 3h12v2h3v3a5 5 0 0 1-4.6 5A5 5 0 0 1 13 15.9V18h3v3H8v-3h3v-2.1A5 5 0 0 1 7.6 13 5 5 0 0 1 3 8V5h3zm0 4H5v1a3 3 0 0 0 1.3 2.5A5 5 0 0 1 6 9zm12 0v2a5 5 0 0 1-.3 1.5A3 3 0 0 0 19 8V7z"/></svg></button>
     <img id="nuiLogo" src="p/tex/3399cf1cc1f6c4304b9a012854043c56.webp" alt="The Last Driver" draggable="false">
@@ -403,10 +437,16 @@ body.nui-tests #menu { display: block !important; position: fixed; inset: 0; z-i
     </div>
     <div class="nbtns">
       <button class="nbtn primary" id="nuiPlay"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 4.5v15l13-7.5z"/></svg><b data-i="play">Jogar</b></button>
+      <button class="nbtn nday" id="nuiDaily"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="none" stroke="#f7b60c" stroke-width="2.6"/><circle cx="12" cy="12" r="5.5" fill="none" stroke="#fff" stroke-width="2.4"/><circle cx="12" cy="12" r="2" fill="#f7b60c"/></svg><span class="ndt"><small id="nuiDailyK">Missão do dia</small><b id="nuiDailyG"></b></span><span class="ndf" id="nuiDailyF" hidden></span><span class="ndr" id="nuiDailyR"></span></button>
       <button class="nbtn" id="nuiGarage"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5 11l1.6-4.6A2 2 0 0 1 8.5 5h7a2 2 0 0 1 1.9 1.4L19 11a2 2 0 0 1 2 2v4h-2v2h-3v-2H8v2H5v-2H3v-4a2 2 0 0 1 2-2zm2.2 0h9.6l-1.1-3.3a1 1 0 0 0-.9-.7H9.2a1 1 0 0 0-.9.7zM6.5 13a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/></svg><b data-i="garage">Garagem</b></button>
       <button class="nbtn" id="nuiMissions"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm1.3 6.6l-1 1 2.6 2.6 4.4-4.4-1-1-3.4 3.4zm0 6.5l-1 1 2.6 2.6 4.4-4.4-1-1-3.4 3.4zM15 9h3v1.5h-3zm0 6.5h3V17h-3z"/></svg><b data-i="missions">Missões</b></button>
       <button class="nbtn test" id="nuiTests" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M9 2h6v2h-1v5.3l5.6 9.4A2 2 0 0 1 17.9 22H6.1a2 2 0 0 1-1.7-3.3L10 9.3V4H9zm3 9.5L8.2 18h7.6z"/></svg><b data-i="tests">Testes</b></button>
     </div>
+    <section id="nuiDayP" hidden role="dialog" aria-modal="true" aria-labelledby="nuiDayPT">
+      <div class="npanel"><h2 id="nuiDayPT">Missão do dia</h2><div id="nuiDayPG"></div><div id="nuiDayPS"></div><ul class="ndrow" id="nuiDayPRow"></ul><p id="nuiDayPI"></p>
+        <button class="nbtn primary" id="nuiDayPPlay" style="justify-content:center"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 4.5v15l13-7.5z"/></svg><b id="nuiDayPPlayT">Jogar</b></button>
+        <button class="nbtn" id="nuiDayPOk" style="justify-content:center;height:52px"><b data-i="ok">OK</b></button></div>
+    </section>
   </section>
   <section id="nuiMiss" hidden role="dialog" aria-modal="true" aria-labelledby="nuiMissT">
     <div class="npanel"><h2 id="nuiMissT" data-i="missions">Missões</h2><ul class="nmlist" id="nuiMList"></ul>
@@ -421,10 +461,12 @@ body.nui-tests #menu { display: block !important; position: fixed; inset: 0; z-i
     </div>
     <div class="nhaz" id="nuiHaz" hidden aria-hidden="true"><svg viewBox="0 0 64 56"><path d="M32 4 60 52H4z" fill="#ffc400" stroke="#141414" stroke-width="5" stroke-linejoin="round"/><rect x="28.5" y="18" width="7" height="20" rx="2" fill="#141414"/><circle cx="32" cy="45" r="4" fill="#141414"/></svg><svg class="hdir" viewBox="0 0 24 24"><path d="M12 3 21 13h-5.5v8h-7v-8H3z" fill="#ffc400" stroke="#141414" stroke-width="2.2" stroke-linejoin="round"/></svg></div>
     <div class="nlife" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" id="nuiLife" data-ia="life" aria-label="Vida"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#e3261b" stroke="#fff" stroke-width="2" d="M12 21s-8-5.2-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.8-8 11-8 11z"/></svg><div class="nbar"><i id="nuiLifeCover"></i></div></div>
+    <div class="ndayh" id="nuiDayH" hidden role="status"><i id="nuiDayHI"></i><b id="nuiDayHT"></b><span class="nbar2"><em id="nuiDayHB"></em></span></div>
     <div class="nnotes">
 <div class="nstrip" id="nuiStrip" hidden role="status"><h3 data-i="missions">Missões</h3><ul id="nuiStripL"></ul></div>
     <div class="npop" id="nuiPop" hidden aria-live="polite"><span id="nuiPopI"></span><span class="w"><span class="s" id="nuiPopS"></span><span class="f" id="nuiPopT"></span></span></div>
     <div class="ntoast" id="nuiToast" hidden role="status"><b data-i="mdone">Missão concluída!</b><span id="nuiToastT"></span></div>
+    <div class="ntoast nday" id="nuiDayT" hidden role="status"><b id="nuiDayTT"></b><span class="r" id="nuiDayTR"></span><span class="st" id="nuiDayTS"></span></div>
     </div>
     <div id="nuiStickZone" aria-hidden="true"></div>
     <div id="nuiStick" hidden aria-hidden="true"><i></i></div>
@@ -464,6 +506,7 @@ body.nui-tests #menu { display: block !important; position: fixed; inset: 0; z-i
         <div><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#f7b60c" stroke="#2a1306" stroke-width="2"/><circle cx="12" cy="12" r="6" fill="none" stroke="#a86a00" stroke-width="2"/></svg><b id="nuiECoins">0</b><small data-i="coins">Moedas</small></div>
       </div>
       <div id="nuiEMiss"></div>
+      <p class="nrew nday" id="nuiEDay" hidden></p>
       <p class="nrew" id="nuiERew"></p>
       <button class="nbtn primary" id="nuiAgain" style="justify-content:center"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 4V1L7 5.5 12 10V6.5a5.5 5.5 0 1 1-5.5 5.5H4a8 8 0 1 0 8-8z"/></svg><b data-i="again">Jogar de novo</b></button>
       <div class="nrow">
@@ -594,6 +637,6 @@ body.nui-tests #menu { display: block !important; position: fixed; inset: 0; z-i
   "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
 } }
 </script>
-<script type="module" src="game.js?v=1ca7cd4d"></script>
+<script type="module" src="game.js?v=d9c543b6"></script>
 
 </body></html>
