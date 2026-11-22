@@ -163,3 +163,12 @@ footer.site a:hover{color:#fff;text-decoration:underline}
 @media (prefers-reduced-motion:reduce){.games .card .thumb{transition:none}.games .card:hover .thumb{transform:none}}
 .games .card p.meta{color:#8d97ad;font-size:12.5px}
 .games .card p.meta:empty{display:none}
+/* paginas de categoria (src/categorias.py) e atalhos de categoria na home (2026-11-21) */
+.cat-page{padding-top:22px}
+.crumb a{color:var(--muted);text-decoration:none;font-weight:600;font-size:14px}.crumb a::before{content:"‹ "}.crumb a:hover{color:var(--gold2)}
+.cat-h1{margin-top:10px;font-size:clamp(30px,6vw,44px)}
+.cat-intro{max-width:760px;color:var(--muted);font-size:16px}.cat-intro p{margin:10px 0 0}
+.cat-more{padding:4px 0 40px}.cat-more .sec-t{margin-bottom:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;margin:0 8px 8px 0;padding:8px 16px;border-radius:999px;border:1.5px solid #ffffff38;color:#fff;text-decoration:none;font-weight:700;font-size:15px;background:#ffffff0d}
+.chip:hover,.chip:focus-visible{border-color:var(--gold);color:var(--gold2);outline:none}
+.cat-chips{margin:12px 0 -8px}

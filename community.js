@@ -304,6 +304,12 @@
     bar.insertBefore(b, bar.firstChild.nextSibling); // depois do "como jogar"
     if (/[#?&]mural\b/.test(location.search + location.hash)) setTimeout(open, 300);
   }
-  function init() { if (HOME) { todayBox(); homeFeed(); } else { addButton(); checkNew(); } }
+  // atalhos das paginas de categoria na home (2026-11-21; paginas geradas por src/categorias.py)
+  var CATL = {en: [["/car-games/", "🏎️ Car games"], ["/multiplayer-games/", "👫 Multiplayer"], ["/puzzle-and-quiz-games/", "🧠 Puzzle & quiz"]],
+    pt: [["/pt/jogos-de-carro/", "🏎️ Jogos de carro"], ["/pt/jogos-multijogador/", "👫 Multijogador"], ["/pt/jogos-de-raciocinio/", "🧠 Raciocínio"]],
+    es: [["/es/juegos-de-autos/", "🏎️ Juegos de autos"], ["/es/juegos-multijugador/", "👫 Multijugador"], ["/es/juegos-de-ingenio/", "🧠 Ingenio"]]};
+  function catChips() { var h = document.getElementById("games-t"); if (!h || document.querySelector(".cat-chips")) return; var nav = el("nav", "cat-chips");
+    (CATL[LP.slice(1) || "en"] || CATL.en).forEach(function (c) { var a = el("a", "chip", c[1]); a.href = c[0]; nav.appendChild(a); }); h.parentNode.insertBefore(nav, h.nextSibling); }
+  function init() { if (HOME) { todayBox(); catChips(); homeFeed(); } else if (document.querySelector("#topbar .tb-r")) { addButton(); checkNew(); } } /* pagina de categoria: nem mural nem bolinha */
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
 })();
