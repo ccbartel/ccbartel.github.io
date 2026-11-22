@@ -1,4 +1,4 @@
-<!doctype html><html lang="en" translate="no"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><style>#nuiHelpB{display:none!important}@media (max-height:640px){#nuiLogo{width:min(84vw,470px,34vh)!important}}</style></head><body>
+<!doctype html><html lang="en" translate="no"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><style>#nuiHelpB{display:none!important}</style></head><body>
 <title>The Last Driver</title>
 <meta name="robots" content="noindex">
 <link rel="icon" type="image/png" href="assets/icon.png">
@@ -200,9 +200,9 @@ body.setas #nuiStickZone { display: none; }
 #nuiStick .nkey { left: 50%; top: -18px; transform: translateX(-50%); }
 body:not(.setas) .nctl.r { display: block; width: 200px; height: 200px; pointer-events: none; }
 body:not(.setas) .nctl.r .nround { position: absolute; }
-body:not(.setas) #nuiGun { right: 12px; bottom: 29px; }
-body:not(.setas) #nuiJump { right: 57px; bottom: 139px; }
-@media (min-width: 900px) and (min-height: 600px) { body:not(.setas) .nctl.r { width: 230px; height: 230px; } body:not(.setas) #nuiGun { right: 26px; bottom: 30px; } body:not(.setas) #nuiJump { right: 82px; bottom: 166px; } }
+body:not(.setas) #nuiGun { right: 57px; bottom: 29px; }   /* 2026-11-22 (pedido dele): diagonal invertida no arco do polegar: TIRO embaixo e mais a esquerda, PULO acima e encostado a direita */
+body:not(.setas) #nuiJump { right: 12px; bottom: 139px; }
+@media (min-width: 900px) and (min-height: 600px) { body:not(.setas) .nctl.r { width: 230px; height: 230px; } body:not(.setas) #nuiGun { right: 82px; bottom: 30px; } body:not(.setas) #nuiJump { right: 26px; bottom: 166px; } }
 .nround.act { color: #2a1306; background: linear-gradient(180deg, #ffe27a 0%, #f7b60c 100%); border-color: #fff; }
 .nround.empty { opacity: .55; filter: grayscale(1); }
 .nround em { position: absolute; top: -8px; right: -8px; min-width: 32px; height: 32px; padding: 0 6px; border-radius: 16px; display: grid; place-items: center; font: 700 20px/1 var(--nf); font-style: normal; color: #fff; background: #2a1306; border: 3px solid #fff; }
@@ -304,7 +304,7 @@ body:not(.setas) #nuiJump { right: 57px; bottom: 139px; }
 .nhelp div { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 10px 6px; border-radius: 14px; background: #0006; text-align: center; font: 700 17px/1.15 var(--nf); }
 .nhelp .nround { pointer-events: none; width: 60px; height: 60px; } .nhelp .nround svg { width: 30px; height: 30px; }
 .nhelp .nhd { position: relative; min-height: 210px; padding: 0; background: #0006; }
-.nhelp .nhd > div { position: absolute; padding: 0; background: none; gap: 4px; } .nhelp .nhd .j { left: 8px; top: 8px; } .nhelp .nhd .g { right: 8px; bottom: 8px; }
+.nhelp .nhd > div { position: absolute; padding: 0; background: none; gap: 4px; } .nhelp .nhd .j { right: 8px; top: 8px; } .nhelp .nhd .g { left: 8px; bottom: 8px; }   /* mesma diagonal do HUD: pulo em cima a direita, tiro embaixo a esquerda */
 .nhelp .nhs { justify-content: center; }
 .nstk { position: relative; width: 84px; height: 84px; border-radius: 50%; background: #1d1714a8; border: 4px solid #ffffffb8; }
 .nstk i { position: absolute; left: 50%; top: 50%; width: 40px; height: 40px; margin: -20px 0 0 -20px; border-radius: 50%; background: linear-gradient(180deg, #ffe27a, #f7b60c); border: 3px solid #fff; animation: nstk2 1.6s ease-in-out infinite; }
@@ -405,7 +405,8 @@ body.nui-tests #menu { display: block !important; position: fixed; inset: 0; z-i
 #nuiDayPS { display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 28px; font: 700 22px/1 var(--nf); color: #ffd84d; }
 #nuiDayPS:empty { display: none; }
 .nnet { position: absolute; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); margin: 0; padding: 10px 18px; border-radius: 16px; background: var(--panel); border: 4px solid #ffffffd0; box-shadow: 0 4px 0 #000a; font: 700 20px/1.2 var(--nf); color: #ffb3a8; white-space: nowrap; z-index: 3; }
-.ndrow { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
+.ndrow { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: min(5px, 1.2vw); }
+.ndrow li { min-width: 0; } .ndrow li small { font-size: clamp(9px, 2.9vw, 12px) !important; } .ndrow li b { font-size: clamp(10px, 3.4vw, 14px) !important; } .ndrow li i { width: clamp(18px, 5.6vw, 24px) !important; height: clamp(18px, 5.6vw, 24px) !important; }   /* palco estreito do site: 7 dias sem passar da largura */
 .ndrow li { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 2px; border-radius: 12px; background: #0006; border: 3px solid #ffffff30; }
 .ndrow li small { font: 700 12px/1 var(--nf); text-transform: uppercase; color: #ffe9a8; white-space: nowrap; }
 .ndrow li i { width: 24px; height: 24px; border-radius: 50%; border: 3px solid #ffffff80; display: grid; place-items: center; font-style: normal; font-size: 13px; }
@@ -421,6 +422,66 @@ body.nui-tests #menu { display: block !important; position: fixed; inset: 0; z-i
 .ntoast.nday { border-color: #ffd84d; } .ntoast.nday .r { display: flex; align-items: center; justify-content: center; gap: 6px; font: 700 34px/1.1 var(--nf); color: #ffd84d; text-shadow: 0 3px 0 #000; }
 .ntoast.nday .r .ncoin svg { width: 30px; height: 30px; } .ntoast.nday .st { display: flex; align-items: center; justify-content: center; gap: 4px; }
 .nrew.nday { color: #ffe9a8; } .nrew.nday.ok { color: #b8f5c0; }
+/* 2026-11-22: o menu cabe em QUALQUER altura do iframe do site (palco 9:16 de ~250x440 a 720x1280; celular real com barras do navegador).
+   Tudo escala pela altura (vh = altura do iframe) e pela largura; chips lado a lado; Garagem/Missoes encolhem antes de Jogar e da Missao do dia.
+   Ultimo recurso: nuiMenuFit() aplica zoom no conteudo (nunca corta nem rola). */
+#nuiMenu { --top: min(calc(56px + env(safe-area-inset-top, 0px)), 7vh); gap: clamp(6px, 1.8vh, 20px);
+  padding: calc(var(--top) + min(64px, 7vh)) 12px calc(min(18px, 2.5vh) + env(safe-area-inset-bottom, 0px)); }
+#nuiLogo { width: min(84vw, 470px, 38vh); }
+#nuiMenu .nchips { flex-wrap: nowrap; gap: min(10px, 2.4vw); max-width: 100%; }
+#nuiMenu .nchip { height: clamp(30px, 6.5vh, 46px); padding: 0 min(16px, 3.4vw) 0 min(10px, 2.2vw); gap: min(8px, 1.8vw); border-width: clamp(3px, .6vh, 4px); white-space: nowrap; }
+#nuiMenu .nchip svg { width: clamp(18px, 4.2vh, 26px); height: clamp(18px, 4.2vh, 26px); flex: none; }
+#nuiMenu .nchip small { font-size: clamp(10px, min(2.6vh, 3.8vw), 16px); }
+#nuiMenu .nchip b { font-size: clamp(16px, min(4vh, 5.6vw), 24px); }
+@media (max-width: 300px) { #nuiMenu .nchip small { display: none; } }
+#nuiMenu .nbtns { gap: clamp(6px, 1.5vh, 16px); width: min(86vw, 400px); }
+#nuiMenu .nbtn { height: clamp(38px, 9.5vh, 76px); padding: 0 clamp(12px, 4vw, 22px); gap: clamp(8px, 3vw, 16px); border-radius: clamp(14px, 2.6vh, 20px); }
+#nuiMenu .nbtn b { font-size: clamp(18px, min(4.6vh, 8.4vw), 36px); }
+#nuiMenu .nbtn > svg { width: clamp(22px, 5vh, 36px); height: clamp(22px, 5vh, 36px); }
+#nuiMenu .nbtn:not(.primary):not(.nday):not(.test) { height: clamp(32px, 8vh, 76px); }   /* Garagem e Missoes: os primeiros a encolher */
+#nuiMenu .nbtn:not(.primary):not(.nday):not(.test) b { font-size: clamp(16px, min(4vh, 7.4vw), 36px); }
+#nuiMenu .nbtn.nday { height: auto; min-height: clamp(40px, 9.5vh, 76px); padding: clamp(3px, .8vh, 8px) 10px clamp(3px, .8vh, 8px) clamp(10px, 3.6vw, 18px); gap: clamp(6px, 2.4vw, 12px); }
+#nuiMenu .nbtn.nday small { font-size: clamp(10px, min(2.2vh, 3.6vw), 15px); }
+#nuiMenu .nbtn.nday .ndt b { font-size: clamp(14px, min(3.4vh, 5.4vw), 26px); }
+#nuiMenu .nbtn.nday .ndr span { font-size: clamp(15px, min(3.2vh, 5vw), 22px); padding: clamp(2px, .6vh, 5px) clamp(5px, 1.6vw, 9px); }
+#nuiMenu .nbtn.nday .ndf { font-size: clamp(16px, 3.4vh, 24px); } #nuiMenu .nbtn.nday .ndf svg { width: clamp(18px, 3.8vh, 28px); height: clamp(18px, 3.8vh, 28px); }
+#nuiMenu .nok { width: clamp(26px, 5vh, 34px); height: clamp(26px, 5vh, 34px); font-size: clamp(14px, 3vh, 20px); }
+#nuiMenu > * { flex-shrink: 0; }
+#nuiGar .gtop .nchip { height: clamp(30px, 6.5vh, 46px); padding: 0 min(16px, 3.4vw) 0 min(10px, 2.2vw); gap: min(8px, 1.8vw); white-space: nowrap; }
+#nuiGar .gtop .nchip small { font-size: clamp(10px, min(2.6vh, 3.8vw), 16px); } #nuiGar .gtop .nchip b { font-size: clamp(16px, min(4vh, 5.6vw), 24px); }
+#nuiGar .gtop .nchip svg { width: clamp(18px, 4.2vh, 26px); height: clamp(18px, 4.2vh, 26px); }
+@media (max-width: 300px) { #nuiGar .gtop .nchip small { display: none; } }
+#nuiGar .gtab { font-size: clamp(11px, 4.2vw, 17px) !important; padding: 0 2px; height: clamp(36px, 7vh, 48px); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* 2026-11-22: HUD e controles escalam pelo palco (iframe do site ~250x440 a 375x812). --k = clamp(.72, min(L/375, A/740), 1) por JS (nuiScale);
+   --kb = fator dos botoes de acao (nunca menores que 56 px). So em pe: o deitado (PC) fica como aprovado. Em 375x812 ou maior, k = 1 (igual ao aprovado). */
+@media (max-aspect-ratio: 1/1) {
+  #nuiHud { --top: calc(56px * var(--k, 1) + env(safe-area-inset-top, 0px)); }
+  #nuiHud .ntop { top: calc(var(--top) + 6px * var(--k, 1)); height: calc(58px * var(--k, 1)); }
+  #nuiHud .npause { width: calc(50px * var(--k, 1)); height: calc(50px * var(--k, 1)); top: calc(4px * var(--k, 1)); border-width: calc(4px * var(--k, 1)); }
+  #nuiHud .npause svg { width: calc(22px * var(--k, 1)); height: calc(22px * var(--k, 1)); }
+  #nuiHud .ncoins { top: calc(6px * var(--k, 1)); height: calc(46px * var(--kt, 1)); gap: calc(6px * var(--kt, 1)); padding: 0 calc(14px * var(--kt, 1)) 0 calc(6px * var(--kt, 1)); border-width: calc(4px * var(--k, 1)); }
+  #nuiHud .ncoins svg { width: calc(30px * var(--kt, 1)); height: calc(30px * var(--kt, 1)); }
+  #nuiHud .ncoins b { font-size: calc(26px * var(--kt, 1)); }
+  #nuiHud .ndist { font-size: calc(54px * var(--kt, 1)); top: calc(-2px * var(--k, 1)); }
+  #nuiHud .ndist .s { -webkit-text-stroke: calc(12px * var(--kt, 1)) #2a1306; }
+  #nuiHud .nlife { top: calc(var(--top) + 72px * var(--k, 1)); width: min(62vw, calc(300px * var(--k, 1))); height: calc(30px * var(--k, 1)); }
+  #nuiHud .nlife svg { width: calc(30px * var(--k, 1)); height: calc(30px * var(--k, 1)); }
+  #nuiHud .nbar { height: calc(20px * var(--k, 1)); }
+  #nuiHud .nhaz { top: calc(var(--top) + 70px * var(--k, 1)); }
+  #nuiHud .ndayh { top: calc(var(--top) + 110px * var(--k, 1)); padding: calc(3px * var(--k, 1)) calc(10px * var(--k, 1)) calc(3px * var(--k, 1)) calc(5px * var(--k, 1)); border-width: calc(4px * var(--k, 1)); }
+  #nuiHud .ndayh i svg { width: calc(26px * var(--k, 1)); height: calc(26px * var(--k, 1)); } #nuiHud .ndayh b { font-size: calc(20px * var(--k, 1)); }
+  #nuiHud .ndayh .nbar2 { width: calc(48px * var(--k, 1)); height: calc(10px * var(--k, 1)); }
+  #nuiHud .nnotes { top: calc(var(--top) + 112px * var(--k, 1)); } #nuiHud:has(#nuiDayH:not([hidden])) .nnotes { top: calc(var(--top) + 158px * var(--k, 1)); }   /* com a faixa da missao: avisos logo abaixo dela */
+  #nuiHud .nround { width: calc(78px * var(--kb, 1)); height: calc(78px * var(--kb, 1)); }
+  #nuiHud .nround svg { width: calc(40px * var(--kb, 1)); height: calc(40px * var(--kb, 1)); }
+  #nuiHud .nround em { top: calc(-8px * var(--kb, 1)); right: calc(-8px * var(--kb, 1)); min-width: calc(32px * var(--kb, 1)); height: calc(32px * var(--kb, 1)); font-size: calc(20px * var(--kb, 1)); }
+  #nuiHud .nctl { bottom: calc(18px * var(--k, 1) + env(safe-area-inset-bottom, 0px)); }
+  body:not(.setas) #nuiHud .nctl.r { width: calc(200px * var(--kb, 1)); height: calc(200px * var(--kb, 1)); }
+  body:not(.setas) #nuiHud #nuiGun { right: calc(57px * var(--kb, 1)); bottom: calc(29px * var(--kb, 1)); }
+  body:not(.setas) #nuiHud #nuiJump { right: calc(12px * var(--kb, 1)); bottom: calc(139px * var(--kb, 1)); }
+  #nuiHud #nuiStick { width: calc(132px * var(--kb, 1)); height: calc(132px * var(--kb, 1)); margin: calc(-66px * var(--kb, 1)) 0 0 calc(-66px * var(--kb, 1)); }
+  #nuiHud #nuiStick i { width: calc(62px * var(--kb, 1)); height: calc(62px * var(--kb, 1)); margin: calc(-31px * var(--kb, 1)) 0 0 calc(-31px * var(--kb, 1)); }
+}
 </style>
 
 <div id="stage"></div>
@@ -442,7 +503,7 @@ body.nui-tests #menu { display: block !important; position: fixed; inset: 0; z-i
       <button class="nbtn" id="nuiMissions"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm1.3 6.6l-1 1 2.6 2.6 4.4-4.4-1-1-3.4 3.4zm0 6.5l-1 1 2.6 2.6 4.4-4.4-1-1-3.4 3.4zM15 9h3v1.5h-3zm0 6.5h3V17h-3z"/></svg><b data-i="missions">Missões</b></button>
       <button class="nbtn test" id="nuiTests" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M9 2h6v2h-1v5.3l5.6 9.4A2 2 0 0 1 17.9 22H6.1a2 2 0 0 1-1.7-3.3L10 9.3V4H9zm3 9.5L8.2 18h7.6z"/></svg><b data-i="tests">Testes</b></button>
     </div>
-    <section id="nuiDayP" hidden role="dialog" aria-modal="true" aria-labelledby="nuiDayPT">
+    <section id="nuiDayP" class="nfull" hidden role="dialog" aria-modal="true" aria-labelledby="nuiDayPT">
       <div class="npanel"><h2 id="nuiDayPT">Missão do dia</h2><div id="nuiDayPG"></div><div id="nuiDayPS"></div><ul class="ndrow" id="nuiDayPRow"></ul><p id="nuiDayPI"></p>
         <button class="nbtn primary" id="nuiDayPPlay" style="justify-content:center"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 4.5v15l13-7.5z"/></svg><b id="nuiDayPPlayT">Jogar</b></button>
         <button class="nbtn" id="nuiDayPOk" style="justify-content:center;height:52px"><b data-i="ok">OK</b></button></div>
@@ -637,6 +698,6 @@ body.nui-tests #menu { display: block !important; position: fixed; inset: 0; z-i
   "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
 } }
 </script>
-<script type="module" src="game.js?v=d9c543b6"></script>
+<script type="module" src="game.js?v=3a1b5817"></script>
 
 </body></html>
