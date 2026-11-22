@@ -311,7 +311,7 @@
     pt: [["/pt/jogos-de-carro/", "🏎️ Jogos de carro"], ["/pt/jogos-multijogador/", "👫 Multijogador"], ["/pt/jogos-de-raciocinio/", "🧠 Raciocínio"]],
     es: [["/es/juegos-de-autos/", "🏎️ Juegos de autos"], ["/es/juegos-multijugador/", "👫 Multijugador"], ["/es/juegos-de-ingenio/", "🧠 Ingenio"]]};
   function catChips() { var h = document.getElementById("games-t"); if (!h || document.querySelector(".cat-chips")) return; var nav = el("nav", "cat-chips");
-    (CATL[LP.slice(1) || "en"] || CATL.en).forEach(function (c) { var a = el("a", "chip", c[1]); a.href = c[0]; nav.appendChild(a); }); h.parentNode.insertBefore(nav, h.nextSibling); }
+    (CATL[LP.slice(1) || String(document.documentElement.lang || "en").slice(0, 2)] || CATL.en).forEach(  /* home "/" traduzida pelo navegador: atalhos no idioma dele */function (c) { var a = el("a", "chip", c[1]); a.href = c[0]; nav.appendChild(a); }); h.parentNode.insertBefore(nav, h.nextSibling); }
   function init() { if (HOME) { todayBox(); catChips(); homeFeed(); } else if (document.querySelector("#topbar .tb-r")) { addButton(); checkNew(); } } /* pagina de categoria: nem mural nem bolinha */
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
 })();
