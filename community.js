@@ -237,7 +237,7 @@
   var PAGE = {"guess-the-flag": "geo-quiz"}, GNAME = {"guess-the-flag": "Geo Quiz", "candy-line": "Candy Line", "burnout-city": "Burnout City", "drift-trail": "Drift Trail", "bumpets": "Bumpets", "the-last-driver": "The Last Driver"};
   var ROOMS = {"bumpets": function (c) { return LP + "/bumpets/#" + c; }, "candy-line": function (c) { return LP + "/candy-line/?sala=" + c; }};
   // caixa "Hoje" da home (2026-11-21): desafio do dia (gira entre os jogos com missao diaria), sequencia de dias e continue jogando
-  var DAILY = ["geo-quiz", "bumpets-zone", "candy-line", "bumpets-soccer", "burnout-city", "bumpets-race", "bumpets", "the-last-driver"]; /* 2026-11-22: Bumpets com missao do dia (pedido dele); The Last Driver com missao do dia + sequencia */
+  var DAILY = ["geo-quiz", "bumpets-zone", "candy-line", "bumpets-soccer", "burnout-city", "bumpets-race", "bumpets"]; /* the-last-driver fora durante a manutencao (2026-11-22); */ /* 2026-11-22: Bumpets com missao do dia (pedido dele); The Last Driver com missao do dia + sequencia */
   function todayBox() {
     var box = document.getElementById("bg-today"); if (!box) return;
     var dd = new Date().toLocaleDateString("sv"), RC = [], DY = [];

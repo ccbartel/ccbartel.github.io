@@ -172,3 +172,6 @@ footer.site a:hover{color:#fff;text-decoration:underline}
 .chip{display:inline-flex;align-items:center;gap:6px;margin:0 8px 8px 0;padding:8px 16px;border-radius:999px;border:1.5px solid #ffffff38;color:#fff;text-decoration:none;font-weight:700;font-size:15px;background:#ffffff0d}
 .chip:hover,.chip:focus-visible{border-color:var(--gold);color:var(--gold2);outline:none}
 .cat-chips{margin:10px 0 22px}
+
+/* The Last Driver em manutencao (2026-11-22): card escondido ate a correcao de desempenho */
+.card[data-game="the-last-driver"]{display:none!important}

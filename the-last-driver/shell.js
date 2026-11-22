@@ -20,6 +20,23 @@
   function win() { try { return fr.contentWindow; } catch (e) { return null; } }
   // endereco do jogo: idioma desta pagina + parametros de teste (?teste=1, etc.)
   var q = new URLSearchParams(location.search); q.set("lang", I.lang || "en");
+  // MANUTENCAO (2026-11-22, pedido do Cristiano: jogo pesado no celular). Em manutencao o jogo NAO carrega para o publico;
+  // so no localhost/127.0.0.1 (testes). Para reabrir: MANUT = false e publicar (e voltar o card/DAILY).
+  var MANUT = true, LOCAL = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+  if (MANUT && !LOCAL) {
+    var L = (I.lang || "en").slice(0, 2), T = {
+      pt: ["Em manutenção", "Estamos deixando o The Last Driver mais leve e rápido no celular. Volte em breve!", "Ver outros jogos"],
+      es: ["En mantenimiento", "Estamos haciendo The Last Driver más ligero y rápido en el móvil. ¡Vuelve pronto!", "Ver otros juegos"],
+      en: ["Under maintenance", "We are making The Last Driver lighter and faster on phones. Come back soon!", "See other games"] }[L] || null;
+    var t = T || ["Under maintenance", "We are making The Last Driver lighter and faster on phones. Come back soon!", "See other games"];
+    fr.remove();
+    var m = document.createElement("div");
+    m.style.cssText = "position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px;text-align:center;background:#1d1714 url(assets/cover.jpg) center/cover;color:#fff;font-family:Oswald,system-ui,sans-serif";
+    m.innerHTML = '<div style="background:#1d1714e6;border:4px solid #ffffffd0;border-radius:22px;padding:22px 20px;max-width:88%;box-shadow:0 4px 0 #000a"><div style="font:700 30px/1.1 Oswald,system-ui,sans-serif;color:#f7b60c;text-transform:uppercase"></div><p style="margin:12px 0 18px;font:400 17px/1.35 system-ui,sans-serif"></p><a href="../" style="display:inline-block;padding:12px 22px;border-radius:14px;background:linear-gradient(180deg,#ffe27a,#f7b60c);color:#2a1306;font:700 20px/1 Oswald,system-ui,sans-serif;text-decoration:none;border:4px solid #fff;box-shadow:0 4px 0 #000a;text-transform:uppercase"></a></div>';
+    m.querySelector("div div").textContent = t[0]; m.querySelector("p").textContent = t[1]; m.querySelector("a").textContent = t[2];
+    stage.appendChild(m);
+    return;
+  }
   fr.src = fr.getAttribute("data-src") + "?" + q.toString();
   fr.addEventListener("load", function () { try { fr.focus(); } catch (e) {} });
   // som: botao da barra do topo (ligado por padrao; a escolha fica salva e o jogo le a mesma chave)
