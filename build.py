@@ -34,12 +34,16 @@ DEFAULT_STATE = {"SITE_NAME": "Bartel Games", "CONTACT_EMAIL": "contato@SEU-DOMI
                  "SITE_URL": "https://bartelgames.com.br/"}
 OBF_OPTIONS = {
     "compact": True, "target": "browser", "identifierNamesGenerator": "hexadecimal",
-    "stringArray": True, "stringArrayThreshold": 1, "stringArrayEncoding": ["rc4"],
-    "stringArrayRotate": True, "stringArrayShuffle": True, "stringArrayIndexShift": True,
-    "stringArrayWrappersCount": 2, "stringArrayWrappersType": "function",
-    "splitStrings": True, "splitStringsChunkLength": 4,
-    "transformObjectKeys": True, "renameGlobals": True,  # ok: modulo ES, nada exportado
-    "numbersToExpressions": True, "simplify": True,
+    # 2026-11-22 (DESEMPENHO, medido): rc4 + 2 wrappers + splitStrings + transformObjectKeys + numbersToExpressions viravam
+    # chamada de funcao/concatenacao em CADA string dos lacos quentes: The Last Driver 31 ms -> 181 ms por quadro (CPU 6x,
+    # Galaxy M34 real: 11-14 fps). Agora: array de strings sem codificacao e sem wrappers (acesso direto, o V8 otimiza);
+    # nomes continuam trocados. Os hosts da trava saem codificados pelo proprio build (hosts_js/url_js abaixo).
+    "stringArray": True, "stringArrayThreshold": 1, "stringArrayEncoding": [],
+    "stringArrayRotate": True, "stringArrayShuffle": True, "stringArrayIndexShift": False,
+    "stringArrayWrappersCount": 0, "stringArrayWrappersType": "variable",
+    "splitStrings": False,
+    "transformObjectKeys": False, "renameGlobals": True,  # ok: modulo ES, nada exportado
+    "numbersToExpressions": False, "simplify": True,
     "controlFlowFlattening": False, "deadCodeInjection": False,  # desligados: pesam no loop do jogo
     "selfDefending": False, "debugProtection": False, "sourceMap": False,
 }
@@ -85,6 +89,21 @@ def site_url(c, d, u):
     return url
 
 
+HOST_KEY = 91   # chave do XOR da trava (so para nao deixar o dominio legivel no game.js; quem le o codigo ainda acha)
+
+
+def _xor_codes(t):
+    return [ord(ch) ^ ((HOST_KEY + i * 7) & 255) for i, ch in enumerate(t)]
+
+
+def hosts_js(hosts):   # expressao JS que devolve a lista de hosts, decodificada uma vez no carregamento
+    return "((a,k)=>a.map(w=>w.map((c,i)=>String.fromCharCode(c^((k+i*7)&255))).join('')))(%s,%d)" % (json.dumps([_xor_codes(h) for h in hosts]), HOST_KEY)
+
+
+def url_js(url):
+    return "((w,k)=>w.map((c,i)=>String.fromCharCode(c^((k+i*7)&255))).join(''))(%s,%d)" % (json.dumps(_xor_codes(url)), HOST_KEY)
+
+
 def npx():
     exe = shutil.which("npx.cmd") or shutil.which("npx")
     if not exe:
@@ -114,8 +133,8 @@ def main():
         SRC = ROOT / "src" / slug / "game.src.js"
         OUT = ROOT / slug / "game.js"
         src = SRC.read_text(encoding="utf8")
-        src, n1 = re.subn(r"/\*@@ALLOWED_HOSTS@@\*/\[[^\]]*\]", lambda m: json.dumps(hosts), src)
-        src, n2 = re.subn(r'/\*@@OFFICIAL_URL@@\*/"[^"]*"', lambda m: json.dumps(url), src)
+        src, n1 = re.subn(r"/\*@@ALLOWED_HOSTS@@\*/\[[^\]]*\]", lambda m: hosts_js(hosts), src)
+        src, n2 = re.subn(r'/\*@@OFFICIAL_URL@@\*/"[^"]*"', lambda m: url_js(url), src)
         if n1 != 1 or n2 != 1:
             die("marcadores @@ALLOWED_HOSTS@@/@@OFFICIAL_URL@@ nao encontrados em " + str(SRC))
         # guarda (2026-11-20): com transformObjectKeys o ofuscador tira o objeto de um 'for(...) lista.push({...})' SEM chaves
@@ -136,7 +155,7 @@ def main():
             if r.returncode != 0 or not OUT.exists():
                 die(slug + ": ofuscador falhou:\n" + (r.stdout + r.stderr)[-1500:])
             out = OUT.read_text(encoding="utf8")
-            leaks = [h for h in hosts if h in out]
+            leaks = [h for h in hosts if h in out and h not in ("localhost", "127.0.0.1", "[::1]")]   # 2026-11-22: sem rc4, os hosts locais aparecem nos testes de modo local do proprio jogo (inofensivo); o dominio do site continua proibido em texto puro
             if leaks:
                 die(slug + ": host em texto puro no game.js ofuscado: %s" % leaks)
         chk = subprocess.run(["node", "--check", str(OUT)], capture_output=True, text=True)
