@@ -13,6 +13,8 @@
     var ah = app.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
     var h = Math.min(ah, aw * 16 / 9), w = Math.floor(h * 9 / 16); h = Math.floor(w * 16 / 9);
     var tall = ah > h + 2 && aw / ah < 0.6; if (tall) h = Math.floor(ah);
+    // celular em pe (2026-11-22, igual aos outros jogos): sem a sobra de ate 16 px dos lados; o jogo no iframe se ajusta ao tamanho novo
+    if (!tall && aw - w > 0 && aw - w <= 16 && matchMedia('(pointer:coarse) and (orientation:portrait),(max-width:520px)').matches) w = Math.floor(aw);
     stage.classList.toggle("full", tall);
     stage.style.width = w + "px"; stage.style.height = h + "px";
   }
