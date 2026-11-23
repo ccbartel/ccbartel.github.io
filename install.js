@@ -41,7 +41,7 @@
   function build(iosMode) {
     var st = document.createElement("style"); st.textContent = css; document.head.appendChild(st);
     box = document.createElement("div"); box.id = "bg-inst"; box.setAttribute("role", "dialog"); box.setAttribute("aria-label", T.t);
-    var im = document.createElement("img"); im.src = "/assets/app-192.png"; im.alt = ""; box.appendChild(im);
+    var im = document.createElement("img"); im.src = "/assets/app-96.webp"; im.alt = ""; box.appendChild(im);
     var tx = document.createElement("div"); tx.className = "tx"; var b = document.createElement("b"); b.textContent = T.t; tx.appendChild(b);
     var sp = document.createElement("span");
     if (iosMode) { var parts = T.ios.split("{i}"); sp.appendChild(document.createTextNode(parts[0]));
