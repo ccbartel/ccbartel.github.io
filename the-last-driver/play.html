@@ -205,7 +205,7 @@ body:not(.setas) #nuiJump { right: 12px; bottom: 139px; }
 @media (min-width: 900px) and (min-height: 600px) { body:not(.setas) .nctl.r { width: 230px; height: 230px; } body:not(.setas) #nuiGun { right: 82px; bottom: 30px; } body:not(.setas) #nuiJump { right: 26px; bottom: 166px; } }
 .nround.act { color: #2a1306; background: linear-gradient(180deg, #ffe27a 0%, #f7b60c 100%); border-color: #fff; }
 .nround.empty { opacity: .55; filter: grayscale(1); }
-.nround em { position: absolute; top: -8px; right: -8px; min-width: 32px; height: 32px; padding: 0 6px; border-radius: 16px; display: grid; place-items: center; font: 700 20px/1 var(--nf); font-style: normal; color: #fff; background: #2a1306; border: 3px solid #fff; }
+.nround em { position: absolute; top: -16px; right: -10px; min-width: 28px; height: 28px; padding: 0 5px; border-radius: 14px; display: grid; place-items: center; font: 700 18px/1 var(--nf); font-style: normal; color: #fff; background: #2a1306; border: 3px solid #fff; }   /* 2026-11-22: fora do icone (antes cobria a seta/mira) */
 .nround.empty em { background: #c81e14; }
 @media (min-width: 900px) and (min-height: 600px) { .nround { width: 88px; height: 88px; } .nround svg { width: 44px; height: 44px; } }
 @media (prefers-reduced-motion: reduce) { .nbar i { transition: none; } }
@@ -530,7 +530,7 @@ html.emb #nui { --top: calc(8px + env(safe-area-inset-top, 0px)); }   /* no site
   #nuiHud .nnotes { top: calc(var(--top) + 112px * var(--k, 1)); } #nuiHud:has(#nuiDayH:not([hidden])) .nnotes { top: calc(var(--top) + 158px * var(--k, 1)); }   /* com a faixa da missao: avisos logo abaixo dela */
   #nuiHud .nround { width: calc(78px * var(--kb, 1)); height: calc(78px * var(--kb, 1)); }
   #nuiHud .nround svg { width: calc(40px * var(--kb, 1)); height: calc(40px * var(--kb, 1)); }
-  #nuiHud .nround em { top: calc(-8px * var(--kb, 1)); right: calc(-8px * var(--kb, 1)); min-width: calc(32px * var(--kb, 1)); height: calc(32px * var(--kb, 1)); font-size: calc(20px * var(--kb, 1)); }
+  #nuiHud .nround em { top: calc(-16px * var(--kb, 1)); right: calc(-10px * var(--kb, 1)); min-width: calc(28px * var(--kb, 1)); height: calc(28px * var(--kb, 1)); font-size: calc(18px * var(--kb, 1)); }
   #nuiHud .nctl { bottom: calc(18px * var(--k, 1) + env(safe-area-inset-bottom, 0px)); }
   body:not(.setas) #nuiHud .nctl.r { width: calc(200px * var(--kb, 1)); height: calc(200px * var(--kb, 1)); }
   body:not(.setas) #nuiHud #nuiGun { right: calc(57px * var(--kb, 1)); bottom: calc(29px * var(--kb, 1)); }
