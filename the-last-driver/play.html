@@ -394,6 +394,22 @@ body:not(.setas) #nuiJump { right: 12px; bottom: 139px; }
 @keyframes nhintg { 0%, 100% { box-shadow: 0 4px 0 #000a, 0 0 18px 6px #ffd23a99; } 50% { box-shadow: 0 4px 0 #000a, 0 0 34px 14px #ffd23aee; } }
 #nui .nround.nhint { animation: nhintp .45s ease-in-out 2; outline: 5px solid #f7b60c; outline-offset: 4px; }
 @media (prefers-reduced-motion: reduce) { #nui .nround.nhint { animation: nhintg .45s ease-in-out 2; } }
+/* tutorial de controles (2026-11-22): mao mostra cada controle e espera a pessoa fazer */
+#nuiTut { position: absolute; inset: 0; pointer-events: none; z-index: 6; --s: var(--kb, 1); }
+#nuiTut .tstk { position: absolute; width: 132px; height: 132px; margin: -66px 0 0 -66px; scale: var(--s); border-radius: 50%; background: radial-gradient(circle, #1d171455 0%, #1d1714a8 70%); border: 4px solid #ffffffb8; box-shadow: 0 6px 0 #0006; }
+#nuiTut .tstk i { position: absolute; left: 50%; top: 50%; width: 62px; height: 62px; margin: -31px 0 0 -31px; border-radius: 50%; background: linear-gradient(180deg, #ffe27a 0%, #f7b60c 100%); border: 4px solid #fff; box-shadow: 0 5px 0 #000a; animation: ntutx 1.6s ease-in-out infinite; }
+#nuiTut .thand { position: absolute; width: 76px; height: auto; margin: -3px 0 0 -25px; transform-origin: 25px 3px; scale: var(--s); filter: drop-shadow(0 4px 0 #0009); }
+#nuiTut.s0 .thand { animation: ntuth 1.6s ease-in-out infinite; }
+#nuiTut.s1 .thand, #nuiTut.s2 .thand, #nuiTut.sb .thand { animation: ntutt .9s ease-in-out infinite; }
+#nuiTut.touch .tstk, #nuiTut.touch .thand, #nuiTut.ok .tstk, #nuiTut.ok .thand { display: none; }
+#nuiTut .tlbl { position: absolute; transform: translate(-50%, -100%); padding: 8px 14px; border-radius: 14px; white-space: nowrap; font: 700 22px/1.1 var(--nf); color: #fff; background: #1d1714e6; border: 3px solid #fff; box-shadow: 0 4px 0 #000a; }
+#nuiTut .tlbl.side { transform: translate(-100%, -50%); }
+#nuiTut.ok .tlbl { background: #2e9d4a; color: #fff; }
+@keyframes ntutx { 0%, 100% { translate: 0 0; } 25% { translate: -44px 0; } 75% { translate: 44px 0; } }
+@keyframes ntuth { 0%, 100% { translate: 0 0; } 25% { translate: calc(-44px * var(--s)) 0; } 75% { translate: calc(44px * var(--s)) 0; } }
+@keyframes ntutt { 0%, 100% { translate: 0 calc(26px * var(--s)); } 45%, 60% { translate: 0 0; } }
+#nui .nround.nhintl { animation: nhintg .9s ease-in-out infinite; outline: 5px solid #f7b60c; outline-offset: 4px; }
+@media (prefers-reduced-motion: reduce) { #nuiTut .tstk i, #nuiTut .thand { animation: none !important; } }
 .nkey { position: absolute; left: -6px; top: -10px; min-width: 28px; height: 28px; padding: 0 6px; border-radius: 8px; display: grid; place-items: center; font: 700 17px/1 var(--nf); color: #2a1306; background: #fff; border: 2px solid #2a1306; box-shadow: 0 3px 0 #000a; }
 #nuiShareMsg { color: #b8f5c0; overflow-wrap: anywhere; font-size: 17px; }
 /* Testes (so em ?teste=1 / localhost): mostra o painel HTML antigo de testes */
@@ -579,6 +595,7 @@ html.emb #nui { --top: calc(8px + env(safe-area-inset-top, 0px)); }   /* no site
       <button class="nround act" id="nuiJump" data-ia="jump" aria-label="Pular"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2 4.5 9.5h4.5V14h6V9.5h4.5zM5 16.5h14V19H5z"/></svg><em id="nuiNJump">0</em></button>
       <button class="nround act" id="nuiGun" data-ia="gun" aria-label="Atirar"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" d="M12 4.5a7.5 7.5 0 1 0 0 15 7.5 7.5 0 0 0 0-15zM12 1v6M12 17v6M1 12h6M17 12h6"/><circle cx="12" cy="12" r="2" fill="currentColor"/></svg><em id="nuiNGun">0</em></button>
     </div>
+    <div id="nuiTut" hidden aria-hidden="true"><div class="tstk"><i></i></div><img class="thand" src="p/mao.png" alt=""><b class="tlbl"></b></div>
   </section>
   <div id="nuiLoadArt" class="nloadart" hidden aria-hidden="true"></div>
   <div id="nuiLoad2" hidden role="status"><b data-i="tip">Dica</b><p id="nuiLoad2T"></p><div class="lbar" aria-hidden="true"><i id="nuiLoad2Bar"></i></div></div>
@@ -739,6 +756,6 @@ html.emb #nui { --top: calc(8px + env(safe-area-inset-top, 0px)); }   /* no site
   "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
 } }
 </script>
-<script type="module" src="game.js?v=c32e9b4c"></script>
+<script type="module" src="game.js?v=6a4f67eb"></script>
 
 </body></html>
