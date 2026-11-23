@@ -315,7 +315,7 @@ body:not(.setas) #nuiJump { right: 12px; bottom: 139px; }
 .nbtn.help { height: 50px; } .nbtn.help b { font-size: 22px; } .nbtn.help svg { width: 28px; height: 28px; }
 /* v2b: ajustes do avaliador */
 #nui .nfull .npanel { max-height: calc(100dvh - var(--top) - 24px); }
-#nuiEMiss:empty, #nuiERew:empty, #nuiShopMsg:empty { display: none; }
+#nuiERew .ncoin svg { display: inline-block; width: 1.1em; height: 1.1em; vertical-align: -.2em; } #nuiEMiss:empty, #nuiERew:empty, #nuiShopMsg:empty { display: none; }
 #nui .npanel p { margin: 0; }
 #nui .nbuy:disabled { opacity: 1; }
 #nui .nbuy.max { background: #36c24a; color: #fff; border-color: #fff; text-shadow: 0 2px 0 #0006; }
@@ -362,7 +362,7 @@ body:not(.setas) #nuiJump { right: 12px; bottom: 139px; }
 .npop { display: flex; align-items: center; gap: 10px; white-space: nowrap; }
 .npop svg { width: 40px; height: 40px; flex: none; filter: drop-shadow(0 3px 0 #2a1306); }
 .npop .w { display: grid; place-items: center; font: 700 clamp(24px, 8vw, 42px)/1 var(--nf); text-transform: uppercase; letter-spacing: .03em; }
-.npop .w > span { grid-area: 1 / 1; } .npop .s { color: #2a1306; -webkit-text-stroke: 7px #2a1306; filter: drop-shadow(0 4px 0 #000c); }
+.npop .w > span { grid-area: 1 / 1; } .npop.lc .w { text-transform: none; }   /* 2026-11-23: '800 m' como no resto do HUD */ .npop .s { color: #2a1306; -webkit-text-stroke: 7px #2a1306; filter: drop-shadow(0 4px 0 #000c); }
 .npop .f { position: relative; background: linear-gradient(180deg, #fff0a0 8%, #ffc93a 52%, #f08c00 94%); -webkit-background-clip: text; background-clip: text; color: transparent; }
 /* 2026-11-22 (celular: "mensagem de missao concluida ocupa quase toda a visao da pista"): em pe, lista de missoes e avisos viram pilulas compactas */
 @media (max-aspect-ratio: 1/1) {
@@ -527,7 +527,7 @@ html.emb #nui { --top: calc(8px + env(safe-area-inset-top, 0px)); }   /* no site
   #nuiHud .ndayh { top: calc(var(--top) + 110px * var(--k, 1)); padding: calc(3px * var(--k, 1)) calc(10px * var(--k, 1)) calc(3px * var(--k, 1)) calc(5px * var(--k, 1)); border-width: calc(4px * var(--k, 1)); }
   #nuiHud .ndayh i svg { width: calc(26px * var(--k, 1)); height: calc(26px * var(--k, 1)); } #nuiHud .ndayh b { font-size: calc(20px * var(--k, 1)); }
   #nuiHud .ndayh .nbar2 { width: calc(48px * var(--k, 1)); height: calc(10px * var(--k, 1)); }
-  #nuiHud .nnotes { top: calc(var(--top) + 112px * var(--k, 1)); } #nuiHud:has(#nuiDayH:not([hidden])) .nnotes { top: calc(var(--top) + 158px * var(--k, 1)); }   /* com a faixa da missao: avisos logo abaixo dela */
+  #nuiHud .nnotes { top: calc(var(--top) + 112px * var(--k, 1)); } #nuiHud:has(#nuiDayH:not([hidden])) .nnotes, #nuiHud:has(#nuiG1:not([hidden])) .nnotes { top: calc(var(--top) + 158px * var(--k, 1)); }   /* com a faixa da missao: avisos logo abaixo dela */
   #nuiHud .nround { width: calc(78px * var(--kb, 1)); height: calc(78px * var(--kb, 1)); }
   #nuiHud .nround svg { width: calc(40px * var(--kb, 1)); height: calc(40px * var(--kb, 1)); }
   #nuiHud .nround em { top: calc(-16px * var(--kb, 1)); right: calc(-10px * var(--kb, 1)); min-width: calc(28px * var(--kb, 1)); height: calc(28px * var(--kb, 1)); font-size: calc(18px * var(--kb, 1)); }
@@ -619,14 +619,6 @@ html.emb #nui { --top: calc(8px + env(safe-area-inset-top, 0px)); }   /* no site
       <h2 class="why"><span class="s" id="nuiWhyS" aria-hidden="true"></span><span class="f" id="nuiWhy"></span></h2>
       <div class="nscore"><small data-i="score">Pontuação</small><b id="nuiScore">0</b></div>
       <div class="nbest" id="nuiBest"></div>
-      <div class="nstats">
-        <div><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#f7b60c" d="M12 2 4 22h4l1.2-3h5.6l1.2 3h4zm0 7 1.8 6h-3.6z"/></svg><b id="nuiEDist">0</b><small data-i="distance">Distância</small></div>
-        <div><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#7ad36b" d="M12 2a8 8 0 0 0-8 8c0 3 1.6 4.6 3 5.5V19a1 1 0 0 0 1 1h1v2h2v-2h2v2h2v-2h1a1 1 0 0 0 1-1v-3.5c1.4-.9 3-2.5 3-5.5a8 8 0 0 0-8-8zm-3 7.5a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm6 0a2 2 0 1 1 0 4 2 2 0 0 1 0-4z"/></svg><b id="nuiEKills">0</b><small data-i="zombies">Zumbis</small></div>
-        <div><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#f7b60c" stroke="#2a1306" stroke-width="2"/><circle cx="12" cy="12" r="6" fill="none" stroke="#a86a00" stroke-width="2"/></svg><b id="nuiECoins">0</b><small data-i="coins">Moedas</small></div>
-      </div>
-      <div id="nuiEMiss"></div>
-      <p class="nrew nday" id="nuiEDay" hidden></p>
-      <p class="nrew" id="nuiERew"></p>
       <button class="nbtn primary" id="nuiAgain" style="justify-content:center"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 4V1L7 5.5 12 10V6.5a5.5 5.5 0 1 1-5.5 5.5H4a8 8 0 1 0 8-8z"/></svg><b data-i="again">Jogar de novo</b></button>
       <div class="nrow">
         <button class="nbtn sm" id="nuiShare" data-ia="share" aria-label="Compartilhar"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M18 16a3 3 0 0 0-2.2 1l-7-4a3 3 0 0 0 0-2l7-4A3 3 0 1 0 15 5a3 3 0 0 0 .1.7l-7 4a3 3 0 1 0 0 4.6l7 4A3 3 0 1 0 18 16z"/></svg><b id="nuiShareN">0</b></button>
@@ -636,6 +628,14 @@ html.emb #nui { --top: calc(8px + env(safe-area-inset-top, 0px)); }   /* no site
         <button class="nbtn sm" id="nuiEGarage"><b data-i="garage">Garagem</b></button>
         <button class="nbtn sm" id="nuiEMenu"><b data-i="menu">Menu</b></button>
       </div>
+      <div class="nstats">
+        <div><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#f7b60c" d="M12 2 4 22h4l1.2-3h5.6l1.2 3h4zm0 7 1.8 6h-3.6z"/></svg><b id="nuiEDist">0</b><small data-i="distance">Distância</small></div>
+        <div><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#7ad36b" d="M12 2a8 8 0 0 0-8 8c0 3 1.6 4.6 3 5.5V19a1 1 0 0 0 1 1h1v2h2v-2h2v2h2v-2h1a1 1 0 0 0 1-1v-3.5c1.4-.9 3-2.5 3-5.5a8 8 0 0 0-8-8zm-3 7.5a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm6 0a2 2 0 1 1 0 4 2 2 0 0 1 0-4z"/></svg><b id="nuiEKills">0</b><small data-i="zombies">Zumbis</small></div>
+        <div><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#f7b60c" stroke="#2a1306" stroke-width="2"/><circle cx="12" cy="12" r="6" fill="none" stroke="#a86a00" stroke-width="2"/></svg><b id="nuiECoins">0</b><small data-i="coins">Moedas</small></div>
+      </div>
+      <div id="nuiEMiss"></div>
+      <p class="nrew nday" id="nuiEDay" hidden></p>
+      <p class="nrew" id="nuiERew"></p>
       <p class="nrew" id="nuiShareMsg" hidden role="status"></p>
     </div>
   </section>
@@ -756,10 +756,10 @@ html.emb #nui { --top: calc(8px + env(safe-area-inset-top, 0px)); }   /* no site
 
 <script type="importmap">
 { "imports": {
-  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
-  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  "three": "/lib/three/0.160.0/build/three.module.js",
+  "three/addons/": "/lib/three/0.160.0/examples/jsm/"
 } }
 </script>
-<script type="module" src="game.js?v=52b3212a"></script>
+<script type="module" src="game.js?v=58d2da1a"></script>
 
 </body></html>
