@@ -236,7 +236,9 @@
         if (pg) { var RC = JSON.parse(localStorage.getItem("bg_recent") || "[]").filter(function (x) { return x.p !== pg; }); RC.unshift({p: pg, d: dd}); localStorage.setItem("bg_recent", JSON.stringify(RC.slice(0, 6))); }
         var DY = JSON.parse(localStorage.getItem("bg_days") || "[]"); if (DY.indexOf(dd) < 0) { DY.push(dd); localStorage.setItem("bg_days", JSON.stringify(DY.slice(-60))); } } catch (e) {}
       EV.game = game; if (EV.ended) event(game, "replay", {mode: mode}); EV.ended = false; EV.t0 = performance.now(); event(game, "start", {mode: mode});
-      return rpc("record_play", {p_game: game}).catch(function () {});
+      // modos irmaos do Bumpets contam na propria capa (bumpets-soccer etc.); os eventos continuam em "bumpets"
+      var pm = game === "bumpets" && /-(soccer|race|zone|flag|paint|cards)$/.exec(mode || "");
+      return rpc("record_play", {p_game: pm ? "bumpets-" + pm[1] : game}).catch(function () {});
     },
     like: function (game) { return rpc("toggle_like", {p_game: game, p_device: device()}).then(function (r) { return r[0]; }); },
     // so com login (o servidor recusa sem conta); em localhost finge sucesso
@@ -268,6 +270,7 @@
     window.BG_SOCIAL.stats(games).then(function (rows) {
       rows.forEach(function (r) {
         var el = document.querySelector('[data-game="' + r.game + '"] .meta');
+        if (!(r.plays > 0)) return; // sem partidas ainda: nao mostra "Jogado 0 vezes"
         if (el) var L = window.SITE_I18N; el.textContent = L ? L.t("played", {p: compact(r.plays, L.tag), l: compact(r.likes, L.tag)}) : "Played " + compact(r.plays, "en") + " times · ♥ " + compact(r.likes, "en");
       });
     }).catch(function () {});
