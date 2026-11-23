@@ -266,8 +266,8 @@ body:not(.setas) #nuiJump { right: 12px; bottom: 139px; }
 .nend .why .f { position: relative; background: linear-gradient(180deg, #fff0a0 8%, #ffc93a 52%, #f08c00 94%); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .nend .why span { text-shadow: none; }
 .nrow .nbtn.sm b { font-size: clamp(18px, 5.2vw, 24px); }
-@media (max-width: 420px) { #nui .nrow .nbtn.sm svg { display: none; } #nui #nuiShare svg { display: block; } }
-#nuiShare { flex: none; width: 64px; padding: 0; }
+@media (max-width: 420px) { #nui .nrow .nbtn.sm svg { display: none; } #nui #nuiShare svg, #nui #nuiERank svg { display: block; } }
+#nuiERank { flex: none; width: 64px; padding: 0; } #nuiERank[hidden] { display: none; } #nuiShare b { font-variant-numeric: tabular-nums; }   /* 2026-11-23: compartilhar largo com a pontuacao; ranking ao lado */
 .nscore { display: flex; flex-direction: column; align-items: center; gap: 2px; }
 .nscore small { font: 700 16px/1 var(--nf); text-transform: uppercase; letter-spacing: .08em; color: #ffe9a8; }
 .nscore b { font: 700 52px/1 var(--nf); font-variant-numeric: tabular-nums; }
@@ -403,7 +403,7 @@ body:not(.setas) #nuiJump { right: 12px; bottom: 139px; }
 #nuiTut.s1 .thand, #nuiTut.s2 .thand, #nuiTut.sb .thand { animation: ntutt .9s ease-in-out infinite; }
 #nuiTut.touch .tstk, #nuiTut.touch .thand, #nuiTut.ok .tstk, #nuiTut.ok .thand { display: none; }
 #nuiTut .tlbl { position: absolute; transform: translate(-50%, -100%); padding: 8px 14px; border-radius: 14px; white-space: nowrap; font: 700 22px/1.1 var(--nf); color: #fff; background: #1d1714e6; border: 3px solid #fff; box-shadow: 0 4px 0 #000a; }
-#nuiTut .tlbl.side { transform: translate(-100%, -50%); }
+#nuiTut .tlbl.side { transform: translate(-100%, -50%); } #nuiTut .tlbl[hidden] { display: none; }
 #nuiTut.ok .tlbl { background: #2e9d4a; color: #fff; }
 @keyframes ntutx { 0%, 100% { translate: 0 0; } 25% { translate: -44px 0; } 75% { translate: 44px 0; } }
 @keyframes ntuth { 0%, 100% { translate: 0 0; } 25% { translate: calc(-44px * var(--s)) 0; } 75% { translate: calc(44px * var(--s)) 0; } }
@@ -578,6 +578,7 @@ html.emb #nui { --top: calc(8px + env(safe-area-inset-top, 0px)); }   /* no site
     </div>
     <div class="nhaz" id="nuiHaz" hidden aria-hidden="true"><svg viewBox="0 0 64 56"><path d="M32 4 60 52H4z" fill="#ffc400" stroke="#141414" stroke-width="5" stroke-linejoin="round"/><rect x="28.5" y="18" width="7" height="20" rx="2" fill="#141414"/><circle cx="32" cy="45" r="4" fill="#141414"/></svg><svg class="hdir" viewBox="0 0 24 24"><path d="M12 3 21 13h-5.5v8h-7v-8H3z" fill="#ffc400" stroke="#141414" stroke-width="2.2" stroke-linejoin="round"/></svg></div>
     <div class="nlife" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" id="nuiLife" data-ia="life" aria-label="Vida"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#e3261b" stroke="#fff" stroke-width="2" d="M12 21s-8-5.2-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.8-8 11-8 11z"/></svg><div class="nbar"><i id="nuiLifeCover"></i></div></div>
+    <div class="ndayh" id="nuiG1" hidden aria-hidden="true"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M5 3h2v18H5zM7 4h12v9H7z"/><path fill="#141414" d="M7 4h3v3H7zm6 0h3v3h-3zm-3 3h3v3h-3zm6 0h3v3h-3zm-9 3h3v3H7zm6 0h3v3h-3z"/></svg></i><b id="nuiG1T"></b><span class="nbar2"><em id="nuiG1B"></em></span></div>
     <div class="ndayh" id="nuiDayH" hidden role="status"><i id="nuiDayHI"></i><b id="nuiDayHT"></b><span class="nbar2"><em id="nuiDayHB"></em></span></div>
     <div class="nnotes">
 <div class="nstrip" id="nuiStrip" hidden role="status"><h3 data-i="missions">Missões</h3><ul id="nuiStripL"></ul></div>
@@ -628,9 +629,12 @@ html.emb #nui { --top: calc(8px + env(safe-area-inset-top, 0px)); }   /* no site
       <p class="nrew" id="nuiERew"></p>
       <button class="nbtn primary" id="nuiAgain" style="justify-content:center"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 4V1L7 5.5 12 10V6.5a5.5 5.5 0 1 1-5.5 5.5H4a8 8 0 1 0 8-8z"/></svg><b data-i="again">Jogar de novo</b></button>
       <div class="nrow">
+        <button class="nbtn sm" id="nuiShare" data-ia="share" aria-label="Compartilhar"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M18 16a3 3 0 0 0-2.2 1l-7-4a3 3 0 0 0 0-2l7-4A3 3 0 1 0 15 5a3 3 0 0 0 .1.7l-7 4a3 3 0 1 0 0 4.6l7 4A3 3 0 1 0 18 16z"/></svg><b id="nuiShareN">0</b></button>
+        <button class="nbtn sm" id="nuiERank" aria-label="Ranking" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 3h12v2h3v3a5 5 0 0 1-4.6 5A5 5 0 0 1 13 15.9V18h3v3H8v-3h3v-2.1A5 5 0 0 1 7.6 13 5 5 0 0 1 3 8V5h3zm0 4H5v1a3 3 0 0 0 1.3 2.5A5 5 0 0 1 6 9zm12 0v2a5 5 0 0 1-.3 1.5A3 3 0 0 0 19 8V7z"/></svg></button>
+      </div>
+      <div class="nrow">
         <button class="nbtn sm" id="nuiEGarage"><b data-i="garage">Garagem</b></button>
         <button class="nbtn sm" id="nuiEMenu"><b data-i="menu">Menu</b></button>
-        <button class="nbtn sm" id="nuiShare" data-ia="share" aria-label="Compartilhar"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M18 16a3 3 0 0 0-2.2 1l-7-4a3 3 0 0 0 0-2l7-4A3 3 0 1 0 15 5a3 3 0 0 0 .1.7l-7 4a3 3 0 1 0 0 4.6l7 4A3 3 0 1 0 18 16z"/></svg></button>
       </div>
       <p class="nrew" id="nuiShareMsg" hidden role="status"></p>
     </div>
@@ -756,6 +760,6 @@ html.emb #nui { --top: calc(8px + env(safe-area-inset-top, 0px)); }   /* no site
   "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
 } }
 </script>
-<script type="module" src="game.js?v=62fb7bd1"></script>
+<script type="module" src="game.js?v=52b3212a"></script>
 
 </body></html>
