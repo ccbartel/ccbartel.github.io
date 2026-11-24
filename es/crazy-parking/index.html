@@ -7,6 +7,8 @@
 
 
 
+
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Crazy Parking - Bartel Games</title>
@@ -55,12 +57,18 @@ body{font-family:var(--font);-webkit-tap-highlight-color:transparent;touch-actio
 #res{left:0;right:0;top:calc(12*var(--u));text-align:center;font-size:calc(12*var(--u));line-height:1;transform:scale(0);transition:transform .25s cubic-bezier(.3,1.6,.5,1)}
 #res.on{transform:scale(1)}
 #res small{display:block;font-size:.36em;letter-spacing:.04em;margin-top:.15em}
+#res.warn{top:calc(30*var(--u))}#res.warn .when{font-size:.42em;animation:warnblink .45s ease-in-out infinite alternate}
+@keyframes warnblink{from{opacity:1;transform:scale(1)}to{opacity:.25;transform:scale(.94)}}
 #res .when{display:block;font-size:.34em;color:#ffd84d;margin-top:.2em;-webkit-text-stroke:calc(.45*var(--u)) #0b1422}
 #res.leg{color:#ffd84d;animation:legpop .6s ease-in-out 3 alternate}#res.leg small{font-size:.5em}#res.leg em{font-size:.34em;color:#fff}
 @keyframes legpop{from{filter:drop-shadow(0 0 0 #ffd84d)}to{filter:drop-shadow(0 0 calc(2*var(--u)) #ffd84d)}}
 #res em{display:block;font-style:normal;font-size:.22em;margin-top:.5em;-webkit-text-stroke:calc(.35*var(--u)) #0b1422}
-#cont{left:0;right:0;bottom:calc(9*var(--u));text-align:center;font-size:calc(3.4*var(--u));opacity:0;transition:opacity .3s .5s}
-#cont.on{opacity:1;animation:blink 1.2s ease-in-out 1s infinite}
+#cont{left:0;right:0;bottom:calc(11*var(--u));text-align:center;font-size:calc(3.4*var(--u));opacity:0;transition:opacity .3s .5s;-webkit-text-stroke:0}
+#cont.on{opacity:1}
+#cont .pill{display:inline-flex;align-items:center;gap:calc(1.2*var(--u));padding:calc(1.6*var(--u)) calc(4*var(--u));border-radius:calc(5*var(--u));font:700 calc(4*var(--u))/1 var(--font);text-transform:uppercase;color:#2a1306;background:linear-gradient(180deg,#ffe27a 0%,#f7b60c 100%);box-shadow:0 0 0 calc(.45*var(--u)) #fff,0 calc(.6*var(--u)) 0 calc(.45*var(--u)) #000a;animation:contpulse .9s ease-in-out 1s infinite alternate}
+#cont .pill i{font-style:normal;font-size:1.05em}
+#cont small{display:block;margin-top:calc(1.6*var(--u));font:700 calc(2.3*var(--u))/1.2 var(--font);color:#fff;-webkit-text-stroke:calc(.4*var(--u)) #0b1422;paint-order:stroke fill}
+@keyframes contpulse{from{transform:scale(1)}to{transform:scale(1.07)}}
 @keyframes blink{50%{opacity:.55}}
 #hand{left:50%;bottom:calc(16*var(--u));font-size:calc(9*var(--u));-webkit-text-stroke:0;transform:translateX(-50%);animation:pulse .8s ease-in-out infinite alternate}
 @keyframes pulse{from{transform:translateX(-50%) scale(.85)}to{transform:translateX(-50%) scale(1.1)}}
@@ -201,7 +209,7 @@ body{font-family:var(--font);-webkit-tap-highlight-color:transparent;touch-actio
 </div>
 <div id="adbar" aria-label="Advertisement" data-i18n-label="ad"><div class="ad-slot" data-ad-slot-key="ADSENSE_SLOT_GAME"></div></div>
 <script type="importmap">{"imports":{"three":"/lib/three/0.186.0/build/three.module.js"}}</script>
-<script type="module" src="game.js?v=b50dacef"></script>
+<script type="module" src="game.js?v=04dc7e67"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7f9a5c4a463b4b799b86c338ccb2bc99"}'></script><!-- End Cloudflare Web Analytics -->
 <!--guide--><style>
 html.bg-hasg,html.bg-hasg body{height:auto;min-height:100%;overflow-x:hidden;overflow-y:auto}
