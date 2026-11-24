@@ -281,5 +281,62 @@ canvas{display:block;width:100%;height:100%}
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.186.0/examples/jsm/"}}</script>
 <script type="module" src="game.js?v=4c2f2cde"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7f9a5c4a463b4b799b86c338ccb2bc99"}'></script><!-- End Cloudflare Web Analytics -->
+<!--guide--><style>
+html.bg-hasg,html.bg-hasg body{height:auto;min-height:100%;overflow-x:hidden;overflow-y:auto}
+html.bg-hasg #app{touch-action:none}
+.bg-gspace{height:100vh;pointer-events:none}
+.bg-guide{position:relative;z-index:2;background:#0b1736;color:#dfe6fb;border-radius:24px 24px 0 0;box-shadow:0 -10px 40px #0009;
+ font:400 16.5px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;user-select:text;-webkit-user-select:text;touch-action:auto;
+ padding:26px 18px calc(var(--adH,60px) + 48px)}
+.bg-guide .g-in{max-width:680px;margin:0 auto}
+.bg-guide .g-k{display:inline-block;font:800 13px/1 "Baloo 2",system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#f7b60c;margin-bottom:6px}
+.bg-guide h2.g-t{font:800 clamp(26px,5.4vw,38px)/1.12 "Baloo 2",system-ui,sans-serif;color:#fff;margin:0 0 12px}
+.bg-guide h3{font:800 22px/1.2 "Baloo 2",system-ui,sans-serif;color:#ffd45a;margin:28px 0 8px}
+.bg-guide p{margin:0 0 12px}
+.bg-guide ul,.bg-guide ol{margin:0 0 12px;padding-left:22px}.bg-guide li{margin:0 0 7px}
+.bg-guide b{color:#fff}
+.bg-guide .g-lead p:first-child{font-size:18px;color:#fff}
+.bg-guide .g-play{display:inline-flex;align-items:center;gap:8px;margin:6px 0 4px;padding:12px 22px;border-radius:999px;border:0;cursor:pointer;text-decoration:none;
+ font:800 18px/1 "Baloo 2",system-ui,sans-serif;color:#0d1430;background:linear-gradient(180deg,#ffe27a,#f7b60c);box-shadow:0 0 0 3px #fff,0 5px 0 3px #000a}
+.bg-guide .g-faq h4{font:700 17px/1.35 system-ui,-apple-system,"Segoe UI",sans-serif;color:#fff;margin:16px 0 4px}
+.bg-guide .g-rel{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 0}
+.bg-guide .g-rel a,.bg-guide .g-foot a{color:#fff;text-decoration:none;font-weight:700;padding:8px 14px;border-radius:999px;border:1.5px solid #ffffff38;background:#ffffff0d;font-size:15px}
+.bg-guide .g-rel a:hover,.bg-guide .g-foot a:hover{border-color:#f7b60c}
+.bg-guide .g-foot{display:flex;flex-wrap:wrap;gap:8px;margin-top:30px;padding-top:18px;border-top:1px solid #ffffff1f}
+.bg-guide .g-upd{color:#93a3cc;font-size:14px;margin-top:14px}
+.bg-gchip{display:none}
+@media (min-width:900px) and (pointer:fine){.bg-gchip{display:inline-flex;align-items:center;gap:8px;position:fixed;right:18px;bottom:calc(var(--adH,90px) + 16px);z-index:2;
+ padding:10px 16px;border-radius:999px;cursor:pointer;font:800 16px/1 "Baloo 2",system-ui,sans-serif;color:#fff;background:#16224a;border:1.5px solid #f7b60c99;box-shadow:0 6px 18px #0008;transition:opacity .2s}
+ .bg-gchip:hover{border-color:#f7b60c}html.bg-gdown .bg-gchip{opacity:0;pointer-events:none}}
+.bg-glink{display:block;margin-top:12px;text-align:center;color:#ffd45a;font-weight:700;text-decoration:underline;cursor:pointer}
+</style><div class="bg-gspace" aria-hidden="true"></div>
+<article id="guide" class="bg-guide" lang="es" aria-labelledby="guide-t"><div class="g-in">
+<span class="g-k">Guía del juego</span><h2 class="g-t" id="guide-t">Bumpets Cards: cómo jugar, consejos y preguntas frecuentes</h2>
+<div class="g-lead"><p>Bumpets Cards es un juego de cartas por turnos para <b>2 a 4 jugadores</b>. Aquí no hay joystick ni DASH: te sientas a la mesa, esperas tu turno y juegas una carta cada vez. El objetivo es simple: ser el primero en quedarte sin cartas en la mano.</p><p>El mazo tiene cuatro palos de animales, el cerdito, la vaquita, el panda y el tigre, además de cartas de acción con el <b>Lobo</b> y comodines con la <b>Capibara</b>. Los turnos son rápidos, las reglas caben en un minuto y la última carta siempre trae un susto: hay que tocar <b>BUMP!</b> a tiempo.</p></div>
+<a class="g-play" href="#" data-guide-top>&#9654; Jugar Bumpets Cards ahora</a>
+<h3>Cómo jugar</h3><ol><li>Toca <b>JUGAR</b> para entrar con alguien al azar, crea una sala para tus amigos o practica contra la computadora.</li><li>Cada uno recibe <b>7 cartas</b> y una carta de número abre la pila de la mesa.</li><li>En tu turno, juega una carta con el <b>mismo animal</b> o el <b>mismo número</b> que la carta de arriba.</li><li>¿Ninguna sirve? Roba una del mazo. Si la carta nueva sirve, puedes jugarla al momento o pasar.</li><li>Cuando te quede la última carta, toca <b>BUMP!</b> antes de que se acabe la barra, o robas 2 cartas.</li><li>Gana quien se quede primero con la mano vacía.</li></ol>
+<h3>Controles</h3><ul><li>Móvil: toca una carta de tu mano para jugarla, toca el mazo para robar y usa los botones que aparecen: <b>Pasar</b>, <b>Robar +N</b> y <b>BUMP!</b>.</li><li>Ordenador: las mismas acciones con el ratón; haz clic en la carta, el mazo o el botón.</li><li>Cada turno tiene un límite de unos 15 segundos. Si se acaba, robas automáticamente y el turno pasa.</li></ul>
+<h3>Las cartas</h3><ul><li><b>Cartas de número (1 a 9)</b>: dos copias de cada número para cada uno de los cuatro animales.</li><li><b>Lobo +2</b>: el siguiente roba 2 cartas y pierde el turno.</li><li><b>Lobo círculo tachado</b>: salta al siguiente jugador.</li><li><b>Lobo flechas</b>: invierten el orden de los turnos. Con solo dos jugadores funciona como un salto y vuelves a jugar.</li><li>Cada carta del Lobo lleva el color de un animal, así que sigue la misma regla: mismo animal o mismo símbolo.</li><li><b>Capibara</b>: comodín. Vale sobre cualquier carta y eliges el animal que sigue.</li><li><b>Capibara +4</b>: también es comodín, y el siguiente roba 4.</li><li>Se puede responder un +2 con otro +2 y un +4 con otro +4. El castigo se va sumando y cae en quien no pueda responder. Un +4 no responde a un +2, y la Capibara común no frena ninguno de los dos.</li></ul>
+<h3>Consejos y estrategias</h3><ul><li>Guarda una Capibara para cuando no tengas otra salida. Gastarla pronto te deja atascado después.</li><li>Mira cuántas cartas tienen los rivales. Cuando el siguiente tenga una o dos, es el momento del +2, del salto o del +4.</li><li>Juega el animal que más tienes. Cambiar a un palo que te falta complica tus próximos turnos.</li><li>Atento a la barra del BUMP! en la última carta. Dura solo unos tres segundos, y olvidarla cuesta dos cartas.</li></ul>
+<h3>Jugar online con amigos</h3><p>Toca <b>Crear sala</b> y comparte el enlace de la sala o el código de 5 letras. Tus amigos abren el enlace o escriben el código en <b>Entrar con código</b>. La mesa admite de 2 a 4 jugadores. <b>JUGAR</b> te sienta con alguien al azar; si nadie entra en unos segundos, juegas contra la computadora. Tu primera partida de Cartas es contra bots fáciles, con solo 5 cartas en la mano, y las cartas que puedes jugar aparecen destacadas, para que aprendas las reglas jugando.</p>
+<section class="g-faq"><h3>Preguntas frecuentes</h3><h4>¿Bumpets Cards es gratis?</h4><p>Sí. Se juega gratis en el navegador, sin registro.</p><h4>¿Tengo que descargar algo?</h4><p>No. El juego funciona en el navegador del móvil y del ordenador.</p><h4>¿Se puede jugar en el móvil?</h4><p>Sí. Todo se hace con toques: cartas, mazo y botones.</p><h4>¿Cómo invito a un amigo?</h4><p>Crea una sala y envía el enlace o el código de 5 letras. Tu amigo abre el enlace o escribe el código en Entrar con código.</p><h4>¿Y si no hay nadie conectado?</h4><p>JUGAR pasa a una partida contra la computadora después de unos segundos. También puedes elegir la Práctica, con 1 a 3 bots y tres niveles de dificultad.</p><h4>El juego va lento o se trabó. ¿Qué hago?</h4><p>Cierra otras pestañas y aplicaciones y recarga la página. Si la conexión se corta durante una sala, el juego intenta reconectarse solo.</p></section>
+<h3>Otros juegos que te pueden gustar</h3><nav class="g-rel"><a href="/es/candy-line/">Candy Line</a><a href="/es/bumpets/">Bumpets Arena</a><a href="/es/geo-quiz/">Geo Quiz</a></nav>
+<a class="g-play" href="#" data-guide-top>&#9650; Volver al juego</a>
+<p class="g-upd">Guía de Bartel Games · actualizada el 24/11/2026</p>
+<nav class="g-foot"><a href="/es/">Todos los juegos</a><a href="/es/acerca-de/">Acerca de</a><a href="/privacy.html">Privacidad</a><a href="/contact.html">Contacto</a></nav>
+</div></article>
+<button class="bg-gchip" type="button" data-guide-go>&#9660; Cómo jugar y consejos</button><script>(function(){var d=document,h=d.documentElement;h.classList.add('bg-hasg');
+function go(){var g=d.getElementById('guide');if(g)g.scrollIntoView({behavior:'smooth'});}
+function top(){scrollTo({top:0,behavior:'smooth'});}
+addEventListener('scroll',function(){h.classList.toggle('bg-gdown',scrollY>innerHeight*0.3);},{passive:true});
+function kd(e){var t=e.target,k=e.key;if(scrollY>innerHeight*0.5||(t&&(t.isContentEditable||/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))))return;
+ if(k==='ArrowDown'||k==='ArrowUp'||k===' '||k==='PageDown'||k==='PageUp')e.preventDefault();}
+addEventListener('keydown',kd);
+function fr(f){try{f.contentWindow.addEventListener('keydown',kd);}catch(e){}}
+[].forEach.call(d.querySelectorAll('#app iframe'),function(f){fr(f);f.addEventListener('load',function(){fr(f);});});
+d.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('[data-guide-go],[data-guide-top]');if(!a)return;e.preventDefault();
+ if(a.hasAttribute('data-guide-go')){var x=d.getElementById('howto');if(x&&x.open)x.close();go();}else top();});
+var x=d.getElementById('howto');if(x&&!x.querySelector('.bg-glink')){var b=x.querySelector('.close')||x.querySelector('form');var l=d.createElement('a');l.className='bg-glink';l.href='#guide';l.setAttribute('data-guide-go','');l.textContent="Guía completa: consejos, modos y preguntas";if(b)b.parentNode.insertBefore(l,b);else x.appendChild(l);}
+})();</script><!--/guide-->
 </body>
 </html>

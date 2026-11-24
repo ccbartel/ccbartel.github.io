@@ -211,5 +211,63 @@ body{font-family:var(--font);-webkit-tap-highlight-color:transparent;touch-actio
 <script>window.BC_GAME="cones";</script>
 <script type="module" src="../burnout-city/game.js?v=1ba97547"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7f9a5c4a463b4b799b86c338ccb2bc99"}'></script><!-- End Cloudflare Web Analytics -->
+<!--guide--><style>
+html.bg-hasg,html.bg-hasg body{height:auto;min-height:100%;overflow-x:hidden;overflow-y:auto}
+html.bg-hasg #app{touch-action:none}
+.bg-gspace{height:100vh;pointer-events:none}
+.bg-guide{position:relative;z-index:2;background:#0b1736;color:#dfe6fb;border-radius:24px 24px 0 0;box-shadow:0 -10px 40px #0009;
+ font:400 16.5px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;user-select:text;-webkit-user-select:text;touch-action:auto;
+ padding:26px 18px calc(var(--adH,60px) + 48px)}
+.bg-guide .g-in{max-width:680px;margin:0 auto}
+.bg-guide .g-k{display:inline-block;font:800 13px/1 "Baloo 2",system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#f7b60c;margin-bottom:6px}
+.bg-guide h2.g-t{font:800 clamp(26px,5.4vw,38px)/1.12 "Baloo 2",system-ui,sans-serif;color:#fff;margin:0 0 12px}
+.bg-guide h3{font:800 22px/1.2 "Baloo 2",system-ui,sans-serif;color:#ffd45a;margin:28px 0 8px}
+.bg-guide p{margin:0 0 12px}
+.bg-guide ul,.bg-guide ol{margin:0 0 12px;padding-left:22px}.bg-guide li{margin:0 0 7px}
+.bg-guide b{color:#fff}
+.bg-guide .g-lead p:first-child{font-size:18px;color:#fff}
+.bg-guide .g-play{display:inline-flex;align-items:center;gap:8px;margin:6px 0 4px;padding:12px 22px;border-radius:999px;border:0;cursor:pointer;text-decoration:none;
+ font:800 18px/1 "Baloo 2",system-ui,sans-serif;color:#0d1430;background:linear-gradient(180deg,#ffe27a,#f7b60c);box-shadow:0 0 0 3px #fff,0 5px 0 3px #000a}
+.bg-guide .g-faq h4{font:700 17px/1.35 system-ui,-apple-system,"Segoe UI",sans-serif;color:#fff;margin:16px 0 4px}
+.bg-guide .g-rel{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 0}
+.bg-guide .g-rel a,.bg-guide .g-foot a{color:#fff;text-decoration:none;font-weight:700;padding:8px 14px;border-radius:999px;border:1.5px solid #ffffff38;background:#ffffff0d;font-size:15px}
+.bg-guide .g-rel a:hover,.bg-guide .g-foot a:hover{border-color:#f7b60c}
+.bg-guide .g-foot{display:flex;flex-wrap:wrap;gap:8px;margin-top:30px;padding-top:18px;border-top:1px solid #ffffff1f}
+.bg-guide .g-upd{color:#93a3cc;font-size:14px;margin-top:14px}
+.bg-gchip{display:none}
+@media (min-width:900px) and (pointer:fine){.bg-gchip{display:inline-flex;align-items:center;gap:8px;position:fixed;right:18px;bottom:calc(var(--adH,90px) + 16px);z-index:2;
+ padding:10px 16px;border-radius:999px;cursor:pointer;font:800 16px/1 "Baloo 2",system-ui,sans-serif;color:#fff;background:#16224a;border:1.5px solid #f7b60c99;box-shadow:0 6px 18px #0008;transition:opacity .2s}
+ .bg-gchip:hover{border-color:#f7b60c}html.bg-gdown .bg-gchip{opacity:0;pointer-events:none}}
+.bg-glink{display:block;margin-top:12px;text-align:center;color:#ffd45a;font-weight:700;text-decoration:underline;cursor:pointer}
+</style><div class="bg-gspace" aria-hidden="true"></div>
+<article id="guide" class="bg-guide" lang="pt" aria-labelledby="guide-t"><div class="g-in">
+<span class="g-k">Guia do jogo</span><h2 class="g-t" id="guide-t">Drift Trail: como jogar, dicas e perguntas frequentes</h2>
+<div class="g-lead"><p>Drift Trail é um jogo de direção de precisão da Bartel Games. Aqui não tem desastre nem monstro: só uma cidade ensolarada, um muscle car que anda sozinho e uma trilha comprida de cones para você fazer zigue-zague. A trilha faz curvas de um lado para o outro e fica mais estreita quanto mais longe você vai, enquanto a velocidade não para de subir.</p><p>O que deixa o jogo interessante é que o caminho mais seguro não é o melhor. Os pontos vêm de passar raspando nos cones, o mais perto que você tiver coragem, sem encostar. Cada portão vira uma pequena escolha entre jogar seguro e ir atrás do combo.</p></div>
+<a class="g-play" href="#" data-guide-top>&#9654; Jogar Drift Trail agora</a>
+<h3>Como jogar</h3><ol><li>Toque em Jogar. O carro sai sozinho na entrada da trilha de cones.</li><li>Vire para manter o carro entre as duas fileiras de cones enquanto a trilha faz zigue-zague.</li><li>Passe cada portão perto de um cone, sem tocar nele, para montar o seu COMBO.</li><li>Evite derrubar cones e nunca saia da trilha.</li><li>A partida acaba quando a barra de vida esvazia. Aí é mandar um desafio ou tentar de novo.</li></ol>
+<h3>Controles</h3><ul><li>Celular: arraste o dedo para a esquerda ou a direita para virar e derrapar.</li><li>Computador: setas, teclas A e D ou o mouse arrastado de lado a lado.</li></ul>
+<h3>Modos de jogo</h3><ul><li><b>Jogar</b>: a trilha de cones com ranking mundial. Cada partida soma a distância e todos os bônus que você pegar.</li><li><b>Desafiar</b>: no fim da partida, a tela de resultado deixa você mandar um link de Desafiar. Seu amigo recebe os mesmos cones, na mesma ordem, e precisa passar a sua pontuação; um aviso aparece na hora em que ele te supera. Ele pode responder com Desafiar de volta.</li></ul>
+<h3>Barra de vida e erros</h3><p>Sua barra tem 2 vidas. Passar por um portão do lado de fora da fileira de cones tira uma vida inteira. Bater num cone tira só um pedacinho da barra (dez cones somam uma vida), mas o cone sai voando, o COMBO quebra e o bônus de trecho limpo daquele pedaço vai embora. Na prática, alguns cones tocados dá para aguentar; sair da trilha duas vezes acaba a partida.</p>
+<h3>Pontuação: passagens raspando e portões limpos</h3><p>A distância dá um fluxo constante de pontos. A pontuação de verdade vem das passagens raspando: cruzar um portão com o carro colado num cone, sem encostar, dá 20 pontos vezes o seu COMBO, até 120 por passagem a partir do COMBO 6. Aqui o combo não tem cronômetro; ele só quebra quando você bate num cone ou sai da trilha. Além disso, cada 10 portões seguidos sem batida e sem saída rendem +100 de bônus de trecho limpo.</p>
+<h3>Dicas e estratégias</h3><ul><li>Escolha um lado de cada portão e vá com convicção. Raspar no cone de dentro da curva costuma ser o caminho mais curto e ainda conta como passagem raspando.</li><li>Olhe dois portões à frente, não o cone colado no carro. A trilha balança, e comandos pequenos e cedo mantêm a derrapagem sob controle.</li><li>Quando a trilha estreitar em alta velocidade, pare de caçar passagens raspando por um momento e só fique dentro. Uma vida inteira vale mais do que um combo.</li><li>Se encostou num cone, o combo já foi: use os próximos portões para se acalmar antes de arriscar de novo.</li><li>Ao aceitar um desafio, o percurso é idêntico, então a pontuação do amigo mostra exatamente quantos trechos limpos você precisa.</li></ul>
+<section class="g-faq"><h3>Perguntas frequentes</h3><h4>O Drift Trail é grátis?</h4><p>Sim. Partidas, ranking e desafios são grátis; a página mostra anúncios.</p><h4>Preciso baixar?</h4><p>Não. É abrir a página e a trilha de cones carrega no próprio navegador, sem cadastro.</p><h4>Dá para jogar no celular?</h4><p>Dá. Um dedo basta para virar, e também funciona com mouse ou teclado.</p><h4>Como funciona o desafio com amigo?</h4><p>Termine uma partida e toque em Desafiar na tela de resultado. O link abre o mesmo percurso de cones para o seu amigo, que precisa fazer um ponto a mais que você para vencer.</p><h4>Tem ranking?</h4><p>Tem, mundial. Basta um apelido para entrar; o login com Google é opcional e leva seu apelido e seu recorde para outros aparelhos.</p><h4>E se o jogo engasgar ou travar?</h4><p>Recarregue a página e feche outras abas. Manter o navegador atualizado também ajuda em celular mais antigo.</p></section>
+<h3>Outros jogos que você pode curtir</h3><nav class="g-rel"><a href="/pt/burnout-city/">Burnout City</a><a href="/pt/the-last-driver/">The Last Driver</a><a href="/pt/bumpets-race/">Bumpets Race</a></nav>
+<a class="g-play" href="#" data-guide-top>&#9650; Voltar ao jogo</a>
+<p class="g-upd">Guia do Bartel Games · atualizado em 24/11/2026</p>
+<nav class="g-foot"><a href="/pt/">Todos os jogos</a><a href="/pt/sobre/">Sobre</a><a href="/privacy.html">Privacidade</a><a href="/contact.html">Contato</a></nav>
+</div></article>
+<button class="bg-gchip" type="button" data-guide-go>&#9660; Como jogar e dicas</button><script>(function(){var d=document,h=d.documentElement;h.classList.add('bg-hasg');
+function go(){var g=d.getElementById('guide');if(g)g.scrollIntoView({behavior:'smooth'});}
+function top(){scrollTo({top:0,behavior:'smooth'});}
+addEventListener('scroll',function(){h.classList.toggle('bg-gdown',scrollY>innerHeight*0.3);},{passive:true});
+function kd(e){var t=e.target,k=e.key;if(scrollY>innerHeight*0.5||(t&&(t.isContentEditable||/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))))return;
+ if(k==='ArrowDown'||k==='ArrowUp'||k===' '||k==='PageDown'||k==='PageUp')e.preventDefault();}
+addEventListener('keydown',kd);
+function fr(f){try{f.contentWindow.addEventListener('keydown',kd);}catch(e){}}
+[].forEach.call(d.querySelectorAll('#app iframe'),function(f){fr(f);f.addEventListener('load',function(){fr(f);});});
+d.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('[data-guide-go],[data-guide-top]');if(!a)return;e.preventDefault();
+ if(a.hasAttribute('data-guide-go')){var x=d.getElementById('howto');if(x&&x.open)x.close();go();}else top();});
+var x=d.getElementById('howto');if(x&&!x.querySelector('.bg-glink')){var b=x.querySelector('.close')||x.querySelector('form');var l=d.createElement('a');l.className='bg-glink';l.href='#guide';l.setAttribute('data-guide-go','');l.textContent="Guia completo: dicas, modos e perguntas";if(b)b.parentNode.insertBefore(l,b);else x.appendChild(l);}
+})();</script><!--/guide-->
 </body>
 </html>

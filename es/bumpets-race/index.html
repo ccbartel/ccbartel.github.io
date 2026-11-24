@@ -281,5 +281,63 @@ canvas{display:block;width:100%;height:100%}
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.186.0/examples/jsm/"}}</script>
 <script type="module" src="game.js?v=4c2f2cde"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7f9a5c4a463b4b799b86c338ccb2bc99"}'></script><!-- End Cloudflare Web Analytics -->
+<!--guide--><style>
+html.bg-hasg,html.bg-hasg body{height:auto;min-height:100%;overflow-x:hidden;overflow-y:auto}
+html.bg-hasg #app{touch-action:none}
+.bg-gspace{height:100vh;pointer-events:none}
+.bg-guide{position:relative;z-index:2;background:#0b1736;color:#dfe6fb;border-radius:24px 24px 0 0;box-shadow:0 -10px 40px #0009;
+ font:400 16.5px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;user-select:text;-webkit-user-select:text;touch-action:auto;
+ padding:26px 18px calc(var(--adH,60px) + 48px)}
+.bg-guide .g-in{max-width:680px;margin:0 auto}
+.bg-guide .g-k{display:inline-block;font:800 13px/1 "Baloo 2",system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#f7b60c;margin-bottom:6px}
+.bg-guide h2.g-t{font:800 clamp(26px,5.4vw,38px)/1.12 "Baloo 2",system-ui,sans-serif;color:#fff;margin:0 0 12px}
+.bg-guide h3{font:800 22px/1.2 "Baloo 2",system-ui,sans-serif;color:#ffd45a;margin:28px 0 8px}
+.bg-guide p{margin:0 0 12px}
+.bg-guide ul,.bg-guide ol{margin:0 0 12px;padding-left:22px}.bg-guide li{margin:0 0 7px}
+.bg-guide b{color:#fff}
+.bg-guide .g-lead p:first-child{font-size:18px;color:#fff}
+.bg-guide .g-play{display:inline-flex;align-items:center;gap:8px;margin:6px 0 4px;padding:12px 22px;border-radius:999px;border:0;cursor:pointer;text-decoration:none;
+ font:800 18px/1 "Baloo 2",system-ui,sans-serif;color:#0d1430;background:linear-gradient(180deg,#ffe27a,#f7b60c);box-shadow:0 0 0 3px #fff,0 5px 0 3px #000a}
+.bg-guide .g-faq h4{font:700 17px/1.35 system-ui,-apple-system,"Segoe UI",sans-serif;color:#fff;margin:16px 0 4px}
+.bg-guide .g-rel{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 0}
+.bg-guide .g-rel a,.bg-guide .g-foot a{color:#fff;text-decoration:none;font-weight:700;padding:8px 14px;border-radius:999px;border:1.5px solid #ffffff38;background:#ffffff0d;font-size:15px}
+.bg-guide .g-rel a:hover,.bg-guide .g-foot a:hover{border-color:#f7b60c}
+.bg-guide .g-foot{display:flex;flex-wrap:wrap;gap:8px;margin-top:30px;padding-top:18px;border-top:1px solid #ffffff1f}
+.bg-guide .g-upd{color:#93a3cc;font-size:14px;margin-top:14px}
+.bg-gchip{display:none}
+@media (min-width:900px) and (pointer:fine){.bg-gchip{display:inline-flex;align-items:center;gap:8px;position:fixed;right:18px;bottom:calc(var(--adH,90px) + 16px);z-index:2;
+ padding:10px 16px;border-radius:999px;cursor:pointer;font:800 16px/1 "Baloo 2",system-ui,sans-serif;color:#fff;background:#16224a;border:1.5px solid #f7b60c99;box-shadow:0 6px 18px #0008;transition:opacity .2s}
+ .bg-gchip:hover{border-color:#f7b60c}html.bg-gdown .bg-gchip{opacity:0;pointer-events:none}}
+.bg-glink{display:block;margin-top:12px;text-align:center;color:#ffd45a;font-weight:700;text-decoration:underline;cursor:pointer}
+</style><div class="bg-gspace" aria-hidden="true"></div>
+<article id="guide" class="bg-guide" lang="es" aria-labelledby="guide-t"><div class="g-in">
+<span class="g-k">Guía del juego</span><h2 class="g-t" id="guide-t">Bumpets Race: cómo jugar, consejos y preguntas frecuentes</h2>
+<div class="g-lead"><p><b>Bumpets Race</b> es una pista de obstáculos para animalitos en burbujas. Hasta cuatro jugadores salen uno al lado del otro en una larga pista en el cielo y corren hasta la meta, pasando por brazos giratorios, martillos que se balancean, paredes móviles, cintas transportadoras, un puente sin barandas y huecos en el suelo.</p><p>Caer forma parte de la diversión, no es el final de la carrera. Si te sales de la pista, vuelves al último checkpoint tras unos dos segundos.</p></div>
+<a class="g-play" href="#" data-guide-top>&#9654; Jugar Bumpets Race ahora</a>
+<h3>Cómo jugar</h3><ol><li>Elige tu Bumpet y el tipo de carrera: online al azar, sala con amigos o práctica contra 1 a 3 bots.</li><li>Espera la cuenta regresiva y rueda hacia adelante por la pista.</li><li>Supera cada obstáculo y cruza los checkpoints. Hay ocho en el recorrido, así que una caída solo te cuesta el último tramo.</li><li>En cuanto llega el primero, los demás tienen 15 segundos para cruzar la meta. Termina entre los tres primeros para sumar puntos.</li></ol>
+<h3>Controles</h3><ul><li>Móvil: arrastra en la pantalla para guiar tu burbuja (el joystick aparece bajo tu dedo) y toca DASH para un acelerón.</li><li>Teclado: guía entre los obstáculos con las flechas (o W, A, S, D) y suelta el acelerón con Espacio.</li><li>Después de cada DASH el botón tarda alrededor de 1,3 segundos en llenarse otra vez; parpadea cuando el siguiente acelerón está listo.</li></ul>
+<h3>El DASH como acelerón</h3><p>En Race el DASH es un sprint corto. La burbuja carga una fracción de segundo y sale recta a más del doble de su velocidad máxima normal. Es perfecto para pasar un martillo justo después de que se balancea, o para cruzar el hueco entre paredes móviles antes de que se cierre.</p><p>El acelerón no gira, y precisamente por eso puede ser peligroso aquí. Un dash un poco torcido en el puente estrecho o cerca de los huecos laterales te lanza directo fuera de la pista. El DASH también empuja a los rivales, así que en un tramo lleno puedes abrirte paso o tirar a alguien a un hueco, pero un golpe fuerte mientras cargas cancela tu dash.</p>
+<h3>Los obstáculos, en orden</h3><p>Justo después de la salida, un brazo giratorio barre la pista, seguido de una cinta que te empuja de lado hacia el borde. Luego vienen dos martillos de péndulo que se balancean de un lado a otro, un puente estrecho sin barandas y un tramo con huecos a ambos lados, donde solo el camino del centro es seguro.</p><p>La segunda mitad tiene dos paredes que van y vienen, un brazo doble que gira en sentido contrario y un tramo final más estrecho con una cinta que te empuja hacia atrás justo antes de la meta.</p>
+<h3>Jugar online con amigos</h3><p>Crea una sala con <b>Con amigos</b> y comparte el código de 5 letras o el enlace; de 2 a 4 jugadores corren juntos. Los puntos de cada carrera se suman en el marcador de la sala, así que puedes jugar varias rondas y ver quién es el verdadero campeón. Si prefieres algo rápido, <b>JUGAR</b> busca un rival al azar, y si no hay nadie cerca corres contra la computadora.</p>
+<h3>Consejos y estrategias</h3><ul><li>En la cinta lateral, dirige contra el empuje y mantente cerca del lado opuesto de la pista.</li><li>Calcula los martillos: espera a que uno pase por el centro y avanza. Un DASH justo detrás de él te hace pasar sin riesgo.</li><li>Cruza el puente estrecho sin dash. Con movimientos pequeños y rectos basta.</li><li>En los huecos laterales, quédate en el carril central, que es el único camino firme.</li><li>No pelees en diagonal con la cinta contraria cerca de la meta; empuja recto y guarda el DASH para los últimos metros.</li></ul>
+<section class="g-faq"><h3>Preguntas frecuentes</h3><h4>¿Bumpets Race es gratis? ¿Hay que instalar una app?</h4><p>Correr es gratis y no pide registro ni app. La pista carga en cualquier navegador actual; el apodo que eliges es lo que ven los demás corredores.</p><h4>¿Cómo corro con mis amigos?</h4><p>Toca <b>Con amigos</b>, envía el código o el enlace de la sala y empieza cuando todos estén dentro. Caben hasta 4 jugadores por sala.</p><h4>¿Y si no hay nadie online?</h4><p>Tras unos segundos sin rivales, el juego empieza una carrera contra la computadora. En la <b>Práctica</b> también eliges de 1 a 3 bots y el nivel: Fácil, Medio o Difícil.</p><h4>La carrera va con tirones. ¿Cómo lo arreglo?</h4><p>Recarga la página, cierra otras pestañas y apps y, si juegas online, acércate al router del Wi-Fi o cambia a una conexión mejor.</p></section>
+<h3>Otros juegos que te pueden gustar</h3><nav class="g-rel"><a href="/es/bumpets/">Bumpets Arena</a><a href="/es/drift-trail/">Drift Trail</a><a href="/es/bumpets-paint/">Bumpets Paint</a></nav>
+<a class="g-play" href="#" data-guide-top>&#9650; Volver al juego</a>
+<p class="g-upd">Guía de Bartel Games · actualizada el 24/11/2026</p>
+<nav class="g-foot"><a href="/es/">Todos los juegos</a><a href="/es/acerca-de/">Acerca de</a><a href="/privacy.html">Privacidad</a><a href="/contact.html">Contacto</a></nav>
+</div></article>
+<button class="bg-gchip" type="button" data-guide-go>&#9660; Cómo jugar y consejos</button><script>(function(){var d=document,h=d.documentElement;h.classList.add('bg-hasg');
+function go(){var g=d.getElementById('guide');if(g)g.scrollIntoView({behavior:'smooth'});}
+function top(){scrollTo({top:0,behavior:'smooth'});}
+addEventListener('scroll',function(){h.classList.toggle('bg-gdown',scrollY>innerHeight*0.3);},{passive:true});
+function kd(e){var t=e.target,k=e.key;if(scrollY>innerHeight*0.5||(t&&(t.isContentEditable||/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))))return;
+ if(k==='ArrowDown'||k==='ArrowUp'||k===' '||k==='PageDown'||k==='PageUp')e.preventDefault();}
+addEventListener('keydown',kd);
+function fr(f){try{f.contentWindow.addEventListener('keydown',kd);}catch(e){}}
+[].forEach.call(d.querySelectorAll('#app iframe'),function(f){fr(f);f.addEventListener('load',function(){fr(f);});});
+d.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('[data-guide-go],[data-guide-top]');if(!a)return;e.preventDefault();
+ if(a.hasAttribute('data-guide-go')){var x=d.getElementById('howto');if(x&&x.open)x.close();go();}else top();});
+var x=d.getElementById('howto');if(x&&!x.querySelector('.bg-glink')){var b=x.querySelector('.close')||x.querySelector('form');var l=d.createElement('a');l.className='bg-glink';l.href='#guide';l.setAttribute('data-guide-go','');l.textContent="Guía completa: consejos, modos y preguntas";if(b)b.parentNode.insertBefore(l,b);else x.appendChild(l);}
+})();</script><!--/guide-->
 </body>
 </html>

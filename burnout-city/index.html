@@ -209,5 +209,63 @@ body{font-family:var(--font);-webkit-tap-highlight-color:transparent;touch-actio
 <script type="importmap">{"imports":{"three":"/lib/three/0.186.0/build/three.module.js"}}</script>
 <script type="module" src="game.js?v=1ba97547"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7f9a5c4a463b4b799b86c338ccb2bc99"}'></script><!-- End Cloudflare Web Analytics -->
+<!--guide--><style>
+html.bg-hasg,html.bg-hasg body{height:auto;min-height:100%;overflow-x:hidden;overflow-y:auto}
+html.bg-hasg #app{touch-action:none}
+.bg-gspace{height:100vh;pointer-events:none}
+.bg-guide{position:relative;z-index:2;background:#0b1736;color:#dfe6fb;border-radius:24px 24px 0 0;box-shadow:0 -10px 40px #0009;
+ font:400 16.5px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;user-select:text;-webkit-user-select:text;touch-action:auto;
+ padding:26px 18px calc(var(--adH,60px) + 48px)}
+.bg-guide .g-in{max-width:680px;margin:0 auto}
+.bg-guide .g-k{display:inline-block;font:800 13px/1 "Baloo 2",system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#f7b60c;margin-bottom:6px}
+.bg-guide h2.g-t{font:800 clamp(26px,5.4vw,38px)/1.12 "Baloo 2",system-ui,sans-serif;color:#fff;margin:0 0 12px}
+.bg-guide h3{font:800 22px/1.2 "Baloo 2",system-ui,sans-serif;color:#ffd45a;margin:28px 0 8px}
+.bg-guide p{margin:0 0 12px}
+.bg-guide ul,.bg-guide ol{margin:0 0 12px;padding-left:22px}.bg-guide li{margin:0 0 7px}
+.bg-guide b{color:#fff}
+.bg-guide .g-lead p:first-child{font-size:18px;color:#fff}
+.bg-guide .g-play{display:inline-flex;align-items:center;gap:8px;margin:6px 0 4px;padding:12px 22px;border-radius:999px;border:0;cursor:pointer;text-decoration:none;
+ font:800 18px/1 "Baloo 2",system-ui,sans-serif;color:#0d1430;background:linear-gradient(180deg,#ffe27a,#f7b60c);box-shadow:0 0 0 3px #fff,0 5px 0 3px #000a}
+.bg-guide .g-faq h4{font:700 17px/1.35 system-ui,-apple-system,"Segoe UI",sans-serif;color:#fff;margin:16px 0 4px}
+.bg-guide .g-rel{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 0}
+.bg-guide .g-rel a,.bg-guide .g-foot a{color:#fff;text-decoration:none;font-weight:700;padding:8px 14px;border-radius:999px;border:1.5px solid #ffffff38;background:#ffffff0d;font-size:15px}
+.bg-guide .g-rel a:hover,.bg-guide .g-foot a:hover{border-color:#f7b60c}
+.bg-guide .g-foot{display:flex;flex-wrap:wrap;gap:8px;margin-top:30px;padding-top:18px;border-top:1px solid #ffffff1f}
+.bg-guide .g-upd{color:#93a3cc;font-size:14px;margin-top:14px}
+.bg-gchip{display:none}
+@media (min-width:900px) and (pointer:fine){.bg-gchip{display:inline-flex;align-items:center;gap:8px;position:fixed;right:18px;bottom:calc(var(--adH,90px) + 16px);z-index:2;
+ padding:10px 16px;border-radius:999px;cursor:pointer;font:800 16px/1 "Baloo 2",system-ui,sans-serif;color:#fff;background:#16224a;border:1.5px solid #f7b60c99;box-shadow:0 6px 18px #0008;transition:opacity .2s}
+ .bg-gchip:hover{border-color:#f7b60c}html.bg-gdown .bg-gchip{opacity:0;pointer-events:none}}
+.bg-glink{display:block;margin-top:12px;text-align:center;color:#ffd45a;font-weight:700;text-decoration:underline;cursor:pointer}
+</style><div class="bg-gspace" aria-hidden="true"></div>
+<article id="guide" class="bg-guide" lang="en" aria-labelledby="guide-t"><div class="g-in">
+<span class="g-k">Game guide</span><h2 class="g-t" id="guide-t">Burnout City: how to play, tips and FAQ</h2>
+<div class="g-lead"><p>Burnout City is a 3D arcade driving game by Bartel Games set in a city that is falling apart. Your muscle car accelerates on its own down a burning avenue while meteors crash down, tornadoes cross the road and buildings collapse in front of you. You only steer, so every run comes down to reading the street and choosing the right line.</p><p>Survival keeps the score growing, but the big points come from running over zombies one after another. The best runs balance both: staying alive long enough while grabbing every zombie combo the road offers.</p></div>
+<a class="g-play" href="#" data-guide-top>&#9654; Play Burnout City now</a>
+<h3>How to play</h3><ol><li>Tap Play. The car starts moving by itself and gets faster the farther you go.</li><li>Steer left and right to dodge meteors, tornadoes, collapsing buildings, road cracks, lava rivers and wrecked cars.</li><li>When a lava river appears, line up with the ramp to jump over it.</li><li>Run over zombies for points and chain them into combos.</li><li>Grab the glowing armor crates to gain extra lives.</li><li>The run ends when your last life is gone. Your score goes to the ranking.</li></ol>
+<h3>Controls</h3><ul><li>Phone: drag your finger left or right anywhere on the screen to steer and drift.</li><li>Computer: drag the mouse left or right, or use the arrow keys or A and D.</li></ul>
+<h3>Game modes</h3><ul><li><b>Play</b>: an endless run: drive as far as you can and climb the global ranking.</li><li><b>Daily mission</b>: one goal and the same road for everyone today, with unlimited tries. Goals include smashing a number of zombies, driving a distance, grabbing armor crates, reaching a COMBO or hitting a score.</li></ul>
+<h3>Lives and armor</h3><p>You start able to take 2 hits. Each armor crate bolts a new armor layer onto the car and adds +1 life, up to 5 lives and 3 visible layers. Every crash tears one layer off, so you can watch the car get stripped back down as you take damage. While the car already carries all three layers, no new crate appears.</p>
+<h3>Scoring and zombie combos</h3><p>You earn 1 point per meter driven and 50 points for each zombie. Hit zombies in quick succession to build a COMBO: the second zombie is worth 100, the third 150, and so on up to 300 points per zombie from COMBO 6. If too much time passes before the next zombie, the combo resets, so a full group of zombies is worth far more when you plow through it in one sweep.</p>
+<h3>Tips and strategies</h3><ul><li>Steer toward zombie groups early, while the car is still slow and the road is easier to read. The extra points matter more than a few meters.</li><li>Treat an armor crate as a priority when you are on 2 lives or fewer. One extra layer is the difference between a short run and a long one.</li><li>Lava gives you only one safe path: the ramp. Move into line with it early instead of correcting at the last second.</li><li>Tornadoes sway from side to side. Pass them on the side they are moving away from.</li><li>Do not chase a zombie through a crack or a falling building. A lost life costs much more than one combo step.</li><li>Small, steady corrections beat big swerves, especially at high speed when the car drifts wider.</li></ul>
+<section class="g-faq"><h3>Frequently asked questions</h3><h4>Is Burnout City free?</h4><p>Yes. It is free to play in the browser, with ads on the page.</p><h4>Do I need to download or install it?</h4><p>No. It runs directly in the browser, with no download and no sign-up.</p><h4>Does it work on a phone?</h4><p>Yes. Steering is a simple drag, so it plays well on touch screens and also on a computer.</p><h4>Is there a ranking?</h4><p>Yes. Choose a nickname to appear in the global ranking. Signing in with Google is optional and keeps your nickname and best score on any device.</p><h4>How do I share my score?</h4><p>Use the Share button at the top of the page or on the results screen.</p><h4>What if the game is slow or freezes?</h4><p>Reload the page, close other tabs and keep your browser updated. On older phones, closing other apps also helps.</p></section>
+<h3>More games you may like</h3><nav class="g-rel"><a href="/the-last-driver/">The Last Driver</a><a href="/drift-trail/">Drift Trail</a><a href="/bumpets-race/">Bumpets Race</a></nav>
+<a class="g-play" href="#" data-guide-top>&#9650; Back to the game</a>
+<p class="g-upd">Guide by Bartel Games · updated November 24, 2026</p>
+<nav class="g-foot"><a href="/">All games</a><a href="/about/">About</a><a href="/privacy.html">Privacy</a><a href="/contact.html">Contact</a></nav>
+</div></article>
+<button class="bg-gchip" type="button" data-guide-go>&#9660; How to play & tips</button><script>(function(){var d=document,h=d.documentElement;h.classList.add('bg-hasg');
+function go(){var g=d.getElementById('guide');if(g)g.scrollIntoView({behavior:'smooth'});}
+function top(){scrollTo({top:0,behavior:'smooth'});}
+addEventListener('scroll',function(){h.classList.toggle('bg-gdown',scrollY>innerHeight*0.3);},{passive:true});
+function kd(e){var t=e.target,k=e.key;if(scrollY>innerHeight*0.5||(t&&(t.isContentEditable||/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))))return;
+ if(k==='ArrowDown'||k==='ArrowUp'||k===' '||k==='PageDown'||k==='PageUp')e.preventDefault();}
+addEventListener('keydown',kd);
+function fr(f){try{f.contentWindow.addEventListener('keydown',kd);}catch(e){}}
+[].forEach.call(d.querySelectorAll('#app iframe'),function(f){fr(f);f.addEventListener('load',function(){fr(f);});});
+d.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('[data-guide-go],[data-guide-top]');if(!a)return;e.preventDefault();
+ if(a.hasAttribute('data-guide-go')){var x=d.getElementById('howto');if(x&&x.open)x.close();go();}else top();});
+var x=d.getElementById('howto');if(x&&!x.querySelector('.bg-glink')){var b=x.querySelector('.close')||x.querySelector('form');var l=d.createElement('a');l.className='bg-glink';l.href='#guide';l.setAttribute('data-guide-go','');l.textContent="Full guide: tips, modes and FAQ";if(b)b.parentNode.insertBefore(l,b);else x.appendChild(l);}
+})();</script><!--/guide-->
 </body>
 </html>

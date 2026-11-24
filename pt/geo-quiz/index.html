@@ -294,5 +294,62 @@ body{font-family:var(--font);-webkit-tap-highlight-color:transparent;touch-actio
 <script type="importmap">{"imports":{"three":"/lib/three/0.186.0/build/three.module.js","three/addons/":"/lib/three/0.186.0/examples/jsm/"}}</script>
 <script type="module" src="game.js?v=72787dfa"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7f9a5c4a463b4b799b86c338ccb2bc99"}'></script><!-- End Cloudflare Web Analytics -->
+<!--guide--><style>
+html.bg-hasg,html.bg-hasg body{height:auto;min-height:100%;overflow-x:hidden;overflow-y:auto}
+html.bg-hasg #app{touch-action:none}
+.bg-gspace{height:100vh;pointer-events:none}
+.bg-guide{position:relative;z-index:2;background:#0b1736;color:#dfe6fb;border-radius:24px 24px 0 0;box-shadow:0 -10px 40px #0009;
+ font:400 16.5px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;user-select:text;-webkit-user-select:text;touch-action:auto;
+ padding:26px 18px calc(var(--adH,60px) + 48px)}
+.bg-guide .g-in{max-width:680px;margin:0 auto}
+.bg-guide .g-k{display:inline-block;font:800 13px/1 "Baloo 2",system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#f7b60c;margin-bottom:6px}
+.bg-guide h2.g-t{font:800 clamp(26px,5.4vw,38px)/1.12 "Baloo 2",system-ui,sans-serif;color:#fff;margin:0 0 12px}
+.bg-guide h3{font:800 22px/1.2 "Baloo 2",system-ui,sans-serif;color:#ffd45a;margin:28px 0 8px}
+.bg-guide p{margin:0 0 12px}
+.bg-guide ul,.bg-guide ol{margin:0 0 12px;padding-left:22px}.bg-guide li{margin:0 0 7px}
+.bg-guide b{color:#fff}
+.bg-guide .g-lead p:first-child{font-size:18px;color:#fff}
+.bg-guide .g-play{display:inline-flex;align-items:center;gap:8px;margin:6px 0 4px;padding:12px 22px;border-radius:999px;border:0;cursor:pointer;text-decoration:none;
+ font:800 18px/1 "Baloo 2",system-ui,sans-serif;color:#0d1430;background:linear-gradient(180deg,#ffe27a,#f7b60c);box-shadow:0 0 0 3px #fff,0 5px 0 3px #000a}
+.bg-guide .g-faq h4{font:700 17px/1.35 system-ui,-apple-system,"Segoe UI",sans-serif;color:#fff;margin:16px 0 4px}
+.bg-guide .g-rel{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 0}
+.bg-guide .g-rel a,.bg-guide .g-foot a{color:#fff;text-decoration:none;font-weight:700;padding:8px 14px;border-radius:999px;border:1.5px solid #ffffff38;background:#ffffff0d;font-size:15px}
+.bg-guide .g-rel a:hover,.bg-guide .g-foot a:hover{border-color:#f7b60c}
+.bg-guide .g-foot{display:flex;flex-wrap:wrap;gap:8px;margin-top:30px;padding-top:18px;border-top:1px solid #ffffff1f}
+.bg-guide .g-upd{color:#93a3cc;font-size:14px;margin-top:14px}
+.bg-gchip{display:none}
+@media (min-width:900px) and (pointer:fine){.bg-gchip{display:inline-flex;align-items:center;gap:8px;position:fixed;right:18px;bottom:calc(var(--adH,90px) + 16px);z-index:2;
+ padding:10px 16px;border-radius:999px;cursor:pointer;font:800 16px/1 "Baloo 2",system-ui,sans-serif;color:#fff;background:#16224a;border:1.5px solid #f7b60c99;box-shadow:0 6px 18px #0008;transition:opacity .2s}
+ .bg-gchip:hover{border-color:#f7b60c}html.bg-gdown .bg-gchip{opacity:0;pointer-events:none}}
+.bg-glink{display:block;margin-top:12px;text-align:center;color:#ffd45a;font-weight:700;text-decoration:underline;cursor:pointer}
+</style><div class="bg-gspace" aria-hidden="true"></div>
+<article id="guide" class="bg-guide" lang="pt" aria-labelledby="guide-t"><div class="g-in">
+<span class="g-k">Guia do jogo</span><h2 class="g-t" id="guide-t">Geo Quiz: como jogar, dicas e perguntas frequentes</h2>
+<div class="g-lead"><p>Geo Quiz é um jogo de geografia com um globo 3D realista. O globo gira, um alfinete vermelho cai em um país e você responde uma pergunta sobre ele: a bandeira, a capital, o nome ou onde ele fica no mapa. São 76 países, de gigantes como Brasil e Canadá até alguns mais difíceis, como Namíbia e Paraguai.</p><p>Nenhum modo tem cronômetro, então serve tanto para uma pausa rápida quanto para estudar com calma. Cada resposta mostra o país certo na hora, e é assim que muita gente acaba aprendendo as bandeiras que antes confundia.</p></div>
+<a class="g-play" href="#" data-guide-top>&#9654; Jogar Geo Quiz agora</a>
+<h3>Como jogar</h3><ol><li>Escolha um modo no menu. Se for a primeira vez, comece por <b>Bandeiras</b>.</li><li>Olhe o globo: ele gira e o alfinete cai em um país.</li><li>Escolha uma das três respostas. O sinal verde indica acerto; no erro, o jogo mostra a resposta certa.</li><li>A partida normal tem 3 rodadas que vão ficando mais difíceis: um país famoso, um médio e um difícil. Tente fazer 3/3 e depois compartilhe.</li></ol>
+<h3>Modos de jogo</h3><ul><li><b>Bandeiras</b>: o alfinete cai em um país e você escolhe a bandeira dele entre três.</li><li><b>Capitais</b>: a mesma ideia, mas os cartões mostram três capitais.</li><li><b>Onde fica?</b>: o nome do país aparece no alto e você mesmo o encontra: arraste para girar o globo e toque no país. Países muito pequenos ficam fora deste modo, para que todo alvo possa ser tocado.</li><li><b>Qual é o país?</b>: o contrário de Bandeiras: aparece uma bandeira grande e você escolhe o nome do país.</li><li><b>Missão do dia</b>: uma missão por dia, igual para todo mundo, com 3 a 5 rodadas de nível médio e difícil, conforme o dia. A missão muda todo dia (bandeiras, capitais, achar países ou uma mistura de todos os modos) e dá para tentar quantas vezes quiser.</li><li><b>Infinito</b>: jogue até o primeiro erro. Começa fácil e as opções erradas ficam mais traiçoeiras conforme a sequência cresce: países vizinhos e bandeiras parecidas.</li></ul>
+<h3>Controles</h3><ul><li>Celular e tablet: toque em um cartão para responder. No modo Onde fica?, arraste um dedo para girar o globo, faça pinça para dar zoom ou use o botão da lupa.</li><li>Computador: clique para responder, arraste com o mouse para girar e use a rodinha ou a lupa para aproximar regiões pequenas, como o Caribe ou a Europa Central.</li></ul>
+<h3>Dicas para melhorar</h3><ul><li>Repare na região do alfinete antes de ler as opções: só o continente já costuma eliminar um cartão.</li><li>Aprenda as bandeiras em famílias. Muitas repetem cores de propósito: a cruz nórdica de Suécia, Noruega, Dinamarca, Finlândia e Islândia; Itália e México, ambas verde-branco-vermelho; Irlanda e Costa do Marfim, que usam as mesmas três cores em ordem invertida. Compare a ordem das faixas, não só as cores.</li><li>No Infinito, a armadilha a partir do quinto acerto é o vizinho. Se duas opções ficam lado a lado no mapa, vá com calma e pense em qual delas o alfinete realmente tocou.</li><li>No modo Onde fica?, primeiro aproxime, depois toque. Um zoom rápido numa região cheia evita a maior parte dos erros.</li><li>Use o modo Capitais para revisar o que errou em Bandeiras: ver o mesmo país por outro ângulo ajuda a fixar.</li></ul>
+<h3>Ranking e desafio com amigos</h3><p>O Infinito e a Missão do dia têm ranking. Não precisa de conta para jogar: para aparecer na lista, basta escolher um apelido. Entrar com Google é opcional e serve só para levar o apelido e o recorde para outro aparelho.</p><p>Depois de uma partida no Infinito, compartilhe o link: o seu amigo recebe exatamente a mesma sequência de países e precisa bater a sua pontuação. O botão Compartilhar também gera uma imagem com o seu resultado.</p>
+<section class="g-faq"><h3>Perguntas frequentes</h3><h4>O Geo Quiz é grátis?</h4><p>Sim. É grátis para jogar no navegador, sem baixar nada e sem cadastro.</p><h4>Funciona no celular?</h4><p>Sim. Foi feito para o celular em pé e também roda em tablet e computador. Precisa de um navegador com WebGL, que todo celular atual tem.</p><h4>Quantos países o jogo tem?</h4><p>76 países: 12 famosos, 26 médios e 38 difíceis. A partida normal sempre pega um de cada, nessa ordem.</p><h4>Tem limite de tempo?</h4><p>Não. Nenhum modo tem cronômetro; no Infinito a única coisa que encerra a partida é uma resposta errada.</p><h4>O globo está lento ou não carrega. O que fazer?</h4><p>Recarregue a página e feche outras abas pesadas. Em celulares mais antigos, o primeiro carregamento leva alguns segundos enquanto as texturas do globo baixam; depois ficam guardadas.</p></section>
+<h3>Outros jogos que você pode curtir</h3><nav class="g-rel"><a href="/pt/candy-line/">Candy Line</a><a href="/pt/bumpets-cards/">Bumpets Cards</a><a href="/pt/drift-trail/">Drift Trail</a></nav>
+<a class="g-play" href="#" data-guide-top>&#9650; Voltar ao jogo</a>
+<p class="g-upd">Guia do Bartel Games · atualizado em 24/11/2026</p>
+<nav class="g-foot"><a href="/pt/">Todos os jogos</a><a href="/pt/sobre/">Sobre</a><a href="/privacy.html">Privacidade</a><a href="/contact.html">Contato</a></nav>
+</div></article>
+<button class="bg-gchip" type="button" data-guide-go>&#9660; Como jogar e dicas</button><script>(function(){var d=document,h=d.documentElement;h.classList.add('bg-hasg');
+function go(){var g=d.getElementById('guide');if(g)g.scrollIntoView({behavior:'smooth'});}
+function top(){scrollTo({top:0,behavior:'smooth'});}
+addEventListener('scroll',function(){h.classList.toggle('bg-gdown',scrollY>innerHeight*0.3);},{passive:true});
+function kd(e){var t=e.target,k=e.key;if(scrollY>innerHeight*0.5||(t&&(t.isContentEditable||/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))))return;
+ if(k==='ArrowDown'||k==='ArrowUp'||k===' '||k==='PageDown'||k==='PageUp')e.preventDefault();}
+addEventListener('keydown',kd);
+function fr(f){try{f.contentWindow.addEventListener('keydown',kd);}catch(e){}}
+[].forEach.call(d.querySelectorAll('#app iframe'),function(f){fr(f);f.addEventListener('load',function(){fr(f);});});
+d.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('[data-guide-go],[data-guide-top]');if(!a)return;e.preventDefault();
+ if(a.hasAttribute('data-guide-go')){var x=d.getElementById('howto');if(x&&x.open)x.close();go();}else top();});
+var x=d.getElementById('howto');if(x&&!x.querySelector('.bg-glink')){var b=x.querySelector('.close')||x.querySelector('form');var l=d.createElement('a');l.className='bg-glink';l.href='#guide';l.setAttribute('data-guide-go','');l.textContent="Guia completo: dicas, modos e perguntas";if(b)b.parentNode.insertBefore(l,b);else x.appendChild(l);}
+})();</script><!--/guide-->
 </body>
 </html>

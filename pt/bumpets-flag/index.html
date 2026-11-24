@@ -281,5 +281,62 @@ canvas{display:block;width:100%;height:100%}
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.186.0/examples/jsm/"}}</script>
 <script type="module" src="game.js?v=4c2f2cde"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7f9a5c4a463b4b799b86c338ccb2bc99"}'></script><!-- End Cloudflare Web Analytics -->
+<!--guide--><style>
+html.bg-hasg,html.bg-hasg body{height:auto;min-height:100%;overflow-x:hidden;overflow-y:auto}
+html.bg-hasg #app{touch-action:none}
+.bg-gspace{height:100vh;pointer-events:none}
+.bg-guide{position:relative;z-index:2;background:#0b1736;color:#dfe6fb;border-radius:24px 24px 0 0;box-shadow:0 -10px 40px #0009;
+ font:400 16.5px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;user-select:text;-webkit-user-select:text;touch-action:auto;
+ padding:26px 18px calc(var(--adH,60px) + 48px)}
+.bg-guide .g-in{max-width:680px;margin:0 auto}
+.bg-guide .g-k{display:inline-block;font:800 13px/1 "Baloo 2",system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#f7b60c;margin-bottom:6px}
+.bg-guide h2.g-t{font:800 clamp(26px,5.4vw,38px)/1.12 "Baloo 2",system-ui,sans-serif;color:#fff;margin:0 0 12px}
+.bg-guide h3{font:800 22px/1.2 "Baloo 2",system-ui,sans-serif;color:#ffd45a;margin:28px 0 8px}
+.bg-guide p{margin:0 0 12px}
+.bg-guide ul,.bg-guide ol{margin:0 0 12px;padding-left:22px}.bg-guide li{margin:0 0 7px}
+.bg-guide b{color:#fff}
+.bg-guide .g-lead p:first-child{font-size:18px;color:#fff}
+.bg-guide .g-play{display:inline-flex;align-items:center;gap:8px;margin:6px 0 4px;padding:12px 22px;border-radius:999px;border:0;cursor:pointer;text-decoration:none;
+ font:800 18px/1 "Baloo 2",system-ui,sans-serif;color:#0d1430;background:linear-gradient(180deg,#ffe27a,#f7b60c);box-shadow:0 0 0 3px #fff,0 5px 0 3px #000a}
+.bg-guide .g-faq h4{font:700 17px/1.35 system-ui,-apple-system,"Segoe UI",sans-serif;color:#fff;margin:16px 0 4px}
+.bg-guide .g-rel{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 0}
+.bg-guide .g-rel a,.bg-guide .g-foot a{color:#fff;text-decoration:none;font-weight:700;padding:8px 14px;border-radius:999px;border:1.5px solid #ffffff38;background:#ffffff0d;font-size:15px}
+.bg-guide .g-rel a:hover,.bg-guide .g-foot a:hover{border-color:#f7b60c}
+.bg-guide .g-foot{display:flex;flex-wrap:wrap;gap:8px;margin-top:30px;padding-top:18px;border-top:1px solid #ffffff1f}
+.bg-guide .g-upd{color:#93a3cc;font-size:14px;margin-top:14px}
+.bg-gchip{display:none}
+@media (min-width:900px) and (pointer:fine){.bg-gchip{display:inline-flex;align-items:center;gap:8px;position:fixed;right:18px;bottom:calc(var(--adH,90px) + 16px);z-index:2;
+ padding:10px 16px;border-radius:999px;cursor:pointer;font:800 16px/1 "Baloo 2",system-ui,sans-serif;color:#fff;background:#16224a;border:1.5px solid #f7b60c99;box-shadow:0 6px 18px #0008;transition:opacity .2s}
+ .bg-gchip:hover{border-color:#f7b60c}html.bg-gdown .bg-gchip{opacity:0;pointer-events:none}}
+.bg-glink{display:block;margin-top:12px;text-align:center;color:#ffd45a;font-weight:700;text-decoration:underline;cursor:pointer}
+</style><div class="bg-gspace" aria-hidden="true"></div>
+<article id="guide" class="bg-guide" lang="pt" aria-labelledby="guide-t"><div class="g-in">
+<span class="g-k">Guia do jogo</span><h2 class="g-t" id="guide-t">Bumpets Flag: como jogar, dicas e perguntas frequentes</h2>
+<div class="g-lead"><p>Bumpets Flag é um jogo de capturar a bandeira para dois times, <b>azul contra vermelho</b>, com até quatro jogadores. Cada time guarda uma bandeira na sua base, em pontas opostas de uma arena cercada, com pedras espalhadas pelo meio. Você vence roubando a bandeira rival, levando até a sua base e impedindo que o outro lado faça o mesmo com você.</p><p>As partidas são curtas e cheias de perseguição: o primeiro time a levar <b>3 bandeiras</b> para casa vence.</p></div>
+<a class="g-play" href="#" data-guide-top>&#9654; Jogar Bumpets Flag agora</a>
+<h3>Como jogar</h3><ol><li>Escolha o seu Bumpet: porquinho, vaquinha, panda, tigre, capivara ou lobo.</li><li>Toque em <b>JOGAR</b> para entrar com alguém aleatório, crie uma sala para os amigos ou treine contra o computador.</li><li>Role até a base rival e encoste na bandeira deles. Ela gruda na sua bolha e vai junto com você.</li><li>Leve até a <b>sua</b> base. Chegar lá vale <b>+1</b>, e a bandeira volta para a base rival.</li><li>Se um rival estiver fugindo com a sua bandeira, persiga e acerte um <b>DASH</b> nele: a bandeira cai no chão.</li><li>Encoste na sua bandeira caída para mandar de volta para casa. Se ninguém encostar, ela volta sozinha depois de uns 8 segundos.</li></ol>
+<h3>Controles</h3><ul><li>Celular: arraste em qualquer lugar da tela para guiar, como um joystick invisível, e toque no botão <b>DASH</b> para arrancar.</li><li>Computador: WASD ou as setas para andar, Espaço para o DASH.</li><li>O DASH tem uma preparação curta (a bolha encolhe e brilha) e depois uma arrancada reta que não faz curva. Mire antes de apertar.</li></ul>
+<h3>Regras da bandeira</h3><ul><li>Só um <b>DASH</b> derruba a bandeira. Uma batida normal empurra quem carrega, mas a bandeira continua com ele.</li><li>Logo depois de pegar a bandeira, quem carrega fica protegido por cerca de um segundo e meio, então um DASH bem na hora da pegada não adianta.</li><li>A bandeira rival caída pode ser pega por qualquer jogador do time atacante, então um colega pode terminar a corrida.</li><li>Carregar a bandeira deixa a sua bolha um pouco mais lenta.</li><li>A sua primeira partida de Bandeira contra o computador é curta: uma captura já vence, com limite de dois minutos.</li></ul>
+<h3>Dicas e estratégias</h3><ul><li>No 2 contra 2, dividam as funções: um ataca e o outro fica entre as duas bases, pronto para dar DASH no ladrão na saída.</li><li>Espere a proteção da pegada acabar. Deixe o ladrão rolar um pouco e dê o DASH pelo lado, onde é mais difícil desviar.</li><li>Use as pedras. A pedra grande do meio e as quatro menores bloqueiam a linha reta do DASH, então coloque uma pedra entre você e quem persegue quando estiver carregando.</li><li>Quem carrega deve mudar de direção quando vir um rival encolher e brilhar. A arrancada não faz curva, então um passo para o lado faz ele errar e ficar cansado.</li><li>Não gaste o DASH logo antes de chegar na bandeira. Guarde para defender ou tirar alguém do caminho, porque ele precisa de um tempo para recarregar.</li></ul>
+<h3>Jogar online com amigos</h3><p>Toque em <b>Criar sala</b> e mande o link da sala ou o código de 5 letras. Os amigos abrem o link ou digitam o código em <b>Entrar com código</b>. As salas aceitam de 2 a 4 jogadores, divididos em azul e vermelho. <b>JOGAR</b> coloca você numa partida com alguém aleatório; se ninguém entrar em alguns segundos, você joga contra o computador. Na primeira vez que você toca em JOGAR neste modo, a partida é contra bots fáceis, para aprender as regras antes de enfrentar pessoas.</p>
+<section class="g-faq"><h3>Perguntas frequentes</h3><h4>O Bumpets Flag é grátis?</h4><p>Sim. Dá para jogar de graça no navegador, sem cadastro.</p><h4>Preciso baixar alguma coisa?</h4><p>Não. O jogo roda no navegador do celular e do computador.</p><h4>Dá para jogar no celular?</h4><p>Sim. Arraste em qualquer lugar da tela para andar e toque no botão DASH. No computador, use WASD ou as setas e o Espaço.</p><h4>Como convido um amigo?</h4><p>Crie uma sala e mande o link ou o código de 5 letras. O amigo abre o link ou digita o código em Entrar com código.</p><h4>E se ninguém estiver online?</h4><p>O JOGAR passa para uma partida contra o computador depois de alguns segundos. Você também pode escolher o Treino, com 1 a 3 bots e três níveis de dificuldade: um bot joga 1 contra 1, mais bots formam um 2 contra 2.</p><h4>O jogo ficou lento ou travou. O que faço?</h4><p>Feche outras abas e aplicativos e recarregue a página. Se a conexão cair durante uma sala, o jogo tenta reconectar sozinho.</p></section>
+<h3>Outros jogos que você pode curtir</h3><nav class="g-rel"><a href="/pt/bumpets-zone/">Bumpets Zone</a><a href="/pt/bumpets-soccer/">Bumpets Soccer</a><a href="/pt/bumpets/">Bumpets Arena</a></nav>
+<a class="g-play" href="#" data-guide-top>&#9650; Voltar ao jogo</a>
+<p class="g-upd">Guia do Bartel Games · atualizado em 24/11/2026</p>
+<nav class="g-foot"><a href="/pt/">Todos os jogos</a><a href="/pt/sobre/">Sobre</a><a href="/privacy.html">Privacidade</a><a href="/contact.html">Contato</a></nav>
+</div></article>
+<button class="bg-gchip" type="button" data-guide-go>&#9660; Como jogar e dicas</button><script>(function(){var d=document,h=d.documentElement;h.classList.add('bg-hasg');
+function go(){var g=d.getElementById('guide');if(g)g.scrollIntoView({behavior:'smooth'});}
+function top(){scrollTo({top:0,behavior:'smooth'});}
+addEventListener('scroll',function(){h.classList.toggle('bg-gdown',scrollY>innerHeight*0.3);},{passive:true});
+function kd(e){var t=e.target,k=e.key;if(scrollY>innerHeight*0.5||(t&&(t.isContentEditable||/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))))return;
+ if(k==='ArrowDown'||k==='ArrowUp'||k===' '||k==='PageDown'||k==='PageUp')e.preventDefault();}
+addEventListener('keydown',kd);
+function fr(f){try{f.contentWindow.addEventListener('keydown',kd);}catch(e){}}
+[].forEach.call(d.querySelectorAll('#app iframe'),function(f){fr(f);f.addEventListener('load',function(){fr(f);});});
+d.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('[data-guide-go],[data-guide-top]');if(!a)return;e.preventDefault();
+ if(a.hasAttribute('data-guide-go')){var x=d.getElementById('howto');if(x&&x.open)x.close();go();}else top();});
+var x=d.getElementById('howto');if(x&&!x.querySelector('.bg-glink')){var b=x.querySelector('.close')||x.querySelector('form');var l=d.createElement('a');l.className='bg-glink';l.href='#guide';l.setAttribute('data-guide-go','');l.textContent="Guia completo: dicas, modos e perguntas";if(b)b.parentNode.insertBefore(l,b);else x.appendChild(l);}
+})();</script><!--/guide-->
 </body>
 </html>
