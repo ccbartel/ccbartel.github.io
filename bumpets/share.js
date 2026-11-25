@@ -5,9 +5,9 @@
 (function () {
   var I = window.CL_I18N || {t: function (k, f) { return k; }, lang: "en"};
   var LP = (location.pathname.match(/^\/(pt|es)\//) || ["", ""])[1]; LP = LP ? "/" + LP : ""; /* versao /pt/ /es/ compartilha o link no idioma */
-  var SLUG = {battle: "bumpets", soccer: "bumpets-soccer", race: "bumpets-race", paint: "bumpets-paint", flag: "bumpets-flag", zone: "bumpets-zone", cards: "bumpets-cards"};
-  var KEY = {battle: "", soccer: "S", race: "R", paint: "P", flag: "F", zone: "Z", cards: "C"}; /* sufixo das frases de cada modo (Arena = shWin/shTxt0) */
-  var PM = location.pathname.match(/\/bumpets(-soccer|-race|-paint|-flag|-zone|-cards)?\//), PAGE = PM && PM[1] ? PM[1].slice(1) : "battle";
+  var SLUG = {battle: "bumpets", soccer: "bumpets-soccer", race: "bumpets-race", paint: "bumpets-paint", flag: "bumpets-flag", zone: "bumpets-zone", cards: "bumpets-cards", pinball: "bumpets-pinball-soccer"};
+  var KEY = {battle: "", soccer: "S", race: "R", paint: "P", flag: "F", zone: "Z", cards: "C", pinball: "B"}; /* sufixo das frases de cada modo (Arena = shWin/shTxt0) */
+  var PM = location.pathname.match(/\/bumpets(-soccer|-race|-paint|-flag|-zone|-cards|-pinball)?\//), PAGE = PM && PM[1] ? PM[1].slice(1) : "battle";
   function urlFor(md) { return "https://bartelgames.com.br" + LP + "/" + (SLUG[md] || "bumpets") + "/"; }
   function toast(msg) {
     var d = document.getElementById("toast");

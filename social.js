@@ -237,8 +237,8 @@
         var DY = JSON.parse(localStorage.getItem("bg_days") || "[]"); if (DY.indexOf(dd) < 0) { DY.push(dd); localStorage.setItem("bg_days", JSON.stringify(DY.slice(-60))); } } catch (e) {}
       EV.game = game; if (EV.ended) event(game, "replay", {mode: mode}); EV.ended = false; EV.t0 = performance.now(); event(game, "start", {mode: mode});
       // modos irmaos do Bumpets contam na propria capa (bumpets-soccer etc.); os eventos continuam em "bumpets"
-      var pm = game === "bumpets" && /-(soccer|race|zone|flag|paint|cards)$/.exec(mode || "");
-      return rpc("record_play", {p_game: pm ? "bumpets-" + pm[1] : game}).catch(function () {});
+      var pm = game === "bumpets" && /-(soccer|race|zone|flag|paint|cards|pinball)$/.exec(mode || "");
+      return rpc("record_play", {p_game: pm ? "bumpets-" + (pm[1] === "pinball" ? "pinball-soccer" : pm[1]) : game}) /* pinball: pagina /bumpets-pinball-soccer/ (nome novo 2026-11-24) */.catch(function () {});
     },
     like: function (game) { return rpc("toggle_like", {p_game: game, p_device: device()}).then(function (r) { return r[0]; }); },
     // so com login (o servidor recusa sem conta); em localhost finge sucesso

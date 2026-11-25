@@ -154,6 +154,7 @@ footer.site a:hover{color:#fff;text-decoration:underline}
 /* serie Bumpets (2026-11-21): "Bumpets" menor que o subtitulo, nao ocupa o card de ponta a ponta */
 .cover-t.bp span:first-child{font-size:clamp(20px,3.4vw,29px)}
 .cover-t.bp.lo{bottom:3%}
+.cover-t.lg span:last-child{font-size:clamp(18px,3.4vw,24px);white-space:nowrap} /* nome longo na 2a linha (Bumpets Pinball Soccer, 2026-11-24) */
 .games .card .info{padding:0 2px;display:flex;flex-direction:column;gap:1px}
 .games .card h3{font:600 15px/1.25 var(--body);color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .games .card p{font-size:13px;color:#aab3c8;flex:none}
