@@ -4,7 +4,8 @@
 // Gerado por src/supabase/gera_social_ui.py a partir de social-ui.template.js (nao editar a copia do jogo).
 (function () {
   var GAME = "candy-shot", MODE = "endless", BEST = "cs_best_end", TPLAY = "rankPlay";
-  var XM = {}; // modos extras com ranking proprio no mesmo jogo: {modo: {best: chave do recorde local, title: chave do titulo}}
+  var XM = {}; // modos extras com ranking proprio no mesmo jogo: {modo: {best: chave do recorde local, title: chave do titulo, game: ranking de OUTRO jogo (opcional)}}
+  function GM(m) { return (XM[m] && XM[m].game) || GAME; } // 2026-11-26: o Cones dentro do Burnout City continua no ranking do Drift Trail
   function T(k, f) { return window.CL_I18N ? window.CL_I18N.t(k, f) : k; }
   function S() { return window.BG_SOCIAL || null; }
   function lim(p, ms) { return Promise.race([p, new Promise(function (_, r) { setTimeout(function () { r(new Error("timeout")); }, ms || 5000); })]); }
@@ -78,7 +79,7 @@
   function send(p) {
     if (!S()) return Promise.reject(new Error("offline"));
     if (sending && sending.p === p) return sending.job;
-    var job = lim(S().submit(GAME, p.mode, p.score, p.day), 8000).then(function (rank) { p.sent = true; p.rank = +rank || null; lsSet(PK, ""); return p.rank; },
+    var job = lim(S().submit(GM(p.mode), p.mode, p.score, p.day), 8000).then(function (rank) { p.sent = true; p.rank = +rank || null; lsSet(PK, ""); return p.rank; },
       function (e) { console.error("[ranking] envio da pontuacao falhou", e); throw e; });
     sending = {p: p, job: job}; job.then(function () { sending = null; }, function () { sending = null; });
     return job;
@@ -144,7 +145,7 @@
     body.replaceChildren(header(), el("p", "rmsg", T("rankLoad")));
     if (!S()) { body.replaceChildren(el("p", "rmsg", T("rankOff"))); return; }
     var me = mine();
-    lim(S().top(GAME, view.mode, view.day, 10), 6000).then(function (rows) {
+    lim(S().top(GM(view.mode), view.mode, view.day, 10), 6000).then(function (rows) {
       body.replaceChildren(header());
       if (me && me.rank) body.append(el("p", "ryou", T("rankYou", String(me.rank))));
       if (!rows || !rows.length) { body.append(el("p", "rmsg", T("rankEmpty"))); return; }

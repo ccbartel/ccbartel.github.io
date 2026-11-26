@@ -41,6 +41,10 @@
 
 
 
+
+
+
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Drift Trail - Bartel Games</title>
@@ -99,6 +103,8 @@ body{font-family:var(--font);-webkit-tap-highlight-color:transparent;touch-actio
 .mbtn b{font:700 48px/1.1 var(--font);white-space:nowrap;text-transform:uppercase;letter-spacing:.5px}
 .mbtn small{font:700 24px/1.2 system-ui,-apple-system,"Segoe UI",sans-serif;opacity:.88;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mbtn.done{opacity:.8}
+#r-alt{height:76px;font-size:32px;padding:0 30px}
+#r-alt .ic-play{display:none}#r-alt:not(.to-cones) .ic-cone{display:none}#r-alt:not(.to-cones) .ic-play{display:block}
 .mbtn:focus-visible{outline:none;filter:brightness(1.08)}
 #m-rank,#r-rank{width:84px;height:84px;border-radius:50%;cursor:pointer;pointer-events:auto;display:flex;align-items:center;justify-content:center;font-size:42px;line-height:1;padding:0;
   background:#1d1714e6;border:4px solid #fff;box-shadow:0 6px 0 #000a;transform:translate(-50%,-50%) scale(0)}
@@ -213,6 +219,7 @@ body{font-family:var(--font);-webkit-tap-highlight-color:transparent;touch-actio
         <h1 id="mtitle" class="a fancy"><span class="l0">Drift&#10;Trail</span><span class="l1">Drift&#10;Trail</span><span class="l2">Drift&#10;Trail</span></h1>
         <button id="m-play" class="a mbtn hide" tabindex="-1" aria-hidden="true" type="button"><span class="mi" aria-hidden="true"><svg viewBox="0 0 24 24" width="46" height="46"><path d="M7 4.5v15l12.5-7.5z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span><span class="mt"><b data-i18n="play"></b><small data-i18n="playSub"></small></span></button>
         <button id="m-cones" class="a mbtn primary" type="button"><span class="mi" aria-hidden="true"><svg viewBox="0 0 24 24" width="46" height="46"><path d="M10.2 3h3.6l5 15H5.2z" fill="#ff7a1a" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M8.6 9h6.8l1 3H7.6zM6.9 14.2h10.2" stroke="#fff" stroke-width="2.2" fill="#fff"/><rect x="2.5" y="18" width="19" height="3" rx="1.2" fill="currentColor"/></svg></span><span class="mt"><b data-i18n="play"></b><small></small></span></button>
+        <button id="m-zombie" class="a mbtn hide" tabindex="-1" aria-hidden="true" type="button"><span class="mi" aria-hidden="true"><svg viewBox="0 0 24 24" width="46" height="46"><path d="M12 2.5c-4.7 0-8.5 3.4-8.5 8 0 2.6 1.2 4.4 3 5.6V19a1.5 1.5 0 0 0 1.5 1.5h8A1.5 1.5 0 0 0 17.5 19v-2.9c1.8-1.2 3-3 3-5.6 0-4.6-3.8-8-8.5-8z" fill="#9fd36a" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="8.6" cy="11" r="2.1" fill="#1c1210"/><circle cx="15.4" cy="11" r="2.1" fill="#1c1210"/><path d="M12 13.4l-1.3 2.3h2.6z" fill="#1c1210"/><path d="M9.6 20.5v-2.4M12 20.5v-2.4M14.4 20.5v-2.4" stroke="#1c1210" stroke-width="1.3"/></svg></span><span class="mt"><b data-i18n="zombie">Zombie Rampage</b><small></small></span></button>
         <button id="m-daily" class="a mbtn hide" tabindex="-1" aria-hidden="true" type="button"><span class="mi" aria-hidden="true"><svg viewBox="0 0 24 24" width="44" height="44"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="12" cy="12" r="5.5" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="12" cy="12" r="1.8" fill="currentColor"/></svg></span><span class="mt"><b data-i18n="daily"></b><small></small></span></button>
         <button id="m-rank" class="a" type="button" aria-haspopup="dialog" aria-controls="rank" data-i18n-label="rank"><span aria-hidden="true">&#127942;</span></button>
         <div id="best" class="a"></div>
@@ -238,6 +245,7 @@ body{font-family:var(--font);-webkit-tap-highlight-color:transparent;touch-actio
         <div id="rpos" class="a"></div>
         <button id="again" class="a pbtn" type="button"><span class="ic" aria-hidden="true">&#8635;</span><span data-i18n="again">Play again</span></button>
         <button id="share" class="a pbtn sec" type="button" data-share><svg viewBox="0 0 24 24" width="34" height="34" aria-hidden="true"><path d="M12 3v12M7 8l5-5 5 5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg><span data-i18n="share">Share</span></button>
+        <button id="r-alt" class="a pbtn sec to-cones" type="button"><svg class="ic-cone" viewBox="0 0 24 24" width="34" height="34" aria-hidden="true"><path d="M10.2 3h3.6l5 15H5.2z" fill="#ff7a1a" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M8.6 9h6.8l1 3H7.6zM6.9 14.2h10.2" stroke="#fff" stroke-width="2.2" fill="#fff"/><rect x="2.5" y="18" width="19" height="3" rx="1.2" fill="currentColor"/></svg><svg class="ic-play" viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span data-i18n="tryCones">Try the Cones</span></button>
         <button id="r-rank" class="a" type="button" aria-haspopup="dialog" aria-controls="rank" data-i18n-label="rank"><span aria-hidden="true">&#127942;</span></button>
       </div>
       <div id="live" class="sr" aria-live="polite"></div>
@@ -248,7 +256,7 @@ body{font-family:var(--font);-webkit-tap-highlight-color:transparent;touch-actio
 <div id="adbar" aria-label="Advertisement" data-i18n-label="ad"><div class="ad-slot" data-ad-slot-key="ADSENSE_SLOT_GAME"></div></div>
 <script type="importmap">{"imports":{"three":"/lib/three/0.186.0/build/three.module.js"}}</script>
 <script>window.BC_GAME="cones";</script>
-<script type="module" src="../burnout-city/game.js?v=1ba97547"></script>
+<script type="module" src="../burnout-city/game.js?v=652e4a1a"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7f9a5c4a463b4b799b86c338ccb2bc99"}'></script><!-- End Cloudflare Web Analytics -->
 <!--guide--><style>
 html.bg-hasg,html.bg-hasg body{height:auto;min-height:100%;overflow-x:hidden;overflow-y:auto}
