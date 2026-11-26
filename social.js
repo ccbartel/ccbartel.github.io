@@ -282,6 +282,8 @@
   };
 
   // vitrine: "Played N times · ♥ N" embaixo de cada capa com data-game
+  // 2026-11-26 (pedido dele): pouca gente jogando, esconder "Jogado N vezes"; true volta a mostrar
+  var SHOW_PLAYS = false;
   function portal() {
     var cards = document.querySelectorAll("[data-game]");
     if (!cards.length) return;
@@ -289,6 +291,7 @@
     window.BG_SOCIAL.stats(games).then(function (rows) {
       rows.forEach(function (r) {
         var el = document.querySelector('[data-game="' + r.game + '"] .meta');
+        if (!SHOW_PLAYS) { if (el && r.likes > 0) el.textContent = "♥ " + compact(r.likes, (window.SITE_I18N || {}).tag || "en"); return; }
         if (!(r.plays > 0)) return; // sem partidas ainda: nao mostra "Jogado 0 vezes"
         if (el) var L = window.SITE_I18N; el.textContent = L ? L.t("played", {p: compact(r.plays, L.tag), l: compact(r.likes, L.tag)}) : "Played " + compact(r.plays, "en") + " times · ♥ " + compact(r.likes, "en");
       });
