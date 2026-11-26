@@ -18,7 +18,7 @@ import hashlib, json, os, re, shutil, subprocess, sys, pathlib
 
 ROOT = pathlib.Path(__file__).resolve().parent
 CONFIG = ROOT / "site-config.js"
-GAMES = ["geo-quiz", "candy-line", "burnout-city", "bumpets", "the-last-driver", "crazy-parking"]  # slug = pasta do jogo; fonte em src/<slug>/game.src.js
+GAMES = ["geo-quiz", "candy-line", "burnout-city", "bumpets", "the-last-driver", "crazy-parking", "candy-shot"]  # slug = pasta do jogo; fonte em src/<slug>/game.src.js
 # jogo com src/<slug>/prebuild.py: o build roda esse script antes (ex.: Bumpets junta os modulos do cliente e copia os assets)
 STATE = ROOT / ".build_state.json"
 TMP = ROOT / "_build_tmp"

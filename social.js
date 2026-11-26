@@ -206,7 +206,9 @@
       return rpc(fn, body);
     },
     channel: function (code, key) { return sb().then(function (c) { return c.channel((LOCAL ? "cl-mp-local-" : "cl-mp-") + code, {config: {broadcast: {self: false, ack: false}, presence: {key: key}}}); }); },
-    drop: function (ch) { try { if (client && ch) client.removeChannel(ch); } catch (e) {} }
+    drop: function (ch) { try { if (client && ch) client.removeChannel(ch); } catch (e) {} },
+    // canal ao vivo generico sem banco (Candy Shot coop, 2026-11-26): so broadcast/presence; em localhost ganha prefixo de teste
+    room: function (name, key) { return sb().then(function (c) { return c.channel((LOCAL ? "local-" : "") + name, {config: {broadcast: {self: false, ack: false}, presence: {key: key || "x"}}}); }); }
   };
 
   window.BG_SOCIAL = {
