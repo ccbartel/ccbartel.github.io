@@ -4,3 +4,6 @@ __pycache__/
 .build_state.json
 _arte/
 .build.lock
+# nao publicar (repositorio publico), 2026-11-26
+.claude/
+radar_modelos/

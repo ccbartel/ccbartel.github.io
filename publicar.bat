@@ -5,6 +5,8 @@ echo === 1/3 Build ===
 "C:\Users\crisb\ComfyUI_windows_portable_nvidia\ComfyUI_windows_portable\python_embeded\python.exe" build.py
 if errorlevel 1 (echo ERRO no build. Nada foi publicado. & pause & exit /b 1)
 echo === 2/3 Commit ===
+rem tira do repositorio publico o que estiver no .gitignore (o arquivo continua no PC)
+for /f "delims=" %%f in ('git ls-files -ci --exclude-standard') do git rm --cached -q "%%f"
 git add -A
 set MSG=%*
 if "%MSG%"=="" set MSG=Atualiza site
