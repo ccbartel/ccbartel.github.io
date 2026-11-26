@@ -182,6 +182,22 @@
 
   // ---- uso anonimo dos jogos (pedido dele 2026-11-18): sem nome, e-mail nem conta; so o ID anonimo do aparelho ----
   var EV = {t0: 0, ended: false, game: null};
+  // teste (2026-11-26): ?teste=1 marca o aparelho como teste (fica salvo; ?teste=0 desmarca); navegador automatico (webdriver) tambem.
+  // Eventos de teste sao gravados com test=true (o servidor mantem a marca do aparelho) e nao somam no contador de partidas.
+  function isTest() {
+    try { var q = new URLSearchParams(location.search).get("teste"); if (q === "1") localStorage.setItem("bg_test", "1"); else if (q === "0") localStorage.removeItem("bg_test"); } catch (e) {}
+    var t = false; try { t = localStorage.getItem("bg_test") === "1"; } catch (e) {}
+    try { if (navigator.webdriver) t = true; } catch (e) {}
+    return t;
+  }
+  var TEST = isTest();
+  // familia do navegador e sistema, curto (ex.: chrome-android); o user agent inteiro nao vai ao servidor
+  function uaShort() {
+    var u = ""; try { u = navigator.userAgent || ""; } catch (e) {}
+    var os = /Android/i.test(u) ? "android" : /iPhone|iPad|iPod/i.test(u) ? "ios" : /Windows/i.test(u) ? "windows" : /Mac OS X/i.test(u) ? "mac" : /CrOS/i.test(u) ? "chromeos" : /Linux/i.test(u) ? "linux" : "other";
+    var br = /HeadlessChrome/i.test(u) ? "headless" : /FBAN|FBAV|FB_IAB/i.test(u) ? "facebook" : /Instagram/i.test(u) ? "instagram" : /TikTok|musical_ly|BytedanceWebview/i.test(u) ? "tiktok" : /WhatsApp/i.test(u) ? "whatsapp" : /SamsungBrowser/i.test(u) ? "samsung" : /Edg\//i.test(u) ? "edge" : /OPR\//i.test(u) ? "opera" : /Firefox|FxiOS/i.test(u) ? "firefox" : /CriOS|Chrome/i.test(u) ? "chrome" : /Safari/i.test(u) ? "safari" : "other";
+    return br + "-" + os;
+  }
   function evBase() {
     var ref = ""; try { if (document.referrer) { var h = new URL(document.referrer).hostname.toLowerCase(); if (h && h !== location.hostname) ref = h.replace(/^www\./, "").slice(0, 80); } } catch (e) {}
     var mob = false; try { mob = matchMedia("(pointer:coarse)").matches; } catch (e) {}
@@ -190,7 +206,7 @@
   function event(game, kind, d) {
     d = d || {}; game = game || EV.game; if (!game) return Promise.resolve(false);
     var b = evBase(), body = {p_game: game, p_kind: kind, p_device: device(), p_mode: d.mode || null, p_secs: d.secs == null ? null : Math.round(d.secs),
-      p_score: d.score == null ? null : Math.round(d.score), p_reason: d.reason || null, p_lang: b.lang || null, p_mobile: b.mobile, p_ref: b.ref || null};
+      p_score: d.score == null ? null : Math.round(d.score), p_reason: d.reason || null, p_lang: b.lang || null, p_mobile: b.mobile, p_ref: b.ref || null, p_test: TEST, p_ua: uaShort()};
     if (LOCAL) { console.info("[uso] (teste local, nao grava)", kind, JSON.stringify(body)); return Promise.resolve(true); }
     return rpc("log_event", body).catch(function () { return false; });
   }
@@ -216,7 +232,7 @@
     event: event,
     game: function (g) { if (g) EV.game = g; return EV.game; },
     // fim de partida: o jogo manda pontuacao e motivo; a duracao e medida aqui (desde o play)
-    end: function (game, mode, score, reason) { try { window.dispatchEvent(new CustomEvent("bg-end", {detail: {game: game, mode: mode, score: score, reason: reason}})); } catch (e) {} EV.ended = true; return event(game, "end", {mode: mode, score: score, reason: reason, secs: EV.t0 ? (performance.now() - EV.t0) / 1000 : null}); },
+    end: function (game, mode, score, reason) { try { window.dispatchEvent(new CustomEvent("bg-end", {detail: {game: game, mode: mode, score: score, reason: reason}})); } catch (e) {} EV.ended = true; var now = performance.now(), secs = EV.t0 ? (now - EV.t0) / 1000 : null; EV.t0 = now; /* 2026-11-26: tempo desta partida/fase, nao o acumulado desde o play */ return event(game, "end", {mode: mode, score: score, reason: reason, secs: secs}); },
     device: device, compact: compact, auth: auth,
     // mural da comunidade (2026-11-21, community.js): RPC com a identidade (apelido do aparelho ou conta Google). Em localhost nada vai ao banco.
     wallRecent: function (n) { return LOCAL ? Promise.resolve(fakeWall("post_recent", {p_limit: n})) : rpc("post_recent", {p_limit: n || 6}); }, // vitrine da home (sem identidade)
@@ -240,6 +256,7 @@
       EV.game = game; if (EV.ended) event(game, "replay", {mode: mode}); EV.ended = false; EV.t0 = performance.now(); event(game, "start", {mode: mode});
       // modos irmaos do Bumpets contam na propria capa (bumpets-soccer etc.); os eventos continuam em "bumpets"
       var pm = game === "bumpets" && /-(soccer|race|zone|flag|paint|cards|pinball)$/.exec(mode || "");
+      if (TEST) return Promise.resolve(0); // teste nao soma no contador publico
       return rpc("record_play", {p_game: pm ? "bumpets-" + (pm[1] === "pinball" ? "pinball-soccer" : pm[1]) : game}) /* pinball: pagina /bumpets-pinball-soccer/ (nome novo 2026-11-24) */.catch(function () {});
     },
     like: function (game) { return rpc("toggle_like", {p_game: game, p_device: device()}).then(function (r) { return r[0]; }); },

@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "bumpets-pinball",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["C:/Users/crisb/SiteJogos/servir.py", "8012", "127.0.0.1"],
+      "port": 8012
+    }
+  ]
+}
