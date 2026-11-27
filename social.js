@@ -298,4 +298,8 @@
     }).catch(function () {});
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", portal); else portal();
+  // visita a pagina que NAO e de jogo (home, categorias, sobre...) — pedido dele 2026-11-27 para o funil: entrou no site -> abriu jogo -> jogou.
+  // Pagina de jogo ja grava "open" pelo social-ui.js; aqui vai game "site", kind "open", mode = caminho da pagina (ex.: "/", "/pt/", "/car-games/").
+  function siteOpen() { if (document.querySelector('script[src*="social-ui.js"]')) return; try { var pg = (location.pathname || "/").replace(/index\.html$/, "").replace(/^\/+|\/+$/g, "").replace(/\//g, "-").toLowerCase().replace(/[^a-z0-9-]/g, "").slice(0, 20) || "home"; event("site", "open", {mode: pg}); } catch (e) {} }   // banco aceita modo ^[a-z0-9-]{1,20}$: "/"->home, "/pt/"->pt, "/pt/jogos-de-carro/"->pt-jogos-de-carro
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", siteOpen); else siteOpen();
 })();
