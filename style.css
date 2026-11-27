@@ -179,3 +179,26 @@ footer.site a:hover{color:#fff;text-decoration:underline}
 .about-txt ul{padding-left:22px;margin:8px 0 0}.about-txt li{margin:0 0 8px}.about-txt b{color:#fff}
 .home-about{margin:34px 0 38px}.home-about .sec-t{margin-bottom:4px}
 .about-txt a,.home-about a{color:#ffd45a}
+
+/* destaque Bumpets Party na home (2026-11-27) */
+.hbp-sec{margin:6px 0 26px}
+.games .hbp,.hbp{display:grid;grid-template-columns:minmax(230px,0.8fr) 1.6fr;align-items:center;gap:18px;padding:22px 0 22px 26px;border-radius:24px;overflow:hidden;text-decoration:none;color:#fff;
+  background:radial-gradient(120% 140% at 0% 0%,#ffd84d33 0%,#0000 45%),linear-gradient(135deg,#1b4fb3 0%,#0e2a6e 55%,#0b1736 100%);border:3px solid #f7b60c;box-shadow:0 14px 40px #0009,inset 0 0 0 3px #0d1430;transition:transform .25s,box-shadow .25s}
+.hbp:hover,.hbp:focus-visible{transform:translateY(-3px);box-shadow:0 18px 46px #000b,inset 0 0 0 3px #0d1430,0 0 0 4px #f7b60c55;outline:none}
+.hbp-txt{display:flex;flex-direction:column;align-items:flex-start;gap:10px;min-width:0}
+.hbp-tag{font:700 12px/1 var(--body);letter-spacing:.08em;text-transform:uppercase;color:#0d1430;background:var(--gold2);padding:6px 10px;border-radius:999px}
+.hbp-logo{display:flex;flex-direction:column;transform:rotate(-3deg);margin:2px 0 0}
+.hbp-logo span{font:800 clamp(40px,6vw,64px)/.86 var(--title);color:#fff;-webkit-text-stroke:6px var(--navy);paint-order:stroke fill;text-shadow:0 5px 0 var(--navy)}
+.hbp-logo span+span{color:var(--gold2);font-size:clamp(34px,5vw,54px);margin-left:.6em}
+.hbp-d{color:#d6e0ff;font-size:15px;line-height:1.4;max-width:30ch}
+.hbp-btn{font:800 20px/1 var(--title);color:#0d1430;background:linear-gradient(#ffe27a,#f7b60c);padding:12px 26px 10px;border-radius:14px;box-shadow:0 5px 0 #a86f00,0 0 0 3px #0d1430,0 8px 0 3px #0d1430}
+.hbp:hover .hbp-btn{filter:brightness(1.06)}
+.hbp-shots{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,#0000,#000 8%,#000 92%,#0000);mask-image:linear-gradient(90deg,#0000,#000 8%,#000 92%,#0000)}
+.hbp-track{display:flex;gap:14px;width:max-content;animation:hbpRoll 38s linear infinite}
+.hbp:hover .hbp-track{animation-play-state:paused}
+@keyframes hbpRoll{to{transform:translateX(calc(-50% - 7px))}}
+.hbp-s{margin:0;width:clamp(128px,15vw,176px);flex:none;position:relative}
+.hbp-s img{display:block;width:100%;height:auto;aspect-ratio:2/3;object-fit:cover;border-radius:16px;border:3px solid #fff;box-shadow:0 0 0 3px #0d1430,0 10px 22px #0008}
+.hbp-s figcaption{position:absolute;left:50%;bottom:8px;transform:translateX(-50%);white-space:nowrap;font:800 13px/1 var(--title);color:#fff;background:#0d1430d9;padding:6px 10px 5px;border-radius:999px}
+@media (max-width:720px){.games .hbp,.hbp{grid-template-columns:1fr;padding:20px 0 18px}.hbp-txt{padding:0 20px;align-items:center;text-align:center}.hbp-d{max-width:34ch}.hbp-s{width:136px}}
+@media (prefers-reduced-motion:reduce){.hbp-track{animation:none}.hbp-shots{overflow-x:auto}.hbp{transition:none}.hbp:hover{transform:none}}
