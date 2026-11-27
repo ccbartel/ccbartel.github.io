@@ -7,8 +7,8 @@
   var URL_ = BASE + "/rest/v1/rpc/";
   var KEY = "sb_publishable_eWUCNrYZoIoBOsbw48UYDg_cDZAfsIa";
   var SBJS = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.0/+esm";
-  function rpc(fn, body) {
-    return fetch(URL_ + fn, {method: "POST", headers: {"apikey": KEY, "Content-Type": "application/json"}, body: JSON.stringify(body || {})})
+  function rpc(fn, body, keep) {   // keep: keepalive (envio ao sair da pagina)
+    return fetch(URL_ + fn, {method: "POST", keepalive: !!keep, headers: {"apikey": KEY, "Content-Type": "application/json"}, body: JSON.stringify(body || {})})
       .then(function (r) { if (!r.ok) throw new Error(fn + " " + r.status); return r.json(); });
   }
   function device() {
@@ -208,7 +208,7 @@
     var b = evBase(), body = {p_game: game, p_kind: kind, p_device: device(), p_mode: d.mode || null, p_secs: d.secs == null ? null : Math.round(d.secs),
       p_score: d.score == null ? null : Math.round(d.score), p_reason: d.reason || null, p_lang: b.lang || null, p_mobile: b.mobile, p_ref: b.ref || null, p_test: TEST, p_ua: uaShort()};
     if (LOCAL) { console.info("[uso] (teste local, nao grava)", kind, JSON.stringify(body)); return Promise.resolve(true); }
-    return rpc("log_event", body).catch(function () { return false; });
+    return rpc("log_event", body, d.keep).catch(function () { return false; });
   }
 
   // ---- multijogador ao vivo (Candy Line, 2026-11-17): RPC com a identidade do jogador (apelido do aparelho ou conta Google) + canal do Realtime ----
@@ -230,7 +230,8 @@
   window.BG_SOCIAL = {
     mp: mp,
     event: event,
-    game: function (g) { if (g) EV.game = g; return EV.game; },
+    game: function (g) { if (g) { EV.game = g; sendReady(); } return EV.game; },
+    ready: function () { readyNow(); },   // jogo avisa que terminou de carregar (quem define window.BG_READY_MANUAL = true); senao vale o "load" da pagina
     // fim de partida: o jogo manda pontuacao e motivo; a duracao e medida aqui (desde o play)
     end: function (game, mode, score, reason) { try { window.dispatchEvent(new CustomEvent("bg-end", {detail: {game: game, mode: mode, score: score, reason: reason}})); } catch (e) {} EV.ended = true; var now = performance.now(), secs = EV.t0 ? (now - EV.t0) / 1000 : null; EV.t0 = now; /* 2026-11-26: tempo desta partida/fase, nao o acumulado desde o play */ return event(game, "end", {mode: mode, score: score, reason: reason, secs: secs}); },
     device: device, compact: compact, auth: auth,
@@ -253,7 +254,7 @@
       try { var dd = new Date().toLocaleDateString("sv"), pg = (location.pathname.replace(/^\/(pt|es)\//, "/").split("/")[1] || "");
         if (pg) { var RC = JSON.parse(localStorage.getItem("bg_recent") || "[]").filter(function (x) { return x.p !== pg; }); RC.unshift({p: pg, d: dd}); localStorage.setItem("bg_recent", JSON.stringify(RC.slice(0, 6))); }
         var DY = JSON.parse(localStorage.getItem("bg_days") || "[]"); if (DY.indexOf(dd) < 0) { DY.push(dd); localStorage.setItem("bg_days", JSON.stringify(DY.slice(-60))); } } catch (e) {}
-      EV.game = game; if (EV.ended) event(game, "replay", {mode: mode}); EV.ended = false; EV.t0 = performance.now(); event(game, "start", {mode: mode});
+      EV.game = game; EV.played = true; if (EV.ended) event(game, "replay", {mode: mode}); EV.ended = false; EV.t0 = performance.now(); event(game, "start", {mode: mode});
       // modos irmaos do Bumpets contam na propria capa (bumpets-soccer etc.); os eventos continuam em "bumpets"
       var pm = game === "bumpets" && /-(soccer|race|zone|flag|paint|cards|pinball)$/.exec(mode || "");
       if (TEST) return Promise.resolve(0); // teste nao soma no contador publico
@@ -302,4 +303,14 @@
   // Pagina de jogo ja grava "open" pelo social-ui.js; aqui vai game "site", kind "open", mode = caminho da pagina (ex.: "/", "/pt/", "/car-games/").
   function siteOpen() { if (document.querySelector('script[src*="social-ui.js"]')) return; try { var pg = (location.pathname || "/").replace(/index\.html$/, "").replace(/^\/+|\/+$/g, "").replace(/\//g, "-").toLowerCase().replace(/[^a-z0-9-]/g, "").slice(0, 20) || "home"; event("site", "open", {mode: pg}); } catch (e) {} }   // banco aceita modo ^[a-z0-9-]{1,20}$: "/"->home, "/pt/"->pt, "/pt/jogos-de-carro/"->pt-jogos-de-carro
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", siteOpen); else siteOpen();
+  // ONDE A PESSOA DESISTE (pedido dele 2026-11-27): "ready" quando o jogo terminou de carregar (secs desde a abertura) e "leave" na 1a vez
+  // que a pagina some (fechou, trocou de aba ou de app): mode carregado|carregando, reason jogou|nao-jogou, secs = tempo na pagina. So em pagina de jogo.
+  var PV = {readyAt: 0, readySent: false, left: false};
+  function sendReady() { if (PV.readySent || !PV.readyAt || !EV.game) return; PV.readySent = true; event(EV.game, "ready", {secs: PV.readyAt / 1000}); }
+  function readyNow() { if (PV.readyAt) return; PV.readyAt = performance.now(); sendReady(); }
+  function leaveNow() { if (PV.left || !EV.game) return; PV.left = true; event(EV.game, "leave", {secs: performance.now() / 1000, mode: PV.readyAt ? "carregado" : "carregando", reason: EV.played ? "jogou" : "nao-jogou", keep: true}); }
+  function onLoad() { setTimeout(function () { if (!window.BG_READY_MANUAL) readyNow(); }, 0); }
+  if (document.readyState === "complete") onLoad(); else addEventListener("load", onLoad);
+  addEventListener("pagehide", leaveNow);
+  document.addEventListener("visibilitychange", function () { if (document.visibilityState === "hidden") leaveNow(); });
 })();
