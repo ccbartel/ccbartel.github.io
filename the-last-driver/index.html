@@ -104,6 +104,51 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>The Last Driver - Bartel Games</title>
@@ -115,7 +160,7 @@
 <script src="../scorecard.js?v=6c095f5f" defer></script>
 <script src="../social.js?v=903658ef" defer></script>
 <script src="social-ui.js" defer></script>
-<script src="../community.js?v=2f4f6c03" defer></script>
+<script src="../community.js?v=2a465799" defer></script>
 <script src="../install.js?v=2e364041" defer></script>
 <script src="../achievements.js?v=693e0c68" defer></script>
 <link rel="icon" type="image/png" href="assets/icon.png">
@@ -207,7 +252,7 @@ body{font-family:var(--font);-webkit-tap-highlight-color:transparent;touch-actio
 </head>
 <body>
 <nav id="topbar"><a class="back" href="../"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M15 4 7 12l8 8" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="more">More games</span></a><span class="tb-r"><button class="topinfo topsnd" id="topsnd" type="button" aria-pressed="false" data-i18n-label="sound" hidden><svg class="sf" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M16.5 9.5l5 5m0-5l-5 5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg><svg class="so" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M16 8.5a5 5 0 0 1 0 7M18.6 5.8a9 9 0 0 1 0 12.4" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/></svg></button><button class="topinfo" type="button" aria-haspopup="dialog" aria-controls="howto" onclick="var d=document.getElementById('howto');d.showModal();d.scrollTop=0;document.getElementById('howto-t').focus({preventScroll:true})"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M12 11v6" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><circle cx="12" cy="7.3" r="1.6" fill="currentColor"/></svg><span class="sr" data-i18n="how">How to play</span></button><button class="toplike" id="toplike" type="button" aria-pressed="false" data-i18n-label="like" hidden><svg class="ho" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.2-9.4C1.6 7.6 3.9 4 7.4 4c2 0 3.6 1.1 4.6 2.7C13 5.1 14.6 4 16.6 4c3.5 0 5.8 3.6 4.6 7.1-1.7 4.8-9.2 9.4-9.2 9.4z" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linejoin="round"/></svg><svg class="hf" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.2-9.4C1.6 7.6 3.9 4 7.4 4c2 0 3.6 1.1 4.6 2.7C13 5.1 14.6 4 16.6 4c3.5 0 5.8 3.6 4.6 7.1-1.7 4.8-9.2 9.4-9.2 9.4z" fill="#ff3b5c" stroke="#ff3b5c" stroke-width="2.3" stroke-linejoin="round"/></svg><span class="lc"></span></button><button class="topshare" type="button" data-share><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 3v12M7 8l5-5 5 5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg><span data-i18n="share">Share</span></button></span></nav>
-<dialog id="howto" aria-labelledby="howto-t"><h1 id="howto-t" tabindex="-1" autofocus data-i18n="title">The Last Driver</h1><h2 data-i18n="how">How to play</h2><ol><li data-i18n="h1">Your car drives on its own down a zombie-filled road. Phone: drag left or right to steer. Computer: move the mouse sideways (or use the arrow keys).</li><li data-i18n="h2">Dodge cars, holes and lava. Phone: swipe up to jump, tap the screen to shoot. Computer: right mouse button (or S) to jump, left mouse button (or A) to shoot. Jumps and shots are limited: grab pickups on the road to refill them.</li><li data-i18n="h3">Run over zombies and collect coins. Hits take away life; the run ends when your life runs out or you fall into a hole, the water or the lava.</li><li data-i18n="h4">Spend your coins in the Garage: new cars, upgrades, weapons and specials.</li></ol><p data-i18n="hm">Missions: complete the three missions to level up and earn a coin bonus. Ranking: the score of each run counts for the global ranking.</p><p data-i18n="ab">The Last Driver is a free 3D zombie driving game: survive the road, smash zombies and upgrade your car. Plays in your browser on phone or computer. No download, no sign-up.</p><p class="cred" data-i18n="cred">Sound effects: Stable Audio 3 — Powered by Stability AI · Music: generated with ACE-Step · Illustration: FLUX.2</p><p class="cred">T-Rex: <a href="https://sketchfab.com/3d-models/ps1low-poly-t-rex-c62dba5641d14d16a5c3cd3bb878f380" target="_blank" rel="noopener">"PS1/Low Poly T-Rex"</a> <span data-i18n="credBy">by</span> Jellypack (Sketchfab), <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a></p><form method="dialog"><button class="close" data-i18n="close">Close</button></form></dialog>
+<dialog id="howto" aria-labelledby="howto-t"><h1 id="howto-t" tabindex="-1" autofocus data-i18n="title">The Last Driver</h1><h2 data-i18n="how">How to play</h2><ol><li data-i18n="h1">Your car drives on its own down a zombie-filled road. Phone: drag left or right to steer. Computer: use the arrow keys.</li><li data-i18n="h2">Dodge cars, holes and lava. Phone: swipe up to jump, tap the screen to shoot. Computer: S to jump, A to shoot. Jumps and shots are limited: grab pickups on the road to refill them.</li><li data-i18n="h3">Run over zombies and collect coins. Hits take away life; the run ends when your life runs out or you fall into a hole, the water or the lava.</li><li data-i18n="h4">Spend your coins in the Garage: new cars, upgrades, weapons and specials.</li></ol><p data-i18n="hm">Missions: complete the three missions to level up and earn a coin bonus. Ranking: the score of each run counts for the global ranking.</p><p data-i18n="ab">The Last Driver is a free 3D zombie driving game: survive the road, smash zombies and upgrade your car. Plays in your browser on phone or computer. No download, no sign-up.</p><p class="cred" data-i18n="cred">Sound effects: Stable Audio 3 — Powered by Stability AI · Music: generated with ACE-Step · Illustration: FLUX.2</p><p class="cred">T-Rex: <a href="https://sketchfab.com/3d-models/ps1low-poly-t-rex-c62dba5641d14d16a5c3cd3bb878f380" target="_blank" rel="noopener">"PS1/Low Poly T-Rex"</a> <span data-i18n="credBy">by</span> Jellypack (Sketchfab), <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a></p><form method="dialog"><button class="close" data-i18n="close">Close</button></form></dialog>
 <dialog id="rank" aria-labelledby="rank-t"><h1 id="rank-t"></h1><div class="rbody"></div><form method="dialog"><button class="rbtn sec" data-i18n="close">Close</button></form></dialog>
 <div id="app"><div id="stage"><iframe id="game" title="The Last Driver" allow="autoplay; fullscreen" data-src="play.html"></iframe></div></div>
 <div id="adbar" aria-label="Advertisement" data-i18n-label="ad"><div class="ad-slot" data-ad-slot-key="ADSENSE_SLOT_GAME"></div></div>
@@ -247,7 +292,7 @@ html.bg-hasg #app{touch-action:none}
 <div class="g-lead"><p>The Last Driver is a 3D zombie road game by Bartel Games. Your car drives itself down a road overrun by zombies, and you switch lanes, jump and shoot to get through traffic, holes and lava. Every run pays out coins, and the coins go into the Garage, where you buy cars, weapons, upgrades and specials.</p><p>That makes it a game of two loops: the run itself, where reflexes matter, and the long-term progress of your garage and missions. A run that ends early still moves you forward if you collected coins along the way.</p></div>
 <a class="g-play" href="#" data-guide-top>&#9654; Play The Last Driver now</a>
 <h3>How to play</h3><ol><li>Tap Play. The car starts on its own.</li><li>Change lanes to avoid cars, holes and lava.</li><li>Jump over obstacles and shoot what is in front of you (phone: swipe up to jump, tap to shoot). Both are limited, so refill them with the pickups on the road.</li><li>Run over zombies and collect coins.</li><li>Hits drain your life. The run ends when life runs out or when you fall into a hole, the water or the lava.</li><li>Back in the menu, spend your coins in the Garage.</li></ol>
-<h3>Controls</h3><ul><li>Phone: drag left or right to steer, swipe up to jump and tap the screen to shoot.</li><li>Computer: move the mouse sideways to steer, right mouse button to jump and left mouse button to shoot. The arrow keys, S (jump) and A (shoot) also work.</li></ul>
+<h3>Controls</h3><ul><li>Phone: drag left or right to steer, swipe up to jump and tap the screen to shoot.</li><li>Computer: arrow keys to steer, S to jump and A to shoot. The arrow keys, S (jump) and A (shoot) also work.</li></ul>
 <h3>Game modes</h3><ul><li><b>Play</b>: the main run. Your score counts for the global ranking.</li><li><b>Missions</b>: three goals at a time, such as driving a distance, killing zombies, collecting coins, driving with full life, driving without zombie kills or keeping a zombie on the car for a few seconds. Complete all three to level up and earn a coin bonus.</li><li><b>Daily mission</b>: one goal per day to complete in a single run: drive, kill zombies, collect coins or use jumps. Each day in a row the prize grows; skip a day and the streak resets.</li></ul>
 <h3>Pickups and the pause Shop</h3><p>Pickups on the road give +3 Ammo, +2 Jumps or +10% Life, plus a magnet that pulls nearby coins to the car and a power-up. If you are in trouble mid-run, pause the game: the Shop there sells ammo, jumps and life with the coins you already have.</p>
 <h3>Garage: cars, weapons, upgrades and specials</h3><p>The Garage has six cars (Muscle car, Off-road, Zombie killer, Spy, Truck and Police) and four weapons (Shotgun, Rocket launcher, Ray gun and Super ray). Each car has its own upgrade limits for Armor, Tires, Jump, Ammo and Power-ups. Armor reduces the damage you take, Tires improve handling, Jump and Ammo raise how many jumps and shots you start with, and Power-ups last longer.</p><p>Specials change the run: Big head, Top view (a higher camera), Start ahead and Hardcore, which is harder but gives +25% score.</p>

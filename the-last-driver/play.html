@@ -204,7 +204,10 @@ body:not(.setas) .nctl.l { display: none; }
 .nhelp { grid-template-columns: 1fr !important; } .nhelp > div { flex-direction: row !important; justify-content: flex-start !important; gap: 14px !important; padding: 8px 14px !important; text-align: left !important; }
 .nhelp .nhd { display: contents !important; } .nhelp .nhd > div { position: static !important; background: #0006 !important; padding: 8px 14px !important; border-radius: 14px; flex-direction: row !important; gap: 14px !important; }
 .nhelp .nround, .nhelp .nstk { display: none !important; } .nhelp kbd { margin-left: auto; white-space: nowrap; flex: none; } .nhelp > div, .nhelp .nhd > div { min-height: 88px; align-items: center !important; }
-.nmsI { display: block; flex: none; width: 74px; text-align: center; } .nmsI .nms { width: 40px; height: 52px; }
+.nmsI { display: flex; flex: none; width: 74px; justify-content: center; gap: 4px; }
+.nkc { display: inline-grid; place-items: center; min-width: 30px; height: 30px; padding: 0 6px; border-radius: 7px; background: #f4efe6; color: #1d1714; font: 700 18px/1 var(--nf); box-shadow: 0 3px 0 #8a7f72, 0 4px 0 #0008; }
+#nuiTut .tlbl.big .nkc { min-width: 46px; height: 46px; font-size: 28px; border-radius: 10px; animation: nkcb 1s ease-in-out infinite; } @keyframes nkcb { 50% { transform: translateY(3px); box-shadow: 0 0 0 #8a7f72, 0 1px 0 #0008; } }
+.nhelp .nkeys { display: none !important; } .nmsI .nms { width: 40px; height: 52px; }
 .ntch, .ngest { display: none; } @media (hover: none) and (pointer: coarse) { .ntch { display: inline; } .npc { display: none; }
   .ngest { display: block; flex: none; position: relative; width: 74px; height: 70px; } .nhelp kbd, .npcI { display: none !important; }
   
@@ -705,8 +708,8 @@ html.emb #nui { --top: calc(8px + env(safe-area-inset-top, 0px)); }   /* no site
       <h2 id="nuiHelpT" data-i="howto">Como jogar</h2>
       <p class="ltip" style="margin:0 auto" data-i="howtoTxt">Desvie dos carros e dos buracos, atropele zumbis e junte moedas.</p>
       <div class="nhelp">
-        <div class="nhs"><span class="nstk" aria-hidden="true"><i></i></span><span class="nmsI npcI" data-m="mv"></span><span class="ngest side" aria-hidden="true"><img src="p/mao.png" alt=""></span><span class="ntch" data-i="hStick">Arraste para virar</span><span class="npc" data-i="hMouse">Mexa o mouse para os lados para virar</span><kbd class="nkeys">← →</kbd></div>
-        <div class="nhd"><div class="j"><span class="nround act"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2 4.5 9.5h4.5V14h6V9.5h4.5zM5 16.5h14V19H5z"/></svg></span><span class="nmsI npcI" data-m="r"></span><span class="ngest up" aria-hidden="true"><img src="p/mao.png" alt=""></span><span class="ntch" data-i="hSwipe">Deslize para cima para pular</span><span class="npc" data-i="hRmb">Botão direito do mouse para pular</span><kbd class="nkeys">S</kbd></div><div class="g"><span class="nround act"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" d="M12 4.5a7.5 7.5 0 1 0 0 15 7.5 7.5 0 0 0 0-15zM12 1v6M12 17v6M1 12h6M17 12h6"/></svg></span><span class="nmsI npcI" data-m="l"></span><span class="ngest tap" aria-hidden="true"><img src="p/mao.png" alt=""></span><span class="ntch" data-i="hTap">Toque na tela para atirar</span><span class="npc" data-i="hLmb">Botão esquerdo do mouse para atirar</span><kbd class="nkeys">A</kbd></div></div>
+        <div class="nhs"><span class="nstk" aria-hidden="true"><i></i></span><span class="nmsI npcI" data-m="mv"></span><span class="ngest side" aria-hidden="true"><img src="p/mao.png" alt=""></span><span class="ntch" data-i="hStick">Arraste para virar</span><span class="npc" data-i="hMouse">Setas para virar</span><kbd class="nkeys">← →</kbd></div>
+        <div class="nhd"><div class="j"><span class="nround act"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2 4.5 9.5h4.5V14h6V9.5h4.5zM5 16.5h14V19H5z"/></svg></span><span class="nmsI npcI" data-m="r"></span><span class="ngest up" aria-hidden="true"><img src="p/mao.png" alt=""></span><span class="ntch" data-i="hSwipe">Deslize para cima para pular</span><span class="npc" data-i="hRmb">S para pular</span><kbd class="nkeys">S</kbd></div><div class="g"><span class="nround act"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" d="M12 4.5a7.5 7.5 0 1 0 0 15 7.5 7.5 0 0 0 0-15zM12 1v6M12 17v6M1 12h6M17 12h6"/></svg></span><span class="nmsI npcI" data-m="l"></span><span class="ngest tap" aria-hidden="true"><img src="p/mao.png" alt=""></span><span class="ntch" data-i="hTap">Toque na tela para atirar</span><span class="npc" data-i="hLmb">A para atirar</span><kbd class="nkeys">A</kbd></div></div>
       </div>
       <p class="ltip" style="margin:0 auto;font-size:11px;opacity:.75">T-Rex: <a href="https://sketchfab.com/3d-models/ps1low-poly-t-rex-c62dba5641d14d16a5c3cd3bb878f380" target="_blank" rel="noopener" style="color:inherit">"PS1/Low Poly T-Rex"</a> &middot; Jellypack (Sketchfab) &middot; <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener" style="color:inherit">CC BY 4.0</a></p>
       <button class="nbtn primary" id="nuiHelpOk" style="justify-content:center"><b data-i="ok">OK</b></button>
@@ -803,6 +806,6 @@ html.emb #nui { --top: calc(8px + env(safe-area-inset-top, 0px)); }   /* no site
   "three/addons/": "/lib/three/0.160.0/examples/jsm/"
 } }
 </script>
-<script type="module" src="game.js?v=64c4021f"></script>
+<script type="module" src="game.js?v=b673de14"></script>
 
 </body></html>
