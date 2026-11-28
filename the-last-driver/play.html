@@ -280,7 +280,8 @@ body:not(.setas) #nuiJump { right: 12px; bottom: 139px; }
 .nitem .ic svg { width: 22px; height: 22px; }
 .nitem .tx { flex: 1; min-width: 0; font: 700 19px/1.1 var(--nf); } .nitem .tx small { display: block; font-size: 15px; color: #ffe9a8; }
 .nbuy { flex: none; min-width: 104px; height: 48px; padding: 0 12px; border-radius: 14px; display: flex; align-items: center; justify-content: center; gap: 6px; color: #2a1306; background: linear-gradient(180deg, #ffe27a, #f7b60c); border: 4px solid #fff; box-shadow: 0 5px 0 #000a; font: 700 20px/1 var(--nf) !important; pointer-events: auto; }
-.nbuy svg { width: 20px; height: 20px; } .nbuy.no { filter: grayscale(.8); opacity: .7; } .nbuy.max, .nbuy.on { background: #36c24a; color: #fff; } .nbuy.off { background: #4a3c36; color: #fff; }
+.nbuy svg { width: 20px; height: 20px; } .nbuy.no { filter: grayscale(.8); opacity: .62; }
+.nbuy.no::before { content: ''; flex: none; width: 15px; height: 15px; margin-right: 2px; background: center / contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%232a1306' d='M7 10V7a5 5 0 0 1 10 0v3h1.5A1.5 1.5 0 0 1 20 11.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 20.5v-9A1.5 1.5 0 0 1 5.5 10zm2.5 0h5V7a2.5 2.5 0 0 0-5 0z'/%3E%3C/svg%3E"); }   /* 2026-11-28: falta moeda = cadeado */ .nbuy.max, .nbuy.on { background: #36c24a; color: #fff; } .nbuy.off { background: #4a3c36; color: #fff; }
 .nbuy:disabled { cursor: default; }
 .nmoney { display: inline-flex; align-items: center; gap: 6px; font: 700 22px/1 var(--nf); } .nmoney svg { width: 24px; height: 24px; }
 .nmsg { min-height: 22px; text-align: center; font: 700 18px/1.1 var(--nf); color: #ff8a7a; }
@@ -475,7 +476,7 @@ body.nui-tests #menu { display: block !important; position: fixed; inset: 0; z-i
 #nuiDayPS:empty { display: none; }
 .nnet { position: absolute; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); margin: 0; padding: 10px 18px; border-radius: 16px; background: var(--panel); border: 4px solid #ffffffd0; box-shadow: 0 4px 0 #000a; font: 700 20px/1.2 var(--nf); color: #ffb3a8; white-space: nowrap; z-index: 3; }
 .ndrow { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: min(5px, 1.2vw); }
-.ndrow li { min-width: 0; } .ndrow li small { font-size: clamp(9px, 2.9vw, 12px) !important; } .ndrow li b { font-size: clamp(10px, 3.4vw, 14px) !important; } .ndrow li i { width: clamp(18px, 5.6vw, 24px) !important; height: clamp(18px, 5.6vw, 24px) !important; }   /* palco estreito do site: 7 dias sem passar da largura */
+.ndrow li { min-width: 0; } .ndrow li small { font-size: clamp(11px, 3.1vw, 13px) !important; } .ndrow li b { font-size: clamp(10px, 3.4vw, 14px) !important; } .ndrow li i { width: clamp(18px, 5.6vw, 24px) !important; height: clamp(18px, 5.6vw, 24px) !important; }   /* palco estreito do site: 7 dias sem passar da largura */
 .ndrow li { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 2px; border-radius: 12px; background: #0006; border: 3px solid #ffffff30; }
 .ndrow li small { font: 700 12px/1 var(--nf); text-transform: uppercase; color: #ffe9a8; white-space: nowrap; }
 .ndrow li i { width: 24px; height: 24px; border-radius: 50%; border: 3px solid #ffffff80; display: grid; place-items: center; font-style: normal; font-size: 13px; }
@@ -586,7 +587,7 @@ html.emb #nui { --top: calc(8px + env(safe-area-inset-top, 0px)); }   /* no site
   <section id="nuiMenu" hidden>
     <p class="nnet" id="nuiNetMsg" hidden role="status"></p>
     <button class="npause" id="nuiHelpB" data-ia="howto" aria-label="Como jogar" style="position:absolute;left:auto;right:12px;top:calc(var(--top) + 6px)"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M11 17h2v2h-2zm1-14a6 6 0 0 0-6 6h2a4 4 0 1 1 6.3 3.3c-1.4.9-2.3 2-2.3 3.7v.5h2V16c0-1 .5-1.6 1.4-2.2A6 6 0 0 0 12 3z"/></svg></button>
-    <button class="npause" id="nuiRankB" aria-label="Ranking" hidden style="position:absolute;left:auto;right:12px;top:calc(var(--top) + 6px)"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 3h12v2h3v3a5 5 0 0 1-4.6 5A5 5 0 0 1 13 15.9V18h3v3H8v-3h3v-2.1A5 5 0 0 1 7.6 13 5 5 0 0 1 3 8V5h3zm0 4H5v1a3 3 0 0 0 1.3 2.5A5 5 0 0 1 6 9zm12 0v2a5 5 0 0 1-.3 1.5A3 3 0 0 0 19 8V7z"/></svg></button>
+    <button class="npause" id="nuiRankB" aria-label="Ranking" hidden style="position:absolute;left:auto;right:max(16px, env(safe-area-inset-right, 0px));top:calc(var(--top) + 8px)"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 3h12v2h3v3a5 5 0 0 1-4.6 5A5 5 0 0 1 13 15.9V18h3v3H8v-3h3v-2.1A5 5 0 0 1 7.6 13 5 5 0 0 1 3 8V5h3zm0 4H5v1a3 3 0 0 0 1.3 2.5A5 5 0 0 1 6 9zm12 0v2a5 5 0 0 1-.3 1.5A3 3 0 0 0 19 8V7z"/></svg></button>
     <img id="nuiLogo" src="p/tex/3399cf1cc1f6c4304b9a012854043c56.webp" alt="The Last Driver" draggable="false">
     <div class="nchips">
       <div class="nchip"><svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="#f7b60c" stroke="#2a1306" stroke-width="1.5" d="M6 3h12v3h3v2a5 5 0 0 1-5 5h-.3A5 5 0 0 1 13 15.7V18h3v3H8v-3h3v-2.3A5 5 0 0 1 8.3 13H8a5 5 0 0 1-5-5V6h3zm-1 5a3 3 0 0 0 1 2.2V8zm14 0h-1v2.2A3 3 0 0 0 19 8z"/></svg><small data-i="record">Recorde</small><b id="nuiHigh">0</b></div>
