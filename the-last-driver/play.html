@@ -4,7 +4,7 @@
   body:not(.setas) #nuiHud .nctl.r .nround svg { width: calc(24px * var(--k, 1)) !important; height: calc(24px * var(--k, 1)) !important; }
   body:not(.setas) #nuiHud .nctl.r .nround em { position: static; min-width: 0; height: auto; padding: 0; border: 0; background: none !important; color: #fff; font: 700 calc(24px * var(--k, 1))/1 var(--nf); }
   body:not(.setas) #nuiHud .nctl.r .nround.empty em { color: #ff6b5e; }
-  #nuiHud .nhaz { left: 50% !important; translate: -50% 0; top: calc(var(--top) + 110px * var(--k, 1)) !important; transform-origin: center; }   /* 2026-11-28: aviso de perigo centralizado abaixo da vida (ao lado saia da tela) */
+  #nuiHud .nhaz { left: calc(50% + 46px * var(--k, 1)) !important; translate: -50% 0; top: calc(var(--top) + 110px * var(--k, 1)) !important; transform-origin: center; }   /* 2026-11-28: aviso de perigo centralizado abaixo da vida (ao lado saia da tela) */
 }
 </style><style>#nuiHelpB{display:none!important}</style></head><body>
 <title>The Last Driver</title>
@@ -800,6 +800,6 @@ html.emb #nui { --top: calc(8px + env(safe-area-inset-top, 0px)); }   /* no site
   "three/addons/": "/lib/three/0.160.0/examples/jsm/"
 } }
 </script>
-<script type="module" src="game.js?v=0"></script>
+<script type="module" src="game.js?v=21ba0b4a"></script>
 
 </body></html>
