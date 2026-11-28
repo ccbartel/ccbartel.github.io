@@ -234,6 +234,13 @@ body:not(.setas) #nuiJump { right: 12px; bottom: 139px; }
 @media (min-width: 900px) and (min-height: 600px) { body:not(.setas) .nctl.r { width: 230px; height: 230px; } body:not(.setas) #nuiGun { right: 82px; bottom: 30px; } body:not(.setas) #nuiJump { right: 26px; bottom: 166px; } }
 .nround.act { color: #2a1306; background: linear-gradient(180deg, #ffe27a 0%, #f7b60c 100%); border-color: #fff; }
 .nround.empty { opacity: .55; filter: grayscale(1); }
+/* 2026-11-28 (dito por ele: nao ficava claro): icones literais (carro saltando / balas), tecla ou gesto ao lado, pulo ao ganhar, vermelho ao zerar */
+#nuiHud .nctl.r .nround .nhk { display: inline-grid; place-items: center; margin-left: calc(4px * var(--k, 1)); min-width: calc(20px * var(--k, 1)); height: calc(20px * var(--k, 1)); border-radius: calc(5px * var(--k, 1)); font: 700 calc(13px * var(--k, 1))/1 var(--nf); color: #1d1714; background: #f4efe6; box-shadow: 0 2px 0 #8a7f72; opacity: .9; }
+#nuiHud .nctl.r .nround .nhk.ntouch { background: none; box-shadow: none; } #nuiHud .nctl.r .nround .nhk svg { width: calc(14px * var(--k, 1)) !important; height: calc(17px * var(--k, 1)) !important; }
+#nuiHud .nctl.r .nround .ntouch { display: none; } @media not all and (hover: hover) and (pointer: fine) { #nuiHud .nctl.r .nround .nkb { display: none; } #nuiHud .nctl.r .nround .ntouch { display: inline-grid; } }
+#nuiHud .nctl.r #nuiJump svg:first-child { width: calc(32px * var(--k, 1)) !important; }
+#nuiHud .nround.up { animation: nrup .45s ease-out; } @keyframes nrup { 30% { transform: scale(1.25); filter: brightness(1.4); } }
+#nuiHud .nround.zero { animation: nrzero .6s ease-out; } @keyframes nrzero { 0%, 60% { box-shadow: 0 0 0 calc(3px * var(--k, 1)) #ff3b2f; } 30% { transform: translateX(-3px); } 50% { transform: translateX(3px); } }
 .nround em { position: absolute; top: -16px; right: -10px; min-width: 28px; height: 28px; padding: 0 5px; border-radius: 14px; display: grid; place-items: center; font: 700 18px/1 var(--nf); font-style: normal; color: #fff; background: #2a1306; border: 3px solid #fff; }   /* 2026-11-22: fora do icone (antes cobria a seta/mira) */
 .nround.empty em { background: #c81e14; }
 @media (min-width: 900px) and (min-height: 600px) { .nround { width: 88px; height: 88px; } .nround svg { width: 44px; height: 44px; } }
@@ -639,8 +646,8 @@ html.emb #nui { --top: calc(8px + env(safe-area-inset-top, 0px)); }   /* no site
       <button class="nround" id="nuiRight" data-ia="right" aria-label="Direita"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8.5 3.5 17 12l-8.5 8.5-2.1-2.1L12.8 12 6.4 5.6z"/></svg></button>
     </div>
     <div class="nctl r">
-      <button class="nround act" id="nuiJump" data-ia="jump" aria-label="Pular"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2 4.5 9.5h4.5V14h6V9.5h4.5zM5 16.5h14V19H5z"/></svg><em id="nuiNJump">0</em></button>
-      <button class="nround act" id="nuiGun" data-ia="gun" aria-label="Atirar"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" d="M12 4.5a7.5 7.5 0 1 0 0 15 7.5 7.5 0 0 0 0-15zM12 1v6M12 17v6M1 12h6M17 12h6"/><circle cx="12" cy="12" r="2" fill="currentColor"/></svg><em id="nuiNGun">0</em></button>
+      <button class="nround act" id="nuiJump" data-ia="jump" aria-label="Pular"><svg viewBox="0 0 32 24" aria-hidden="true"><path fill="none" stroke="#ffd84d" stroke-width="2.2" stroke-linecap="round" stroke-dasharray="2.5 3" d="M3 20C7 6 23 2 28 9"/><path fill="#ffd84d" d="m28 4 2.6 6.8-7 .3z"/><path fill="currentColor" d="M9 13.5 11 10h7l3 3.5h2.2c.6 0 1 .4 1 1V17h-1.6a2.2 2.2 0 0 0-4.3 0h-5.6a2.2 2.2 0 0 0-4.3 0H6.2v-2.5c0-.6.4-1 1-1z"/><circle cx="10.3" cy="17.4" r="1.6" fill="currentColor"/><circle cx="20.3" cy="17.4" r="1.6" fill="currentColor"/></svg><em id="nuiNJump">0</em><span class="nhk nkb" aria-hidden="true">S</span><span class="nhk ntouch" aria-hidden="true"><svg viewBox="0 0 16 20"><path fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" d="M8 18V4M3.5 8.5 8 4l4.5 4.5"/></svg></span></button>
+      <button class="nround act" id="nuiGun" data-ia="gun" aria-label="Atirar"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="currentColor"><path d="M4 9a2 2 0 0 1 4 0v11H4z"/><path d="M10 7a2 2 0 0 1 4 0v13h-4z"/><path d="M16 9a2 2 0 0 1 4 0v11h-4z"/></g><g fill="#ffd84d"><rect x="4" y="15" width="4" height="1.6"/><rect x="10" y="15" width="4" height="1.6"/><rect x="16" y="15" width="4" height="1.6"/></g></svg><em id="nuiNGun">0</em><span class="nhk nkb" aria-hidden="true">A</span><span class="nhk ntouch" aria-hidden="true"><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="3.2" fill="#fff"/><circle cx="10" cy="10" r="7.5" fill="none" stroke="#fff" stroke-width="1.6" opacity=".7"/></svg></span></button>
     </div>
     <div id="nuiTut" hidden aria-hidden="true"><div class="tstk"><i></i></div><i class="tarw"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 3 3 12h5v3h8v-3h5zM8 17h8v2H8zm0 3h8v1.5H8z"/></svg></i><i class="trip"></i><img class="thand" src="p/mao.png" alt=""><b class="tlbl"></b></div>
   </section>
@@ -806,6 +813,6 @@ html.emb #nui { --top: calc(8px + env(safe-area-inset-top, 0px)); }   /* no site
   "three/addons/": "/lib/three/0.160.0/examples/jsm/"
 } }
 </script>
-<script type="module" src="game.js?v=934c9a3b"></script>
+<script type="module" src="game.js?v=52b61ddf"></script>
 
 </body></html>
