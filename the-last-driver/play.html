@@ -1,4 +1,11 @@
-<!doctype html><html lang="en" translate="no"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><style>#nuiHelpB{display:none!important}</style></head><body>
+<!doctype html><html lang="en" translate="no"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}@media all {   /* 2026-11-28 (pedido dele): pulo/tiro sao gestos (celular) ou botoes do mouse (PC); a municao e so indicador do HUD (pilula como a das moedas), sem cara de botao */
+  body:not(.setas) #nuiHud .nctl.r { position: absolute; display: flex !important; flex-direction: column; align-items: flex-end; gap: calc(8px * var(--k, 1)); left: auto; bottom: auto !important; right: max(12px, env(safe-area-inset-right, 0px)); top: calc(var(--top) + 112px * var(--k, 1)); width: auto !important; height: auto !important; pointer-events: none; }
+  body:not(.setas) #nuiHud .nctl.r .nround { position: static !important; pointer-events: none; width: auto !important; height: calc(40px * var(--k, 1)) !important; display: flex; align-items: center; gap: calc(5px * var(--k, 1)); padding: 0 calc(12px * var(--k, 1)) 0 calc(7px * var(--k, 1)); border-radius: 999px; color: #ffd84d; background: var(--panel); border: calc(3px * var(--k, 1)) solid #ffffffd0; box-shadow: 0 3px 0 #000a !important; outline: none !important; animation: none !important; transform: none !important; }
+  body:not(.setas) #nuiHud .nctl.r .nround svg { width: calc(24px * var(--k, 1)) !important; height: calc(24px * var(--k, 1)) !important; }
+  body:not(.setas) #nuiHud .nctl.r .nround em { position: static; min-width: 0; height: auto; padding: 0; border: 0; background: none !important; color: #fff; font: 700 calc(24px * var(--k, 1))/1 var(--nf); }
+  body:not(.setas) #nuiHud .nctl.r .nround.empty em { color: #ff6b5e; }
+}
+</style><style>#nuiHelpB{display:none!important}</style></head><body>
 <title>The Last Driver</title>
 <meta name="robots" content="noindex">
 <link rel="icon" type="image/png" href="assets/icon.png">
@@ -189,9 +196,25 @@ body.inmenu #controls, body.inmenu #info, body.inmenu .round, body.inmenu #lifeb
 .nround.on { transform: translateY(4px) scale(.96); box-shadow: 0 3px 0 #000a; }
 /* v3 controle: stick virtual no polegar esquerdo (aparece onde toca na metade esquerda de baixo) + tiro/pulo em diagonal no arco do polegar direito */
 body:not(.setas) .nctl.l { display: none; }
-#nuiStickZone { position: absolute; left: 0; bottom: 0; width: 46%; height: 58%; pointer-events: auto; touch-action: none; }
+
+/* 2026-11-28: Como jogar em 3 linhas iguais (icone animado + frase), sem sobreposicao; PC mostra o mouse, celular a mao */
+.nhelp { grid-template-columns: 1fr !important; } .nhelp > div { flex-direction: row !important; justify-content: flex-start !important; gap: 14px !important; padding: 8px 14px !important; text-align: left !important; }
+.nhelp .nhd { display: contents !important; } .nhelp .nhd > div { position: static !important; background: #0006 !important; padding: 8px 14px !important; border-radius: 14px; flex-direction: row !important; gap: 14px !important; }
+.nhelp .nround, .nhelp .nstk { display: none !important; } .nhelp kbd { margin-left: auto; white-space: nowrap; flex: none; } .nhelp > div, .nhelp .nhd > div { min-height: 88px; align-items: center !important; }
+.nmsI { display: block; flex: none; width: 74px; text-align: center; } .nmsI .nms { width: 40px; height: 52px; }
+.ntch, .ngest { display: none; } @media (hover: none) and (pointer: coarse) { .ntch { display: inline; } .npc { display: none; }
+  .ngest { display: block; flex: none; position: relative; width: 74px; height: 70px; } .nhelp kbd, .npcI { display: none !important; }
+  
+  .ngest img { position: absolute; left: 50%; top: 6px; width: 44px; margin-left: -17px; filter: drop-shadow(0 3px 0 #0009); }
+  .ngest.side img { animation: ngs 1.6s ease-in-out infinite; } .ngest.up img { animation: ngu 1.2s ease-in-out infinite; } .ngest.tap img { animation: ngt .9s ease-in-out infinite; }
+  .ngest.tap::after { content: ''; position: absolute; left: 50%; top: 14px; width: 44px; height: 44px; margin: -22px 0 0 -22px; border-radius: 50%; border: 4px solid #ffd84d; animation: ntutr .9s ease-out infinite; }
+  @keyframes ngs { 0%, 100% { translate: 0 0; } 25% { translate: -20px 0; } 75% { translate: 20px 0; } }
+  @keyframes ngu { 0% { translate: 0 22px; opacity: 0; } 20% { opacity: 1; } 75% { translate: 0 -8px; opacity: 1; } 100% { translate: 0 -8px; opacity: 0; } }
+  @keyframes ngt { 0%, 100% { translate: 0 12px; } 45%, 60% { translate: 0 0; } }
+}
+#nuiStickZone { position: absolute; left: 0; bottom: 0; width: 100%; height: 80%; pointer-events: auto; touch-action: none; }   /* 2026-11-28: arrastar em qualquer lugar, igual ao Burnout City */
 body.setas #nuiStickZone { display: none; }
-@media (orientation: landscape) { #nuiStickZone { width: 22%; } }   /* deitado: a base do stick nao alcanca o carro (medido em 1700x940) */
+   /* deitado: a base do stick nao alcanca o carro (medido em 1700x940) */
 #nuiStick { position: absolute; left: 0; top: 0; width: 132px; height: 132px; margin: -66px 0 0 -66px; border-radius: 50%; pointer-events: none; background: radial-gradient(circle, #1d171455 0%, #1d1714a8 70%); border: 4px solid #ffffffb8; box-shadow: 0 6px 0 #0006; }
 #nuiStick i { position: absolute; left: 50%; top: 50%; width: 62px; height: 62px; margin: -31px 0 0 -31px; border-radius: 50%; background: linear-gradient(180deg, #ffe27a 0%, #f7b60c 100%); border: 4px solid #fff; box-shadow: 0 5px 0 #000a; }
 #nuiStick.ghost { opacity: .9; scale: .7; } #nuiStick.ghost i { animation: nstick 1.1s ease-in-out 2; }
@@ -396,12 +419,27 @@ body:not(.setas) #nuiJump { right: 12px; bottom: 139px; }
 @media (prefers-reduced-motion: reduce) { #nui .nround.nhint { animation: nhintg .45s ease-in-out 2; } }
 /* tutorial de controles (2026-11-22): mao mostra cada controle e espera a pessoa fazer */
 #nuiTut { position: absolute; inset: 0; pointer-events: none; z-index: 6; --s: var(--kb, 1); }
-#nuiTut .tstk { position: absolute; width: 132px; height: 132px; margin: -66px 0 0 -66px; scale: var(--s); border-radius: 50%; background: radial-gradient(circle, #1d171455 0%, #1d1714a8 70%); border: 4px solid #ffffffb8; box-shadow: 0 6px 0 #0006; }
+#nuiTut .tarw, #nuiTut .trip { display: none; position: absolute; pointer-events: none; }
+#nuiTut.g1 .thand { animation: ntutu 1.3s ease-in-out infinite; }
+#nuiTut.g1 .tarw { display: block; width: 110px; height: 110px; margin: -55px 0 0 -55px; scale: var(--s); color: #ffd84d; filter: drop-shadow(0 0 3px #000) drop-shadow(0 5px 0 #000a); animation: ntuta 1.3s ease-in-out infinite; }
+#nuiTut.g2 .thand { animation: ntutt .9s ease-in-out infinite; }
+#nuiTut.g2 .trip { display: block; width: 110px; height: 110px; margin: -55px 0 0 -55px; border-radius: 50%; border: 7px solid #ffd84d; box-shadow: 0 0 0 3px #000a, inset 0 0 0 3px #000a; animation: ntutr .9s ease-out infinite; }
+@keyframes ntutu { 0% { translate: 0 calc(50px * var(--s)); opacity: 0; } 15% { opacity: 1; } 70% { translate: 0 calc(-120px * var(--s)); opacity: 1; } 100% { translate: 0 calc(-120px * var(--s)); opacity: 0; } }
+@keyframes ntuta { 0%, 100% { translate: 0 0; opacity: .55; } 60% { translate: 0 calc(-30px * var(--s)); opacity: 1; } }
+@keyframes ntutr { 0%, 40% { scale: .3; opacity: 0; } 50% { scale: .35; opacity: 1; } 100% { scale: 1.6; opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { #nuiTut .tarw, #nuiTut .trip { animation: none !important; } }
+#nuiTut .tstk { display: none !important; position: absolute; width: 132px; height: 132px; margin: -66px 0 0 -66px; scale: var(--s); border-radius: 50%; background: radial-gradient(circle, #1d171455 0%, #1d1714a8 70%); border: 4px solid #ffffffb8; box-shadow: 0 6px 0 #0006; }
 #nuiTut .tstk i { position: absolute; left: 50%; top: 50%; width: 62px; height: 62px; margin: -31px 0 0 -31px; border-radius: 50%; background: linear-gradient(180deg, #ffe27a 0%, #f7b60c 100%); border: 4px solid #fff; box-shadow: 0 5px 0 #000a; animation: ntutx 1.6s ease-in-out infinite; }
 #nuiTut .thand { position: absolute; width: 76px; height: auto; margin: -3px 0 0 -25px; transform-origin: 25px 3px; scale: var(--s); filter: drop-shadow(0 4px 0 #0009); }
 #nuiTut.s0 .thand { animation: ntuth 1.6s ease-in-out infinite; }
 #nuiTut.s1 .thand, #nuiTut.s2 .thand, #nuiTut.sb .thand { animation: ntutt .9s ease-in-out infinite; }
 #nuiTut.touch .tstk, #nuiTut.touch .thand, #nuiTut.ok .tstk, #nuiTut.ok .thand { display: none; }
+#nuiTut.pcm .thand, #nuiTut.pcm .tstk { display: none !important; }
+#nuiTut .tlbl.big { display: flex; align-items: center; gap: 12px; padding: 10px 18px; border-radius: 22px; }
+#nuiTut .tlbl.big .nms { width: 52px; height: 68px; } #nuiTut .tlbl.big small { font: 700 20px/1 var(--nf); opacity: .8; }
+.nms.mv { animation: ngs 1.6s ease-in-out infinite; } .nms.l path[fill], .nms.r path[fill] { animation: nmsb .9s ease-in-out infinite; }
+@keyframes nmsb { 0%, 100% { opacity: 1; } 50% { opacity: .25; } }
+@keyframes ngs { 0%, 100% { translate: 0 0; } 25% { translate: -20px 0; } 75% { translate: 20px 0; } }
 #nuiTut .tlbl { position: absolute; transform: translate(-50%, -100%); padding: 8px 14px; border-radius: 14px; white-space: nowrap; font: 700 22px/1.1 var(--nf); color: #fff; background: #1d1714e6; border: 3px solid #fff; box-shadow: 0 4px 0 #000a; }
 #nuiTut .tlbl.side { transform: translate(-100%, -50%); } #nuiTut .tlbl[hidden] { display: none; }
 #nuiTut.ok .tlbl { background: #2e9d4a; color: #fff; }
@@ -596,7 +634,7 @@ html.emb #nui { --top: calc(8px + env(safe-area-inset-top, 0px)); }   /* no site
       <button class="nround act" id="nuiJump" data-ia="jump" aria-label="Pular"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2 4.5 9.5h4.5V14h6V9.5h4.5zM5 16.5h14V19H5z"/></svg><em id="nuiNJump">0</em></button>
       <button class="nround act" id="nuiGun" data-ia="gun" aria-label="Atirar"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" d="M12 4.5a7.5 7.5 0 1 0 0 15 7.5 7.5 0 0 0 0-15zM12 1v6M12 17v6M1 12h6M17 12h6"/><circle cx="12" cy="12" r="2" fill="currentColor"/></svg><em id="nuiNGun">0</em></button>
     </div>
-    <div id="nuiTut" hidden aria-hidden="true"><div class="tstk"><i></i></div><img class="thand" src="p/mao.png" alt=""><b class="tlbl"></b></div>
+    <div id="nuiTut" hidden aria-hidden="true"><div class="tstk"><i></i></div><i class="tarw"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 3 3 12h5v3h8v-3h5zM8 17h8v2H8zm0 3h8v1.5H8z"/></svg></i><i class="trip"></i><img class="thand" src="p/mao.png" alt=""><b class="tlbl"></b></div>
   </section>
   <div id="nuiLoadArt" class="nloadart" hidden aria-hidden="true"></div>
   <div id="nuiLoad2" hidden role="status"><b data-i="tip">Dica</b><p id="nuiLoad2T"></p><div class="lbar" aria-hidden="true"><i id="nuiLoad2Bar"></i></div></div>
@@ -662,8 +700,8 @@ html.emb #nui { --top: calc(8px + env(safe-area-inset-top, 0px)); }   /* no site
       <h2 id="nuiHelpT" data-i="howto">Como jogar</h2>
       <p class="ltip" style="margin:0 auto" data-i="howtoTxt">Desvie dos carros e dos buracos, atropele zumbis e junte moedas.</p>
       <div class="nhelp">
-        <div class="nhs"><span class="nstk" aria-hidden="true"><i></i></span><span data-i="hStick">Arraste para virar</span><kbd class="nkeys">← →</kbd></div>
-        <div class="nhd"><div class="j"><span class="nround act"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2 4.5 9.5h4.5V14h6V9.5h4.5zM5 16.5h14V19H5z"/></svg></span><span data-i="hJump">Pular por cima</span><kbd class="nkeys">S</kbd></div><div class="g"><span class="nround act"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" d="M12 4.5a7.5 7.5 0 1 0 0 15 7.5 7.5 0 0 0 0-15zM12 1v6M12 17v6M1 12h6M17 12h6"/></svg></span><span data-i="hGun">Atirar</span><kbd class="nkeys">A</kbd></div></div>
+        <div class="nhs"><span class="nstk" aria-hidden="true"><i></i></span><span class="nmsI npcI" data-m="mv"></span><span class="ngest side" aria-hidden="true"><img src="p/mao.png" alt=""></span><span class="ntch" data-i="hStick">Arraste para virar</span><span class="npc" data-i="hMouse">Mexa o mouse para os lados para virar</span><kbd class="nkeys">← →</kbd></div>
+        <div class="nhd"><div class="j"><span class="nround act"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2 4.5 9.5h4.5V14h6V9.5h4.5zM5 16.5h14V19H5z"/></svg></span><span class="nmsI npcI" data-m="r"></span><span class="ngest up" aria-hidden="true"><img src="p/mao.png" alt=""></span><span class="ntch" data-i="hSwipe">Deslize para cima para pular</span><span class="npc" data-i="hRmb">Botão direito do mouse para pular</span><kbd class="nkeys">S</kbd></div><div class="g"><span class="nround act"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" d="M12 4.5a7.5 7.5 0 1 0 0 15 7.5 7.5 0 0 0 0-15zM12 1v6M12 17v6M1 12h6M17 12h6"/></svg></span><span class="nmsI npcI" data-m="l"></span><span class="ngest tap" aria-hidden="true"><img src="p/mao.png" alt=""></span><span class="ntch" data-i="hTap">Toque na tela para atirar</span><span class="npc" data-i="hLmb">Botão esquerdo do mouse para atirar</span><kbd class="nkeys">A</kbd></div></div>
       </div>
       <p class="ltip" style="margin:0 auto;font-size:11px;opacity:.75">T-Rex: <a href="https://sketchfab.com/3d-models/ps1low-poly-t-rex-c62dba5641d14d16a5c3cd3bb878f380" target="_blank" rel="noopener" style="color:inherit">"PS1/Low Poly T-Rex"</a> &middot; Jellypack (Sketchfab) &middot; <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener" style="color:inherit">CC BY 4.0</a></p>
       <button class="nbtn primary" id="nuiHelpOk" style="justify-content:center"><b data-i="ok">OK</b></button>
@@ -760,6 +798,6 @@ html.emb #nui { --top: calc(8px + env(safe-area-inset-top, 0px)); }   /* no site
   "three/addons/": "/lib/three/0.160.0/examples/jsm/"
 } }
 </script>
-<script type="module" src="game.js?v=58d2da1a"></script>
+<script type="module" src="game.js?v=4a36621d"></script>
 
 </body></html>
