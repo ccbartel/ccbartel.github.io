@@ -242,7 +242,7 @@
     var box = document.getElementById("bg-today"); if (!box) return;
     var dd = new Date().toLocaleDateString("sv"), RC = [], DY = [];
     try { RC = JSON.parse(localStorage.getItem("bg_recent") || "[]"); DY = JSON.parse(localStorage.getItem("bg_days") || "[]"); } catch (e) {}
-    function card(pg) { var cs = document.querySelectorAll(".grid .card"); for (var i = 0; i < cs.length; i++) { var h = (cs[i].getAttribute("href") || "").replace(/^(pt|es)\//, ""); if (h === pg + "/") return cs[i]; } return null; }
+    function card(pg) { var cs = [].slice.call(document.querySelectorAll(".grid .card")), tp = document.getElementById("home-cards"); if (tp && tp.content) cs = cs.concat([].slice.call(tp.content.querySelectorAll(".card"))); /* 2026-11-28: na home os cartoes ficam no <template id="home-cards"> */ for (var i = 0; i < cs.length; i++) { var h = (cs[i].getAttribute("href") || "").replace(/^(pt|es)\//, ""); if (h === pg + "/") return cs[i]; } return null; }
     function title(c) { var t = c && c.querySelector(".cover-t"); return t ? [].map.call(t.children, function (x) { return x.textContent; }).join(" ") : ""; }
     function cover(c) { var i = c.querySelector("img.cover"); return i ? i.getAttribute("src") : ""; }
     var dayN = Math.floor(Date.parse(dd + "T12:00:00Z") / 864e5), pg = DAILY[dayN % DAILY.length], c = card(pg);
