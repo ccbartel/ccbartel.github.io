@@ -4,6 +4,7 @@
   body:not(.setas) #nuiHud .nctl.r .nround svg { width: calc(24px * var(--k, 1)) !important; height: calc(24px * var(--k, 1)) !important; }
   body:not(.setas) #nuiHud .nctl.r .nround em { position: static; min-width: 0; height: auto; padding: 0; border: 0; background: none !important; color: #fff; font: 700 calc(24px * var(--k, 1))/1 var(--nf); }
   body:not(.setas) #nuiHud .nctl.r .nround.empty em { color: #ff6b5e; }
+  #nuiHud .nhaz { left: 50% !important; translate: -50% 0; top: calc(var(--top) + 110px * var(--k, 1)) !important; transform-origin: center; }   /* 2026-11-28: aviso de perigo centralizado abaixo da vida (ao lado saia da tela) */
 }
 </style><style>#nuiHelpB{display:none!important}</style></head><body>
 <title>The Last Driver</title>
@@ -154,7 +155,8 @@ body.inmenu #controls, body.inmenu #info, body.inmenu .round, body.inmenu #lifeb
 .nbtn.primary:active { box-shadow: 0 0 0 4px #2a1306, 0 5px 0 4px #000a; }
 .nbtn.test { height: 48px; border-style: dashed; border-color: #7f7; color: #bfffbf; }
 .nbtn.test b { font-size: 22px; }
-.nbtn:disabled { opacity: .45; cursor: not-allowed; }
+.nbtn:disabled { opacity: .72; cursor: not-allowed; filter: saturate(.4); }
+.nbtn:disabled::after { content: ''; flex: none; margin-left: auto; width: 26px; height: 26px; background: center / contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23ffd84d' stroke='%232a1306' stroke-width='1.2' d='M7 10V7a5 5 0 0 1 10 0v3h1.5A1.5 1.5 0 0 1 20 11.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 20.5v-9A1.5 1.5 0 0 1 5.5 10zm2.5 0h5V7a2.5 2.5 0 0 0-5 0z'/%3E%3C/svg%3E"); }   /* 2026-11-28: cadeado */
 .nbtn:focus-visible, .nround:focus-visible, .npause:focus-visible { outline: 4px solid #ffd84d; outline-offset: 4px; }
 /* missoes */
 #nuiMiss { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: var(--top) 16px 16px; background: #000a; pointer-events: auto; }
@@ -176,7 +178,7 @@ body.inmenu #controls, body.inmenu #info, body.inmenu .round, body.inmenu #lifeb
 .ncoins b { font: 700 26px/1 var(--nf); font-variant-numeric: tabular-nums; min-width: 2ch; text-align: right; }
 .ndist { position: absolute; left: 50%; top: -2px; transform: translateX(-50%); display: grid; place-items: center; white-space: nowrap; font: 700 54px/1 var(--nf); font-variant-numeric: tabular-nums; }
 .ndist > span { grid-area: 1 / 1; }
-.nhaz { position: absolute; left: calc(50% + min(31vw, 150px) + 4px); top: calc(var(--top) + 70px); height: 30px; display: flex; align-items: center; gap: 2px; filter: drop-shadow(0 3px 0 #000c); animation: nhazP .3s ease-in-out infinite alternate; transform-origin: left center; }   /* LOTE 4: aviso de buraco; retrato: ao lado da barra de vida, fora da pista */
+.nhaz { position: absolute; left: calc(50% + min(31vw, 150px) + 4px); top: calc(var(--top) + 70px); height: 30px; display: flex; align-items: center; gap: 2px; filter: drop-shadow(0 3px 0 #000c); animation: nhazP .3s ease-in-out infinite alternate; transform-origin: left center; padding: 0 8px; border-radius: 999px; background: var(--panel); border: 3px solid #ffffffd0; }   /* LOTE 4: aviso de buraco; retrato: ao lado da barra de vida, fora da pista */
 .nhaz[hidden] { display: none; }
 .nhaz svg { width: 32px; height: 28px; flex: none; }
 .nhaz .hdir { width: 20px; height: 20px; transition: transform .1s; }
@@ -423,7 +425,7 @@ body:not(.setas) #nuiJump { right: 12px; bottom: 139px; }
 #nuiTut.g1 .thand { animation: ntutu 1.3s ease-in-out infinite; }
 #nuiTut.g1 .tarw { display: block; width: 110px; height: 110px; margin: -55px 0 0 -55px; scale: var(--s); color: #ffd84d; filter: drop-shadow(0 0 3px #000) drop-shadow(0 5px 0 #000a); animation: ntuta 1.3s ease-in-out infinite; }
 #nuiTut.g2 .thand { animation: ntutt .9s ease-in-out infinite; }
-#nuiTut.g2 .trip { display: block; width: 110px; height: 110px; margin: -55px 0 0 -55px; border-radius: 50%; border: 7px solid #ffd84d; box-shadow: 0 0 0 3px #000a, inset 0 0 0 3px #000a; animation: ntutr .9s ease-out infinite; }
+#nuiTut.g2 .trip { display: block; width: 110px; height: 110px; margin: -55px 0 0 -55px; border-radius: 50%; border: 10px solid #ffd84d; background: #ffd84d33; box-shadow: 0 0 0 3px #000a, inset 0 0 0 3px #000a; animation: ntutr .9s ease-out infinite; }
 @keyframes ntutu { 0% { translate: 0 calc(50px * var(--s)); opacity: 0; } 15% { opacity: 1; } 70% { translate: 0 calc(-120px * var(--s)); opacity: 1; } 100% { translate: 0 calc(-120px * var(--s)); opacity: 0; } }
 @keyframes ntuta { 0%, 100% { translate: 0 0; opacity: .55; } 60% { translate: 0 calc(-30px * var(--s)); opacity: 1; } }
 @keyframes ntutr { 0%, 40% { scale: .3; opacity: 0; } 50% { scale: .35; opacity: 1; } 100% { scale: 1.6; opacity: 0; } }
@@ -436,7 +438,7 @@ body:not(.setas) #nuiJump { right: 12px; bottom: 139px; }
 #nuiTut.touch .tstk, #nuiTut.touch .thand, #nuiTut.ok .tstk, #nuiTut.ok .thand { display: none; }
 #nuiTut.pcm .thand, #nuiTut.pcm .tstk { display: none !important; }
 #nuiTut .tlbl.big { display: flex; align-items: center; gap: 12px; padding: 10px 18px; border-radius: 22px; }
-#nuiTut .tlbl.big .nms { width: 52px; height: 68px; } #nuiTut .tlbl.big small { font: 700 20px/1 var(--nf); opacity: .8; }
+#nuiTut .tlbl.big .nms { width: 52px; height: 68px; } #nuiTut .tlbl.big .narr { width: 58px; height: 30px; flex: none; } #nuiTut .tlbl.big small { font: 700 20px/1 var(--nf); opacity: .8; }
 .nms.mv { animation: ngs 1.6s ease-in-out infinite; } .nms.l path[fill], .nms.r path[fill] { animation: nmsb .9s ease-in-out infinite; }
 @keyframes nmsb { 0%, 100% { opacity: 1; } 50% { opacity: .25; } }
 @keyframes ngs { 0%, 100% { translate: 0 0; } 25% { translate: -20px 0; } 75% { translate: 20px 0; } }
@@ -667,7 +669,7 @@ html.emb #nui { --top: calc(8px + env(safe-area-inset-top, 0px)); }   /* no site
         <button class="nbtn sm" id="nuiEMenu"><b data-i="menu">Menu</b></button>
       </div>
       <div class="nstats">
-        <div><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#f7b60c" d="M12 2 4 22h4l1.2-3h5.6l1.2 3h4zm0 7 1.8 6h-3.6z"/></svg><b id="nuiEDist">0</b><small data-i="distance">Distância</small></div>
+        <div><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M5 3h2v18H5zM7 4h12v9H7z"/><path fill="#141414" d="M7 4h3v3H7zm6 0h3v3h-3zm-3 3h3v3h-3zm6 0h3v3h-3zm-9 3h3v3H7zm6 0h3v3h-3z"/></svg><b id="nuiEDist">0</b><small data-i="distance">Distância</small></div>
         <div><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#7ad36b" d="M12 2a8 8 0 0 0-8 8c0 3 1.6 4.6 3 5.5V19a1 1 0 0 0 1 1h1v2h2v-2h2v2h2v-2h1a1 1 0 0 0 1-1v-3.5c1.4-.9 3-2.5 3-5.5a8 8 0 0 0-8-8zm-3 7.5a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm6 0a2 2 0 1 1 0 4 2 2 0 0 1 0-4z"/></svg><b id="nuiEKills">0</b><small data-i="zombies">Zumbis</small></div>
         <div><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#f7b60c" stroke="#2a1306" stroke-width="2"/><circle cx="12" cy="12" r="6" fill="none" stroke="#a86a00" stroke-width="2"/></svg><b id="nuiECoins">0</b><small data-i="coins">Moedas</small></div>
       </div>
@@ -798,6 +800,6 @@ html.emb #nui { --top: calc(8px + env(safe-area-inset-top, 0px)); }   /* no site
   "three/addons/": "/lib/three/0.160.0/examples/jsm/"
 } }
 </script>
-<script type="module" src="game.js?v=4a36621d"></script>
+<script type="module" src="game.js?v=7d758a5d"></script>
 
 </body></html>
